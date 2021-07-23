@@ -9,13 +9,13 @@ import {
 
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH)
-import { carouselItem } from '../../types';
+import { noticeInfo } from '../../types';
 
-const CarouselCardItem = ({ item, index }: { item: carouselItem; index: number }) => {
+const CarouselCardItem = ({ item, index }: { item: noticeInfo; index: number }) => {
   return (
     <View style={styles.container} key={index}>
       <Image
-        source={{ uri: item.imgUrl }}
+        source={{ uri: item.image }}
         style={styles.image}
       />
     </View>

@@ -53,3 +53,9 @@ export type boxProductInfo = {
     name: string;
     price: number;
 }
+
+// Notice Information
+export type noticeInfo = {
+    image: string;
+    url: string;
+}

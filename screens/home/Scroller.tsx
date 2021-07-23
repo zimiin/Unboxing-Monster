@@ -1,13 +1,18 @@
 import React from 'react';
 import {
     View,
-    Text,
     Dimensions,
 } from 'react-native';
+import TextTicker from 'react-native-text-ticker';
 
 const SCROLLER_WIDTH = Dimensions.get('window').width - 48;
 
 const Scroller = () => {
+    const content = () => {
+        // 차후 여기서 디비에서 데이터 가져옴
+        return 'User***님이 최상급 한우에 당첨되셨습니다. User***님이 최상급 한우에 당첨되셨습니다. User***님이 최상급 한우에 당첨되셨습니다.';
+    }
+
     return (
         <View
             style={{
@@ -23,14 +28,21 @@ const Scroller = () => {
                 justifyContent: 'center',
             }}
         >
-            <Text
+            <TextTicker
                 style={{
                     color: '#fffffc',
                     fontSize: 15,
                 }}
+                duration={10000}
+                loop
+                repeatSpacer={50}
+                bounce={false}
+                bouncePadding={{
+                    left: 30,
+                }}
             >
-                User***님이 최상급 한우에 당첨되셨습니다.
-            </Text>
+                {content()}
+            </TextTicker>
         </View>
     );
 }

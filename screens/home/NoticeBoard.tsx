@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import carouselItems from '../../data/carouselItems';
+import carouselItems from '../../data/notices';
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem';
 
 const NoticeBox = () => {
