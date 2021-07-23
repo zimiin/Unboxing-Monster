@@ -1,11 +1,9 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import {
     View,
-    Text,
     ScrollView,
 } from 'react-native';
+
 import { boxProductInfo } from '../../types';
 
 import BoxItem from './BoxItem';
@@ -17,6 +15,7 @@ interface horizontalBoxListProps {
 const HorizontalBoxList: React.FunctionComponent<horizontalBoxListProps> = props => {
     const boxItems = props.items.map((item) =>
         <BoxItem
+            key={item.id}
             id={item.id}
             image={item.image}
             name={item.name}

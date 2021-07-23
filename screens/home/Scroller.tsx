@@ -2,7 +2,9 @@ import React from 'react';
 import {
     View,
     Dimensions,
+    StyleSheet,
 } from 'react-native';
+
 import TextTicker from 'react-native-text-ticker';
 
 const SCROLLER_WIDTH = Dimensions.get('window').width - 48;
@@ -14,25 +16,9 @@ const Scroller = () => {
     }
 
     return (
-        <View
-            style={{
-                width: SCROLLER_WIDTH,
-                height: 48,
-                backgroundColor: '#535353',
-                alignSelf: 'center',
-                position: 'absolute',
-                top: 228,
-                borderRadius: 4,
-                borderWidth: 1,
-                borderColor: '#29a3ff',
-                justifyContent: 'center',
-            }}
-        >
+        <View style={styles.container}>
             <TextTicker
-                style={{
-                    color: '#fffffc',
-                    fontSize: 15,
-                }}
+                style={styles.text}
                 duration={10000}
                 loop
                 repeatSpacer={50}
@@ -48,3 +34,22 @@ const Scroller = () => {
 }
 
 export default Scroller;
+
+const styles = StyleSheet.create({
+    container: {
+        width: SCROLLER_WIDTH,
+        height: 48,
+        backgroundColor: '#535353',
+        alignSelf: 'center',
+        position: 'absolute',
+        top: 228,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#29a3ff',
+        justifyContent: 'center',
+    },
+    text: {
+        color: '#fffffc',
+        fontSize: 15,
+    }
+});

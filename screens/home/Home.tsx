@@ -2,6 +2,7 @@ import React from 'react';
 import {
     SafeAreaView,
     ScrollView,
+    StyleSheet,
 } from 'react-native';
 
 import NoticeBoard from './NoticeBoard';
@@ -12,12 +13,7 @@ import BoxProductList from './BoxProductList';
 
 const Home = () => {
     return (
-        <SafeAreaView 
-            style={{
-                flex: 1,
-                backgroundColor: 'white',
-            }}
-        >
+        <SafeAreaView style={styles.container}>
             <ScrollView>
                 <NoticeBoard />
                 <Scroller />
@@ -30,4 +26,12 @@ const Home = () => {
 }
 
 export default Home;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    }
+});
+
 

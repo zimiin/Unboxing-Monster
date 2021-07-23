@@ -4,22 +4,22 @@ import {
 } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import carouselItems from '../../data/notices';
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem';
+import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from './NoticeItem';
+
+import noticeData from '../../data/notices';
 
 const NoticeBox = () => {
     const isCarousel = useRef(null);
     const [activeSlide, setActiveSlide] = useState(0);
 
     return (
-        // Carousel
         <View>
             <Carousel
                 layout="default"
                 layoutCardOffset={9}
                 ref={isCarousel}
-                data={carouselItems}
-                renderItem={CarouselCardItem}
+                data={noticeData} // 여기에 보여줄 공지 데이터
+                renderItem={NoticeItem}
                 sliderWidth={SLIDER_WIDTH}
                 itemWidth={ITEM_WIDTH}
                 inactiveSlideShift={0}
@@ -32,7 +32,7 @@ const NoticeBox = () => {
             />
     
             <Pagination 
-                dotsLength={carouselItems.length}
+                dotsLength={noticeData.length} // 여기에 보여줄 공지 개수
                 activeDotIndex={activeSlide}
                 containerStyle={{ 
                     backgroundColor: 'rgba(0, 0, 0, 0.0)',
