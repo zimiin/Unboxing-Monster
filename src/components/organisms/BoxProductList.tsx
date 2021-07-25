@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TwoColumnBoxList from './twoColumnBoxList';
+import TwoColumnBoxList from '../molecules/TwoColumnBoxList';
 
 import boxItems from '../../assets/data/boxItems';
 
