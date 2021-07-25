@@ -2,11 +2,12 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from './Home';
-import CustomBox from './CustomBox';
-import Storage from './Storage';
-import MyPage from './MyPage';
-import TabIcon from '../atoms/TabIcon';
+import HomeStackScreen from './HomeStackScreen';
+import CustomBox from './components/pages/CustomBox';
+import Storage from './components/pages/Storage';
+import MyPage from './components/pages/MyPage';
+import TabIcon from './components/atoms/TabIcon';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +16,7 @@ const Main = () => {
         <Tab.Navigator
             initialRouteName= "Home"
             screenOptions={({route}) => ({
-              tabBarIcon: ({ focused, color, size }) => 
+            tabBarIcon: ({ focused, color, size }) => 
                 <TabIcon tabName={route.name} /> 
             })}
             tabBarOptions={{
@@ -25,7 +26,7 @@ const Main = () => {
                 }
             }}
         >
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Home" component={HomeStackScreen} />
             <Tab.Screen name="CustomBox" component={CustomBox} />
             <Tab.Screen name="Storage" component={Storage} />
             <Tab.Screen name="MyPage" component={MyPage} />

@@ -11,7 +11,9 @@ import HotBoxList from '../organisms/HotBoxList';
 import CustomBoxList from '../organisms/CustomBoxList';
 import BoxProductList from '../organisms/BoxProductList';
 
-const Home = () => {
+import { HomeProps } from '../../constants/types';
+
+const Home = ({ navigation }: {navigation: HomeProps}) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>

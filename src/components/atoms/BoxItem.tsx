@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
     Text,
@@ -9,15 +10,11 @@ import {
 import { boxProductInfo } from '../../constants/types';
 
 const BoxItem = ({ item }: { item: boxProductInfo }) => {
-    const handlePress = () => {
-        // TODO
-        // 박스 상세 페이지로 이동
-        // 스택에 쌓아야 하는데...
-    }
+    const navigation = useNavigation();
 
     return (
         <TouchableOpacity
-            onPress={handlePress}
+            onPress={() => navigation.navigate('BoxInfo')}
         >
             <Image
                 source={{uri: item.image}}

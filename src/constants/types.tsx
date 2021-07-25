@@ -39,11 +39,20 @@ export type RegisterProps = {
     navigation: RegisterNavigationProp;
 }
 
-// Carousel
-export type carouselItem = {
-    title: string;
-    body: string;
-    imgUrl: string;
+// Home Stack
+export type HomeStackParamList = {
+    Home: undefined;
+    BoxInfo: undefined;
+}
+
+export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
+export type HomeProps = {
+    navigation: HomeNavigationProp;
+}
+
+export type BoxInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'BoxInfo'>;
+export type BoxInfoProps = {
+    navigation: BoxInfoNavigationProp;
 }
 
 // Box Product Information

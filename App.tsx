@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Splash from './src/components/pages/Splash';
 import Auth from './src/components/pages/Auth';
-import Main from './src/components/pages/Main';
+import Main from './src/Main';
+
 import { RootStackParamList } from './src/constants/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -28,12 +29,7 @@ const App = () => {
       <Stack.Screen
         name="Main"
         component={Main}
-        options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: 'powderblue',
-          }
-        }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   </NavigationContainer>
