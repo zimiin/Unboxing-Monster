@@ -6,7 +6,8 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { SplashProps } from "../types";
+
+import { SplashProps } from "../../constants/types";
 
 const Splash = ({navigation} : SplashProps) => {
   const [animating, setAnimatinng] = useState(true);

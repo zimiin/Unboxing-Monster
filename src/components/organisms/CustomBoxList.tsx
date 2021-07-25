@@ -5,9 +5,9 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import HorizontalBoxList from '../../components/horizontalBoxList';
+import HorizontalBoxList from './horizontalBoxList';
 
-import boxItems from '../../data/boxItems';
+import boxItems from '../../assets/data/boxItems';
 
 const CustomBoxList = () => {
     return (

@@ -4,7 +4,7 @@ import {
     ScrollView,
 } from 'react-native';
 
-import { boxProductInfo } from '../../types';
+import { boxProductInfo } from '../../../constants/types';
 
 import BoxItem from './BoxItemContainer';
 

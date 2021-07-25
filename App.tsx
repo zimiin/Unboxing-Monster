@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Splash from './screens/Splash';
-import Auth from './screens/Auth';
-import Main from './screens/main';
-import { RootStackParamList } from './types';
+import Splash from './src/components/pages/Splash';
+import Auth from './src/components/pages/Auth';
+import Main from './src/components/pages/Main';
+import { RootStackParamList } from './src/constants/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

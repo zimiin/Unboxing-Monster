@@ -1,8 +1,8 @@
 import React from 'react';
 
-import TwoColumnBoxList from '../../components/twoColumnBoxList';
+import TwoColumnBoxList from './twoColumnBoxList';
 
-import boxItems from '../../data/boxItems';
+import boxItems from '../../assets/data/boxItems';
 
 const BoxProductList = () => {
     return (

@@ -5,11 +5,11 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import NoticeBoard from './NoticeBoard';
-import Scroller from './Scroller';
-import HotBoxList from './HotBoxList';
-import CustomBoxList from './CustomBoxList';
-import BoxProductList from './BoxProductList';
+import NoticeBoard from '../organisms/NoticeBoard';
+import Scroller from '../organisms/Scroller';
+import HotBoxList from '../organisms/HotBoxList';
+import CustomBoxList from '../organisms/CustomBoxList';
+import BoxProductList from '../organisms/BoxProductList';
 
 const Home = () => {
     return (

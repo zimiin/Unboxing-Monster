@@ -4,9 +4,9 @@ import {
 } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from './NoticeItem';
+import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../molecules/NoticeItem';
 
-import noticeData from '../../data/notices';
+import noticeData from '../../assets/data/notices';
 
 const NoticeBox = () => {
     const isCarousel = useRef(null);

@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-    View,
     Text,
     StyleSheet,
     Image,
     TouchableOpacity,
 } from 'react-native';
 
-import { boxProductInfo } from '../types';
+import { boxProductInfo } from '../../constants/types';
 
 const BoxItem = ({ item }: { item: boxProductInfo }) => {
     const handlePress = () => {

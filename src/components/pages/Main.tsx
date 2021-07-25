@@ -2,11 +2,11 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from '../home';
-import CustomBox from '../CustomBox';
-import Storage from '../Storage';
-import MyPage from '../MyPage';
-import TabIcon from './TabIcon';
+import Home from './Home';
+import CustomBox from './CustomBox';
+import Storage from './Storage';
+import MyPage from './MyPage';
+import TabIcon from '../atoms/TabIcon';
 
 const Tab = createBottomTabNavigator();
 

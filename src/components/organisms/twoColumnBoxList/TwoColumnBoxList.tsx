@@ -6,7 +6,7 @@ import {
 
 import BoxItem from './BoxItemContainer';
 
-import { boxProductInfo } from '../../types';
+import { boxProductInfo } from '../../../constants/types';
 
 const TwoColumnBoxList = ({ items }: { items: boxProductInfo[] }) => {
     const boxItems = items.map((item) => 
