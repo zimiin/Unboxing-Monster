@@ -4,7 +4,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import BoxItem from './BoxItem';
+import BoxItem from './BoxItemContainer';
 
 import { boxProductInfo } from '../../types';
 

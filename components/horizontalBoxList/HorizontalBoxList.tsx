@@ -6,7 +6,7 @@ import {
 
 import { boxProductInfo } from '../../types';
 
-import BoxItem from './BoxItem';
+import BoxItem from './BoxItemContainer';
 
 interface horizontalBoxListProps {
     items: boxProductInfo[];

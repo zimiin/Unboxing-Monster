@@ -15,7 +15,7 @@ const HotBoxList = () => {
             <Text style={styles.title}>
                 인기 박스
             </Text>
-
+        
             <HorizontalBoxList items={boxItems}/>
         </View>
     );

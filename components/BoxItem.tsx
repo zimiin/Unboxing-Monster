@@ -1,16 +1,25 @@
-import React from "react";
+import React from 'react';
 import {
-    Image,
     View,
     Text,
     StyleSheet,
+    Image,
+    TouchableOpacity,
 } from 'react-native';
 
-import { boxProductInfo } from '../../types';
+import { boxProductInfo } from '../types';
 
-const boxItem = ({ item }: {item: boxProductInfo}) => {
+const BoxItem = ({ item }: { item: boxProductInfo }) => {
+    const handlePress = () => {
+        // TODO
+        // 박스 상세 페이지로 이동
+        // 스택에 쌓아야 하는데...
+    }
+
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            onPress={handlePress}
+        >
             <Image
                 source={{uri: item.image}}
                 style={styles.image}
@@ -23,22 +32,16 @@ const boxItem = ({ item }: {item: boxProductInfo}) => {
             <Text style={styles.price}>
                 {item.price}원
             </Text>
-        </View>
+        </TouchableOpacity>
     );
 }
 
-export default boxItem;
+export default BoxItem;
 
 const styles = StyleSheet.create({
-    container: {
-        width: '50%',
-        marginBottom: 28,
-        alignItems: 'center',
-    },
     image: {
         width: 110,
         height: 81,
-        backgroundColor: 'black',
     },
     name: {
         marginTop: 19,
@@ -50,4 +53,4 @@ const styles = StyleSheet.create({
         color: '#060606',
         fontSize: 12,
     }
-});
+})

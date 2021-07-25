@@ -1,36 +1,24 @@
 import React from "react";
 import {
-    Image,
     View,
-    Text,
     StyleSheet,
 } from 'react-native';
 
+import BoxItem from "../BoxItem";
+
 import { boxProductInfo } from "../../types";
 
-const BoxItem = (item: boxProductInfo) => {
+const BoxItemContainer = (item: boxProductInfo) => {
     return (
         <View
             style={styles.container}
         >
-            <Image
-                source={{uri: item.image}}
-                style={styles.boxImage}
-            />
-
-            <Text style={styles.name}>
-                {item.name}
-            </Text>
-
-            <Text style={styles.price}>
-                {/* TODO 콤마 찍어주기 */}
-                {item.price}원
-            </Text>
+            <BoxItem item={item} />
         </View>
     );
 }
 
-export default BoxItem;
+export default BoxItemContainer;
 
 const styles = StyleSheet.create({
     container: {
