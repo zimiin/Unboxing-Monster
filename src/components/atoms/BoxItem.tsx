@@ -14,7 +14,7 @@ const BoxItem = ({ item }: { item: boxProductInfo }) => {
 
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate('BoxInfo')}
+            onPress={() => navigation.navigate('BoxInfo', {boxId: item.id})}
         >
             <Image
                 source={{uri: item.image}}
