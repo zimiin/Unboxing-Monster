@@ -8,6 +8,7 @@ const Body = ({content}: {content: string}) => {
         <Text
             style={{
                 fontSize: 12,
+                lineHeight: 20,
             }}
         >
             {content}

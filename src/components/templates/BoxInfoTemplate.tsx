@@ -7,7 +7,7 @@ import {
 
 import SubTitle from '../atoms/typography/SubTitle'
 import AddToCartButton from '../atoms/button/AddToCartButton'
-import Footer from '../organisms/Footer'
+import Footer from '../molecules/Footer'
 import PolicyDescriptionList from '../organisms/PolicyDescriptionList'
 import ToIntroButton from '../atoms/button/ToIntroButton'
 import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
