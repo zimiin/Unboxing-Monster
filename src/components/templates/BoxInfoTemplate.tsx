@@ -36,7 +36,6 @@ const BoxInfoTemplate = (props) => {
                     style={{
                         width: SCREEN_WIDTH,
                         height: SCREEN_WIDTH,
-                        backgroundColor: 'grey',
                     }}
                 >
                     {props.image}

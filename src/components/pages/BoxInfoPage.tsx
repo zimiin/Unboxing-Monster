@@ -43,8 +43,7 @@ interface dataType {
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     const [data, setData] = useState<dataType>({
-        // id: route.params.boxId,
-        id: 2,
+        id: route.params.boxId,
         title: '',
         price: 0,
         image: '',
@@ -66,8 +65,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     }
 
     useEffect(() => {
-        // getBoxInfo(route.params.boxId);
-        getBoxInfo(2);
+        getBoxInfo(route.params.boxId);
     }, []);
 
     const getItems = () => {
@@ -106,12 +104,9 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
         // 일단 타입스크립트 무시하고 진행
         <BoxInfoTemplate
             image={<BoxInfoImage image={data.image}/>}
-            boxName={<Title content={'엄청난 박스'}/>}
-            boxPrice={<BoxPriceInfo price={30000}/>}
-            boxDetail={
-                <Body
-                    content={'고기로 구성된 박스입니다! A+ 등급의 한우를 노려보세요! 고기로 구성된 박스입니다! A+ 등급의 한우를 노려보세요! 고기로 구성된 박스입니다! A+ 등급의 한우를 노려보세요!'}
-                />}
+            boxName={<Title content={data.title}/>}
+            boxPrice={<BoxPriceInfo price={data.price}/>}
+            boxDetail={<Body content={data.detail}/>}
             boxItems={items}
         />
     );
