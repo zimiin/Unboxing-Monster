@@ -5,7 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import HorizontalBoxList from './horizontalBoxList';
+import HorizontalBoxList from '../molecules/HorizontalBoxList';
 
 import boxItems from '../../assets/data/boxItems';
 

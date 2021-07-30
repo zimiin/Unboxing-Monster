@@ -11,7 +11,10 @@ import HotBoxList from '../organisms/HotBoxList';
 import CustomBoxList from '../organisms/CustomBoxList';
 import BoxProductList from '../organisms/BoxProductList';
 
-const Home = () => {
+import { HomeProps } from '../../constants/types';
+
+// TODO 여기서 데이터 넘겨주는 형태로 변경하기
+const Home = ({ navigation }: {navigation: HomeProps}) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>

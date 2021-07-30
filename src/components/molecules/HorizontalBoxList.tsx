@@ -2,26 +2,28 @@ import React from 'react';
 import {
     View,
     ScrollView,
+    StyleSheet,
 } from 'react-native';
 
-import { boxProductInfo } from '../../../constants/types';
+import BoxItem from '../atoms/BoxItem';
 
-import BoxItem from './BoxItemContainer';
+import { boxProductInfo } from '../../constants/types';
 
 interface horizontalBoxListProps {
     items: boxProductInfo[];
 }
 
 const HorizontalBoxList: React.FunctionComponent<horizontalBoxListProps> = props => {
-    const boxItems = props.items.map((item) =>
-        <BoxItem
-            key={item.id}
-            id={item.id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-        />
-    );
+    const boxItems = props.items.map((item) => {
+        return (
+            <View
+                key={item.id}
+                style={styles.container}
+            >
+                <BoxItem item={item}/>
+            </View>
+        );
+    });
     
     return (
         <View>
@@ -40,3 +42,10 @@ const HorizontalBoxList: React.FunctionComponent<horizontalBoxListProps> = props
 }
 
 export default HorizontalBoxList;
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        marginRight: 15,
+    },
+});

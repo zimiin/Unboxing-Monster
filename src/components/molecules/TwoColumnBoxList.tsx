@@ -4,16 +4,21 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import BoxItem from './BoxItemContainer';
+import BoxItem from '../atoms/BoxItem';
 
-import { boxProductInfo } from '../../../constants/types';
+import { boxProductInfo } from '../../constants/types';
 
 const TwoColumnBoxList = ({ items }: { items: boxProductInfo[] }) => {
-    const boxItems = items.map((item) => 
-        <BoxItem 
-            key={item.id}
-            item={item}
-        />);
+    const boxItems = items.map((item) => {
+        return (
+            <View 
+                key={item.id}
+                style={styles.boxContainer}
+            >
+                <BoxItem item={item}/>
+            </View>
+        );
+    });
 
     return (
         <View style={styles.container}>
@@ -31,5 +36,10 @@ const styles = StyleSheet.create({
         width: 300,
         alignSelf: 'center',
         marginTop: 60,
+    },
+    boxContainer: {
+        width: '50%',
+        marginBottom: 28,
+        alignItems: 'center',
     }
 });
