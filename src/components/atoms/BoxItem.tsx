@@ -22,7 +22,7 @@ const BoxItem = ({ item }: { item: boxProductInfo }) => {
             />
 
             <Text style={styles.name}>
-                {item.name}
+                {item.title}
             </Text>
 
             <Text style={styles.price}>

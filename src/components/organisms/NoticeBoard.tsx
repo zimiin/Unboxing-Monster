@@ -5,20 +5,46 @@ import {
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../molecules/NoticeItem';
-
-import noticeData from '../../assets/data/notices';
+import { noticeInfo } from "../../constants/types";
+import { useEffect } from "react";
+// import noticeData from '../../assets/data/notices';
 
 const NoticeBox = () => {
     const isCarousel = useRef(null);
     const [activeSlide, setActiveSlide] = useState(0);
+    const [noticeData, setNoticeData] = useState<noticeInfo[]>([{
+        id: 0,
+        imgUrl: '',
+        srcUrl: '',
+    }])
 
+    const getNoticeData = async () => {
+        let url = 'http://3.37.238.160/notice'
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        if (response.status === 200) {
+            let json = await response.json();
+            setNoticeData(json)
+        } else {
+            console.log('No reponse! url:', url)
+        }
+    }
+    useEffect(()=> {
+        getNoticeData()
+    }, [])
+    
     return (
         <View>
             <Carousel
                 layout="default"
                 layoutCardOffset={9}
                 ref={isCarousel}
-                data={noticeData} // 여기에 보여줄 공지 데이터
+                data={noticeData}
                 renderItem={NoticeItem}
                 sliderWidth={SLIDER_WIDTH}
                 itemWidth={ITEM_WIDTH}

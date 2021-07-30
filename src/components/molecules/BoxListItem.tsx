@@ -11,7 +11,9 @@ import SubTitle from '../atoms/typography/SubTitle'
 const BoxListItem = ({image, title, price}: {image: string, title: string, price: number}) => {
     return (
         <View>
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity 
+                style={styles.container}
+            >
                 <Image
                     source={{uri: image}}
                     style={styles.image}

@@ -15,22 +15,22 @@ export const ITEM_WIDTH = SLIDER_WIDTH
 
 const NoticeItem = ({ item, index }: { item: noticeInfo; index: number }) => {
   const handlePress = () => {
-    Linking.canOpenURL(item.url).then(supported => {
+    Linking.canOpenURL(item.srcUrl).then(supported => {
       if (supported) {
-        Linking.openURL(item.url);
+        Linking.openURL(item.srcUrl);
       } else {
-        console.log("Don't know how to open URI: " + item.url);
+        console.log("Don't know how to open URI: " + item.srcUrl);
       }
     });
   }
-
+  
   return (
     <View style={styles.container} key={index}>
       <TouchableOpacity
         onPress={handlePress}
       >
         <Image
-          source={{ uri: item.image }}
+          source={{ uri: item.imgUrl }}
           style={styles.image}
         />
       </TouchableOpacity>

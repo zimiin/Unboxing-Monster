@@ -60,7 +60,7 @@ export type BoxInfoProps = {
 // Box Product Information
 export type boxProductInfo = {
     id: number;
-    name: string;
+    title: string;
     price: number;
     image: string;
     detail: string;
@@ -70,6 +70,7 @@ export type boxProductInfo = {
 
 // Notice Information
 export type noticeInfo = {
-    image: string;
-    url: string;
+    id: number;
+    imgUrl: string;
+    srcUrl: string;
 }
