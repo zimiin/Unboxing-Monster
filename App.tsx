@@ -7,6 +7,8 @@ import Auth from './src/components/pages/Auth';
 import Main from './src/Main';
 
 import { RootStackParamList } from './src/constants/types';
+import BoxInfoTemplate from './src/components/templates/BoxInfoTemplate';
+import BoxInfoPage from './src/components/pages/BoxInfoPage'
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -14,6 +16,13 @@ const App = () => {
   return (
   <NavigationContainer>
     <Stack.Navigator initialRouteName="Splash">
+    {/* <Stack.Navigator initialRouteName="test">
+      <Stack.Screen
+        name="test"
+        component={BoxInfoPage}
+        options={{headerShown: true}}
+      /> */}
+    
       <Stack.Screen 
         name="Splash"
         component={Splash}

@@ -13,6 +13,7 @@ import BoxProductList from '../organisms/BoxProductList';
 
 import { HomeProps } from '../../constants/types';
 
+// TODO 여기서 데이터 넘겨주는 형태로 변경하기
 const Home = ({ navigation }: {navigation: HomeProps}) => {
     return (
         <SafeAreaView style={styles.container}>
