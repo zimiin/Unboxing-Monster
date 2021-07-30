@@ -1,146 +1,131 @@
-import React from 'react';
+import React from 'react'
 import {
     View,
-    Text,
     ScrollView,
-} from 'react-native';
+    StyleSheet,
+} from 'react-native'
 
-import BoxInfoImage from '../atoms/BoxInfoImage';
-import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure';
-import Title from '../atoms/typography/Title';
-import BoxPriceInfo from '../atoms/BoxPriceInfo';
-import SubTitle from '../atoms/typography/SubTitle';
-import Body from '../atoms/typography/Body';
-import AddToCartButton from '../atoms/button/AddToCartButton';
-import BoxListItem from '../atoms/BoxListItem';
-import Footer from '../molecules/Footer';
-import PolicyDescriptionList from '../organisms/PolicyDescriptionList';
-import ToIntroButton from '../atoms/button/ToIntroButton';
+import SubTitle from '../atoms/typography/SubTitle'
+import AddToCartButton from '../atoms/button/AddToCartButton'
+import Footer from '../organisms/Footer'
+import PolicyDescriptionList from '../organisms/PolicyDescriptionList'
+import ToIntroButton from '../atoms/button/ToIntroButton'
 import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
 
-const BoxInfoTemplate = (props) => {
+import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure'
+
+type BoxInfoTemplateProps = {
+    boxImage: object,
+    boxName: object,
+    boxPrice: object,
+    boxDetail: object,
+    boxItems: object,
+}
+
+const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
     return (
-        // prop으로 받은 컴포넌트들 배치
-        <View
-            style={{
-                flex: 1,
-            }}
-        >
-            <ScrollView
-                style={{
-                    backgroundColor: 'white',
-                }}    
-            >
+        <View style={styles.screen}>
+            <ScrollView>
                 {/* 박스 대표 이미지 */}
-                <View
-                    style={{
-                        width: SCREEN_WIDTH,
-                        height: SCREEN_WIDTH,
-                    }}
-                >
-                    {props.image}
+                <View style={styles.boxImageContainer}>
+                    {props.boxImage}
                 </View>
 
                 {/* Content Container */}
-                <View
-                    style={{
-                        width: CONTENT_WIDTH,
-                        alignSelf: 'center',
-                    }}
-                >
+                <View style={styles.contentContainer}>
                     {/* 박스명 */}
-                    <View
-                        style={{
-                            marginTop: 26,
-                        }}
-                    >
+                    <View style={styles.boxNameContainer}>
                         {props.boxName}
                     </View>
 
                     {/* 박스가격 */}
-                    <View
-                        style={{
-                            marginTop: 5,
-                        }}
-                    >
+                    <View style={styles.boxPriceContainer}>
                         {props.boxPrice}
                     </View>
 
-                    {/* 박스 소개 */}
-                    <View
-                        style={{
-                          marginTop: 26,  
-                        }}
-                    >
+                    {/* 박스소개 (제목) */}
+                    <View style={styles.subTitleContainer}>
                         <SubTitle
-                            subTitle={'이 박스는요'}
+                            content={'이 박스는요'}
                         />
-
                     </View>
 
-                    <View
-                        style={{
-                            marginTop: 4,
-                        }}
-                    >
+                    {/* 박스소개 */}
+                    <View style={styles.boxDetailContainer}>
                         {props.boxDetail}
-                        
                     </View>
 
-                    {/* 박스 구성상품 */}
-                    <View
-                        style={{
-                            marginTop: 25,
-                        }}
-                    >
+                    {/* 구성상품 (제목) */}
+                    <View style={styles.subTitleContainer}>
                         <SubTitle
-                            subTitle='구성상품'
+                            content='구성상품'
                         />
                     </View>
-                    <View
-                        style={{
-                            marginTop: 25,
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                        }}
-                    >
+
+                    {/* 구성상품 */}
+                    <View style={styles.boxItemContainer}>
                         {props.boxItems}
                     </View>
                 </View>
                 
-
                 {/* 언박싱 인트로 이동 버튼 */}
                 <ToIntroButton />
 
                 {/* 자세한 확률 알아보기 버튼 */}
-                <View
-                    style={{
-                        marginTop: 13,
-                    }}
-                >
+                <View style={styles.probButtonContainer}>
                     <ToProbabilityButton />
-
                 </View>
 
                 {/* 안내사항 */}
-                <View
-                    style={{
-                        marginTop: 31,
-                    }}
-                >
+                <View style={styles.policyContainer}>
                     <PolicyDescriptionList />
                 </View>
 
                 {/* Footer */}
-                <Footer />
-
-                
+                <Footer />                
             </ScrollView>
 
             <AddToCartButton />
-            
         </View>
     );
 }
 
 export default BoxInfoTemplate;
+
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+    boxImageContainer: {
+        width: SCREEN_WIDTH,
+        height: SCREEN_WIDTH,
+    },
+    contentContainer: {
+        width: CONTENT_WIDTH,
+        alignSelf: 'center',
+    },
+    boxNameContainer: {
+        marginTop: 26,
+    },
+    boxPriceContainer: {
+        marginTop: 5,
+    },
+    subTitleContainer: {
+        marginTop: 26,  
+    },
+    boxDetailContainer: {
+        marginTop: 4,
+    },
+    boxItemContainer: {
+        marginTop: 25,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    probButtonContainer: {
+        marginTop: 13,
+    },
+    policyContainer: {
+        marginTop: 31,
+    }
+})

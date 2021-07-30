@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {
     View,
-    Text,
-    ScrollView,
-    Image,
-    TouchableOpacity,
+    StyleSheet,
 } from 'react-native';
 
-import { ICONS } from '../../constants/icons';
-import { BoxInfoProps } from '../../constants/types';
-import AddToCartButton from '../atoms/button/AddToCartButton';
-import SubTitle from '../atoms/typography/SubTitle';
-import BoxInfoDetail from '../molecules/BoxInfoDetail';
-import BoxItemListItem from '../atoms/BoxListItem';
-import PolicyDescriptionList from '../organisms/PolicyDescriptionList';
-import Footer from '../molecules/Footer';
 import BoxInfoTemplate from '../templates/BoxInfoTemplate';
 import BoxInfoImage from '../atoms/BoxInfoImage'
 import Title from '../atoms/typography/Title'
 import BoxPriceInfo from '../atoms/BoxPriceInfo'
 import Body from '../atoms/typography/Body'
-import { ITEM_WIDTH } from '../molecules/NoticeItem';
+import BoxListItem from '../molecules/BoxListItem';
+
+import { BoxInfoProps } from '../../constants/types';
 
 interface boxItemType {
     id: number;
@@ -73,22 +64,15 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
             data.items.map(
                 (item) => {
                     return (
-
                         <View
-                            style={{
-                                alignItems: 'center',
-                                width: '50%',
-                                marginBottom: 28,
-                                // backgroundColor: 'red',
-                            }}
+                            style={styles.itemContainer}
                             key={item.id}
                         >
-                            <BoxItemListItem 
+                            <BoxListItem 
                                 image={item.image}
                                 title={item.title}
                                 price={item.price}
                             />
-
                         </View>
                     )
                 }
@@ -99,11 +83,8 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     const items = getItems();
 
     return (
-        // 여기에 템플릿 추가하고
-        // 컴포넌트 넘겨주기
-        // 일단 타입스크립트 무시하고 진행
         <BoxInfoTemplate
-            image={<BoxInfoImage image={data.image}/>}
+            boxImage={<BoxInfoImage image={data.image}/>}
             boxName={<Title content={data.title}/>}
             boxPrice={<BoxPriceInfo price={data.price}/>}
             boxDetail={<Body content={data.detail}/>}
@@ -113,3 +94,11 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
 }
 
 export default BoxInfo;
+
+const styles = StyleSheet.create({
+    itemContainer: {
+        alignItems: 'center',
+        width: '50%',
+        marginBottom: 28,
+    }
+})

@@ -1,14 +1,10 @@
-import React from 'react';
+import React from 'react'
 import {
-    View,
     Image,
-} from 'react-native';
-
-import { SCREEN_WIDTH } from '../../constants/figure';
+} from 'react-native'
 
 const BoxInfoImage = ({image}: {image: string}) => {
     return (
-        
             <Image
                 source={{uri: image}}
                 style={{
@@ -21,4 +17,4 @@ const BoxInfoImage = ({image}: {image: string}) => {
     );
 }
 
-export default BoxInfoImage;
+export default BoxInfoImage

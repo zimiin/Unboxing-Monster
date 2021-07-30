@@ -1,22 +1,17 @@
-import React from 'react';
+import React from 'react'
 import {
     View,
-    Text,
-} from 'react-native';
-import PolicyDescriptionTitle from '../molecules/PolicyDescriptionTitle';
-import { CONTENT_MARGIN } from '../../constants/figure';
+    StyleSheet,
+} from 'react-native'
+
+import PolicyDescriptionTitle from '../molecules/PolicyDescriptionTitle'
+
+import { CONTENT_MARGIN } from '../../constants/figure'
 
 const PolicyDescriptionList = () => {
     return (
-        <View
-            style={{
-                backgroundColor: '#eef1f2',
-                paddingLeft: CONTENT_MARGIN,
-                paddingRight: CONTENT_MARGIN,
-                paddingTop: 7,
-                paddingBottom: 31,
-            }}
-        >
+        <View style={styles.container}>
+            {/* TODO 클릭상태별 화살표 및 설명 보이기 */}
             {/* 상품안내 */}
             <PolicyDescriptionTitle
                 title='상품안내'
@@ -37,7 +32,17 @@ const PolicyDescriptionList = () => {
                 title='문의'
             />
         </View>
-    );
+    )
 }
 
-export default PolicyDescriptionList;
+export default PolicyDescriptionList
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#eef1f2',
+        paddingLeft: CONTENT_MARGIN,
+        paddingRight: CONTENT_MARGIN,
+        paddingTop: 7,
+        paddingBottom: 31,
+    }
+})

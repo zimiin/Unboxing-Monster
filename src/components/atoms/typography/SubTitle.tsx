@@ -3,7 +3,7 @@ import {
     Text,
 } from 'react-native';
 
-const SubTitle = ({subTitle}: {subTitle: string}) => {
+const SubTitle = ({content}: {content: string}) => {
     return (
         <Text
             style={{
@@ -11,7 +11,7 @@ const SubTitle = ({subTitle}: {subTitle: string}) => {
                 fontWeight: 'bold',
             }}
         >
-            {subTitle}
+            {content}
         </Text>
     );
 }

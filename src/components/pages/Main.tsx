@@ -3,10 +3,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeStackScreen from './HomeStackScreen';
-import CustomBox from './components/pages/CustomBox';
-import Storage from './components/pages/Storage';
-import MyPage from './components/pages/MyPage';
-import TabIcon from './components/atoms/TabIcon';
+import CustomBox from './CustomBox';
+import Storage from './Storage';
+import MyPage from './MyPage';
+import TabIcon from '../atoms/TabIcon';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();

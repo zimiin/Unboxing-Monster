@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import {
     Text,
-} from 'react-native';
+} from 'react-native'
 
 const Title = ({content}: {content: string}) => {
     return (
@@ -16,4 +16,4 @@ const Title = ({content}: {content: string}) => {
     );
 }
 
-export default Title;
+export default Title

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Splash from './src/components/pages/Splash';
 import Auth from './src/components/pages/Auth';
-import Main from './src/Main';
+import Main from './src/components/pages/Main';
 
 import { RootStackParamList } from './src/constants/types';
 import BoxInfoTemplate from './src/components/templates/BoxInfoTemplate';
