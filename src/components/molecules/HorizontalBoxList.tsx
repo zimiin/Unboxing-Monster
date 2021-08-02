@@ -5,7 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import BoxItem from '../atoms/BoxItem';
+import BoxItem from './BoxItem';
 
 import { boxProductInfo } from '../../constants/types';
 
