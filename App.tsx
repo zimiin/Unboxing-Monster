@@ -2,13 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Splash from './src/components/pages/Splash';
+import SplashPage from './src/components/pages/SplashPage';
 import Auth from './src/components/pages/Auth';
 import Main from './src/components/pages/Main';
 
 import { RootStackParamList } from './src/constants/types';
-import BoxInfoTemplate from './src/components/templates/BoxInfoTemplate';
-import BoxInfoPage from './src/components/pages/BoxInfoPage'
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -25,7 +23,7 @@ const App = () => {
     
       <Stack.Screen 
         name="Splash"
-        component={Splash}
+        component={SplashPage}
         options={{headerShown: false}}
       />
       
