@@ -11,8 +11,10 @@ import Footer from '../molecules/Footer'
 import PolicyDescriptionList from '../organisms/PolicyDescriptionList'
 import ToIntroButton from '../atoms/button/ToIntroButton'
 import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
+import IntroModal from './IntroModal'
 
 import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure'
+import { useState } from 'react'
 
 type BoxInfoTemplateProps = {
     boxImage: object,
@@ -23,8 +25,10 @@ type BoxInfoTemplateProps = {
 }
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
+    const [introModalVisible, setIntroModalVisible] = useState<boolean>(false);
     return (
         <View style={styles.screen}>
+            <IntroModal modalVisible={introModalVisible} setModalVisible={setIntroModalVisible}></IntroModal>
             <ScrollView>
                 {/* 박스 대표 이미지 */}
                 <View style={styles.boxImageContainer}>
@@ -69,7 +73,7 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
                 </View>
                 
                 {/* 언박싱 인트로 이동 버튼 */}
-                <ToIntroButton />
+                <ToIntroButton setModalVisible={setIntroModalVisible}/>
 
                 {/* 자세한 확률 알아보기 버튼 */}
                 <View style={styles.probButtonContainer}>

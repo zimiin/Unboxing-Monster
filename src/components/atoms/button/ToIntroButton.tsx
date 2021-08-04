@@ -1,27 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
     TouchableOpacity,
     Text,
     Image,
     StyleSheet,
 } from 'react-native'
+import { Dispatch, SetStateAction } from 'react'
 
 import { ICONS } from '../../../constants/icons'
 
-const ToIntroButton = () => {
-    return (
-        <TouchableOpacity style={styles.container}>
-            <Text style={styles.text}>
-                어떻게 언박싱이 공정함을 갖나요?
-            </Text>
+type ToIntroButtonProps = {
+    setModalVisible: Dispatch<SetStateAction<boolean>>
+  }
 
-            <Image
-                source={ICONS.info}
-                style={styles.icon}
-            />
-        </TouchableOpacity>
-    )
-}
+class ToIntroButton extends Component<ToIntroButtonProps> {
+    render() {
+        return (
+            <TouchableOpacity style={styles.container} onPress={() => this.props.setModalVisible(true)}>
+                <Text style={styles.text}>
+                    어떻게 언박싱이 공정함을 갖나요?
+                </Text>
+    
+                <Image
+                    source={ICONS.info}
+                    style={styles.icon}
+                />
+            </TouchableOpacity>
+        )
+    }
+} 
 
 export default ToIntroButton
 
