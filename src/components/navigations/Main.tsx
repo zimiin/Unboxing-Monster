@@ -1,14 +1,7 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import HomeStackScreen from './HomeStack';
-import CustomBox from '../pages/CustomBox';
-import Storage from '../pages/Storage';
-import MyPage from '../pages/MyPage';
 import TabIcon from '../atoms/icon/TabIcon';
-import { NavigationContainer } from '@react-navigation/native';
-import { HeaderWithBack } from '../components';
+import HomeStack from './HomeStack';
 import CustomBoxStack from './CustomBoxStack';
 import StorageStack from './StorageStack'
 import MyPageStack from './MyPageStack';
@@ -32,7 +25,7 @@ const Main = () => {
             }}
             
         >
-            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="CustomBox" component={CustomBoxStack} />
             <Tab.Screen name="Storage" component={StorageStack} />
             <Tab.Screen name="MyPage" component={MyPageStack} />

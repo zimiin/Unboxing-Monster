@@ -5,7 +5,6 @@ import {
 
 import { IMAGES } from '../../constants/images'
 
-// 로고 크기 받아와서 스타일 적용
 const Logo = () => {
     return (
         <Image

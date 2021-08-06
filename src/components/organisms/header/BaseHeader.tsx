@@ -1,30 +1,19 @@
 import React from 'react'
 import {
     View,
-    Text,
     TouchableOpacity,
+    StyleSheet,
 } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import BackIcon from '../../atoms/icon/BackIcon'
 import HeaderTitle from '../../atoms/typography/HeaderTitle'
-import { scale } from 'react-native-size-matters'
-import CartIcon from '../../atoms/icon/CartIcon'
 import HeaderContainer from '../../atoms/HeaderContainer'
+import { scale } from 'react-native-size-matters'
 
 const BaseHeader = (props) => {
     return (
         <HeaderContainer>
                 {/* Left Container */}
-                <View
-                    style={{
-                        paddingLeft: scale(17),
-                        width: scale(44),
-                        // flex: 1,
-                        // zIndex: 1,
-                        flexDirection: 'row',
-                        // backgroundColor: 'blue',
-                    }}
-                    >
+                <View style={styles.leftContainer}>
                     {props.canGoBack ?
                         <TouchableOpacity
                             onPress={props.goBackAction}
@@ -35,49 +24,18 @@ const BaseHeader = (props) => {
                 </View>
 
                 {/* Center Container */}
-                <View
-                    style={{
-                        // position: 'absolute',
-                        // width: '100%',
-                        height: '100%',
-                        alignItems: 'center',
-                        flex: 1,
-                        paddingRight: scale(10),
-                        paddingLeft: scale(10),
-                        // backgroundColor: 'purple',
-                        justifyContent: 'center',
-                    }}
-                >
+                <View style={styles.centerContainer}>
                     <HeaderTitle content={props.title} />
 
                     {/* Center Component Container */}
-                    <View
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            // backgroundColor: 'red',
-                            position: 'absolute',
-                            justifyContent: 'center',
-                            zIndex: 1,
-                        }}
-                    >
+                    <View style={styles.centerComponentContainer}>
                         {props.center}
                     </View>
                 </View>
 
 
                 {/* Right Container */}
-                <View
-                    style={{
-                        // backgroundColor: 'black',
-                        flexDirection: 'row',
-                        width: scale(44),
-                        // flex: 1,
-                        // zIndex: 1,
-                        paddingRight: scale(24),
-                        justifyContent: 'flex-end'
-                    }}
-                >
+                <View style={styles.rightContainer}>
                     {props.right}
                 </View>
         </HeaderContainer>
@@ -85,3 +43,32 @@ const BaseHeader = (props) => {
 }
 
 export default BaseHeader
+
+const styles = StyleSheet.create({
+    leftContainer: {
+        paddingLeft: scale(17),
+        width: scale(44),
+        flexDirection: 'row',
+    },
+    centerContainer: {
+        height: '100%',
+        alignItems: 'center',
+        flex: 1,
+        paddingRight: scale(10),
+        paddingLeft: scale(10),
+        justifyContent: 'center',
+    },
+    centerComponentContainer: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        justifyContent: 'center',
+        zIndex: 1,
+    },
+    rightContainer: {
+        flexDirection: 'row',
+        width: scale(44),
+        paddingRight: scale(24),
+        justifyContent: 'flex-end'
+    }
+})
