@@ -5,9 +5,11 @@ import {
   ActivityIndicator,
   View,
 } from 'react-native';
-
-import { SplashProps } from "../../constants/types";
+import { SplashProps } from "../../constants/navigationTypes";
 import Logo from "../atoms/Logo";
+import { scale, verticalScale } from "react-native-size-matters";
+import { SCREEN_HEIGHT } from "../../constants/figure";
+
 
 const Splash = ({navigation} : SplashProps) => {
   const [animating, setAnimatinng] = useState(true);
@@ -18,7 +20,7 @@ const Splash = ({navigation} : SplashProps) => {
       // TODO
       // 로그인 되어있을 시 바로 상품으로 이동
       navigation.replace('Main');
-    }, 1000)
+    }, 10000)
   }, []);
 
   return (
@@ -39,6 +41,8 @@ const Splash = ({navigation} : SplashProps) => {
 
 export default Splash;
 
+const logoPosition = SCREEN_HEIGHT * 261 / 716
+
 const styles = StyleSheet.create({
   background: {
     backgroundColor: 'white', 
@@ -46,15 +50,15 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     alignSelf: 'center',
-    height: 80,
+    height: scale(80),
     position: 'absolute',
-    bottom: 130,
+    bottom: verticalScale(130),
   },
   logo: {
-    width: 120,
-    height: 100,
+    width: scale(120),
+    height: scale(100),
     alignSelf: 'center',
     position: 'absolute',
-    top: 285,
+    top: logoPosition,
   }
 });
