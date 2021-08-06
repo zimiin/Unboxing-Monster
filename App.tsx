@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SplashPage from './src/components/pages/SplashPage';
 import Auth from './src/components/pages/Auth';
-import Main from './src/components/pages/Main';
+import Main from './src/components/navigations/Main';
 
 import { RootStackParamList } from './src/constants/types';
 

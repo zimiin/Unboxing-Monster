@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View,
     ScrollView,
@@ -12,9 +12,8 @@ import PolicyDescriptionList from '../organisms/PolicyDescriptionList'
 import ToIntroButton from '../atoms/button/ToIntroButton'
 import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
 import IntroModal from './IntroModal'
-
 import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure'
-import { useState } from 'react'
+import HeaderWithCart from '../organisms/header/HeaderWithCart'
 
 type BoxInfoTemplateProps = {
     boxImage: object,
@@ -27,6 +26,14 @@ type BoxInfoTemplateProps = {
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
     const [introModalVisible, setIntroModalVisible] = useState<boolean>(false);
     return (
+        <>
+        <HeaderWithCart
+            canGoBack={true}
+            goBackAction={() => props.navigation.goBack()}
+            title={props.boxName}
+            navigation={props.navigation}
+        />
+
         <View style={styles.screen}>
             <IntroModal modalVisible={introModalVisible} setModalVisible={setIntroModalVisible}></IntroModal>
             <ScrollView>
@@ -88,9 +95,10 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
                 {/* Footer */}
                 <Footer />                
             </ScrollView>
-
-            <AddToCartButton />
         </View>
+
+        <AddToCartButton />
+        </>
     );
 }
 

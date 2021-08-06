@@ -42,7 +42,7 @@ export type RegisterProps = {
 // Home Stack
 export type HomeStackParamList = {
     Home: undefined;
-    BoxInfo: {boxId: number};
+    BoxInfo: { boxId: number };
 }
 
 export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
@@ -55,22 +55,4 @@ export type BoxInfoRouteProp = RouteProp<HomeStackParamList, 'BoxInfo'>;
 export type BoxInfoProps = {
     route: BoxInfoRouteProp;
     navigation: BoxInfoNavigationProp;
-}
-
-// Box Product Information
-export type boxProductInfo = {
-    id: number;
-    title: string;
-    price: number;
-    image: string;
-    detail: string;
-    ownerId: string;
-    sales: number;
-}
-
-// Notice Information
-export type noticeInfo = {
-    id: number;
-    imgUrl: string;
-    srcUrl: string;
 }

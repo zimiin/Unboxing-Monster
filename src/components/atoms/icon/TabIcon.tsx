@@ -3,18 +3,18 @@ import {
     Image
 } from 'react-native';
 
-import { ICONS } from '../../constants/icons';
+import { ICONS } from '../../../constants/icons';
 
-const TabIcon = ({ tabName }: {tabName: string}) => {
+const TabIcon = ({ tabName, focused }: {tabName: string, focused: boolean }) => {
     let icon;
     if (tabName === 'Home') {
-        icon = ICONS.homeTab;
+        icon = focused ? ICONS.home_focused : ICONS.home;
     } else if (tabName === 'CustomBox') {
-        icon = ICONS.customBoxTab;
+        icon = focused ? ICONS.customBox_focused : ICONS.customBox;
     } else if (tabName === 'Storage') {
-        icon = ICONS.storageTab;
+        icon = focused ? ICONS.storage_focused : ICONS.storage;
     } else if (tabName === 'MyPage') {
-        icon = ICONS.myPageTab;
+        icon = focused ? ICONS.myPage_focused : ICONS.myPage;
     }
 
     return (

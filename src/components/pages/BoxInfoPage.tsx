@@ -11,7 +11,8 @@ import BoxPriceInfo from '../atoms/BoxPriceInfo'
 import Body from '../atoms/typography/Body'
 import BoxListItem from '../molecules/BoxListItem';
 
-import { BoxInfoProps } from '../../constants/types';
+import { BoxInfoProps } from '../../constants/navigationTypes';
+import HeaderWithCart from '../organisms/header/HeaderWithCart';
 
 interface boxItemType {
     id: number;
@@ -89,6 +90,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
             boxPrice={<BoxPriceInfo price={data.price}/>}
             boxDetail={<Body content={data.detail}/>}
             boxItems={items}
+            navigation={navigation}
         />
     );
 }
