@@ -10,8 +10,11 @@ import Title from '../atoms/typography/Title'
 import BoxPriceInfo from '../atoms/BoxPriceInfo'
 import Body from '../atoms/typography/Body'
 import BoxListItem from '../molecules/BoxListItem';
+import BaseHeader from '../organisms/header/BaseHeader';
 
 import { BoxInfoProps } from '../../constants/types';
+import HeaderWithBack from '../organisms/header/HeaderWithBack';
+import HeaderWithCart from '../organisms/header/HeaderWithCart';
 
 interface boxItemType {
     id: number;
@@ -83,6 +86,14 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     const items = getItems();
 
     return (
+        <>
+        <HeaderWithCart
+            canGoBack={true}
+            goBackAction={() => navigation.goBack()}
+            title={data.title}
+            navigation={navigation}
+        />
+        
         <BoxInfoTemplate
             boxImage={<BoxInfoImage image={data.image}/>}
             boxName={<Title content={data.title}/>}
@@ -90,6 +101,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
             boxDetail={<Body content={data.detail}/>}
             boxItems={items}
         />
+        </>
     );
 }
 

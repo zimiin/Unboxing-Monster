@@ -13,6 +13,7 @@ import ToIntroButton from '../atoms/button/ToIntroButton'
 import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
 
 import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 type BoxInfoTemplateProps = {
     boxImage: object,
@@ -24,7 +25,8 @@ type BoxInfoTemplateProps = {
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
     return (
-        <View style={styles.screen}>
+        <>
+            <View style={styles.screen}>
             <ScrollView>
                 {/* 박스 대표 이미지 */}
                 <View style={styles.boxImageContainer}>
@@ -84,9 +86,10 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
                 {/* Footer */}
                 <Footer />                
             </ScrollView>
+        </View>
 
             <AddToCartButton />
-        </View>
+        </>
     );
 }
 
