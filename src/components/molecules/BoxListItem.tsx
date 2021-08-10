@@ -4,11 +4,12 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image
+    Image,
+    ImageSourcePropType
 } from 'react-native'
 import SubTitle from '../atoms/typography/SubTitle'
 
-const BoxListItem = ({image, title, price}: {image: string, title: string, price: number}) => {
+const BoxListItem = ({ image, title, price }: { image: string, title: string, price: number}) => {
     return (
         <View>
             <TouchableOpacity 

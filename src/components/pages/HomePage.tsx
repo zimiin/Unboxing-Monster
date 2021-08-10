@@ -12,8 +12,7 @@ import CustomBoxList from '../organisms/CustomBoxList';
 import BoxProductList from '../organisms/BoxProductList';
 
 import { HomeProps } from '../../constants/types';
-import BaseHeader from '../organisms/header/BaseHeader';
-import HomeScreenHeader from '../organisms/header/HomeScreenHeader';
+import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader';
 
 // TODO 여기서 데이터 넘겨주는 형태로 변경하기
 const Home = ({ navigation }: {navigation: HomeProps}) => {

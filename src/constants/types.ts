@@ -9,6 +9,25 @@ export type boxProductInfo = {
     sales: number;
 }
 
+export type BoxItemType = {
+    id: number;
+    title: string;
+    price: number;
+    image: string;
+    detail: string;
+}
+
+export type BoxDataType = {
+    id: number;
+    title: string;
+    price: number;
+    image: string;
+    detail: string;
+    ownerId: string;
+    sales: number;
+    items: BoxItemType[];
+}
+
 // Notice Information
 export type noticeInfo = {
     id: number;

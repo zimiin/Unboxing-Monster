@@ -1,21 +1,24 @@
-import React from 'react';
+import React from 'react'
 import {
     TouchableOpacity,
     Text,
     StyleSheet,
-} from 'react-native';
+} from 'react-native'
 
-const AddToCartButton = () => {
+const AddToCartButton = (props) => {
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity 
+            style={styles.container}
+            onPress={props.onPressAction}    
+        >
             <Text style={styles.text}>
                 장바구니에 담기
             </Text>
         </TouchableOpacity>
-    );
+    )
 }
 
-export default AddToCartButton;
+export default AddToCartButton
 
 const styles = StyleSheet.create({
     container: {

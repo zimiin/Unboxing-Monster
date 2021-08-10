@@ -13,5 +13,7 @@ export const ICONS = {
     leftArrow: require('../assets/images/left_arrow.png'),
     cart: require('../assets/images/cart.png'),
     search: require('../assets/images/search.png'),
-    xCircle: require('../assets/images/x_circle.png')
+    xCircle: require('../assets/images/x_circle.png'),
+    minus: require('../assets/images/btn_subtract.png'),
+    plus: require('../assets/images/btn_add.png')
 }

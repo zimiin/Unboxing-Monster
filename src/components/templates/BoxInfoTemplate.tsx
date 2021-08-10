@@ -21,6 +21,7 @@ type BoxInfoTemplateProps = {
     boxPrice: object,
     boxDetail: object,
     boxItems: object,
+    onPressAction: Function,
 }
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
@@ -97,7 +98,7 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
             </ScrollView>
         </View>
 
-        <AddToCartButton />
+        <AddToCartButton onPressAction={props.onPressAction}/>
         </>
     );
 }

@@ -4,6 +4,7 @@ import BoxInfoPage from '../pages/BoxInfoPage'
 import CartPage from '../pages/CartPage'
 import SearchPage from '../pages/SearchPage'
 import HomePage from '../pages/HomePage'
+import AddToCartPage from '@components/pages/AddToCartPage'
 
 const HomeStackScreen = () => {
     const HomeStack = createStackNavigator()
@@ -25,9 +26,15 @@ const HomeStackScreen = () => {
                 component={BoxInfoPage}
             />
 
+            {/* 여기 아래 타입들 추가 */}
             <HomeStack.Screen
                 name="Cart"
                 component={CartPage}
+            />
+
+            <HomeStack.Screen
+                name="AddToCart"
+                component={AddToCartPage}
             />
 
             <HomeStack.Screen

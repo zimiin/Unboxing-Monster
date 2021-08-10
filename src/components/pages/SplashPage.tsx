@@ -20,7 +20,7 @@ const Splash = ({navigation} : SplashProps) => {
       // TODO
       // 로그인 되어있을 시 바로 상품으로 이동
       navigation.replace('Main');
-    }, 10000)
+    }, 1000)
   }, []);
 
   return (

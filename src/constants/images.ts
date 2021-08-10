@@ -17,3 +17,5 @@ export const IMAGES: {[k: string]: ImageSourcePropType} = {
     intro_03: require('../assets/images/img_intro_03.png'),
     intro_04: require('../assets/images/img_intro_04.png'),
 }
+
+export const defaultBox = "https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png"

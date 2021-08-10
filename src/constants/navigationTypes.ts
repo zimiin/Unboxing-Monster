@@ -43,6 +43,7 @@ export type RegisterProps = {
 export type HomeStackParamList = {
     Home: undefined;
     BoxInfo: { boxId: number };
+    AddToCart: undefined
 }
 
 export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
