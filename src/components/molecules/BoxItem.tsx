@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import { boxProductInfo } from '../../constants/types';
+import { boxProductInfo } from '@constants/types';
 
 const BoxItem = ({ item }: { item: boxProductInfo }) => {
     const navigation = useNavigation();

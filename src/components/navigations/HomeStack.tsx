@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import BoxInfoPage from '../pages/BoxInfoPage'
-import CartPage from '../pages/CartPage'
-import SearchPage from '../pages/SearchPage'
-import HomePage from '../pages/HomePage'
+import BoxInfoPage from '@components/pages/BoxInfoPage'
+import CartPage from '@components/pages/CartPage'
+import SearchPage from '@components/pages/SearchPage'
+import HomePage from '@components/pages/HomePage'
 import AddToCartPage from '@components/pages/AddToCartPage'
 
 const HomeStackScreen = () => {

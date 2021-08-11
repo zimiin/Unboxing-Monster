@@ -5,13 +5,13 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import NoticeBoard from '../organisms/NoticeBoard';
-import Scroller from '../organisms/Scroller';
-import HotBoxList from '../organisms/HotBoxList';
-import CustomBoxList from '../organisms/CustomBoxList';
-import BoxProductList from '../organisms/BoxProductList';
+import NoticeBoard from '@components/organisms/NoticeBoard';
+import Scroller from '@components/organisms/Scroller';
+import HotBoxList from '@components/organisms/HotBoxList';
+import CustomBoxList from '@components/organisms/CustomBoxList';
+import BoxProductList from '@components/organisms/BoxProductList';
 
-import { HomeProps } from '../../constants/types';
+import { HomeProps } from '@constants/types';
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader';
 
 // TODO 여기서 데이터 넘겨주는 형태로 변경하기

@@ -4,10 +4,10 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import HeaderContainer from '../../atoms/HeaderContainer'
+import HeaderContainer from '@components/atoms/HeaderContainer'
 import { scale } from 'react-native-size-matters'
-import SearchIcon from '../../atoms/icon/SearchIcon'
-import CartIcon from '../../atoms/icon/CartIcon'
+import SearchIcon from '@components/atoms/icon/SearchIcon'
+import CartIcon from '@components/atoms/icon/CartIcon'
 
 const HomeScreenHeader = ({navigation}) => {
     return (

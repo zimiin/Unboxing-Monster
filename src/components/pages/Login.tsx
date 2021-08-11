@@ -10,7 +10,7 @@ import {
     KeyboardAvoidingView,
 } from 'react-native';
 
-import { LoginProps } from "../../constants/types";
+import { LoginProps } from "@constants/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 

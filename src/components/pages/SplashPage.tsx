@@ -5,10 +5,10 @@ import {
   ActivityIndicator,
   View,
 } from 'react-native';
-import { SplashProps } from "../../constants/navigationTypes";
-import Logo from "../atoms/Logo";
+import { SplashProps } from "@constants/navigationTypes";
+import Logo from "@components/atoms/Logo";
 import { scale, verticalScale } from "react-native-size-matters";
-import { SCREEN_HEIGHT } from "../../constants/figure";
+import { SCREEN_HEIGHT } from "@constants/figure";
 
 
 const Splash = ({navigation} : SplashProps) => {

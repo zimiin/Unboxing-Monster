@@ -4,8 +4,8 @@ import {
 } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../molecules/NoticeItem';
-import { noticeInfo } from "../../constants/types";
+import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '@components/molecules/NoticeItem';
+import { noticeInfo } from "@constants/types";
 import { useEffect } from "react";
 // import noticeData from '../../assets/data/notices';
 

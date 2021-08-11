@@ -3,7 +3,7 @@ import {
     Image,
 } from 'react-native'
 
-import { IMAGES } from '../../constants/images'
+import { IMAGES } from '@constants/images'
 
 const Logo = () => {
     return (

@@ -5,15 +5,15 @@ import {
     StyleSheet,
 } from 'react-native'
 
-import SubTitle from '../atoms/typography/SubTitle'
-import AddToCartButton from '../atoms/button/AddToCartButton'
-import Footer from '../molecules/Footer'
-import PolicyDescriptionList from '../organisms/PolicyDescriptionList'
-import ToIntroButton from '../atoms/button/ToIntroButton'
-import ToProbabilityButton from '../atoms/button/ToProbabilityButton'
-import IntroModal from './IntroModal'
-import { CONTENT_WIDTH, SCREEN_WIDTH } from '../../constants/figure'
-import HeaderWithCart from '../organisms/header/HeaderWithCart'
+import SubTitle from '@components/atoms/typography/SubTitle'
+import AddToCartButton from '@components/atoms/button/AddToCartButton'
+import Footer from '@components/molecules/Footer'
+import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
+import ToIntroButton from '@components/atoms/button/ToIntroButton'
+import ToProbabilityButton from '@components/atoms/button/ToProbabilityButton'
+import IntroModal from '@components/templates/IntroModal'
+import { CONTENT_WIDTH, SCREEN_WIDTH } from '@constants/figure'
+import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 
 type BoxInfoTemplateProps = {
     boxImage: object,

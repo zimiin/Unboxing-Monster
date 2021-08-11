@@ -4,9 +4,9 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import BackIcon from '../../atoms/icon/BackIcon'
-import HeaderTitle from '../../atoms/typography/HeaderTitle'
-import HeaderContainer from '../../atoms/HeaderContainer'
+import BackIcon from '@components/atoms/icon/BackIcon'
+import HeaderTitle from '@components/atoms/typography/HeaderTitle'
+import HeaderContainer from '@components/atoms/HeaderContainer'
 import { scale } from 'react-native-size-matters'
 
 const BaseHeader = (props) => {

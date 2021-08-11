@@ -5,14 +5,14 @@ import {
     ImageSourcePropType,
 } from 'react-native'
 
-import BoxInfoTemplate from '../templates/BoxInfoTemplate'
-import BoxInfoImage from '../atoms/BoxInfoImage'
-import Title from '../atoms/typography/Title'
-import BoxPriceInfo from '../atoms/BoxPriceInfo'
-import Body from '../atoms/typography/Body'
-import BoxListItem from '../molecules/BoxListItem'
-import { BoxInfoProps } from '../../constants/navigationTypes'
-import { BoxDataType } from 'constants/types'
+import BoxInfoTemplate from '@components/templates/BoxInfoTemplate'
+import BoxInfoImage from '@components/atoms/BoxInfoImage'
+import Title from '@components/atoms/typography/Title'
+import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
+import Body from '@components/atoms/typography/Body'
+import BoxListItem from '@components/molecules/BoxListItem'
+import { BoxInfoProps } from '@constants/navigationTypes'
+import { BoxDataType } from '@constants/types'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     const [data, setData] = useState<BoxDataType>({

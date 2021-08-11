@@ -6,7 +6,7 @@ import {
     StyleSheet,
 } from 'react-native'
 
-import { IMAGES } from '../../constants/images'
+import { IMAGES } from '@constants/images'
 
 const Footer = () => {
     return (

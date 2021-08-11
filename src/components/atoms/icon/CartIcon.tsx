@@ -5,7 +5,7 @@ import {
     Image,
 } from 'react-native'
 import { scale, verticalScale } from 'react-native-size-matters'
-import { ICONS } from '../../../constants/icons'
+import { ICONS } from '@constants/icons'
 
 const CartIcon = () => {
     return (

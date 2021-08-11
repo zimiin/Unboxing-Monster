@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabIcon from '../atoms/icon/TabIcon';
-import HomeStack from './HomeStack';
-import CustomBoxStack from './CustomBoxStack';
-import StorageStack from './StorageStack'
-import MyPageStack from './MyPageStack';
+import TabIcon from '@components/atoms/icon/TabIcon';
+import HomeStack from '@components/navigations/HomeStack';
+import CustomBoxStack from '@components/navigations/CustomBoxStack';
+import StorageStack from '@components/navigations/StorageStack'
+import MyPageStack from '@components/navigations/MyPageStack';
 
 const Tab = createBottomTabNavigator();
 

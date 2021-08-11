@@ -2,7 +2,7 @@ import AddToCartTemplate from '@components/templates/AddToCartTemplate'
 import React, { useState, useEffect } from 'react'
 import { BoxDataType } from 'constants/types'
 import { defaultBox } from '@constants/images'
-import AppContext from '@components/AppContext'
+import AppContext from '@src/AppContext'
 import { useContext } from 'react'
 
 const AddToCartPage = ({route, navigation}) => {

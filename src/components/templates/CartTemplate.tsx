@@ -1,21 +1,25 @@
+import HorizontalRule from '@components/atoms/HorizontalRule'
 import React from 'react'
 import {
     View,
     Text,
+    ScrollView,
 } from 'react-native'
-import BaseHeader from '../organisms/header/BaseHeader'
+import BaseHeader from '@components/organisms/header/BaseHeader'
 
-const CartTemplate = ({navigation}) => {
+const CartTemplate = (props) => {
     return (
         <>
         <BaseHeader
             canGoBack={true}
-            goBackAction={() => navigation.goBack()}
+            goBackAction={props.onPressBack}
             title={'장바구니'}
         />
-        <View>
-            <Text>This is CartTemplate.</Text>
-        </View>
+        <HorizontalRule />
+        
+        <ScrollView>
+
+        </ScrollView>
         </>
     )
 }

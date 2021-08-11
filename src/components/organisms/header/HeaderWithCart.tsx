@@ -2,8 +2,8 @@ import React from 'react'
 import {
     TouchableOpacity,
 } from 'react-native'
-import CartIcon from '../../atoms/icon/CartIcon'
-import BaseHeader from './BaseHeader'
+import CartIcon from '@components/atoms/icon/CartIcon'
+import BaseHeader from '@components/organisms/header/BaseHeader'
 
 
 const HeaderWithCart = (props) => {

@@ -5,7 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import { CONTENT_WIDTH } from '../../../constants/figure';
+import { CONTENT_WIDTH } from '@constants/figure';
 
 const ToProbabilityButton = () => {
     return (

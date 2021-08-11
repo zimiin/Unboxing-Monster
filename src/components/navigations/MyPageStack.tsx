@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import MyPage from '../pages/MyPage'
+import MyPage from '@components/pages/MyPage'
 
 const MyPageStack = () => {
     const MyPageStack = createStackNavigator()

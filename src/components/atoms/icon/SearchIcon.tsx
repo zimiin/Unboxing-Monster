@@ -4,7 +4,7 @@ import {
     Text,
     Image,
 } from 'react-native'
-import { ICONS } from '../../../constants/icons'
+import { ICONS } from '@constants/icons'
 
 const SearchIcon = () => {
     return (

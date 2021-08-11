@@ -6,10 +6,10 @@ import {
     View,
 } from 'react-native'
 
-import SubTitle from '../atoms/typography/SubTitle'
+import SubTitle from '@components/atoms/typography/SubTitle'
 
-import { CONTENT_WIDTH } from '../../constants/figure'
-import { ICONS } from '../../constants/icons'
+import { CONTENT_WIDTH } from '@constants/figure'
+import { ICONS } from '@constants/icons'
 
 const PolicyDescriptionItem = ({title, description}: {title: string, description: object}) => {
     const [toggle, setToggle] = useState(false)

@@ -5,11 +5,11 @@ import {
     Text,
 } from 'react-native'
 
-import PolicyDescriptionItem from '../molecules/PolicyDescriptionItem'
-import Body from '../atoms/typography/Body'
+import PolicyDescriptionItem from '@components/molecules/PolicyDescriptionItem'
+import Body from '@components/atoms/typography/Body'
 
-import { CONTENT_MARGIN } from '../../constants/figure'
-import SmallTitle from '../atoms/typography/SmallTitle'
+import { CONTENT_MARGIN } from '@constants/figure'
+import SmallTitle from '@components/atoms/typography/SmallTitle'
 
 // 이 부분 어떻게 구현하면 좋을지 질문
 const PolicyDescriptionList = () => {

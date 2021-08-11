@@ -1,18 +1,21 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import SplashPage from './src/components/pages/SplashPage'
-import Auth from './src/components/pages/Auth'
-import Main from './src/components/navigations/Main'
-import { RootStackParamList } from './src/constants/types'
+import SplashPage from '@components/pages/SplashPage'
+import Auth from '@components/pages/Auth'
+import Main from '@components/navigations/Main'
+import { RootStackParamList } from '@constants/types'
 import { useState } from 'react'
-import AppContext from '@components/AppContext'
+import AppContext from '@src/AppContext'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
   const [cart, setCart] = useState(new Map())
   
+  // 질문) 여기 어떤 방식으로 cart 값을 업데이트 하는게 좋을까?
+  // curCart = cart는 cart state을 직접적으로 바꾸는 것 같고,
+  // Object.assign() 을 쓰는게 맞나?
   const addBoxToCart = (boxId: number, count: number) => {
     let curCart = cart
 

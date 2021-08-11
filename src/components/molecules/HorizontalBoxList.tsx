@@ -5,9 +5,9 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import BoxItem from './BoxItem';
+import BoxItem from '@components/molecules/BoxItem'
 
-import { boxProductInfo } from '../../constants/types';
+import { boxProductInfo } from '@constants/types';
 
 interface horizontalBoxListProps {
     items: boxProductInfo[];

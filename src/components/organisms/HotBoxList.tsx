@@ -5,9 +5,9 @@ import {
     StyleSheet,
 } from 'react-native'
 
-import HorizontalBoxList from '../molecules/HorizontalBoxList'
+import HorizontalBoxList from '@components/molecules/HorizontalBoxList'
 
-import { boxProductInfo } from '../../constants/types'
+import { boxProductInfo } from '@constants/types'
 
 const HotBoxList = () => {
     const [data, setData] = useState<boxProductInfo[]>([{

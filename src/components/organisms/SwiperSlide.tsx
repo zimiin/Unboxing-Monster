@@ -9,7 +9,7 @@ import {
   ImageSourcePropType
 } from 'react-native'
 
-import { IMAGES } from '../../constants/images'
+import { IMAGES } from '@constants/images'
 
 const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
   image: ImageSourcePropType, 

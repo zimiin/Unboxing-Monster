@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 
-import { noticeInfo } from '../../constants/types';
+import { noticeInfo } from '@constants/types';
 
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = SLIDER_WIDTH

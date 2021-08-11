@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import CustomBox from '../pages/CustomBox'
+import CustomBox from '@components/pages/CustomBox'
 
 const CustomBoxStack = () => {
     const CustomBoxStack = createStackNavigator()

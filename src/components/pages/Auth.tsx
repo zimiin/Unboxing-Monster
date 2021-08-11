@@ -2,10 +2,10 @@ import React from "react";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthStackParamList } from "../../constants/navigationTypes";
+import { AuthStackParamList } from "@constants/navigationTypes";
 
-import Login from './Login';
-import Register from "./Register";
+import Login from '@components/pages/Login';
+import Register from "@components/pages/Register";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 

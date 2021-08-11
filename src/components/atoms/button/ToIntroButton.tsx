@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
 
-import { ICONS } from '../../../constants/icons'
+import { ICONS } from '@constants/icons'
 
 type ToIntroButtonProps = {
     setModalVisible: Dispatch<SetStateAction<boolean>>

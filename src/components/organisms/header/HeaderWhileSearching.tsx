@@ -8,9 +8,9 @@ import {
     Text,
     StyleSheet,
 } from 'react-native'
-import BaseHeader from './BaseHeader'
+import BaseHeader from '@components/organisms/header/BaseHeader'
 import { scale } from 'react-native-size-matters'
-import { ICONS } from '../../../constants/icons'
+import { ICONS } from '@constants/icons'
 
 
 const HeaderWhileSearching = (props) => {

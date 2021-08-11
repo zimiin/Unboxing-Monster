@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Storage from '../pages/Storage'
+import Storage from '@components/pages/Storage'
 
 const StorageStack = () => {
     const StorageStack = createStackNavigator()

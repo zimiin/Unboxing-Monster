@@ -3,7 +3,7 @@ import {
     Image
 } from 'react-native';
 
-import { ICONS } from '../../../constants/icons';
+import { ICONS } from '@constants/icons';
 
 const TabIcon = ({ tabName, focused }: {tabName: string, focused: boolean }) => {
     let icon;

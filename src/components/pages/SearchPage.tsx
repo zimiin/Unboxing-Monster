@@ -3,7 +3,7 @@ import {
     View,
     Text,
 } from 'react-native'
-import SearchTemplate from '../templates/SearchTemplate'
+import SearchTemplate from '@components/templates/SearchTemplate'
 
 const SearchPage = ({navigation}) => {
     return (

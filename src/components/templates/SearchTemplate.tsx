@@ -3,8 +3,7 @@ import {
     View,
     Text,
 } from 'react-native'
-import BaseHeader from '../organisms/header/BaseHeader'
-import HeaderWhileSearching from '../organisms/header/HeaderWhileSearching'
+import HeaderWhileSearching from '@components/organisms/header/HeaderWhileSearching'
 
 const SearchTemplate = ({navigation}) => {
     return (

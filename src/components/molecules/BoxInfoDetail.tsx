@@ -2,14 +2,14 @@ import React from 'react';
 import {
     View,
 } from 'react-native';
-import SubTitle from '../atoms/typography/SubTitle';
-import Body from '../atoms/typography/Body';
+import SubTitle from '@components/atoms/typography/SubTitle';
+import Body from '@components/atoms/typography/Body';
 
 const BoxInfoDetail = ({title, detail}: {title: string, detail: string}) => {
     return (
         <View>
             <SubTitle
-                subTitle={title}
+                content={title}
             />
 
             <View
@@ -18,7 +18,7 @@ const BoxInfoDetail = ({title, detail}: {title: string, detail: string}) => {
                 }}
             >
                 <Body
-                    detail={detail}
+                    content={detail}
                 />
 
             </View>
