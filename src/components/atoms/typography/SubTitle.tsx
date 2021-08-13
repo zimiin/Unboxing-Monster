@@ -1,19 +1,19 @@
-import React from 'react';
+import React from 'react'
 import {
-    Text,
-} from 'react-native';
+  Text,
+} from 'react-native'
 
-const SubTitle = ({content}: {content: string}) => {
-    return (
-        <Text
-            style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-            }}
-        >
-            {content}
-        </Text>
-    );
+const SubTitle = ({ content }: { content: string }) => {
+  return (
+    <Text
+      style={{
+        fontSize: 15,
+        fontWeight: 'bold',
+      }}
+    >
+      {content}
+    </Text>
+  )
 }
 
-export default SubTitle;
+export default SubTitle

@@ -1,37 +1,41 @@
 import React from 'react'
-import { 
-    View,
-    StyleSheet,
+import {
+  View,
+  StyleSheet,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const HeaderContainer = (props) => {
-    const statusBarHeight = useSafeAreaInsets().top
+interface Props {
+  children: React.ReactNode
+}
 
-    return (
-        <View style={styles.container}>
-            <View 
-                style={[
-                    styles.header, 
-                    { marginTop: statusBarHeight }
-                ]}
-            >
-                {props.children}
-            </View>
-        </View>
-    )
+const HeaderContainer = (props: Props) => {
+  const statusBarHeight = useSafeAreaInsets().top
+
+  return (
+    <View style={styles.container}>
+      <View
+        style={[
+          styles.header,
+          { marginTop: statusBarHeight }
+        ]}
+      >
+        {props.children}
+      </View>
+    </View>
+  )
 }
 
 export default HeaderContainer
 
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-    },
-    header: {
-        height: 56,
-        flexDirection: 'row',
-        alignItems: 'center',
-    }
+  container: {
+    backgroundColor: 'white',
+  },
+  header: {
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 })

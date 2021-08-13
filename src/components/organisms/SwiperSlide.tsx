@@ -38,7 +38,7 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
           </TouchableOpacity> :
           null}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

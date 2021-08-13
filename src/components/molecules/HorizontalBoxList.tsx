@@ -1,51 +1,49 @@
-import React from 'react';
+import React from 'react'
 import {
-    View,
-    ScrollView,
-    StyleSheet,
-} from 'react-native';
-
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native'
 import BoxItem from '@components/molecules/BoxItem'
+import { boxProductInfo } from '@constants/types'
 
-import { boxProductInfo } from '@constants/types';
-
-interface horizontalBoxListProps {
-    items: boxProductInfo[];
+interface Props {
+  items: boxProductInfo[]
 }
 
-const HorizontalBoxList: React.FunctionComponent<horizontalBoxListProps> = props => {
-    const boxItems = props.items.map((item) => {
-        return (
-            <View
-                key={item.id}
-                style={styles.container}
-            >
-                <BoxItem item={item}/>
-            </View>
-        );
-    });
-    
+const HorizontalBoxList = (props: Props) => {
+  const boxItems = props.items.map((item) => {
     return (
-        <View>
-            <ScrollView
-                horizontal={true}
-                style={{
-                    marginTop: 26,
-                }}
-                showsHorizontalScrollIndicator={false}
-            >
-                {boxItems}
-            </ScrollView>
+      <View
+        key={item.id}
+        style={styles.container}
+      >
+        <BoxItem item={item} />
+      </View>
+    )
+  })
 
-        </View>
-    );
+  return (
+    <View>
+      <ScrollView
+        horizontal={true}
+        style={{
+          marginTop: 26,
+        }}
+        showsHorizontalScrollIndicator={false}
+      >
+        {boxItems}
+      </ScrollView>
+
+    </View>
+  )
 }
 
-export default HorizontalBoxList;
+export default HorizontalBoxList
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        marginRight: 15,
-    },
-});
+  container: {
+    alignItems: 'center',
+    marginRight: 15,
+  },
+})

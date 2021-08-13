@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Image,
@@ -6,22 +6,21 @@ import {
   Dimensions,
   TouchableOpacity,
   Linking,
-} from 'react-native';
-
-import { noticeInfo } from '@constants/types';
+} from 'react-native'
+import { noticeInfo } from '@constants/types'
 
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = SLIDER_WIDTH
 
-const NoticeItem = ({ item, index }: { item: noticeInfo; index: number }) => {
+const NoticeItem = ({ item, index }: { item: noticeInfo, index: number }) => {
   const handlePress = () => {
     Linking.canOpenURL(item.srcUrl).then(supported => {
       if (supported) {
-        Linking.openURL(item.srcUrl);
+        Linking.openURL(item.srcUrl)
       } else {
-        console.log("Don't know how to open URI: " + item.srcUrl);
+        console.log("Don't know how to open URI: " + item.srcUrl)
       }
-    });
+    })
   }
   
   return (
@@ -38,7 +37,7 @@ const NoticeItem = ({ item, index }: { item: noticeInfo; index: number }) => {
   )
 }
 
-export default NoticeItem;
+export default NoticeItem
 
 const styles = StyleSheet.create({
   container: {

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Modal,
-} from 'react-native';
+} from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
 import Swiper from 'react-native-swiper'
 import { IMAGES } from '@constants/images'
@@ -25,7 +25,7 @@ const IntroModal = (props: IntroModalProps)  => {
       presentationStyle="formSheet"
       visible={props.modalVisible}
       onRequestClose={() => {
-        props.setModalVisible(!props.modalVisible);
+        props.setModalVisible(!props.modalVisible)
       }}
     >
       <Swiper 

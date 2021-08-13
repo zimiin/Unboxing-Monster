@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
 } from 'react-native'
-
 import BoxInfoTemplate from '@components/templates/BoxInfoTemplate'
 import BoxInfoImage from '@components/atoms/BoxInfoImage'
-import Title from '@components/atoms/typography/Title'
 import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
 import Body from '@components/atoms/typography/Body'
 import BoxListItem from '@components/molecules/BoxListItem'
@@ -61,22 +59,22 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     )
   }
 
-  const items = getItems();
+  const items = getItems()
 
   return (
     <BoxInfoTemplate
       boxImage={<BoxInfoImage image={data.image}/>}
-      boxName={<Title content={data.title}/>}
+      boxName={data.title}
       boxPrice={<BoxPriceInfo price={data.price}/>}
       boxDetail={<Body content={data.detail}/>}
       boxItems={items}
       navigation={navigation}
-      onPressAction={() => navigation.push('AddToCart', {boxId: data.id})}
+      onPressAddToCart={() => navigation.push('AddToCart', {boxId: data.id})}
     />
   )
 }
 
-export default BoxInfo;
+export default BoxInfo
 
 const styles = StyleSheet.create({
   itemContainer: {
