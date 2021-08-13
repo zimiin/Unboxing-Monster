@@ -41,19 +41,33 @@ export type RegisterProps = {
 
 // Home Stack
 export type HomeStackParamList = {
-    Home: undefined;
-    BoxInfo: { boxId: number };
-    AddToCart: undefined
+    Home: undefined
+    BoxInfo: { boxId: number }
+    AddToCart: { boxId: number }
+    Cart: undefined
 }
 
-export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
+export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>
 export type HomeProps = {
-    navigation: HomeNavigationProp;
+    navigation: HomeNavigationProp
 }
 
-export type BoxInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'BoxInfo'>;
-export type BoxInfoRouteProp = RouteProp<HomeStackParamList, 'BoxInfo'>;
+export type BoxInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'BoxInfo'>
+export type BoxInfoRouteProp = RouteProp<HomeStackParamList, 'BoxInfo'>
 export type BoxInfoProps = {
-    route: BoxInfoRouteProp;
-    navigation: BoxInfoNavigationProp;
+    route: BoxInfoRouteProp
+    navigation: BoxInfoNavigationProp
+}
+
+export type AddToCartNavigationProp = StackNavigationProp<HomeStackParamList, 'AddToCart'>
+export type AddToCartRouteProp = RouteProp<HomeStackParamList, 'AddToCart'>
+export type AddToCartProps = {
+    route: AddToCartRouteProp
+    navigation: AddToCartNavigationProp
+}
+
+export type CartNavigationProp = StackNavigationProp<HomeStackParamList, 'Cart'>
+export type CartRouteProp = RouteProp<HomeStackParamList, 'Cart'>
+export type CartProps = {
+    navigation: CartNavigationProp
 }

@@ -34,3 +34,10 @@ export type noticeInfo = {
     imgUrl: string;
     srcUrl: string;
 }
+
+export type BoxId = number
+
+export type CartItem = {
+    count: number;
+    checked: boolean;
+}

@@ -14,6 +14,7 @@ import ToProbabilityButton from '@components/atoms/button/ToProbabilityButton'
 import IntroModal from '@components/templates/IntroModal'
 import { CONTENT_WIDTH, SCREEN_WIDTH } from '@constants/figure'
 import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
+import { BoxInfoNavigationProp } from '@constants/navigationTypes'
 
 type BoxInfoTemplateProps = {
     boxImage: object,
@@ -22,6 +23,7 @@ type BoxInfoTemplateProps = {
     boxDetail: object,
     boxItems: object,
     onPressAction: Function,
+    navigation: BoxInfoNavigationProp,
 }
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {

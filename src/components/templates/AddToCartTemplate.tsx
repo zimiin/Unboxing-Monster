@@ -77,7 +77,7 @@ const AddToCartTemplate = (props) => {
 
                 {/* - 버튼 */}
                 <MinusButton 
-                    onPressAction={props.onPressMinus}
+                    onPress={props.onPressMinus}
                 />
 
                 {/* state만들고 보여주기 */}
@@ -91,7 +91,7 @@ const AddToCartTemplate = (props) => {
                 </Text>
 
                 {/* + 버튼 */}
-                <PlusButton onPressAction={props.onPressPlus}/>
+                <PlusButton onPress={props.onPressPlus}/>
             </View>
 
             {/* 전체 가격 */}

@@ -7,10 +7,10 @@ import {
 import { ICONS } from '@constants/icons'
 import FastImage from 'react-native-fast-image'
 
-const PlusButton = ({ onPressAction }) => {
+const PlusButton = ({ onPress }: { onPress: () => void }) => {
     return (
         <TouchableOpacity
-            onPress={onPressAction}
+            onPress={onPress}
         >
             <FastImage
                 source={ICONS.plus}

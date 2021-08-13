@@ -17,5 +17,6 @@ export const ICONS = {
     minus: require('assets/images/btn_subtract.png'),
     plus: require('assets/images/btn_add.png'),
     checkBox_checked: require('assets/images/btn_chkbox_chkd.png'),
-    checkBox_unchecked: require('assets/images/btn_chkbox.png')
+    checkBox_unchecked: require('assets/images/btn_chkbox.png'),
+    x: require('assets/images/x.png')
 }
