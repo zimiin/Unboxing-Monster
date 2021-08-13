@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import {
   Text,
-} from 'react-native';
+} from 'react-native'
 
 const Intro = () => {
   return (

@@ -6,7 +6,7 @@ import {
     StyleSheet,
 } from 'react-native'
 
-import { IMAGES } from '../../constants/images'
+import { IMAGES } from '@constants/images'
 
 const Footer = () => {
     return (
@@ -26,10 +26,10 @@ const Footer = () => {
                 Copyright @ unboxing  All rights reserved.
             </Text>
         </View>
-    );
+    )
 }
 
-export default Footer;
+export default Footer
 
 const styles = StyleSheet.create({
     container: {

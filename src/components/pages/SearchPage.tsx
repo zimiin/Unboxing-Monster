@@ -1,14 +1,17 @@
 import React from 'react'
 import {
-    View,
-    Text,
+  View,
+  Text,
 } from 'react-native'
-import SearchTemplate from '../templates/SearchTemplate'
+import SearchTemplate from '@components/templates/SearchTemplate'
+import { SearchProps } from '@constants/navigationTypes'
 
-const SearchPage = ({navigation}) => {
-    return (
-        <SearchTemplate navigation={navigation} />
-    )
+const SearchPage = (props: SearchProps) => {
+  return (
+    <SearchTemplate 
+      onPressBack={() => props.navigation.goBack()}
+    />
+  )
 }
 
 export default SearchPage

@@ -1,36 +1,36 @@
-import React from 'react';
+import React from 'react'
 import {
-    TouchableOpacity,
-    Text,
-    StyleSheet,
-} from 'react-native';
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native'
 
-import { CONTENT_WIDTH } from '../../../constants/figure';
+import { CONTENT_WIDTH } from '@constants/figure'
 
 const ToProbabilityButton = () => {
-    return (
-        <TouchableOpacity style={styles.container}>
-            <Text style={styles.text}>
-                자세한 확률 알아보기
-            </Text>
-        </TouchableOpacity>
-    );
+  return (
+    <TouchableOpacity style={styles.container}>
+      <Text style={styles.text}>
+        자세한 확률 알아보기
+      </Text>
+    </TouchableOpacity>
+  )
 }
 
-export default ToProbabilityButton;
+export default ToProbabilityButton
 
 const styles = StyleSheet.create({
-    container: {
-        width: CONTENT_WIDTH,
-        height: 48,
-        backgroundColor: '#eef1f2',
-        borderRadius: 6,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center',
-    },
-    text: {
-        color: '#060606',
-        fontSize: 14,
-    }
+  container: {
+    width: CONTENT_WIDTH,
+    height: 48,
+    backgroundColor: '#eef1f2',
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  text: {
+    color: '#060606',
+    fontSize: 14,
+  }
 })

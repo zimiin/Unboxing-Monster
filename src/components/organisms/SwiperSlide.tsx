@@ -9,7 +9,7 @@ import {
   ImageSourcePropType
 } from 'react-native'
 
-import { IMAGES } from '../../constants/images'
+import { IMAGES } from '@constants/images'
 
 const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
   image: ImageSourcePropType, 
@@ -38,7 +38,7 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
           </TouchableOpacity> :
           null}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

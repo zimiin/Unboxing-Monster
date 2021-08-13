@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 import {
-    View,
-    Text,
-} from 'react-native';
+  View,
+  Text,
+} from 'react-native'
 
 const Storage = () => {
-    return (
-        <View>
-            <Text>This is Storage screen</Text>
-        </View>
-    );
+  return (
+    <View>
+      <Text>This is Storage screen</Text>
+    </View>
+  )
 }
 
-export default Storage;
+export default Storage

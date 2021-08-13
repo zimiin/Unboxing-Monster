@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   SafeAreaView,
   StyleSheet,
   ActivityIndicator,
   View,
-} from 'react-native';
-import { SplashProps } from "../../constants/navigationTypes";
-import Logo from "../atoms/Logo";
-import { scale, verticalScale } from "react-native-size-matters";
-import { SCREEN_HEIGHT } from "../../constants/figure";
-
+} from 'react-native'
+import { SplashProps } from "@constants/navigationTypes"
+import Logo from "@components/atoms/Logo"
+import { scale, verticalScale } from "react-native-size-matters"
+import { SCREEN_HEIGHT } from "@constants/figure"
 
 const Splash = ({navigation} : SplashProps) => {
-  const [animating, setAnimatinng] = useState(true);
+  const [animating, setAnimatinng] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
-      setAnimatinng(false);
+      setAnimatinng(false)
       // TODO
       // 로그인 되어있을 시 바로 상품으로 이동
-      navigation.replace('Main');
-    }, 10000)
-  }, []);
+      navigation.replace('Main')
+    }, 1000)
+  }, [])
 
   return (
       <SafeAreaView style={styles.background}>
@@ -36,10 +35,10 @@ const Splash = ({navigation} : SplashProps) => {
           style={styles.activityIndicator}
         />
       </SafeAreaView>
-  );
-};
+  )
+}
 
-export default Splash;
+export default Splash
 
 const logoPosition = SCREEN_HEIGHT * 261 / 716
 
@@ -61,4 +60,4 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: logoPosition,
   }
-});
+})

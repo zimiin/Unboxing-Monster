@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Modal,
-} from 'react-native';
+} from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
 import Swiper from 'react-native-swiper'
-import { IMAGES } from '../../constants/images'
-import SwipeImage from '../atoms/SwipeImage'
-import SwipeDot from '../atoms/SwipeDot'
-import Bold from '../atoms/Bold'
-import SwiperSlide from '../organisms/SwiperSlide'
+import { IMAGES } from '@constants/images'
+import SwipeImage from '@components/atoms/SwipeImage'
+import SwipeDot from '@components/atoms/SwipeDot'
+import Bold from '@components/atoms/Bold'
+import SwiperSlide from '@components/organisms/SwiperSlide'
 
 
 type IntroModalProps = {
@@ -25,7 +25,7 @@ const IntroModal = (props: IntroModalProps)  => {
       presentationStyle="formSheet"
       visible={props.modalVisible}
       onRequestClose={() => {
-        props.setModalVisible(!props.modalVisible);
+        props.setModalVisible(!props.modalVisible)
       }}
     >
       <Swiper 

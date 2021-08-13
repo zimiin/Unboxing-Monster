@@ -1,19 +1,19 @@
-import React from 'react';
+import React from 'react'
 import {
-    Text,
-} from 'react-native';
+  Text,
+} from 'react-native'
 
-const SmallTitle = ({content}: {content: string}) => {
-    return (
-            <Text
-                style={{
-                    fontWeight: 'bold',
-                    fontSize: 12,
-                }}
-            >
-                {content}
-            </Text>
-    );
+const SmallTitle = ({ content }: { content: string }) => {
+  return (
+    <Text
+      style={{
+        fontWeight: 'bold',
+        fontSize: 12,
+      }}
+    >
+      {content}
+    </Text>
+  )
 }
 
-export default SmallTitle;
+export default SmallTitle

@@ -1,19 +1,19 @@
 import React from 'react'
 import {
-    Text,
+  Text,
 } from 'react-native'
 
-const Title = ({content}: {content: string}) => {
-    return (
-        <Text
-            style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-            }}
-        >
-            {content}
-        </Text>
-    );
+const Title = ({ content }: { content: string }) => {
+  return (
+    <Text
+      style={{
+        fontSize: 20,
+        fontWeight: 'bold',
+      }}
+    >
+      {content}
+    </Text>
+  )
 }
 
 export default Title
