@@ -5,7 +5,7 @@ import {BoxId, CartItem} from '@constants/types'
 type Context = [
   {cart: Map<BoxId, CartItem>},
   {
-    addToCart: (boxId: number, count: number) => void,
+    modifyBoxCount: (boxId: number, count: number) => void,
     deleteFromCart: (boxId: number) => void,
     setChecked: (boxId: number, bool: boolean) => void,
     setCheckedToAll: (bool: boolean) => void
@@ -15,7 +15,7 @@ type Context = [
 const defaultContext: Context = [
   {cart: new Map<BoxId, CartItem>()},
   {
-    addToCart: (boxId: number, count: number) => {},
+    modifyBoxCount: (boxId: number, count: number) => {},
     deleteFromCart: (boxId: number) => {},
     setChecked: (boxId: number, bool: boolean) => {},
     setCheckedToAll: (bool: boolean) => {}
@@ -31,7 +31,7 @@ interface Props extends ViewProps {
 const CartContextProvider = (props: Props) => {
   const [cart, setCart] = useState(new Map<BoxId, CartItem>())
   
-  const addToCart = (boxId: number, amount: number) => {
+  const modifyBoxCount = (boxId: number, amount: number) => {
     let curCart = new Map(cart)
   
     let item = curCart.get(boxId)
@@ -82,7 +82,7 @@ const CartContextProvider = (props: Props) => {
   }
 
   return (
-  <CartContext.Provider value={[{cart}, {addToCart, deleteFromCart, setChecked, setCheckedToAll}]}>
+  <CartContext.Provider value={[{cart}, {modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll}]}>
     {props.children}
   </CartContext.Provider>
   )

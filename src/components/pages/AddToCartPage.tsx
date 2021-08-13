@@ -9,7 +9,7 @@ import { AddToCartNavigationProp, AddToCartRouteProp } from '@constants/navigati
 const AddToCartPage = ({route, navigation}: {route: AddToCartRouteProp, navigation: AddToCartNavigationProp}) => {
     const [data, setData] = useState<BoxDataType>()
     const [count, setCount] = useState(1)
-    const [{ cart }, { addToCart, setChecked }] = useContext(CartContext)
+    const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
 
     const minusAction = () => {
         if (count > 1)
@@ -22,7 +22,7 @@ const AddToCartPage = ({route, navigation}: {route: AddToCartRouteProp, navigati
 
     const addAction = () => {
         if (data) {
-            addToCart(data?.id, count)
+            modifyBoxCount(data?.id, count)
         }
         navigation.goBack()
     }

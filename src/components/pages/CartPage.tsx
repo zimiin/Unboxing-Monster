@@ -8,8 +8,12 @@ import { CartNavigationProp } from '@constants/navigationTypes'
 import { BoxId } from '@constants/types'
 
 const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
-  const [{cart}, {addToCart, deleteFromCart, setChecked, setCheckedToAll}] = useContext(CartContext)
+  const [{cart}, {modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll}] = useContext(CartContext)
   const [cartData, setCartData] = useState<CartData[]>()
+  const [boxData, setBoxData] = useState<BoxData>()
+  const [totalBoxPrice, setTotalBoxPrice] = useState(0)
+  const [checkAll, setCheckAll] = useState(false)
+  const [totalBoxCount, setTotalBoxCount] = useState(0)
   
   useEffect(() => {
     let data: CartData[] = []
@@ -18,12 +22,15 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
       let newData: CartData = {
         boxId,
         count: item.count,
-        modifyCount: (amount) => {
-          addToCart(boxId, amount)
+        deleteOneFromCart: () => {
+          modifyBoxCount(boxId, -1)
+        },
+        addOneToCart: () => {
+          modifyBoxCount(boxId, +1)
         },
         checked: item.checked,
-        setChecked: (bool) => {
-          setChecked(boxId, bool)
+        setChecked: () => {
+          setChecked(boxId, !item.checked)
         },
         delete: () => {
           deleteFromCart(boxId)
@@ -34,10 +41,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
     }
 
     setCartData(data)
-  }, [cart, addToCart, setChecked, deleteFromCart])
-
-  const [boxData, setBoxData] = useState<BoxData>()
-  const [totalBoxPrice, setTotalBoxPrice] = useState(0)
+  }, [cart, modifyBoxCount, setChecked, deleteFromCart])
 
   useEffect(() => {
     const getItemInfo = async () => {
@@ -85,9 +89,6 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
 
     setTotalBoxPrice(price)
   }, [cart, boxData])
-
-  const [checkAll, setCheckAll] = useState(false)
-  const [totalBoxCount, setTotalBoxCount] = useState(0)
   
   useEffect(() => {
     let count = 0
@@ -98,7 +99,6 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
     
     setTotalBoxCount(count)
   }, [cart])
-
 
   return (
     <CartTemplate 
