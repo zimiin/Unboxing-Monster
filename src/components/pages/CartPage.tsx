@@ -112,6 +112,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
       }}
       totalBoxCount={totalBoxCount}
       totalBoxPrice={totalBoxPrice}
+      onPressPurchase={() => navigation.push('Payment')}
     />
   )
 }

@@ -1,0 +1,66 @@
+import GreyButton from '@components/atoms/button/GreyButton'
+import DoneIcon from '@components/atoms/icon/DoneIcon'
+import Title from '@components/atoms/typography/Title'
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+} from 'react-native'
+import { verticalScale } from 'react-native-size-matters'
+
+interface Props {
+  onPressGoHome: () => void,
+}
+
+const PaymentCompleteTemplate = (props: Props) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.iconContainer}>
+        <DoneIcon />
+
+        <View style={styles.madePayment}>
+          <Title content='결제 완료'/>
+        </View>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <GreyButton
+          onPress={() => console.log('보관함으로!!')}
+          content={'보관함으로 가기'}
+        />
+
+        <View style={styles.belowButtonContainer}>
+          <GreyButton
+            onPress={props.onPressGoHome}
+            content={'홈으로 돌아가기'}
+          />
+        </View>
+      </View>
+    </View>
+  )
+}
+
+export default PaymentCompleteTemplate
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  madePayment: {
+    marginTop: verticalScale(7)
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginBottom: 60,
+  },
+  belowButtonContainer: {
+    marginTop: 8,
+  }
+})

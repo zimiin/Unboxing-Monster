@@ -1,4 +1,3 @@
-import HorizontalRule from '@components/atoms/HorizontalRule'
 import React from 'react'
 import {
   View,
@@ -7,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native'
+import HorizontalRule from '@components/atoms/HorizontalRule'
 import BaseHeader from '@components/organisms/header/BaseHeader'
 import { scale } from 'react-native-size-matters'
 import CheckBox from '@components/atoms/button/CheckBox'
@@ -47,6 +47,7 @@ interface Prop {
   onPressCheckAll: () => void,
   totalBoxCount: number,
   totalBoxPrice: number,
+  onPressPurchase: () => void,
 }
 
 const CartTemplate = (props: Prop) => {
@@ -120,7 +121,10 @@ const CartTemplate = (props: Prop) => {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.purchaseButton}>
+        <TouchableOpacity 
+          style={styles.purchaseButton}
+          onPress={props.onPressPurchase}
+        >
           <Text style={styles.purchaseText}>
             결제하기  
           </Text>  

@@ -5,6 +5,8 @@ import CartPage from '@components/pages/CartPage'
 import SearchPage from '@components/pages/SearchPage'
 import HomePage from '@components/pages/HomePage'
 import AddToCartPage from '@components/pages/AddToCartPage'
+import PaymentPage from '@components/pages/PaymentPage'
+import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 
 const HomeStackScreen = () => {
   const HomeStack = createStackNavigator()
@@ -26,7 +28,6 @@ const HomeStackScreen = () => {
         component={BoxInfoPage}
       />
 
-      {/* 여기 아래 타입들 추가 */}
       <HomeStack.Screen
         name="Cart"
         component={CartPage}
@@ -41,6 +42,16 @@ const HomeStackScreen = () => {
         name="Search"
         component={SearchPage}
         options={{ animationEnabled: false, }}
+      />
+
+      <HomeStack.Screen
+        name="Payment"
+        component={PaymentPage}
+      />
+
+      <HomeStack.Screen
+        name="PaymentComplete"
+        component={PaymentCompletePage}
       />
     </HomeStack.Navigator>
   )

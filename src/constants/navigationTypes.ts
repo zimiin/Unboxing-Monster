@@ -46,6 +46,8 @@ export type HomeStackParamList = {
   AddToCart: { boxId: number }
   Search: undefined
   Cart: undefined
+  Payment: undefined
+  PaymentComplete: undefined
 }
 
 export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>
@@ -76,4 +78,18 @@ export type CartNavigationProp = StackNavigationProp<HomeStackParamList, 'Cart'>
 export type CartRouteProp = RouteProp<HomeStackParamList, 'Cart'>
 export type CartProps = {
   navigation: CartNavigationProp
+}
+
+export type PaymentNavigationProp = StackNavigationProp<HomeStackParamList, 'Payment'>
+export type PaymentRouteProp = RouteProp<HomeStackParamList, 'Payment'>
+export type PaymentProps = {
+  route: PaymentRouteProp
+  navigation: PaymentNavigationProp
+}
+
+export type PaymentCompleteNavigationProp = StackNavigationProp<HomeStackParamList, 'PaymentComplete'>
+export type PaymentCompleteRouteProp = RouteProp<HomeStackParamList, 'PaymentComplete'>
+export type PaymentCompleteProps = {
+  route: PaymentCompleteRouteProp
+  navigation: PaymentCompleteNavigationProp
 }

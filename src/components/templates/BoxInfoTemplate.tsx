@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import SubTitle from '@components/atoms/typography/SubTitle'
-import AddToCartButton from '@components/atoms/button/AddToCartButton'
+import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import Footer from '@components/molecules/Footer'
 import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
 import ToIntroButton from '@components/atoms/button/ToIntroButton'
@@ -105,7 +105,10 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
         </ScrollView>
       </View>
 
-      <AddToCartButton onPress={props.onPressAddToCart}/>
+      <FullWidthButton 
+        onPress={props.onPressAddToCart}
+        content='장바구니에 담기'
+      />
     </>
   )
 }

@@ -1,42 +1,43 @@
 import React from 'react'
 import {
-  TouchableOpacity,
+  View,
   Text,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native'
+import { scale } from 'react-native-size-matters'
 
 interface Props {
   onPress: () => void,
+  content: string
 }
 
-const AddToCartButton = (props: Props) => {
+const GreyButton = (props: Props) => {
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={props.onPress}
     >
       <Text style={styles.text}>
-        장바구니에 담기
+        {props.content}
       </Text>
     </TouchableOpacity>
   )
 }
 
-export default AddToCartButton
+export default GreyButton
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#29a3ff',
-    flexDirection: 'row',
-    width: '100%',
+    backgroundColor: '#eef1f2',
+    width: scale(312),
+    height: 48,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 18,
-    paddingBottom: 19,
   },
   text: {
+    fontSize: 14,
     fontWeight: 'bold',
-    fontSize: 16,
-    color: 'white',
   }
 })
