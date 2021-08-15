@@ -5,12 +5,12 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import {
   View,
-  Text,
 } from 'react-native'
 import { verticalScale } from 'react-native-size-matters'
 
 interface Props {
   onPressGoHome: () => void,
+  onPressGoStorage: () => void,
 }
 
 const PaymentCompleteTemplate = (props: Props) => {
@@ -26,7 +26,7 @@ const PaymentCompleteTemplate = (props: Props) => {
 
       <View style={styles.buttonContainer}>
         <GreyButton
-          onPress={() => console.log('보관함으로!!')}
+          onPress={props.onPressGoStorage}
           content={'보관함으로 가기'}
         />
 

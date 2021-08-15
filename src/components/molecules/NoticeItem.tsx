@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native'
-import { noticeInfo } from '@constants/types'
+import { Notice } from '@constants/types'
 
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = SLIDER_WIDTH
 
-const NoticeItem = ({ item, index }: { item: noticeInfo, index: number }) => {
+const NoticeItem = ({ item, index }: { item: Notice, index: number }) => {
   const handlePress = () => {
     Linking.canOpenURL(item.srcUrl).then(supported => {
       if (supported) {

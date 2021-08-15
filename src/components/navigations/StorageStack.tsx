@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Storage from '@components/pages/Storage'
+import StoragePage from '@components/pages/StoragePage'
 
 const StorageStack = () => {
   const StorageStack = createStackNavigator()
@@ -8,10 +8,13 @@ const StorageStack = () => {
   return (
     <StorageStack.Navigator
       initialRouteName="Storage"
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <StorageStack.Screen
         name="Storage"
-        component={Storage}
+        component={StoragePage}
       />
     </StorageStack.Navigator>
   )

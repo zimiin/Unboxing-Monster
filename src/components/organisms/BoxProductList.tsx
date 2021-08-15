@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 
 import TwoColumnBoxList from '@components/molecules/TwoColumnBoxList'
 
-import { boxProductInfo } from '@constants/types'
+import { Box } from '@constants/types'
 
 const BoxProductList = () => {
-  const [data, setData] = useState<boxProductInfo[]>([{
+  const [data, setData] = useState<Box[]>([{
     id: 0,
     title: '',
     price: 0,

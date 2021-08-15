@@ -1,17 +1,25 @@
 import React from 'react'
+import { StyleProp, TextStyle } from 'react-native'
 import {
   Text,
 } from 'react-native'
 
-const SubTitle = ({ content }: { content: string }) => {
+interface Props {
+  content: string, 
+  style?: StyleProp<TextStyle>
+}
+
+const SubTitle = (props: Props) => {
   return (
     <Text
-      style={{
+      style={[{
         fontSize: 15,
         fontWeight: 'bold',
-      }}
+      },
+      props.style
+    ]}
     >
-      {content}
+      {props.content}
     </Text>
   )
 }

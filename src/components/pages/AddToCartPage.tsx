@@ -1,13 +1,13 @@
 import AddToCartTemplate from '@components/templates/AddToCartTemplate'
 import React, { useState, useEffect } from 'react'
-import { BoxDataType } from 'constants/types'
+import { BoxWithItems } from 'constants/types'
 import { defaultBox } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'
 import { useContext } from 'react'
 import { AddToCartNavigationProp, AddToCartRouteProp } from '@constants/navigationTypes'
 
 const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navigation: AddToCartNavigationProp }) => {
-  const [data, setData] = useState<BoxDataType>()
+  const [data, setData] = useState<BoxWithItems>()
   const [count, setCount] = useState(1)
   const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
 

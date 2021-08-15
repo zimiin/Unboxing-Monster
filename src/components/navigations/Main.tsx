@@ -5,18 +5,18 @@ import HomeStack from '@components/navigations/HomeStack'
 import CustomBoxStack from '@components/navigations/CustomBoxStack'
 import StorageStack from '@components/navigations/StorageStack'
 import MyPageStack from '@components/navigations/MyPageStack'
+import { BottomTabParamList } from '@constants/navigationTypes'
 
-const Tab = createBottomTabNavigator()
+const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
 const Main = () => {
   return (
-    <Tab.Navigator
+    <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) =>
           <TabIcon tabName={route.name} focused={focused} />,
-      }
-      )}
+      })}
       tabBarOptions={{
         showLabel: false,
         tabStyle: {
@@ -25,11 +25,11 @@ const Main = () => {
       }}
 
     >
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="CustomBox" component={CustomBoxStack} />
-      <Tab.Screen name="Storage" component={StorageStack} />
-      <Tab.Screen name="MyPage" component={MyPageStack} />
-    </Tab.Navigator>
+      <BottomTab.Screen name="Home" component={HomeStack} />
+      <BottomTab.Screen name="CustomBox" component={CustomBoxStack} />
+      <BottomTab.Screen name="Storage" component={StorageStack} />
+      <BottomTab.Screen name="MyPage" component={MyPageStack} />
+    </BottomTab.Navigator>
   )
 }
 

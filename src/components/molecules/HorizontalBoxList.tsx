@@ -5,10 +5,10 @@ import {
   StyleSheet,
 } from 'react-native'
 import BoxItem from '@components/molecules/BoxItem'
-import { boxProductInfo } from '@constants/types'
+import { Box } from '@constants/types'
 
 interface Props {
-  items: boxProductInfo[]
+  items: Box[]
 }
 
 const HorizontalBoxList = (props: Props) => {

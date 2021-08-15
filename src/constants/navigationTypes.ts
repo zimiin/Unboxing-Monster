@@ -1,4 +1,5 @@
-import { RouteProp } from '@react-navigation/native'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 
 // Root Stack
@@ -39,6 +40,42 @@ export type RegisterProps = {
   navigation: RegisterNavigationProp
 }
 
+// Bottom Tab
+export type BottomTabParamList = {
+  Home: undefined,
+  CustomBox: undefined,
+  Storage: undefined,
+  MyPage: undefined
+}
+
+export type HomeTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Home'>
+export type HomeTabRouteProp = RouteProp<BottomTabParamList, 'Home'>
+export type HomeTabProps = {
+  route: HomeTabRouteProp,
+  navigation: HomeTabNavigationProp
+}
+
+export type CustomBoxTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'CustomBox'>
+export type CustomBoxTabRouteProp = RouteProp<BottomTabParamList, 'CustomBox'>
+export type CustomBoxTabProps = {
+  route: CustomBoxTabRouteProp,
+  navigation: CustomBoxTabNavigationProp
+}
+
+export type StorageTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'Storage'>
+export type StorageTabRouteProp = RouteProp<BottomTabParamList, 'Storage'>
+export type StorageTabProps = {
+  route: StorageTabRouteProp,
+  navigation: StorageTabNavigationProp
+}
+
+export type MyPageTabNavigationProp = BottomTabNavigationProp<BottomTabParamList, 'MyPage'>
+export type MyPageTabRouteProp = RouteProp<BottomTabParamList, 'MyPage'>
+export type MyPageTabProps = {
+  route: MyPageTabRouteProp,
+  navigation: MyPageTabNavigationProp
+}
+
 // Home Stack
 export type HomeStackParamList = {
   Home: undefined
@@ -47,7 +84,7 @@ export type HomeStackParamList = {
   Search: undefined
   Cart: undefined
   Payment: undefined
-  PaymentComplete: undefined
+  PaymentComplete: { paymentId: number }
 }
 
 export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>
@@ -87,7 +124,10 @@ export type PaymentProps = {
   navigation: PaymentNavigationProp
 }
 
-export type PaymentCompleteNavigationProp = StackNavigationProp<HomeStackParamList, 'PaymentComplete'>
+export type PaymentCompleteNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<HomeStackParamList, 'PaymentComplete'>,
+  BottomTabNavigationProp<BottomTabParamList, 'Home'>
+>
 export type PaymentCompleteRouteProp = RouteProp<HomeStackParamList, 'PaymentComplete'>
 export type PaymentCompleteProps = {
   route: PaymentCompleteRouteProp

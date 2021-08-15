@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper'
 import { IMAGES } from '@constants/images'
 import SwipeImage from '@components/atoms/SwipeImage'
 import SwipeDot from '@components/atoms/SwipeDot'
-import Bold from '@components/atoms/Bold'
+import Bold from '@components/atoms/typography/Bold'
 import SwiperSlide from '@components/organisms/SwiperSlide'
 
 

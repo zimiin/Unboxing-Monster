@@ -7,10 +7,10 @@ import {
 
 import HorizontalBoxList from '@components/molecules/HorizontalBoxList'
 
-import { boxProductInfo } from '@constants/types'
+import { Box } from '@constants/types'
 
 const HotBoxList = () => {
-  const [data, setData] = useState<boxProductInfo[]>([{
+  const [data, setData] = useState<Box[]>([{
     id: 0,
     title: '',
     price: 0,

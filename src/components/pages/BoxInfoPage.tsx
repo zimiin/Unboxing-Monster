@@ -9,10 +9,10 @@ import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
 import Body from '@components/atoms/typography/Body'
 import BoxListItem from '@components/molecules/BoxListItem'
 import { BoxInfoProps } from '@constants/navigationTypes'
-import { BoxDataType } from '@constants/types'
+import { BoxWithItems } from '@constants/types'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
-  const [data, setData] = useState<BoxDataType>({
+  const [data, setData] = useState<BoxWithItems>({
     id: route.params.boxId,
     title: '',
     price: 0,

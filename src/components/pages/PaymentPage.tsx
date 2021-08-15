@@ -1,8 +1,4 @@
 import React, { useContext, useState } from 'react'
-import {
-  View,
-  Text,
-} from 'react-native'
 import PaymentTemplate from '@components/templates/PaymentTemplate'
 import { PaymentProps } from '@constants/navigationTypes'
 import { CartContext } from '@src/stores/CartContext'
@@ -101,7 +97,8 @@ const PaymentPage = (props: PaymentProps) => {
         throw 'Payment failed.'
       }
       
-      props.navigation.push('PaymentComplete')
+      const json = await response.json()
+      props.navigation.push('PaymentComplete', {paymentId: json.id})
     } catch (error) {
       console.error(error)
     }

@@ -48,8 +48,6 @@ const Login = ({ navigation }: LoginProps) => {
       AsyncStorage.setItem('token', responseJson.access_token)
       AsyncStorage.setItem('user_email', responseJson.email)
       console.log(responseJson.email, 'has logged in')
-      // TODO
-      // 페이지 이동하기 & token으로 helloworld 출력
     } else {
       console.log('Wrong email or password')
       setErrorText('이메일 또는 비밀번호를 확인해주세요.')

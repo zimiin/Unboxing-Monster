@@ -6,9 +6,9 @@ import {
 
 import BoxItem from '@components/molecules/BoxItem'
 
-import { boxProductInfo } from '@constants/types'
+import { Box } from '@constants/types'
 
-const TwoColumnBoxList = ({ items }: { items: boxProductInfo[] }) => {
+const TwoColumnBoxList = ({ items }: { items: Box[] }) => {
   const boxItems = items.map((item) => {
     return (
       <View

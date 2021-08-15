@@ -4,13 +4,13 @@ import {
 } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '@components/molecules/NoticeItem'
-import { noticeInfo } from "@constants/types"
+import { Notice } from "@constants/types"
 import { useEffect } from "react"
 
 const NoticeBox = () => {
   const isCarousel = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [noticeData, setNoticeData] = useState<noticeInfo[]>([{
+  const [noticeData, setNoticeData] = useState<Notice[]>([{
     id: 0,
     imgUrl: '',
     srcUrl: '',

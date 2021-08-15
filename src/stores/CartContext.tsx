@@ -6,7 +6,7 @@ type Context = [
   {cart: Map<BoxId, CartItem>},
   {
     modifyBoxCount: (boxId: number, count: number) => void,
-    deleteFromCart: (boxId: number) => void,
+    deleteFromCart: (boxes: number[]) => void,
     setChecked: (boxId: number, bool: boolean) => void,
     setCheckedToAll: (bool: boolean) => void
   }
@@ -16,7 +16,7 @@ const defaultContext: Context = [
   {cart: new Map<BoxId, CartItem>()},
   {
     modifyBoxCount: (boxId: number, count: number) => {},
-    deleteFromCart: (boxId: number) => {},
+    deleteFromCart: (boxes: number[]) => {},
     setChecked: (boxId: number, bool: boolean) => {},
     setCheckedToAll: (bool: boolean) => {}
   }
@@ -52,13 +52,15 @@ const CartContextProvider = (props: Props) => {
     setCart(curCart)
   }
 
-  const deleteFromCart = (boxId: number) => {
+  const deleteFromCart = (boxes: number[]) => {
     let curCart = new Map(cart)
-
-    if (curCart.has(boxId)) {
-      curCart.delete(boxId)
+    
+    for (let boxId of boxes) {
+      if (curCart.has(boxId)) {
+        curCart.delete(boxId)
+      }
     }
-
+    
     setCart(curCart)
   }
 

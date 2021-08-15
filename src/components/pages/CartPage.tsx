@@ -33,7 +33,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
           setChecked(boxId, !item.checked)
         },
         delete: () => {
-          deleteFromCart(boxId)
+          deleteFromCart([boxId])
         },
       }
 
@@ -80,7 +80,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
         if (boxData?.has(boxId)) {
           price += item.count * boxData?.get(boxId)?.price!
         } else {
-          console.log('boxData does not has ', boxId)
+          console.log('boxData does not have ', boxId)
           price = 0
           break
         }
