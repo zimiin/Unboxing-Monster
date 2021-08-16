@@ -32,6 +32,7 @@ const HorizontalBoxList = (props: Props) => {
         horizontal={true}
         style={{
           marginTop: 26,
+          marginLeft: windowWidth * (12 / 360)
         }}
         showsHorizontalScrollIndicator={false}
       >

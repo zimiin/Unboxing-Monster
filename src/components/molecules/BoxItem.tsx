@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         width: windowWidth * (5 / 12),
         height: windowWidth * (5 / 12),
         borderRadius: 10,
+        borderWidth: 1,
     },
     name: {
         marginTop: 14,
