@@ -5,8 +5,9 @@ import { useEffect } from "react"
 import { BoxStorage, CouponWithItem } from "@constants/types"
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import { StorageCouponData } from "@components/molecules/StorageCoupon"
+import { StorageProps } from "@constants/navigationTypes"
 
-const StoragePage = () => {
+const StoragePage = ({route, navigation}: StorageProps) => {
   const [focus, setFocus] = useState<Focus>('randomBox')
   const [boxData, setBoxData] = useState<StorageBoxData[]>()
   const [couponData, setCouponData] = useState<StorageCouponData[]>()
@@ -14,7 +15,7 @@ const StoragePage = () => {
   useEffect(() => {
     const fetchBoxStorage = async () => {
       try {
-        const url = 'http://3.37.238.160/box-storage/' + 'f4123798117741192'
+        const url = 'http://3.37.238.160/box-storage/' + 'k1804801727'
         const response = await fetch(
           url, {
           method: 'GET',
@@ -44,8 +45,24 @@ const StoragePage = () => {
           image: {uri: item.box.image},
           name: item.box.title,
           count: item.count,
-          openOneBox: () => { console.log('Open ' + 'one' + ' id:' + item.boxId + ' boxes.') },
-          openAllBox: () => { console.log('Open ' + item.count + ' id:' + item.boxId + ' boxes.') },
+          openOneBox: () => { 
+            navigation.navigate('Open', {
+              screen: 'Loading', 
+              params: {
+                boxId: item.boxId,
+                count: 1
+              }
+            }) 
+          },
+          openAllBox: () => {
+            navigation.navigate('Open', {
+              screen: 'Loading',
+              params: {
+                boxId: item.boxId,
+                count: item.count
+              }
+            })
+          },
         })
       }
 
@@ -58,7 +75,7 @@ const StoragePage = () => {
   useEffect(() => {
     const fetchCoupon = async () => {
       try {
-        const url = 'http://3.37.238.160/coupon/' + 'f4123798117741192'
+        const url = 'http://3.37.238.160/coupon/' + 'k1804801727'
         const response = await fetch(
           url, {
           method: 'GET',

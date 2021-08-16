@@ -7,14 +7,16 @@ import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '@components/molecules/Noti
 import { Notice } from "@constants/types"
 import { useEffect } from "react"
 
+const defaultNotice: Notice[] = [{
+  id: 0,
+  imgUrl: 'https://user-images.githubusercontent.com/45932570/129535240-50cb4e7b-fb8c-4315-9bfc-6a79a3b7d425.png',
+  srcUrl: 'https://swmaestro.org'
+}]
+
 const NoticeBox = () => {
   const isCarousel = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [noticeData, setNoticeData] = useState<Notice[]>([{
-    id: 0,
-    imgUrl: '',
-    srcUrl: '',
-  }])
+  const [noticeData, setNoticeData] = useState<Notice[]>()
 
   const getNoticeData = async () => {
     let url = 'http://3.37.238.160/notice'
@@ -42,7 +44,7 @@ const NoticeBox = () => {
         layout="default"
         layoutCardOffset={9}
         ref={isCarousel}
-        data={noticeData}
+        data={noticeData || defaultNotice}
         renderItem={NoticeItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
@@ -56,7 +58,7 @@ const NoticeBox = () => {
       />
 
       <Pagination
-        dotsLength={noticeData.length} // 여기에 보여줄 공지 개수
+        dotsLength={noticeData ? noticeData.length : 1} // 여기에 보여줄 공지 개수
         activeDotIndex={activeSlide}
         containerStyle={{
           backgroundColor: 'rgba(0, 0, 0, 0.0)',

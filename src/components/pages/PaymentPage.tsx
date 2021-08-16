@@ -86,18 +86,19 @@ const PaymentPage = (props: PaymentProps) => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            ownerId: "f4123798117741192",
+            ownerId: "k1804801727",
             price: totalPrice,
             boxes: getBoxList()
           })
         }
       )
-
-      if (response.status !== 201) {
-        throw 'Payment failed.'
-      }
       
       const json = await response.json()
+      
+      if (response.status !== 201) {
+        throw 'Payment failed. : ' + json.message
+      }
+      
       props.navigation.push('PaymentComplete', {paymentId: json.id})
     } catch (error) {
       console.error(error)
