@@ -42,8 +42,8 @@ const HorizontalBoxList = (props: Props) => {
 export default HorizontalBoxList
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginRight: 15,
-  },
-})
+    container: {
+        alignItems: 'center',
+        marginLeft: windowWidth * (12 / 360)
+    },
+});

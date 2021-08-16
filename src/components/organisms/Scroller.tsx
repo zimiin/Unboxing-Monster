@@ -36,20 +36,26 @@ const Scroller = () => {
 export default Scroller
 
 const styles = StyleSheet.create({
-  container: {
-    width: SCROLLER_WIDTH,
-    height: 48,
-    backgroundColor: '#535353',
-    alignSelf: 'center',
-    position: 'absolute',
-    top: 228,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#29a3ff',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#fffffc',
-    fontSize: 15,
-  }
-})
+    container: {
+        width: SCROLLER_WIDTH,
+        height: 48,
+        backgroundColor: '#535353',
+        alignSelf: 'center',
+        position: 'absolute',
+        top: 228,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#29a3ff',
+        justifyContent: 'center',
+        shadowColor: '#29a3ff33',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 1,
+    },
+    text: {
+        color: '#fffffc',
+        fontSize: 15,
+    }
+});
