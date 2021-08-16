@@ -2,11 +2,14 @@ import React from 'react'
 import {
   View,
   StyleSheet,
+  Dimensions,
 } from 'react-native'
 
 import BoxItem from '@components/molecules/BoxItem'
 
 import { Box } from '@constants/types'
+
+const windowWidth = Dimensions.get('window').width;
 
 const TwoColumnBoxList = ({ items }: { items: Box[] }) => {
   const boxItems = items.map((item) => {
@@ -43,16 +46,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: 300,
-    alignSelf: 'center',
-    marginTop: 60,
-  },
-  boxContainer: {
-    width: '50%',
-    marginBottom: 28,
-    alignItems: 'center',
-  }
-})

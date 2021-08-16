@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
   StyleSheet,
+  Dimensions,
 } from 'react-native'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box } from '@constants/types'
@@ -10,6 +11,8 @@ import { Box } from '@constants/types'
 interface Props {
   items: Box[]
 }
+
+const windowWidth = Dimensions.get('window').width;
 
 const HorizontalBoxList = (props: Props) => {
   const boxItems = props.items.map((item) => {
