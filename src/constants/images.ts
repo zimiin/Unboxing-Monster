@@ -16,7 +16,10 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   intro_02: require('assets/images/img_intro_02.png'),
   intro_03: require('assets/images/img_intro_03.png'),
   intro_04: require('assets/images/img_intro_04.png'),
-  open_loading: require('assets/images/open_loading.gif')
+  open_loading: require('assets/images/open_loading.gif'),
+  unopen_box: require('assets/images/img_unbox_01.png'),
+  open_box: require('assets/images/img_unbox_03.png'),
+  result_box: require('assets/images/img_gift_result.png')
 }
 
 export const defaultBox = "https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png"

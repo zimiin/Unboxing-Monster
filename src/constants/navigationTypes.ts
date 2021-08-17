@@ -161,6 +161,8 @@ export type StorageProps = {
 // Open Stack
 export type OpenStackParamList = {
   Loading: { boxId: number, count: number },
+  Opening: { result: number[] },
+  OpenResult: { result: number[] }
 }
 
 export type LoadingNavigationProp = StackNavigationProp<OpenStackParamList, 'Loading'>
@@ -168,4 +170,18 @@ export type LoadingRouteProp = RouteProp<OpenStackParamList, 'Loading'>
 export type LoadingProps = {
   route: LoadingRouteProp
   navigation: LoadingNavigationProp
+}
+
+export type OpeningNavigationProp = StackNavigationProp<OpenStackParamList, 'Opening'>
+export type OpeningRouteProp = RouteProp<OpenStackParamList, 'Opening'>
+export type OpeningProps = {
+  route: OpeningRouteProp
+  navigation: OpeningNavigationProp
+}
+
+export type OpenResultNavigationProp = StackNavigationProp<OpenStackParamList, 'OpenResult'>
+export type OpenResultRouteProp = RouteProp<OpenStackParamList, 'OpenResult'>
+export type OpenResultProps = {
+  route: OpenResultRouteProp
+  navigation: OpenResultNavigationProp
 }

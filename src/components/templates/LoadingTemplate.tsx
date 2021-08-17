@@ -3,21 +3,18 @@ import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
   View,
-  Text,
   Image,
+  StyleSheet,
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 
+interface Props {
+  
+}
+
 const LoadingTemplate = () => {
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       <Bold
         style={{
           fontSize: 17,
@@ -39,3 +36,13 @@ const LoadingTemplate = () => {
 }
 
 export default LoadingTemplate
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    flex: 1,
+  },
+
+})
