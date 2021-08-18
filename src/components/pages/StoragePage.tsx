@@ -118,7 +118,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   }, [])  
 
   return (
-    <>
     <StorageTemplate
       focusOn={focus}
       onPressRandomBoxTab={() => setFocus('randomBox')}
@@ -126,10 +125,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       boxData={boxData || []}
       couponData={couponData || []}
     />
-    <TouchableOpacity
-      onPress={() => navigation.push('Open', {screen: 'OpenResult'})}
-      ><Text>To Result Page</Text></TouchableOpacity>
-    </>
   )
 }
 

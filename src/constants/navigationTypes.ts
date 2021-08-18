@@ -179,7 +179,10 @@ export type OpeningProps = {
   navigation: OpeningNavigationProp
 }
 
-export type OpenResultNavigationProp = StackNavigationProp<OpenStackParamList, 'OpenResult'>
+export type OpenResultNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<OpenStackParamList, 'OpenResult'>,
+  StackNavigationProp<RootStackParamList, 'Open'>
+>
 export type OpenResultRouteProp = RouteProp<OpenStackParamList, 'OpenResult'>
 export type OpenResultProps = {
   route: OpenResultRouteProp
