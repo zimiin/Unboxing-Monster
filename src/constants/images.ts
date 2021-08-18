@@ -1,5 +1,5 @@
 import {
-  ImageSourcePropType,
+  ImageSourcePropType, requireNativeComponent,
 } from 'react-native'
 
 export const IMAGES: { [k: string]: ImageSourcePropType } = {
@@ -20,7 +20,8 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   unopen_box: require('assets/images/img_unbox_01.png'),
   open_box: require('assets/images/img_unbox_03.png'),
   result_box: require('assets/images/img_gift_result.png'),
-  notice: require('assets/images/ic_notice.png')
+  notice: require('assets/images/ic_notice.png'),
+  box_opening: require('assets/images/box_opening.gif')
 }
 
 export const defaultBox = "https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png"

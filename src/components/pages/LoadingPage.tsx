@@ -16,6 +16,35 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
       return arr.map(strNum => parseInt(strNum))
     }
 
+    const postCoupon = async (item: number[]) => {
+      for (let itemId of item) {
+        try {
+          const response = await fetch(
+            'http://3.37.238.160/coupon',
+            {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                ownerId: 'k1804801727',
+                itemId: itemId,
+                qr: 'https://user-images.githubusercontent.com/45932570/129915902-c08ed219-fcc7-495d-b712-d8e2b3f6a4d4.png'
+              })
+            }
+          )
+
+          if (response.status !== 201) {
+            const json = await response.json()
+            throw json.message + ' url: ' + response.url
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    }
+
     const requestBoxOpen = async () => {
       try {
         const url = 'http://3.37.238.160/box/open/' + route.params.boxId
@@ -27,7 +56,6 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
             'Content-Type': 'text/html'
           }
         })
-
         
         if (response.status === 500) {
           setModalVisible(true)
@@ -41,6 +69,10 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
         }
         
         const result = await parseStringArray(await response.text())
+        
+        // 결과에 해당하는 모바일쿠폰 디비에 저장
+        await postCoupon(result)
+
         navigation.push('Opening', { result: result })
       } catch (error) {
         console.error(error)
