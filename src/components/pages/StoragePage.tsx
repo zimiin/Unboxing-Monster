@@ -6,7 +6,6 @@ import { BoxStorage, CouponWithItem } from "@constants/types"
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import { StorageCouponData } from "@components/molecules/StorageCoupon"
 import { StorageProps } from "@constants/navigationTypes"
-import { Text, TouchableOpacity} from 'react-native'
 
 const StoragePage = ({route, navigation}: StorageProps) => {
   const [focus, setFocus] = useState<Focus>('randomBox')

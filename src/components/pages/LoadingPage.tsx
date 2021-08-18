@@ -3,12 +3,10 @@ import { LoadingProps } from '@constants/navigationTypes'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import {
-  View,
-  Text,
-} from 'react-native'
 
 const LoadingPage = ({route, navigation}: LoadingProps) => {
+  const [modalVisible, setModalVisible] = useState(false)
+
   useEffect(() => {
     const parseStringArray = async (str: string) => {
       str = str.replace(/'/g, '\"')
@@ -32,7 +30,8 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
 
         
         if (response.status === 500) {
-          // TODO 블록체인 오류 안내 띄우기
+          setModalVisible(true)
+          throw 'Bolckchain server error'
         }
         
         if (response.status !== 200) {
@@ -53,7 +52,8 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
 
   return (
     <LoadingTemplate  
-      
+      modalVisible={modalVisible}
+      onRequestModalClose={() => navigation.navigate('Main')}
     />
   )
 }

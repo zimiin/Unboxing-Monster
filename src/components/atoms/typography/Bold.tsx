@@ -9,9 +9,7 @@ import {
 } from 'react-native'
 
 interface Props extends TextProps {
-  children: string,
-  // style?: StyleProp<TextStyle>
-  // numberOfLines?: number,
+  children: string
 }
 
 const Bold = (props: Props) => {

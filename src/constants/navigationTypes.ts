@@ -165,7 +165,10 @@ export type OpenStackParamList = {
   OpenResult: { result: number[] }
 }
 
-export type LoadingNavigationProp = StackNavigationProp<OpenStackParamList, 'Loading'>
+export type LoadingNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<OpenStackParamList, 'Loading'>,
+  StackNavigationProp<RootStackParamList, 'Open'>
+>
 export type LoadingRouteProp = RouteProp<OpenStackParamList, 'Loading'>
 export type LoadingProps = {
   route: LoadingRouteProp
