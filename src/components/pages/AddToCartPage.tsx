@@ -24,7 +24,7 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
     if (data) {
       modifyBoxCount(data?.id, count)
     }
-    navigation.goBack()
+    navigation.navigate('Home')
   }
 
   useEffect(() => {
