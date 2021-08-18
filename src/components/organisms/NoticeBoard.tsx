@@ -1,22 +1,31 @@
 import React, { useState, useRef } from "react"
 import {
   View,
+  Linking,
 } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH } from '@components/molecules/NoticeItem'
+import NoticeItem, { SLIDER_WIDTH, ITEM_WIDTH, NoticeItemProps } from '@components/molecules/NoticeItem'
 import { Notice } from "@constants/types"
 import { useEffect } from "react"
 
-const defaultNotice: Notice[] = [{
-  id: 0,
-  imgUrl: 'https://user-images.githubusercontent.com/45932570/129535240-50cb4e7b-fb8c-4315-9bfc-6a79a3b7d425.png',
-  srcUrl: 'https://swmaestro.org'
+const defaultNotice: NoticeItemProps[] = [{
+  item: {
+    id: 0,
+    imgUrl: 'https://user-images.githubusercontent.com/45932570/129535240-50cb4e7b-fb8c-4315-9bfc-6a79a3b7d425.png',
+    srcUrl: 'https://swmaestro.org'
+  },
+  index: 0,
+  onPress: () => console.log('Notice is pressed')
 }]
 
-const NoticeBox = () => {
+interface Props {
+  onPressIntro: () => void
+}
+
+const NoticeBox = (props: Props) => {
   const isCarousel = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [noticeData, setNoticeData] = useState<Notice[]>()
+  const [noticeData, setNoticeData] = useState<NoticeItemProps[]>()
 
   const getNoticeData = async () => {
     let url = 'http://3.37.238.160/notice'
@@ -28,8 +37,31 @@ const NoticeBox = () => {
       }
     })
     if (response.status === 200) {
-      let json = await response.json()
-      setNoticeData(json)
+      let json: Notice[] = await response.json()
+      const noticeData: NoticeItemProps[] = json.map(
+        (item, index) => {
+          let onPress: () => void
+
+          if (index === 0) {
+            onPress = props.onPressIntro
+          } else {
+            onPress = () => {
+              Linking.canOpenURL(item.srcUrl).then(supported => {
+                if (supported) {
+                  Linking.openURL(item.srcUrl)
+                } else {
+                  console.log("Don't know how to open URI: " + item.srcUrl)
+                }
+              })
+            }
+          }
+          return {
+            item: item,
+            index: index,
+            onPress: onPress
+          }
+      })
+      setNoticeData(noticeData)
     } else {
       console.log('No reponse! url:', url)
     }
