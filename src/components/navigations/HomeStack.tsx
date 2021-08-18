@@ -7,9 +7,10 @@ import HomePage from '@components/pages/HomePage'
 import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
+import { HomeStackParamList } from '@constants/navigationTypes'
 
 const HomeStackScreen = () => {
-  const HomeStack = createStackNavigator()
+  const HomeStack = createStackNavigator<HomeStackParamList>()
 
   return (
     <HomeStack.Navigator

@@ -3,13 +3,14 @@ import PaymentCompleteTemplate from '@components/templates/PaymentCompleteTempla
 import { PaymentCompleteProps } from '@constants/navigationTypes'
 import { useEffect, useContext } from 'react'
 import { CartContext } from '@src/stores/CartContext'
+import { CommonActions, NavigationContainer } from '@react-navigation/native'
 
-const PaymentCompletePage = (props: PaymentCompleteProps) => {
+const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
 
   useEffect(() => {
     const getPaidItemList = async () => {
-      const paymentId = props.route.params.paymentId
+      const paymentId = route.params.paymentId
 
       try {
         const response = await fetch(
@@ -59,10 +60,25 @@ const PaymentCompletePage = (props: PaymentCompleteProps) => {
 
   return (
     <PaymentCompleteTemplate
-      onPressGoHome={() => props.navigation.navigate('Home')}
+      onPressGoHome={() => {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{
+              name: 'Home'
+            }]
+          })
+        )
+      }}
       onPressGoStorage={() => {
-        props.navigation.navigate('Home')
-        props.navigation.jumpTo('Storage')
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{
+              name: 'Storage'
+            }]
+          })
+        )
       }}
     />
   )

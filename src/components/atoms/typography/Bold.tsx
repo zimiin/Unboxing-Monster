@@ -1,25 +1,29 @@
 import React from 'react'
-import { StyleProp, TextStyle } from 'react-native'
+import { 
+  StyleProp, 
+  TextStyle,
+  TextProps,
+} from 'react-native'
 import {
   Text
 } from 'react-native'
 
-interface Props { 
-  children: string,
-  style?: StyleProp<TextStyle>
-  numberOfLines?: number,
+interface Props extends TextProps {
+  children: string
 }
 
 const Bold = (props: Props) => {
+  const { style, children, ...rest } = props
+
   return (
     <Text 
+      {...rest}
       style={[
         { fontWeight: 'bold' }, 
-        props.style
+        style
       ]}
-      numberOfLines={props.numberOfLines}
     >
-      {props.children}
+      {children}
     </Text>
   )
 }

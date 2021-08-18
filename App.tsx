@@ -6,6 +6,7 @@ import Auth from '@components/pages/Auth'
 import Main from '@components/navigations/Main'
 import { RootStackParamList } from '@constants/navigationTypes'
 import CartContextProvider from '@src/stores/CartContext'
+import OpenStack from '@components/navigations/OpenStack'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -13,7 +14,12 @@ const App = () => {
   return (
     <CartContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Splash">
+        <Stack.Navigator 
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false
+          }}
+        >
         {/* <Stack.Navigator initialRouteName="test">
           <Stack.Screen
             name="test"
@@ -24,19 +30,21 @@ const App = () => {
           <Stack.Screen 
             name="Splash"
             component={SplashPage}
-            options={{headerShown: false}}
           />
           
           <Stack.Screen 
             name="Auth"
             component={Auth}
-            options={{headerShown: false}}
           />
 
           <Stack.Screen
             name="Main"
             component={Main}
-            options={{headerShown: false}}
+          />
+
+          <Stack.Screen
+            name="Open"
+            component={OpenStack}
           />
         </Stack.Navigator>
       </NavigationContainer>

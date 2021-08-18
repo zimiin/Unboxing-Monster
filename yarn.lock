@@ -1485,9 +1485,9 @@
     "xmldoc" "^1.1.2"
 
 "@react-native-community/cli-platform-ios@^5.0.1-alpha.0":
-  "integrity" "sha512-Nr/edBEYJfElgBNvjDevs2BuDicsvQaM8nYkTGgp33pyuCZRBxsYxQqfsNmnLalTzcYaebjWj6AnjUSxzQBWqg=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.1.tgz"
-  "version" "5.0.1"
+  "integrity" "sha512-IAJ2B3j2BTsQUJZ4R6cVvnTbPq0Vza7+dOgP81ISz2BKRtQ0VqNFv+VOALH2jLaDzf4t7NFlskzIXFqWqy2BLg=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.2.tgz"
+  "version" "5.0.2"
   dependencies:
     "@react-native-community/cli-tools" "^5.0.1"
     "chalk" "^3.0.0"
@@ -9322,13 +9322,13 @@
     "find-up" "^3.0.0"
 
 "plist@^3.0.1":
-  "integrity" "sha512-MSrkwZBdQ6YapHy87/8hDU8MnIcyxBKjeF+McXnr5A9MtffPewTs7G3hlpodT5TacyfIyFTaJEhh3GGcmasTgQ=="
-  "resolved" "https://registry.npmjs.org/plist/-/plist-3.0.2.tgz"
-  "version" "3.0.2"
+  "integrity" "sha512-ghdOKN99hh1oEmAlwBmPYo4L+tSQ7O3jRpkhWqOrMz86CWotpVzMevvQ+czo7oPDpOZyA6K06Ci7QVHpoh9gaA=="
+  "resolved" "https://registry.npmjs.org/plist/-/plist-3.0.3.tgz"
+  "version" "3.0.3"
   dependencies:
     "base64-js" "^1.5.1"
     "xmlbuilder" "^9.0.7"
-    "xmldom" "^0.5.0"
+    "xmldom" "^0.6.0"
 
 "pnp-webpack-plugin@1.5.0":
   "integrity" "sha512-jd9olUr9D7do+RN8Wspzhpxhgp1n6Vd0NtQ4SFkmIACZoEL1nkyAdW9Ygrinjec0vgDcWjscFQQ1gDW8rsfKTg=="
@@ -9900,7 +9900,7 @@
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
-"react-native-animatable@1.3.3":
+"react-native-animatable@^1.3.3", "react-native-animatable@1.3.3":
   "integrity" "sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w=="
   "resolved" "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.3.tgz"
   "version" "1.3.3"
@@ -12370,10 +12370,10 @@
   dependencies:
     "sax" "^1.2.1"
 
-"xmldom@^0.5.0":
-  "integrity" "sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA=="
-  "resolved" "https://registry.npmjs.org/xmldom/-/xmldom-0.5.0.tgz"
-  "version" "0.5.0"
+"xmldom@^0.6.0":
+  "integrity" "sha512-iAcin401y58LckRZ0TkI4k0VSM1Qg0KGSc3i8rU+xrxe19A/BN1zHyVSJY7uoutVlaTSzYyk/v5AmkewAP7jtg=="
+  "resolved" "https://registry.npmjs.org/xmldom/-/xmldom-0.6.0.tgz"
+  "version" "0.6.0"
 
 "xtend@^4.0.0", "xtend@~4.0.1":
   "integrity" "sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ=="

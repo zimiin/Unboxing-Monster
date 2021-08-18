@@ -103,7 +103,6 @@ export default StorageTemplate
 
 const styles = StyleSheet.create({
   container: { 
-    paddingBottom: 15, 
     flex: 1, 
     backgroundColor: 'white' 
   },

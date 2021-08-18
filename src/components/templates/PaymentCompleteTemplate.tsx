@@ -25,17 +25,20 @@ const PaymentCompleteTemplate = (props: Props) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <GreyButton
+        <GreyButton 
           onPress={props.onPressGoStorage}
-          content={'보관함으로 가기'}
-        />
+        >
+          보관함으로 가기
+        </GreyButton>
 
-        <View style={styles.belowButtonContainer}>
-          <GreyButton
-            onPress={props.onPressGoHome}
-            content={'홈으로 돌아가기'}
-          />
-        </View>
+        <GreyButton 
+          onPress={props.onPressGoHome}
+          style={{
+            marginTop: 8,
+          }}  
+        >
+          홈으로 돌아가기
+        </GreyButton>
       </View>
     </View>
   )
@@ -59,8 +62,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     marginBottom: 60,
-  },
-  belowButtonContainer: {
-    marginTop: 8,
   }
 })

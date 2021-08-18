@@ -1,4 +1,5 @@
 import React from 'react'
+import { TouchableOpacityProps } from 'react-native'
 import {
   View,
   Text,
@@ -7,19 +8,21 @@ import {
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 
-interface Props {
+interface Props extends TouchableOpacityProps {
   onPress: () => void,
-  content: string
+  children: string
 }
 
 const GreyButton = (props: Props) => {
+  const { onPress, children, style, ...rest } = props
   return (
     <TouchableOpacity
-      style={styles.container}
-      onPress={props.onPress}
+      {...rest}
+      style={[styles.container, style]}
+      onPress={onPress}
     >
       <Text style={styles.text}>
-        {props.content}
+        {children}
       </Text>
     </TouchableOpacity>
   )

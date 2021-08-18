@@ -1,12 +1,13 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
-import { CompositeNavigationProp, RouteProp } from '@react-navigation/native'
+import { CompositeNavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 
 // Root Stack
 export type RootStackParamList = {
-  Splash: undefined
-  Auth: undefined
-  Main: undefined
+  Splash: undefined,
+  Auth: undefined,
+  Main: undefined,
+  Open: NavigatorScreenParams<OpenStackParamList>,
 }
 
 export type SplashNavigationProp = StackNavigationProp<RootStackParamList, 'Splash'>
@@ -22,6 +23,11 @@ export type AuthProps = {
 export type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>
 export type MainProps = {
   navigation: MainNavigationProp
+}
+
+export type OpenNavigationProp = StackNavigationProp<RootStackParamList, 'Open'>
+export type OpenProps = {
+  navigation: OpenNavigationProp
 }
 
 // Auth Stack
@@ -132,4 +138,56 @@ export type PaymentCompleteRouteProp = RouteProp<HomeStackParamList, 'PaymentCom
 export type PaymentCompleteProps = {
   route: PaymentCompleteRouteProp
   navigation: PaymentCompleteNavigationProp
+}
+
+// Storage Stack
+export type StorageStackParamList = {
+  Storage: undefined,
+}
+
+export type StorageNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<StorageStackParamList, 'Storage'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'Storage'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
+export type StorageRouteProp = RouteProp<StorageStackParamList, 'Storage'>
+export type StorageProps = {
+  route: StorageRouteProp,
+  navigation: StorageNavigationProp
+}
+
+// Open Stack
+export type OpenStackParamList = {
+  Loading: { boxId: number, count: number },
+  Opening: { result: number[] },
+  OpenResult: { result: number[] }
+}
+
+export type LoadingNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<OpenStackParamList, 'Loading'>,
+  StackNavigationProp<RootStackParamList, 'Open'>
+>
+export type LoadingRouteProp = RouteProp<OpenStackParamList, 'Loading'>
+export type LoadingProps = {
+  route: LoadingRouteProp
+  navigation: LoadingNavigationProp
+}
+
+export type OpeningNavigationProp = StackNavigationProp<OpenStackParamList, 'Opening'>
+export type OpeningRouteProp = RouteProp<OpenStackParamList, 'Opening'>
+export type OpeningProps = {
+  route: OpeningRouteProp
+  navigation: OpeningNavigationProp
+}
+
+export type OpenResultNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<OpenStackParamList, 'OpenResult'>,
+  StackNavigationProp<RootStackParamList, 'Open'>
+>
+export type OpenResultRouteProp = RouteProp<OpenStackParamList, 'OpenResult'>
+export type OpenResultProps = {
+  route: OpenResultRouteProp
+  navigation: OpenResultNavigationProp
 }
