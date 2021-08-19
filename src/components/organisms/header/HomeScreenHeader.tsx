@@ -8,10 +8,14 @@ import HeaderContainer from '@components/atoms/HeaderContainer'
 import { scale } from 'react-native-size-matters'
 import SearchIcon from '@components/atoms/icon/SearchIcon'
 import CartIcon from '@components/atoms/icon/CartIcon'
+import { SCREEN_WIDTH } from '@constants/figure'
+import Badge from '@components/atoms/Badge'
+import globalStyles from '@constants/globalStyles'
 
 interface Props {
   onPressSearchBar: () => void,
   onPressCart: () => void,
+  cartItemCount?: number,
 }
 
 const HomeScreenHeader = (props: Props) => {
@@ -33,6 +37,13 @@ const HomeScreenHeader = (props: Props) => {
           onPress={props.onPressCart}
         >
           <CartIcon />
+
+          {props.cartItemCount ?
+            <Badge
+              style={globalStyles.badge}
+              count={props.cartItemCount}
+            />
+            : null}
         </TouchableOpacity>
       </View>
     </HeaderContainer>
@@ -58,8 +69,6 @@ const styles = StyleSheet.create({
   },
   cartButtonContainer: {
     flexDirection: 'row',
-    width: scale(44),
-    paddingRight: scale(24),
-    justifyContent: 'flex-end'
+    width: SCREEN_WIDTH * 44 / 360,
   },
 })

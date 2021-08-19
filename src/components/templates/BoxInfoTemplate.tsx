@@ -25,6 +25,7 @@ type BoxInfoTemplateProps = {
   boxItems: object,
   onPressAddToCart: () => void,
   navigation: BoxInfoNavigationProp,
+  cartItemCount?: number,
 }
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
@@ -36,6 +37,7 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
         goBackAction={() => props.navigation.goBack()}
         title={props.boxName}
         onPressCart={() => props.navigation.push('Cart')}
+        cartItemCount={props.cartItemCount}
       />
 
       <HorizontalRule />

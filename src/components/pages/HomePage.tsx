@@ -11,18 +11,21 @@ import CustomBoxList from '@components/organisms/CustomBoxList'
 import BoxProductList from '@components/organisms/BoxProductList'
 import { HomeProps } from '@constants/navigationTypes'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import TutorialModal from '@components/templates/TutorialModal'
+import { CartContext } from '@src/stores/CartContext'
 
 // TODO 여기서 데이터 넘겨주는 형태로 변경하기
 const Home = (props: HomeProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
 
   return (
     <>
       <HomeScreenHeader 
         onPressSearchBar={() => props.navigation.push('Search')}
         onPressCart={() => props.navigation.push('Cart')}
+        cartItemCount={cart.size > 0 ? cart.size : undefined}
       />
 
       <SafeAreaView style={styles.container}>

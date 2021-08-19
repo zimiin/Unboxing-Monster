@@ -8,6 +8,7 @@ import BackIcon from '@components/atoms/icon/BackIcon'
 import HeaderTitle from '@components/atoms/typography/HeaderTitle'
 import HeaderContainer from '@components/atoms/HeaderContainer'
 import { scale } from 'react-native-size-matters'
+import { SCREEN_WIDTH } from '@constants/figure'
 
 interface Props {
   canGoBack: boolean
@@ -26,7 +27,9 @@ const BaseHeader = (props: Props) => {
           <TouchableOpacity
             onPress={props.goBackAction}
           >
-            <BackIcon />
+            <BackIcon 
+              style={{ marginRight: 3 }}
+            />
           </TouchableOpacity>
         : null}
       </View>
@@ -54,9 +57,9 @@ export default BaseHeader
 
 const styles = StyleSheet.create({
   leftContainer: {
-    paddingLeft: scale(17),
-    width: scale(44),
+    width: SCREEN_WIDTH * 44 / 360,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   centerContainer: {
     height: '100%',
@@ -75,8 +78,6 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flexDirection: 'row',
-    width: scale(44),
-    paddingRight: scale(24),
-    justifyContent: 'flex-end'
+    width: SCREEN_WIDTH * 44 / 360,
   }
 })

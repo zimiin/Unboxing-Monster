@@ -124,6 +124,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		795999A9D79A4373AC12D5AB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +150,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D924841958686ED550E31B75 /* Pods */,
+				795999A9D79A4373AC12D5AB /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

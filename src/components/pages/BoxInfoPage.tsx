@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   View,
   StyleSheet,
@@ -10,8 +10,11 @@ import Body from '@components/atoms/typography/Body'
 import BoxListItem from '@components/molecules/BoxListItem'
 import { BoxInfoProps } from '@constants/navigationTypes'
 import { BoxWithItems } from '@constants/types'
+import { CartContext } from '@src/stores/CartContext'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
+  const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+
   const [data, setData] = useState<BoxWithItems>({
     id: route.params.boxId,
     title: '',
@@ -70,6 +73,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
       boxItems={items}
       navigation={navigation}
       onPressAddToCart={() => navigation.push('AddToCart', {boxId: data.id})}
+      cartItemCount={cart.size > 0 ? cart.size : undefined}
     />
   )
 }
