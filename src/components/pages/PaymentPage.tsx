@@ -3,78 +3,104 @@ import PaymentTemplate from '@components/templates/PaymentTemplate'
 import { PaymentProps } from '@constants/navigationTypes'
 import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
-import { BoxId } from '@constants/types'
-import { BoxData } from '@components/templates/CartTemplate'
-import { BoxInfo } from '@components/templates/CartTemplate'
+import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
+
+interface BoxIdCount {
+  boxId: number,
+  count: number
+}
 
 const PaymentPage = (props: PaymentProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
-  const [boxData, setBoxData] = useState<BoxData>()
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [boxData, setBoxData] = useState<PaymentBoxItemProps[]>()
+  const [totalPrice, setTotalPrice] = useState<number>(0)
+  const [boxIdCounts, setBoxIdCounts] = useState<BoxIdCount[]>()
+  const [point, setPoint] = useState<number>(0)
+  const [usingPoint, setUsingPoint] = useState<number>(0)
+  const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
+  const [paymentMethod, setPaymentMethod] = useState<string>('신용카드')
 
   useEffect(() => {
-    const getItemInfo = async () => {
-      let data: BoxData = new Map<BoxId, BoxInfo>()
+    const setBoxDataState = async () => {
+      let data: PaymentBoxItemProps[] = []
+      
+      try {
+        for (let [boxId, item] of cart) {
+          if (item.checked === true) {
+            const url = 'http://3.37.238.160/box/' + boxId
+            const response = await fetch(url)
+            const json = await response.json()
 
-      for (let [boxId, item] of cart) {
-        let url = 'http://3.37.238.160/box/' + boxId
-        let response = await fetch(url)
+            if (response.status !== 200) {
+              throw json.message + ' url: ' + response.url
+            }
 
-        if (response.status === 200) {
-          let json = await response.json()
+            const paymentBoxItem: PaymentBoxItemProps = {
+              id: json.id,
+              image: { uri: json.image },
+              name: json.title,
+              count: item.count,
+              price: item.count * json.price
+            }
 
-          let boxInfo: BoxInfo = {
-            name: json.title,
-            price: json.price,
-            image: json.image
+            data.push(paymentBoxItem)
           }
-
-          data.set(boxId, boxInfo)
-        } else {
-          console.log('No reponse! url:', url)
         }
+      } catch (error) {
+        console.error(error)
       }
-
       setBoxData(data)
     }
 
-    getItemInfo()
+    setBoxDataState()
   }, [cart])
 
   useEffect(() => {
     let sum = 0
 
-    for (let [boxId, item] of cart) {
-      if (item.checked) {
-        if (boxData?.has(boxId)) {
-          const price = boxData.get(boxId)?.price!
-          sum += price * item.count
-        }
+    if (boxData) {
+      for (let item of boxData) {
+        sum += item.price
       }
     }
-
+    
     setTotalPrice(sum)
-  }, [cart, boxData])
+  }, [boxData])
 
-  interface boxIdCount {
-    boxId: number,
-    count: number
-  }
+  useEffect(() => {
+    let boxes: BoxIdCount[] = []
 
-  const getBoxList = () => {
-    let boxes: boxIdCount[] = []
-
-    for (let [boxId, item] of cart) {
-      if (item.checked) {
+    if (boxData) {
+      for (let item of boxData) {
         boxes.push({
-          boxId: boxId,
+          boxId: item.id,
           count: item.count
         })
       }
     }
+
+    setBoxIdCounts(boxes)
+  }, [boxData])
+
+  useEffect(() => {
+    const setPointState = async () => {
+      try {
+        const url = 'http://3.37.238.160/users/' + 'k1804801727'
+        const response = await fetch(url)
+        const json = await response.json()
+
+        if (response.status !== 200) {
+          throw json.message + 'url : ' + response.url
+        }
+
+        setPoint(json.point)
+      } catch (error) {
+        console.error(error)
+      }
+    }
     
-    return boxes
-  }
+    setPointState()
+  }, [])
 
   const makePayment = async () => {
     try {
@@ -87,8 +113,8 @@ const PaymentPage = (props: PaymentProps) => {
           },
           body: JSON.stringify({
             ownerId: "k1804801727",
-            price: totalPrice,
-            boxes: getBoxList()
+            price: totalPrice - usingPoint,
+            boxes: boxIdCounts,
           })
         }
       )
@@ -105,13 +131,53 @@ const PaymentPage = (props: PaymentProps) => {
     }
   }
 
+  const setUsingPointFromInput = (input: string) => {
+    if (input === '') {
+      setUsingPoint(0)
+      return
+    }
+    
+    const inputPoint = parseInt(input)
+    if (inputPoint > point) {
+      setUsingPoint(point)
+    } else if (inputPoint > totalPrice) {
+      setUsingPoint(totalPrice)
+    } else if (inputPoint < 0) {
+      setUsingPoint(0)
+    } else {
+      setUsingPoint(inputPoint)
+    }
+  }
+
+  const onPressUseAllPoint = () => {
+    if (useAllPoint) {
+      setUsingPoint(0)
+    } else {
+      if (point > totalPrice) {
+        setUsingPoint(totalPrice)
+      } else {
+        setUsingPoint(point)
+      }
+    }
+    setUseAllPoint(!useAllPoint)
+  }
+
   return (
     <PaymentTemplate
       screenTitle={'결제'}
       canGoBack={true}
       onPressBack={() => props.navigation.goBack()}
-      onPressMakePayment={() => makePayment()}
+      boxData={boxData || []}
+      currentPoint={point}
+      usingPoint={usingPoint}
+      onChangeUsingPointAmount={setUsingPointFromInput}
+      useAllPoint={useAllPoint}
+      onPressUseAllPoint={onPressUseAllPoint}
+      paymentMethod={paymentMethod}
+      onChangePaymentMethod={setPaymentMethod}
       totalPrice={totalPrice}
+      finalPrice={totalPrice - usingPoint}
+      onPressMakePayment={() => makePayment()}
     />
   )
 }
