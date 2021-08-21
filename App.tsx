@@ -20,13 +20,6 @@ const App = () => {
             headerShown: false
           }}
         >
-        {/* <Stack.Navigator initialRouteName="test">
-          <Stack.Screen
-            name="test"
-            component={BoxInfoPage}
-            options={{headerShown: true}}
-          /> */}
-        
           <Stack.Screen 
             name="Splash"
             component={SplashPage}
