@@ -21,9 +21,9 @@ const ItemInfoTemplate = (props: ItemInfoTemplateProps) => {
   return (
     <>
       <BaseHeader title={props.title} canGoBack={true} goBackAction={() => props.navigation.goBack()}/>
+      <HorizontalRule/>
       
       <ScrollView style={styles.screen}>
-        <HorizontalRule/>
         <ItemInfoImage image={props.image} title={props.title} price={props.price}/>
         <HorizontalRule/>
         <ItemInfoDetail detail={props.detail}/>
