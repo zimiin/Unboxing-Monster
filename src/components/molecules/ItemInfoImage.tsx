@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     marginTop: 48,
     width: 150,
     height: 150,
+    borderRadius: 12,
   },
   title: {
     fontSize: 20,
