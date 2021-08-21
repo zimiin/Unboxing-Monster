@@ -14,6 +14,7 @@ import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import { useState, useContext } from 'react'
 import TutorialModal from '@components/templates/TutorialModal'
 import { CartContext } from '@src/stores/CartContext'
+import HorizontalRule from '@components/atoms/HorizontalRule'
 
 // TODO 여기서 데이터 넘겨주는 형태로 변경하기
 const Home = (props: HomeProps) => {
@@ -36,6 +37,7 @@ const Home = (props: HomeProps) => {
           <Scroller />
           <HotBoxList />
           <CustomBoxList />
+          <HorizontalRule/>
           <BoxProductList />
         </ScrollView>
       </SafeAreaView>
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-  }
+  },
 })
 
 
