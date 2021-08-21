@@ -37,7 +37,7 @@ const CustomBoxList = () => {
   }, [])
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>
         실시간 커스텀 박스
       </Text>
@@ -50,6 +50,9 @@ const CustomBoxList = () => {
 export default CustomBoxList
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 34,
+  },
   title: {
     marginTop: 36,
     marginLeft: 24,

@@ -86,6 +86,7 @@ export type MyPageTabProps = {
 export type HomeStackParamList = {
   Home: undefined
   BoxInfo: { boxId: number }
+  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string}
   AddToCart: { boxId: number }
   Search: undefined
   Cart: undefined
@@ -103,6 +104,13 @@ export type BoxInfoRouteProp = RouteProp<HomeStackParamList, 'BoxInfo'>
 export type BoxInfoProps = {
   route: BoxInfoRouteProp
   navigation: BoxInfoNavigationProp
+}
+
+export type ItemInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'ItemInfo'>
+export type ItemInfoRouteProp = RouteProp<HomeStackParamList, 'ItemInfo'>
+export type ItemInfoProps = {
+  route: ItemInfoRouteProp
+  navigation: ItemInfoNavigationProp
 }
 
 export type AddToCartNavigationProp = StackNavigationProp<HomeStackParamList, 'AddToCart'>

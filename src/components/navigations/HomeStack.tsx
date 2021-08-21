@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import BoxInfoPage from '@components/pages/BoxInfoPage'
+import ItemInfoPage from '@components/pages/ItemInfoPage'
 import CartPage from '@components/pages/CartPage'
 import SearchPage from '@components/pages/SearchPage'
 import HomePage from '@components/pages/HomePage'
@@ -29,6 +30,11 @@ const HomeStackScreen = () => {
         component={BoxInfoPage}
       />
 
+      <HomeStack.Screen
+        name="ItemInfo"
+        component={ItemInfoPage}
+      />
+      
       <HomeStack.Screen
         name="Cart"
         component={CartPage}

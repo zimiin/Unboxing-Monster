@@ -33,16 +33,16 @@ const TwoColumnBoxList = ({ items }: { items: Box[] }) => {
 export default TwoColumnBoxList
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: windowWidth * (324 / 360),
-        alignSelf: 'center',
-        marginTop: 60,
-    },
-    boxContainer: {
-        width: '50%',
-        marginBottom: 28,
-        alignItems: 'center',
-    }
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: windowWidth * (324 / 360),
+    alignSelf: 'center',
+    marginTop: 32,
+  },
+  boxContainer: {
+    width: '50%',
+    marginBottom: 28,
+    alignItems: 'center',
+  }
 });

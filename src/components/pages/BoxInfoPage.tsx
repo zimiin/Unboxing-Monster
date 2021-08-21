@@ -54,6 +54,17 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
                 image={item.image}
                 title={item.title}
                 price={item.price}
+                onPress = {
+                  () => navigation.push('ItemInfo', 
+                      {
+                        itemId: item.id, 
+                        itemImage: item.image,
+                        itemTitle: item.title,
+                        itemPrice: item.price,
+                        itemDetail: item.detail,
+                      }
+                    )
+                  }
               />
             </View>
           )

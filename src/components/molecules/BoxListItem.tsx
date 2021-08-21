@@ -9,11 +9,12 @@ import {
 } from 'react-native'
 import SubTitle from '@components/atoms/typography/SubTitle'
 
-const BoxListItem = ({ image, title, price }: { image: string, title: string, price: number }) => {
+const BoxListItem = ({ image, title, price, onPress }: { image: string, title: string, price: number, onPress: () => void }) => {
   return (
     <View>
       <TouchableOpacity
         style={styles.container}
+        onPress={onPress}
       >
         <Image
           source={{ uri: image }}
