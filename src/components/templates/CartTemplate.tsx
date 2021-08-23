@@ -22,7 +22,7 @@ export interface CartData {
   addOneToCart: () => void,
   checked: boolean,
   setChecked: () => void,
-  delete: () => void,
+  delete: () => void
 }
 
 export interface BoxInfo {
@@ -39,7 +39,7 @@ const defaultBoxInfo: BoxInfo = {
 
 export type BoxData = Map<BoxId, BoxInfo>
 
-interface Prop {
+interface Props {
   onPressBack: () => void,
   cartData: CartData[],
   boxData: BoxData,
@@ -50,7 +50,7 @@ interface Prop {
   onPressPurchase: () => void,
 }
 
-const CartTemplate = (props: Prop) => {
+const CartTemplate = (props: Props) => {
 
   const getItems = () => {
     if (props.cartData) {

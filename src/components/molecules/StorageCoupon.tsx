@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import { defaultBox } from '@constants/images'
@@ -19,6 +20,7 @@ export interface StorageCouponData {
   confirmableDays: number,
   onPressConfirm: () => void,
   onPressRefund: () => void
+  onPress: () => void,
 }
 
 const defaultBoxURI = { uri: defaultBox }
@@ -28,7 +30,10 @@ const defaultFunction = () => {
 
 const StorageCoupon = (props: StorageCouponData) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+      style={styles.container}
+      onPress={props.onPress}
+    >
       <Image
         source={props.image || defaultBoxURI}
         style={styles.image}
@@ -69,7 +74,7 @@ const StorageCoupon = (props: StorageCouponData) => {
           </StorageCouponConfirmButton>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

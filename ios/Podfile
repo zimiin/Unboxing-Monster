@@ -13,6 +13,8 @@ target 'Unboxing_pre' do
   )
 
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+
   target 'Unboxing_preTests' do
     inherit! :complete
     # Pods for testing
