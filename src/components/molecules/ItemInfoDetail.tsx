@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Dimensions,
 } from 'react-native'
 
 const ItemInfoDetail = ({ detail }: { detail: string }) => {
@@ -21,7 +22,7 @@ const ItemInfoDetail = ({ detail }: { detail: string }) => {
         {"배송 기프티쇼 소개"}
       </Text>
       <Text style={styles.text}>
-        {"• 본 기프티쇼 상품은 배송주소를 입력하신 후 해당 상품을 주소지\n   로 수령받는 상품입니다."}
+        {"• 본 기프티쇼 상품은 배송주소를 입력하신 후 해당 상품을 주소지로 수령받는 상품입니다."}
       </Text>
       <Text style={styles.text}>
         {"• 주문시 주소 및 연락처를 정확히 기입해주세요."}
@@ -33,7 +34,7 @@ const ItemInfoDetail = ({ detail }: { detail: string }) => {
         {"• 주문시 주소 및 연락처를 정확히 기입해주세요."}
       </Text>
       <Text style={styles.text}>
-        {"• 12시이전 주문건은 당일 발송되며, 그 이후 주문건은 익일 발송됩\n   니다."}
+        {"• 12시이전 주문건은 당일 발송되며, 그 이후 주문건은 익일 발송됩니다."}
       </Text>
       <Text style={styles.text}>
         {"• 주문하신 제품은 우체국택배로 발송됩니다."}
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
+    width: Dimensions.get('window').width * 0.9,
     letterSpacing: -0.3,
     color: '#060606',
     marginTop: 4,

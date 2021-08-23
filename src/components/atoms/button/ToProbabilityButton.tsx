@@ -7,9 +7,9 @@ import {
 
 import { CONTENT_WIDTH } from '@constants/figure'
 
-const ToProbabilityButton = () => {
+const ToProbabilityButton = ({ onPress }:  { onPress: () => void }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.text}>
         자세한 확률 알아보기
       </Text>

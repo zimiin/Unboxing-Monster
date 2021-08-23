@@ -24,6 +24,7 @@ type BoxInfoTemplateProps = {
   boxDetail: object,
   boxItems: object,
   onPressAddToCart: () => void,
+  onPressProbInfo: () => void,
   navigation: BoxInfoNavigationProp,
   cartItemCount?: number,
 }
@@ -94,7 +95,7 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
 
           {/* 자세한 확률 알아보기 버튼 */}
           <View style={styles.probButtonContainer}>
-            <ToProbabilityButton />
+            <ToProbabilityButton onPress={props.onPressProbInfo}/>
           </View>
 
           {/* 안내사항 */}

@@ -84,6 +84,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
       boxItems={items}
       navigation={navigation}
       onPressAddToCart={() => navigation.push('AddToCart', {boxId: data.id})}
+      onPressProbInfo={() => navigation.push('ProbInfo', {boxId: data.id, boxPrice: data.price, items: data.items})}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
     />
   )
