@@ -100,6 +100,21 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
     setTotalBoxCount(count)
   }, [cart])
 
+  const beginPayment = () => {
+    let canBeginPayment: boolean = false
+
+    for (let [boxId, item] of cart) {
+      if (item.checked) {
+        canBeginPayment = true
+        break
+      }
+    }
+
+    if (canBeginPayment) {
+      navigation.push('Payment')
+    }
+  }
+
   return (
     <CartTemplate 
       onPressBack={() => navigation.goBack()}
@@ -112,7 +127,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
       }}
       totalBoxCount={totalBoxCount}
       totalBoxPrice={totalBoxPrice}
-      onPressPurchase={() => navigation.push('Payment')}
+      onPressPurchase={beginPayment}
     />
   )
 }

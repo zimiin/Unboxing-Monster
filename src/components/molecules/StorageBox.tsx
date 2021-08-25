@@ -4,6 +4,7 @@ import {
   ImageSourcePropType,
   StyleSheet,
   Image,
+  TouchableOpacity,
 } from 'react-native'
 import StorageBoxOpenButton from '@components/atoms/button/StorageBoxOpenButton'
 import Bold from '@components/atoms/typography/Bold'
@@ -18,6 +19,7 @@ export interface StorageBoxData {
   count: number,
   openOneBox: () => void,
   openAllBox: () => void,
+  onPress: () => void,
 }
 
 const defaultBoxURI = { uri: defaultBox }
@@ -27,7 +29,10 @@ const defaultOpenFunction = () => {
 
 const StorageBox = (props: StorageBoxData) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+      style={styles.container}
+      onPress={props.onPress}
+    >
       <Image
         source={props.image}
         style={styles.image || defaultBoxURI}
@@ -63,7 +68,7 @@ const StorageBox = (props: StorageBoxData) => {
           </StorageBoxOpenButton>
         </View >
       </View >
-    </View >
+    </TouchableOpacity >
   )
 }
 
