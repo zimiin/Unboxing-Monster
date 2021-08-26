@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Unboxing_pre</string>
+    <string name="facebook_app_id">554330805918428</string>
+    <string name="facebook_client_token">80efb795c90e7a1f5c6c4e7c20fffeb5</string>
 </resources>

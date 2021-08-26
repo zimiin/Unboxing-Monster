@@ -14,6 +14,7 @@ import {
 
 interface Props {
   onPressLookAround: () => void,
+  onPressFacebook: () => void,
 }
 
 const FirstTemplate = (props: Props) => {
@@ -65,7 +66,7 @@ const FirstTemplate = (props: Props) => {
 
           <IconButton24
             image={ICONS.facebook}
-            onPress={() => console.log("facebook login pressed")}
+            onPress={props.onPressFacebook}
             style={styles.SNSIcon}
           />
 
