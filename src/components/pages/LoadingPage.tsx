@@ -8,14 +8,6 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
-    const parseStringArray = async (str: string) => {
-      str = str.replace(/'/g, '\"')
-      str = str.replace(/ /g, ',')
-      
-      const arr: string[] = JSON.parse(str)
-      return arr.map(strNum => parseInt(strNum))
-    }
-
     const postCoupon = async (item: number[]) => {
       for (let itemId of item) {
         try {
@@ -62,18 +54,17 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
           throw 'Bolckchain server error'
         }
         
+        const json = await response.json()
+
         if (response.status !== 200) {
-          const json = await response.json()
           console.log(url)
           throw json.message
         }
         
-        const result = await parseStringArray(await response.text())
-        
         // 결과에 해당하는 모바일쿠폰 디비에 저장
-        await postCoupon(result)
+        await postCoupon(json.result)
 
-        navigation.push('Opening', { result: result })
+        navigation.push('Opening', { result: json.result })
       } catch (error) {
         console.error(error)
       }
