@@ -9,7 +9,7 @@ import { BottomTabParamList } from '@constants/navigationTypes'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
-const Main = () => {
+const MainBottomTab = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -33,4 +33,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default MainBottomTab

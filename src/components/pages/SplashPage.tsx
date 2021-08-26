@@ -10,15 +10,13 @@ import Logo from "@components/atoms/Logo"
 import { scale, verticalScale } from "react-native-size-matters"
 import { SCREEN_HEIGHT } from "@constants/figure"
 
-const Splash = ({navigation} : SplashProps) => {
+const SplashPage = ({navigation} : SplashProps) => {
   const [animating, setAnimatinng] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
       setAnimatinng(false)
-      // TODO
-      // 로그인 되어있을 시 바로 상품으로 이동
-      navigation.replace('Main')
+      navigation.replace('First')
     }, 1000)
   }, [])
 
@@ -38,7 +36,7 @@ const Splash = ({navigation} : SplashProps) => {
   )
 }
 
-export default Splash
+export default SplashPage
 
 const logoPosition = SCREEN_HEIGHT * 261 / 716
 

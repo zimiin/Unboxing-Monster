@@ -5,15 +5,9 @@ import { Item } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
-  Splash: undefined,
   Auth: undefined,
   Main: undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
-}
-
-export type SplashNavigationProp = StackNavigationProp<RootStackParamList, 'Splash'>
-export type SplashProps = {
-  navigation: SplashNavigationProp
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -33,8 +27,25 @@ export type OpenProps = {
 
 // Auth Stack
 export type AuthStackParamList = {
-  Login: undefined
-  Register: undefined
+  Splash: undefined,
+  First: undefined,
+  Login: undefined,
+  Register: undefined,
+}
+
+export type SplashNavigationProp = StackNavigationProp<AuthStackParamList, 'Splash'>
+export type SplashProps = {
+  navigation: SplashNavigationProp
+}
+
+export type FirstNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<AuthStackParamList, 'First'>,
+  StackNavigationProp<RootStackParamList, 'Auth'>
+>
+export type FirstRouteProp = RouteProp<AuthStackParamList, 'First'>
+export type FirstProps = {
+  route: FirstRouteProp,
+  navigation: FirstNavigationProp
 }
 
 export type LoginNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>
