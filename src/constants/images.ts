@@ -21,7 +21,8 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   open_box: require('assets/images/img_unbox_03.png'),
   result_box: require('assets/images/img_gift_result.png'),
   notice: require('assets/images/ic_notice.png'),
-  box_opening: require('assets/images/box_opening.gif')
+  box_opening: require('assets/images/box_opening.gif'),
+  img_splash: require('assets/images/img_splash.png')
 }
 
 export const defaultBox = "https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png"

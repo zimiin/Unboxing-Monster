@@ -15,11 +15,24 @@ import { useState, useContext } from 'react'
 import TutorialModal from '@components/templates/TutorialModal'
 import { CartContext } from '@src/stores/CartContext'
 import HorizontalRule from '@components/atoms/HorizontalRule'
+import { useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // TODO 여기서 데이터 넘겨주는 형태로 변경하기
 const Home = (props: HomeProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+
+  const printAsyncStorage = async () => {
+    const token = await AsyncStorage.getItem('@token')
+    const socialLoginProvider = await AsyncStorage.getItem('@socialLoginProvider')
+    console.log('token: ', token)
+    console.log('socialLoginProvider: ', socialLoginProvider)
+  }
+
+  useEffect(() => {
+    printAsyncStorage()
+  }, [])
 
   return (
     <>

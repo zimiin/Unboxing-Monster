@@ -19,5 +19,9 @@ export const ICONS = {
   checkBox_checked: require('assets/images/btn_chkbox_chkd.png'),
   checkBox_unchecked: require('assets/images/btn_chkbox.png'),
   x: require('assets/images/x.png'),
-  done: require('assets/images/ic_done.png')
+  done: require('assets/images/ic_done.png'),
+  naver: require('assets/images/naver.png'),
+  apple: require('assets/images/apple.png'),
+  facebook: require('assets/images/facebook.png'),
+  kakao_talk: require('assets/images/kakao_talk.png')
 }
