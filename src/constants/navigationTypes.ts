@@ -185,6 +185,24 @@ export type StorageProps = {
   navigation: StorageNavigationProp
 }
 
+// MyPage Stack
+export type MyPageStackParamList = {
+  MyPage: undefined,
+}
+
+export type MyPageNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<MyPageStackParamList, 'MyPage'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'MyPage'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
+export type MyPageRouteProp = RouteProp<MyPageStackParamList, 'MyPage'>
+export type MyPageProps = {
+  route: MyPageRouteProp,
+  navigation: MyPageNavigationProp
+}
+
 // Open Stack
 export type OpenStackParamList = {
   Loading: { boxId: number, count: number },

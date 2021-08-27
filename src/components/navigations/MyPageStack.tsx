@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import MyPage from '@components/pages/MyPage'
+import MyPagePage from '@components/pages/MyPagePage'
 
 const MyPageStack = () => {
   const MyPageStack = createStackNavigator()
@@ -8,10 +8,13 @@ const MyPageStack = () => {
   return (
     <MyPageStack.Navigator
       initialRouteName="MyPage"
+      screenOptions={{
+        headerShown: false
+      }}
     >
       <MyPageStack.Screen
         name="MyPage"
-        component={MyPage}
+        component={MyPagePage}
       />
     </MyPageStack.Navigator>
   )
