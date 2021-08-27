@@ -28,28 +28,27 @@ export type OpenProps = {
 // Auth Stack
 export type AuthStackParamList = {
   Splash: undefined,
-  First: undefined,
   Login: undefined,
   Register: undefined,
 }
 
-export type SplashNavigationProp = StackNavigationProp<AuthStackParamList, 'Splash'>
+export type SplashNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<AuthStackParamList, 'Splash'>,
+  StackNavigationProp<RootStackParamList, 'Auth'>
+>
+export type SplashRouteProp = RouteProp<AuthStackParamList, 'Splash'>
 export type SplashProps = {
+  route: SplashRouteProp,
   navigation: SplashNavigationProp
 }
 
-export type FirstNavigationProp = CompositeNavigationProp<
-  StackNavigationProp<AuthStackParamList, 'First'>,
+export type LoginNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<AuthStackParamList, 'Login'>,
   StackNavigationProp<RootStackParamList, 'Auth'>
 >
-export type FirstRouteProp = RouteProp<AuthStackParamList, 'First'>
-export type FirstProps = {
-  route: FirstRouteProp,
-  navigation: FirstNavigationProp
-}
-
-export type LoginNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>
+export type LoginRouteProp = RouteProp<AuthStackParamList, 'Login'>
 export type LoginProps = {
+  route: LoginRouteProp,
   navigation: LoginNavigationProp
 }
 

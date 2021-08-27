@@ -62,7 +62,6 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
-// Added
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
@@ -72,6 +71,5 @@ static void InitializeFlipper(UIApplication *application) {
                                                  options:options];
   return YES;
 }
-// End 
 
 @end

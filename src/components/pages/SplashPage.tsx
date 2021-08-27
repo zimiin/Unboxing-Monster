@@ -1,61 +1,34 @@
-import React, { useState, useEffect } from "react"
-import {
-  SafeAreaView,
-  StyleSheet,
-  ActivityIndicator,
-  View,
-} from 'react-native'
+import React, { useState } from "react"
 import { SplashProps } from "@constants/navigationTypes"
-import Logo from "@components/atoms/Logo"
-import { scale, verticalScale } from "react-native-size-matters"
-import { SCREEN_HEIGHT } from "@constants/figure"
+import SplashTemplate from "@components/templates/SplashTemplate"
+import { useEffect } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-const SplashPage = ({navigation} : SplashProps) => {
+const SplashPage = ({route, navigation} : SplashProps) => {
   const [animating, setAnimatinng] = useState(true)
+  
+  const checkTokenAndNavigate = async () => {
+    const token = await AsyncStorage.getItem('@token')
+    if (token === null) {
+      navigation.replace('Login')
+      return
+    }
+    
+    // token 유효 확인하기
+      // 유효하지 않으면 First로 보내기
+  
+    navigation.replace('Main')
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      setAnimatinng(false)
-      navigation.replace('First')
-    }, 1000)
+   checkTokenAndNavigate()
   }, [])
 
   return (
-      <SafeAreaView style={styles.background}>
-        <View style={styles.logo}>
-          <Logo />
-        </View>
-
-        <ActivityIndicator
-          animating={animating}
-          color="slategray"
-          size="large"
-          style={styles.activityIndicator}
-        />
-      </SafeAreaView>
+    <SplashTemplate
+      animating={animating}
+    />
   )
 }
 
 export default SplashPage
-
-const logoPosition = SCREEN_HEIGHT * 261 / 716
-
-const styles = StyleSheet.create({
-  background: {
-    backgroundColor: 'white', 
-    flex: 1,
-  },
-  activityIndicator: {
-    alignSelf: 'center',
-    height: scale(80),
-    position: 'absolute',
-    bottom: verticalScale(130),
-  },
-  logo: {
-    width: scale(120),
-    height: scale(100),
-    alignSelf: 'center',
-    position: 'absolute',
-    top: logoPosition,
-  }
-})

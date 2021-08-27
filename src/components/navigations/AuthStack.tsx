@@ -1,12 +1,8 @@
 import React from "react"
-
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { AuthStackParamList } from "@constants/navigationTypes"
-
-import Login from '@components/pages/Login'
 import Register from "@components/pages/Register"
-import FirstPage from "@components/pages/FirstPage"
+import LoginPage from "@components/pages/LoginPage"
 import SplashPage from "@components/pages/SplashPage"
 
 const Stack = createStackNavigator<AuthStackParamList>()
@@ -14,7 +10,7 @@ const Stack = createStackNavigator<AuthStackParamList>()
 const AuthStack = () => {
   return (
     <Stack.Navigator 
-      initialRouteName="First"
+      initialRouteName="Splash"
       screenOptions={{
         headerShown: false
       }}
@@ -25,14 +21,9 @@ const AuthStack = () => {
       />
 
       <Stack.Screen
-        name="First"
-        component={FirstPage}
-      />
-      {/* <Stack.Screen
         name="Login"
-        component={Login}
-        options={{ headerShown: false }}
-      /> */}
+        component={LoginPage}
+      />
 
       <Stack.Screen
         name="Register"

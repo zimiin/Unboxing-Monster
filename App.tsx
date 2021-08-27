@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import SplashPage from '@components/pages/SplashPage'
 import AuthStack from '@components/navigations/AuthStack'
 import MainBottomTab from '@components/navigations/MainBottomTab'
 import { RootStackParamList } from '@constants/navigationTypes'

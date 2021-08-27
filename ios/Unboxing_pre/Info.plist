@@ -71,7 +71,7 @@
 	<key>FacebookClientToken</key>
 	<string>80efb795c90e7a1f5c6c4e7c20fffeb5</string>
 	<key>FacebookDisplayName</key>
-	<string>Unboxing</string>
+	<string>unboxing</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

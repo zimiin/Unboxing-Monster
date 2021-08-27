@@ -17,7 +17,7 @@ interface Props {
   onPressFacebook: () => void,
 }
 
-const FirstTemplate = (props: Props) => {
+const LoginTemplate = (props: Props) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.contentView}>
@@ -81,7 +81,7 @@ const FirstTemplate = (props: Props) => {
   )
 }
 
-export default FirstTemplate
+export default LoginTemplate
 
 const styles = StyleSheet.create({
   safeAreaView: {
