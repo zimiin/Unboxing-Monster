@@ -1,3 +1,4 @@
+import { DESIGN_HEIGHT, SCREEN_HEIGHT } from '@constants/figure'
 import React from 'react'
 import {
   View,
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#535353',
         alignSelf: 'center',
         position: 'absolute',
-        top: 228,
+        top: 16 / DESIGN_HEIGHT * SCREEN_HEIGHT * -1,
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#29a3ff',

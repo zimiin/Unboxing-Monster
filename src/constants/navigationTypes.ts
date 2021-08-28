@@ -107,7 +107,9 @@ export type HomeStackParamList = {
 }
 
 export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>
+export type HomeRouteProp = RouteProp<HomeStackParamList, 'Home'>
 export type HomeProps = {
+  route: HomeRouteProp,
   navigation: HomeNavigationProp
 }
 

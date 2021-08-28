@@ -1,18 +1,31 @@
 import React from 'react'
 import {
-  View,
+  View, 
+  ViewProps, 
+  StyleSheet,
 } from 'react-native'
 
-const HorizontalRule = () => {
+interface Props extends ViewProps {
+  
+}
+
+const HorizontalRule = (props: Props) => {
+  const { style, ...rest } = props
+
   return (
     <View
-      style={{
-        width: '100%',
-        height: 8,
-        backgroundColor: '#f9f9f9',
-      }}
+      style={[styles.HorizontalRule, style]}
+      {...rest}
     />
   )
 }
 
 export default HorizontalRule
+
+const styles = StyleSheet.create({
+  HorizontalRule: {
+    width: '100%',
+    height: 8,
+    backgroundColor: '#f9f9f9',
+  }
+})

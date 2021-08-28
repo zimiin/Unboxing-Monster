@@ -1,27 +1,129 @@
 import React from 'react'
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from 'react-native'
-import NoticeBoard from '@components/organisms/NoticeBoard'
-import Scroller from '@components/organisms/Scroller'
-import HotBoxList from '@components/organisms/HotBoxList'
-import CustomBoxList from '@components/organisms/CustomBoxList'
-import BoxProductList from '@components/organisms/BoxProductList'
 import { HomeProps } from '@constants/navigationTypes'
-import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import { useState, useContext } from 'react'
-import TutorialModal from '@components/templates/TutorialModal'
 import { CartContext } from '@src/stores/CartContext'
-import HorizontalRule from '@components/atoms/HorizontalRule'
 import { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import HomeTemplate from '@components/templates/HomeTemplate'
+import { Box, Notice } from '@constants/types'
+import { NoticeItemProps } from '@components/molecules/NoticeItem'
+import { Linking } from 'react-native'
+import { BoxItemProps } from '@components/molecules/BoxItem'
 
-// TODO 여기서 데이터 넘겨주는 형태로 변경하기
-const Home = (props: HomeProps) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false)
+const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [noticeData, setNoticeData] = useState<NoticeItemProps[]>()
+  const [popularBoxData, setPopularBoxData] = useState<BoxItemProps[]>()
+  const [allBoxData, setAllBoxData] = useState<BoxItemProps[]>()
+
+  const openUrl = async (url: string) => {
+    const supported = await Linking.canOpenURL(url)
+    
+    if (supported) {
+      Linking.openURL(url)
+    } else {
+      console.log("Don't know how to open URI: " + url)
+    }
+  }
+
+  const setNoticeDataState = async () => {
+    try {
+      const url = 'http://3.37.238.160/notice'
+      const response = await fetch(url)
+      
+      const json = await response.json()
+
+      if (response.status !== 200) {
+        throw 'Response status: ' + response.status 
+        + ', message: ' + json
+        + ', url: ' + response.url
+      }
+      
+      const notices: NoticeItemProps[] = json.map(
+        (notice: Notice, index: number) => {
+          let onPress: () => void
+
+          if (index === 0) {
+            onPress = () => setModalVisible(true)
+          } else {
+            onPress = () => openUrl(notice.srcUrl)
+          }
+
+          return {
+            index: index,
+            image: {uri: notice.imgUrl},
+            onPress: onPress
+          }
+        }
+      )
+
+      setNoticeData(notices)
+    } catch (error) {
+      console.log('Error executing setNoticeDataState')
+      console.log(error)
+    }
+  }
+
+  const setPopularBoxDataState = async () => {
+    try {
+      const url = 'http://3.37.238.160/box/popular'
+      const response = await fetch(url)
+      const json = await response.json()
+
+      if (response.status !== 200) {
+        throw 'Reponse status: ' + response.status
+        + ', url: ' + response.url
+        + ', message: ' + json.message
+      }
+
+      const popularBoxes: BoxItemProps[] = json.map(
+        (box: Box) => {
+          return {
+            key: box.id,
+            image: {uri: box.image},
+            name: box.title,
+            price: box.price,
+            onPress: () => navigation.push('BoxInfo', { boxId: box.id })
+          }
+        }
+      )
+
+      setPopularBoxData(popularBoxes)
+    } catch (error) {
+      console.log('Error in setPopularBoxDataState', error)
+    }
+  }
+
+  const setAllBoxDataState = async () => {
+    try {
+      const url = 'http://3.37.238.160/box'
+      const response = await fetch(url)
+      const json = await response.json()
+
+      if (response.status !== 200) {
+        throw 'Reponse status: ' + response.status
+        + ', url: ' + response.url
+        + ', message: ' + json.message
+      }
+
+      const boxes: BoxItemProps[] = json.map(
+        (box: Box) => {
+          return {
+            key: box.id,
+            image: { uri: box.image },
+            name: box.title,
+            price: box.price,
+            onPress: () => navigation.push('BoxInfo', { boxId: box.id })
+          }
+        }
+      )
+
+      setAllBoxData(boxes)
+    } catch (error) {
+      console.log('Error in setAllBoxDataState', error)
+    }
+  }
 
   const printAsyncStorage = async () => {
     const token = await AsyncStorage.getItem('@token')
@@ -32,44 +134,25 @@ const Home = (props: HomeProps) => {
 
   useEffect(() => {
     printAsyncStorage()
+    setNoticeDataState()
+    setPopularBoxDataState()
+    setAllBoxDataState()
   }, [])
 
   return (
-    <>
-      <HomeScreenHeader 
-        onPressSearchBar={() => props.navigation.push('Search')}
-        onPressCart={() => props.navigation.push('Cart')}
-        cartItemCount={cart.size > 0 ? cart.size : undefined}
-      />
-
-      <SafeAreaView style={styles.container}>
-        <ScrollView>
-          <NoticeBoard 
-            onPressIntro={() => setModalVisible(true)}
-          />
-          <Scroller />
-          <HotBoxList />
-          <CustomBoxList />
-          <HorizontalRule/>
-          <BoxProductList />
-        </ScrollView>
-      </SafeAreaView>
-
-      <TutorialModal 
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-    </>
+    <HomeTemplate
+      onPressSearchBar={() => navigation.push('Search')}
+      onPressCart={() => navigation.push('Cart')}
+      cartItemCount={cart.size > 0 ? cart.size : undefined}
+      noticeData={noticeData || []}
+      popularBoxData={popularBoxData || []}
+      customBoxData={popularBoxData || []}
+      allBoxData={allBoxData || []} 
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+    />
   )
 }
 
-export default Home
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-})
-
+export default HomePage
 

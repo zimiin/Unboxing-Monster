@@ -5,31 +5,34 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    Dimensions,
+    ImageSourcePropType,
 } from 'react-native';
+import { SCREEN_WIDTH } from '@constants/figure';
 
-import { Box } from '@constants/types'
+export interface BoxItemProps {
+  key: number,
+  image: ImageSourcePropType,
+  name: string,
+  price: number,
+  onPress: () => void,
+}
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const BoxItem = ({ item }: { item: Box }) => {
-  const navigation = useNavigation()
-
+const BoxItem = ({ item }: { item: BoxItemProps }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('BoxInfo', { boxId: item.id })}
+      onPress={item.onPress}
     >
     <Image
-      source={{ uri: item.image }}
+      source={item.image}
       style={styles.image}
     />
 
       <Text style={styles.name}>
-        {item.title}
+        {item.name}
       </Text>
 
       <Text style={styles.price}>
-          {item.price.toLocaleString()}원
+        {item.price.toLocaleString()}원
       </Text>
     </TouchableOpacity>
   );
@@ -39,8 +42,8 @@ export default BoxItem
 
 const styles = StyleSheet.create({
   image: {
-    width: windowWidth * (5 / 12),
-    height: windowWidth * (5 / 12),
+    width: SCREEN_WIDTH * (5 / 12),
+    height: SCREEN_WIDTH * (5 / 12),
     borderRadius: 10,
     borderWidth: 0.07
   },
