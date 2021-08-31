@@ -1,5 +1,5 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
-import { CompositeNavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
+import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Item } from '@constants/types'
 
@@ -29,7 +29,10 @@ export type OpenProps = {
 export type AuthStackParamList = {
   Splash: undefined,
   Login: undefined,
-  Register: undefined,
+  SignUpEmailInput: undefined,
+  SignUpPhoneInput: undefined,
+  SignUpPhoneConfirmInput: undefined,
+  SignUpNicknameInput: undefined,
 }
 
 export type SplashNavigationProp = CompositeNavigationProp<
@@ -52,9 +55,35 @@ export type LoginProps = {
   navigation: LoginNavigationProp
 }
 
-export type RegisterNavigationProp = StackNavigationProp<AuthStackParamList, 'Register'>
-export type RegisterProps = {
-  navigation: RegisterNavigationProp
+export type SignUpEmailInputRouteProp = RouteProp<AuthStackParamList, 'SignUpEmailInput'>
+export type SignUpEmailInputNavigationProp = NavigationProp<AuthStackParamList, 'SignUpEmailInput'>
+export type SignUpEmailInputProps = {
+  route: SignUpEmailInputRouteProp,
+  navigation: SignUpEmailInputNavigationProp,
+}
+
+export type SignUpPhoneInputRouteProp = RouteProp<AuthStackParamList, 'SignUpPhoneInput'>
+export type SignUpPhoneInputNavigationProp = NavigationProp<AuthStackParamList, 'SignUpPhoneInput'>
+export type SignUpPhoneInputProps = {
+  route: SignUpPhoneInputRouteProp,
+  navigation: SignUpPhoneInputNavigationProp,
+}
+
+export type SignUpPhoneConfirmInputRouteProp = RouteProp<AuthStackParamList, 'SignUpPhoneConfirmInput'>
+export type SignUpPhoneConfirmInputNavigationProp = NavigationProp<AuthStackParamList, 'SignUpPhoneConfirmInput'>
+export type SignUpPhoneConfirmInputProps = {
+  route: SignUpPhoneConfirmInputRouteProp,
+  navigation: SignUpPhoneConfirmInputNavigationProp,
+}
+
+export type SignUpNicknameInputRouteProp = RouteProp<AuthStackParamList, 'SignUpNicknameInput'>
+export type SignUpNicknameInputNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<AuthStackParamList, 'SignUpNicknameInput'>,
+  StackNavigationProp<RootStackParamList, 'Auth'>
+>
+export type SignUpNicknameInputProps = {
+  route: SignUpNicknameInputRouteProp,
+  navigation: SignUpNicknameInputNavigationProp,
 }
 
 // Bottom Tab

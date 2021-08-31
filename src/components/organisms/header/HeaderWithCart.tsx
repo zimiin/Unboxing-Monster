@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native'
 import CartIcon from '@components/atoms/icon/CartIcon'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import Badge from '@components/atoms/Badge'
 import globalStyles from '@constants/globalStyles'
 
@@ -34,7 +34,7 @@ const HeaderWithCart = (props: Props) => {
   )
 
   return (
-    <BaseHeader
+    <Header
       canGoBack={props.canGoBack}
       goBackAction={props.goBackAction}
       title={props.title}

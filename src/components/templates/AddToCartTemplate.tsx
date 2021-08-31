@@ -1,4 +1,4 @@
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import React, { useState, useEffect } from 'react'
 import {
   View,
@@ -29,7 +29,7 @@ interface Props {
 const AddToCartTemplate = (props: Props) => {
   return (
     <>
-      <BaseHeader
+      <Header
         canGoBack={true}
         goBackAction={props.goBackAction}
         title={'장바구니에 담기'}

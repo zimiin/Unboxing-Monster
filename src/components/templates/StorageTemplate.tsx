@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { scale } from 'react-native-size-matters'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import StorageTab from '@components/molecules/StorageTab'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import StorageBox from '@components/molecules/StorageBox'
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import { useEffect } from 'react'
@@ -67,7 +67,7 @@ const StorageTemplate = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <BaseHeader
+      <Header
         canGoBack={false}
         title='보관함'
       />

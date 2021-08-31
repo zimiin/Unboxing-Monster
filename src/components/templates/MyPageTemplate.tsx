@@ -1,4 +1,4 @@
-import BaseHeader from "@components/organisms/header/BaseHeader"
+import Header from "@components/organisms/header/Header"
 import React from "react"
 import {
   View,
@@ -13,7 +13,7 @@ interface Props {
 const MyPageTemplate = (props: Props) => {
   return (
     <>
-      <BaseHeader
+      <Header
         canGoBack={false}
         title={'마이페이지'}
       />

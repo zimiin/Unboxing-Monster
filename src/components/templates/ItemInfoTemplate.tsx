@@ -3,7 +3,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import { ItemInfoNavigationProp } from '@constants/navigationTypes'
 import ItemInfoImage from '@components/molecules/ItemInfoImage'
 import HorizontalRule from '@components/atoms/HorizontalRule'
@@ -20,7 +20,7 @@ type ItemInfoTemplateProps = {
 const ItemInfoTemplate = (props: ItemInfoTemplateProps) => {
   return (
     <>
-      <BaseHeader title={props.title} canGoBack={true} goBackAction={() => props.navigation.goBack()}/>
+      <Header title={props.title} canGoBack={true} goBackAction={() => props.navigation.goBack()}/>
       <HorizontalRule/>
       
       <ScrollView style={styles.screen}>

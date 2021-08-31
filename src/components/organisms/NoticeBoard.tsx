@@ -17,7 +17,7 @@ interface Props {
   noticeData: NoticeItemProps[] | undefined
 }
 
-const NoticeBox = (props: Props) => {
+const NoticeBoard = (props: Props) => {
   const isCarousel = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0)
 
@@ -64,4 +64,4 @@ const NoticeBox = (props: Props) => {
   )
 }
 
-export default NoticeBox
+export default NoticeBoard
