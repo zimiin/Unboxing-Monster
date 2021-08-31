@@ -16,6 +16,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [noticeData, setNoticeData] = useState<NoticeItemProps[]>()
   const [popularBoxData, setPopularBoxData] = useState<BoxItemProps[]>()
   const [allBoxData, setAllBoxData] = useState<BoxItemProps[]>()
+  const [refreshing, setRefreshing] = useState<boolean>(true)
 
   const openUrl = async (url: string) => {
     const supported = await Linking.canOpenURL(url)
@@ -130,11 +131,18 @@ const HomePage = ({route, navigation}: HomeProps) => {
     console.log('@access_token: ', token)
   }
 
+  const setDatas = async () => {
+    console.log('set datas')
+    setRefreshing(true)
+    await setNoticeDataState()
+    await setPopularBoxDataState()
+    await setAllBoxDataState()
+    setRefreshing(false)
+  }
+
   useEffect(() => {
     printAsyncStorage()
-    setNoticeDataState()
-    setPopularBoxDataState()
-    setAllBoxDataState()
+    setDatas()
   }, [])
 
   return (
@@ -148,6 +156,8 @@ const HomePage = ({route, navigation}: HomeProps) => {
       allBoxData={allBoxData || []} 
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
+      onRefresh={setDatas}
+      refreshing={refreshing}
     />
   )
 }

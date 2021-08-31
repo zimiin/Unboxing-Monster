@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
+  FlatList,
 } from 'react-native'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import HorizontalRule from '@components/atoms/HorizontalRule'
@@ -12,7 +13,6 @@ import TutorialModal from '@components/templates/TutorialModal'
 import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@constants/figure'
 import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import Bold from '@components/atoms/typography/Bold'
-import { FlatList } from 'react-native-gesture-handler'
 import BoxItem, { BoxItemProps } from '@components/molecules/BoxItem'
 
 interface Props {
@@ -25,6 +25,8 @@ interface Props {
   allBoxData: BoxItemProps[],
   modalVisible: boolean,
   setModalVisible: Dispatch<SetStateAction<boolean>>,
+  onRefresh: () => void,
+  refreshing: boolean,
 }
 
 const HorizontalListBlank = () => (
@@ -115,6 +117,8 @@ const HomeTemplate = (props: Props) => {
         centerContent={true}
         columnWrapperStyle={styles.columnWrapper}
         style={styles.mainFlatList}
+        onRefresh={props.onRefresh}
+        refreshing={props.refreshing}
       />
         
       <TutorialModal
