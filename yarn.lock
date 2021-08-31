@@ -2212,6 +2212,18 @@
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.7.tgz"
   "version" "7.0.7"
 
+"@types/lodash.debounce@^4.0.6":
+  "integrity" "sha512-4WTmnnhCfDvvuLMaF3KV4Qfki93KebocUF45msxhYyjMttZDQYzHkO639ohhk8+oco2cluAFL3t5+Jn4mleylQ=="
+  "resolved" "https://registry.npmjs.org/@types/lodash.debounce/-/lodash.debounce-4.0.6.tgz"
+  "version" "4.0.6"
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  "integrity" "sha512-/BHF5HAx3em7/KkzVKm3LrsD6HZAXuXO1AJZQ3cRRBZj4oHZDviWPYu0aEplAqDFNHZPW6d3G7KN+ONcCCC7pw=="
+  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.172.tgz"
+  "version" "4.14.172"
+
 "@types/node@*":
   "integrity" "sha512-TmCW5HoZ2o2/z2EYi109jLqIaPIi9y/lc2LmDCWzuCi35bcaQ+OtUh6nwBiFK7SOu25FAU5+YKdqFZUwtqGSdg=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-16.0.0.tgz"
@@ -2265,10 +2277,10 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native@*", "@types/react-native@^0.64.5":
-  "integrity" "sha512-3Kb9QM5/WZ6p58yZ7VPbvjvi6Wc/ZkESgJhKso1gKkNuHBe/4WL6586R2JRDiz9Tsxal9lMnbj3fligBVGl8PA=="
-  "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.64.10.tgz"
-  "version" "0.64.10"
+"@types/react-native@*", "@types/react-native@^0.64.13":
+  "integrity" "sha512-QSOBN6m3TKBPFAcDhuFItDQtw1Fo1/FKDTHGeyeTwBXd3bu0V9s+oHEhntHN7PUK5dAOYFWsnO0wynWwS/KRxQ=="
+  "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.64.13.tgz"
+  "version" "0.64.13"
   dependencies:
     "@types/react" "*"
 

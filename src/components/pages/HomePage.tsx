@@ -9,6 +9,8 @@ import { Box, Notice } from '@constants/types'
 import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
+import debounce from 'lodash.debounce'
+import { useCallback } from 'react'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
@@ -140,6 +142,10 @@ const HomePage = ({route, navigation}: HomeProps) => {
     setRefreshing(false)
   }
 
+  const debouncedSetDatas = useCallback(
+    debounce(setDatas, 3000)
+  , [])
+
   useEffect(() => {
     printAsyncStorage()
     setDatas()
@@ -156,7 +162,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       allBoxData={allBoxData || []} 
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
-      onRefresh={setDatas}
+      onRefresh={debouncedSetDatas}
       refreshing={refreshing}
     />
   )
