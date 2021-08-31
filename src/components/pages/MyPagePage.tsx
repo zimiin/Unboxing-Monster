@@ -6,8 +6,7 @@ import React from "react"
 
 const MyPagePage = ({route, navigation}: MyPageProps) => {
   const logout = async () => {
-    await AsyncStorage.removeItem('@token')
-    await AsyncStorage.removeItem('@socialLoginProvider')
+    await AsyncStorage.removeItem('@access_token')
     
     navigation.dispatch(
       CommonActions.reset({

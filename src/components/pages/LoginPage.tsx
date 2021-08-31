@@ -1,21 +1,25 @@
 import React from 'react'
 import LoginTemplate from '@components/templates/LoginTemplate'
 import { LoginProps } from '@constants/navigationTypes'
-import { LoginManager, AccessToken } from 'react-native-fbsdk-next'
+import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useContext } from 'react'
+import { SignUpContext } from '@src/stores/SignUpContext'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
+  const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
+
   const getFacebookToken = async () => {
     try {
-      const result = await LoginManager.logInWithPermissions(["public_profile"])
+      const result = await LoginManager.logInWithPermissions(["public_profile", 'email'])
       console.log('result: ', result)
       
       if (result.isCancelled) {
         console.log("Login cancelled")
         return undefined
       }
-      console.log("Permissions: " + result.grantedPermissions!.toString())
 
+      console.log("Permissions: " + result.grantedPermissions!.toString())
       const data = await AccessToken.getCurrentAccessToken()
       return data?.accessToken.toString()
     } catch (error) {
@@ -23,53 +27,67 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }
 
-  const sendUserPostRequest = async (token: string) => {
-    try {
-      const url = "http://3.37.238.160/users"
-      const response = await fetch(
-        url, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            token: token,
-            email: 'wlals6105@naver.com',
-            co: 'facebook',
-          })
-        }
-      )
+  const getFacebookEmail = async () => {
+    const data = await AccessToken.getCurrentAccessToken()
+    const facebookToken = data?.accessToken
+    const userId = data?.userID
 
-      console.log('response: ', response)
+    const response = await fetch(
+      'https://graph.facebook.com/' + userId + '?fields=email&access_token=' + facebookToken
+    )
 
-      // let json = await response.json()
-      let json = await response.text()
-      console.log('text: ', json)
+    const json = await response.json()
 
-      if (response.status !== 201) {
-        console.log('url: ' + url)
-        console.log('status: ' + response.status)
-        // console.log(json.message)
-      }
-    } catch (error) {
-      console.log('Error from sendUserPostRequest: ', error)
+    if (response.status !== 200) {
+      console.log('Response status:', response.status, 'Message:', json.message)
+      return ''
     }
+
+    return json.email
   }
 
   const facebookLogin = async () => {
-    const token = await getFacebookToken()
-    if (token === undefined) return
+    const facebookToken = await getFacebookToken()
 
-    // 가입된 유저인지 확인
-      // 가입안된 유저라면
-      // await sendUserPostRequest(token)
+    console.log(facebookToken)
+    if (facebookToken === undefined) {
+      return
+    }
 
-    console.log('token: ' + token)
-    await AsyncStorage.setItem('@token', token)
-    await AsyncStorage.setItem('@socialLoginProvider', 'facebook')
+    const response = await fetch(
+      'http://3.37.238.160/auth/login/facebook', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + facebookToken,
+        }
+      }
+    )
 
-    navigation.replace('Main')
+    const json = await response.json()
+
+    if (response.status === 200) {
+      await AsyncStorage.setItem('@access_token', json.access_token)
+      navigation.replace('Main')
+      console.log('@access_token:', json.access_token)
+    } else if (response.status === 404) {
+      console.log('need to sign up')
+      setProvider('facebook')
+      setProviderToken(facebookToken)
+      const email = await getFacebookEmail()
+
+      if (email === undefined || email === '' || email === null) {
+        navigation.push('SignUpEmailInput')
+      } else {
+        setEmail(email)
+        navigation.push('SignUpPhoneInput')
+      }
+    } else {
+      // 로그인 에러 안내창 띄우기
+      console.log('Error occured while executing fetch login!!!')
+      return
+    }
   }
   
   return (

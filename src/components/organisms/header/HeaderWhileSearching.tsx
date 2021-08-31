@@ -8,7 +8,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
 import { ICONS } from '@constants/icons'
 
@@ -60,7 +60,7 @@ const HeaderWhileSearching = (props: Props) => {
   )
 
   return (
-    <BaseHeader
+    <Header
       canGoBack={props.canGoBack}
       goBackAction={props.goBackAction}
       right={cancelButton}

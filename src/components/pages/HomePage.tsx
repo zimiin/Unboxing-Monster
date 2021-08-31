@@ -126,10 +126,8 @@ const HomePage = ({route, navigation}: HomeProps) => {
   }
 
   const printAsyncStorage = async () => {
-    const token = await AsyncStorage.getItem('@token')
-    const socialLoginProvider = await AsyncStorage.getItem('@socialLoginProvider')
-    console.log('token: ', token)
-    console.log('socialLoginProvider: ', socialLoginProvider)
+    const token = await AsyncStorage.getItem('@access_token')
+    console.log('@access_token: ', token)
   }
 
   useEffect(() => {

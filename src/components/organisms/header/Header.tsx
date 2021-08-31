@@ -18,7 +18,7 @@ interface Props {
   right?: React.ReactNode
 }
 
-const BaseHeader = (props: Props) => {
+const Header = (props: Props) => {
   return (
     <HeaderContainer>
       {/* Left Container */}
@@ -53,7 +53,7 @@ const BaseHeader = (props: Props) => {
   )
 }
 
-export default BaseHeader
+export default Header
 
 const styles = StyleSheet.create({
   leftContainer: {

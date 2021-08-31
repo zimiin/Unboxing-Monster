@@ -1,7 +1,7 @@
 import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import ContentBox from '@components/atoms/ContentBox'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import React from 'react'
 import {
   View,
@@ -54,7 +54,7 @@ const PaymentTemplate = (props: Props) => {
 
   return (
     <>
-      <BaseHeader
+      <Header
         canGoBack={props.canGoBack}
         goBackAction={props.onPressBack}
         title={props.screenTitle}

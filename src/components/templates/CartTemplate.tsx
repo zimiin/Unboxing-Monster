@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
-import BaseHeader from '@components/organisms/header/BaseHeader'
+import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
 import CheckBox from '@components/atoms/button/CheckBox'
 import { BoxId } from '@constants/types'
@@ -79,7 +79,7 @@ const CartTemplate = (props: Props) => {
 
   return (
     <>
-      <BaseHeader
+      <Header
         canGoBack={true}
         goBackAction={props.onPressBack}
         title={'장바구니'}
