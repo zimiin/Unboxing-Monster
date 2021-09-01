@@ -28,14 +28,14 @@ const defaultFunction = () => {
   console.log("No function passed to StorageCoupon")
 }
 
-const StorageCoupon = (props: StorageCouponData) => {
+const StorageCoupon = ({ item }: { item: StorageCouponData }) => {
   return (
     <TouchableOpacity 
       style={styles.container}
-      onPress={props.onPress}
+      onPress={item.onPress}
     >
       <Image
-        source={props.image || defaultBoxURI}
+        source={item.image || defaultBoxURI}
         style={styles.image}
       />
 
@@ -45,20 +45,20 @@ const StorageCoupon = (props: StorageCouponData) => {
           style={styles.name}
           numberOfLines={1}
         >
-          {props.name || ''}
+          {item.name || ''}
         </Bold>
 
         <Text style={styles.price}>
-          {props.price.toLocaleString() || ''} 원
+          {item.price.toLocaleString() || ''} 원
         </Text>
 
         <Text style={styles.confirmableDays}>
-          자동 환불까지 {props.confirmableDays || ''}일 남았습니다.
+          자동 환불까지 {item.confirmableDays || ''}일 남았습니다.
         </Text>
 
         <View style={styles.buttonContainer}>
           <StorageCouponConfirmButton
-            onPress={props.onPressConfirm || defaultFunction}
+            onPress={item.onPressConfirm || defaultFunction}
             buttonStyle={styles.confirmButton}
             textStyle={styles.confirmText}
           >
@@ -66,7 +66,7 @@ const StorageCoupon = (props: StorageCouponData) => {
           </StorageCouponConfirmButton>
 
           <StorageCouponConfirmButton
-            onPress={props.onPressRefund || defaultFunction}
+            onPress={item.onPressRefund || defaultFunction}
             buttonStyle={styles.refundButton}
             textStyle={styles.refundText}
           >

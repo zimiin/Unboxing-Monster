@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react'
 import {
   View,
   StyleSheet,
+  FlatList,
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { scale } from 'react-native-size-matters'
@@ -20,50 +21,52 @@ interface Props {
   onPressRandomBoxTab: () => void,
   onPressCouponTab: () => void,
   boxData: StorageBoxData[],
-  couponData: StorageCouponData[]
+  couponData: StorageCouponData[],
+  refreshingBoxList: boolean,
+  onRefreshBoxList: () => void,
+  refreshingCouponList: boolean,
+  onRefreshCouponList: () => void,
 }
 
 const StorageTemplate = (props: Props) => {
-  const [boxes, setBoxes] = useState<ReactNode>()
-  const [coupons, setCoupons] = useState<ReactNode>()
-  
-  useEffect(() => {
-    const boxComponents = props.boxData.map(
-      item => {
-        return (
-          <StorageBox
-            key={item.id}
-            id={item.id}
-            image={item.image}
-            name={item.name}
-            count={item.count}
-            openOneBox={item.openOneBox}
-            openAllBox={item.openAllBox}
-          />
-        )
-      })
-    setBoxes(boxComponents)
-  }, [props.boxData])
+  const boxes = (
+    <FlatList
+      renderItem={StorageBox}
+      data={props.boxData}
+      style={styles.storageData}
+      refreshing={props.refreshingBoxList}
+      onRefresh={props.onRefreshBoxList}
+    />
+  )
 
-  useEffect(() => {
-    const couponComponents = props.couponData.map(
-      item => {
-        return (
-          <StorageCoupon
-            key={item.id}
-            id={item.id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-            confirmableDays={item.confirmableDays}
-            onPressConfirm={item.onPressConfirm}
-            onPressRefund={item.onPressRefund}
-          />
-        )
-      }
-    )
-    setCoupons(couponComponents)
-  }, [props.couponData])
+  const coupons = (
+    <FlatList
+      renderItem={StorageCoupon}
+      data={props.couponData}
+      style={styles.storageData}
+      refreshing={props.refreshingCouponList}
+      onRefresh={props.onRefreshCouponList}
+    />
+  )
+  // useEffect(() => {
+  //   const couponComponents = props.couponData.map(
+  //     item => {
+  //       return (
+  //         <StorageCoupon
+  //           key={item.id}
+  //           id={item.id}
+  //           image={item.image}
+  //           name={item.name}
+  //           price={item.price}
+  //           confirmableDays={item.confirmableDays}
+  //           onPressConfirm={item.onPressConfirm}
+  //           onPressRefund={item.onPressRefund}
+  //         />
+  //       )
+  //     }
+  //   )
+  //   setCoupons(couponComponents)
+  // }, [props.couponData])
 
   return (
     <View style={styles.container}>
@@ -92,9 +95,7 @@ const StorageTemplate = (props: Props) => {
         </View>
       </View>
 
-      <ScrollView style={styles.storageData}>
-        {props.focusOn === 'randomBox' ? boxes : coupons}
-      </ScrollView>
+      {props.focusOn === 'randomBox' ? boxes : coupons}
     </View>
   )
 }

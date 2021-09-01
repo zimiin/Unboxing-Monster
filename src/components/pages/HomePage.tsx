@@ -9,11 +9,9 @@ import { Box, Notice } from '@constants/types'
 import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
-import debounce from 'lodash.debounce'
-import { useCallback } from 'react'
 
 const HomePage = ({route, navigation}: HomeProps) => {
-  const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+  const [{ cart }, { }] = useContext(CartContext)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [noticeData, setNoticeData] = useState<NoticeItemProps[]>()
   const [popularBoxData, setPopularBoxData] = useState<BoxItemProps[]>()

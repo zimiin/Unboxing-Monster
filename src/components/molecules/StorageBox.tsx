@@ -27,27 +27,27 @@ const defaultOpenFunction = () => {
   console.log("No function passed to StorageBox component.")
 }
 
-const StorageBox = (props: StorageBoxData) => {
+const StorageBox = ({ item }: {item: StorageBoxData}) => {
   return (
     <TouchableOpacity 
       style={styles.container}
-      onPress={props.onPress}
+      onPress={item.onPress}
     >
       <Image
-        source={props.image}
+        source={item.image}
         style={styles.image || defaultBoxURI}
       />
 
       <View>
         <Bold style={styles.name}>
-          {props.name || ''}
+          {item.name || ''}
         </Bold>
 
         <View style={styles.count}>
           <XIcon />
 
           <Bold style={styles.countValue}>
-            {props.count.toString() || ''}
+            {item.count.toString() || ''}
           </Bold>
         </View>
 
@@ -55,14 +55,14 @@ const StorageBox = (props: StorageBoxData) => {
           <StorageBoxOpenButton
             buttonStyle={styles.openOneButton}
             textStyle={styles.openOneText}
-            onPress={props.openOneBox || defaultOpenFunction}
+            onPress={item.openOneBox || defaultOpenFunction}
           >
             1개 열기
           </StorageBoxOpenButton>
 
           <StorageBoxOpenButton
             buttonStyle={styles.openAllBoxButton}
-            onPress={props.openAllBox || defaultOpenFunction}
+            onPress={item.openAllBox || defaultOpenFunction}
           >
             모두 열기
           </StorageBoxOpenButton>

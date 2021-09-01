@@ -11,6 +11,10 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   const [focus, setFocus] = useState<Focus>('randomBox')
   const [boxData, setBoxData] = useState<StorageBoxData[]>()
   const [couponData, setCouponData] = useState<StorageCouponData[]>()
+  const [refreshingBoxList, setRefreshingBoxList] = useState<boolean>(false)
+  const [boxRefreshThrottled, setBoxRefreshThrottled] = useState<boolean>(false)
+  const [refreshingCouponList, setRefreshingCouponList] = useState<boolean>(false)
+  const [couponRefreshThrottled, setCouponRefreshThrottled] = useState<boolean>(false)
 
   const fetchBoxStorage = async () => {
     try {
@@ -35,6 +39,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   }
 
   const setBoxDataState = async () => {
+    if (boxRefreshThrottled) {
+      return
+    }
+
+    console.log('setBoxDataState')
+
+    setBoxRefreshThrottled(true)
+    setRefreshingBoxList(true)
+
     const json: BoxStorage[] = await fetchBoxStorage()
     let boxDataValue: StorageBoxData[] = []
 
@@ -66,6 +79,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
 
     setBoxData(boxDataValue)
+    setRefreshingBoxList(false)
+    setTimeout(() => setBoxRefreshThrottled(false), 3000)
   }
 
   const fetchCoupon = async () => {
@@ -91,6 +106,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   }
 
   const setCouponDataState = async () => {
+    if (couponRefreshThrottled) {
+      return
+    }
+
+    console.log('setCouponDataState')
+
+    setRefreshingCouponList(true)
+    setCouponRefreshThrottled(true)
+
     const json: CouponWithItem[] = await fetchCoupon()
     let couponDataValue: StorageCouponData[] = []
 
@@ -107,6 +131,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
 
     setCouponData(couponDataValue)
+    setRefreshingCouponList(false)
+    setTimeout(() => setCouponRefreshThrottled(false), 3000)
   }
 
   useEffect(() => {
@@ -114,7 +140,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       setBoxDataState()
       setCouponDataState()
     })
-  }, [])  
+  }, [])
 
   return (
     <StorageTemplate
@@ -123,6 +149,10 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       onPressCouponTab={() => setFocus('coupon')}
       boxData={boxData || []}
       couponData={couponData || []}
+      refreshingBoxList={refreshingBoxList}
+      onRefreshBoxList={setBoxDataState}
+      refreshingCouponList={refreshingCouponList}
+      onRefreshCouponList={setCouponDataState}
     />
   )
 }
