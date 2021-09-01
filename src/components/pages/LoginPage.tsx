@@ -89,11 +89,16 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       return
     }
   }
+
+  const appleLogin = async () => {
+    
+  }
   
   return (
     <LoginTemplate
       onPressLookAround={() => navigation.replace('Main')}
       onPressFacebook={facebookLogin}
+      onPressApple={appleLogin}
     />
   )
 }

@@ -147,6 +147,12 @@ const HomePage = ({route, navigation}: HomeProps) => {
   , [])
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV)
+    // try {
+    //   console.log(process.env.NODE_ENV)
+    // } catch (error) {
+    //   console.log(error)
+    // }
     printAsyncStorage()
     setDatas()
   }, [])
