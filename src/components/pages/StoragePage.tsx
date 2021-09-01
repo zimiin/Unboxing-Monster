@@ -75,6 +75,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
             }
           })
         },
+        onPress: () => { }
       })
     }
 
@@ -126,7 +127,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
         price: coupon.item.price,
         confirmableDays: 10,
         onPressConfirm: () => { console.log('Confirm to use ' + coupon.itemId) },
-        onPressRefund: () => { console.log('Decide to refund ' + coupon.itemId) }
+        onPressRefund: () => { console.log('Decide to refund ' + coupon.itemId) },
+        onPress: () => { }
       })
     }
 

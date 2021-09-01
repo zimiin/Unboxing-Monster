@@ -1,17 +1,15 @@
-import React, { ReactNode, useState } from 'react'
+import React from 'react'
 import {
   View,
   StyleSheet,
   FlatList,
 } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
 import { scale } from 'react-native-size-matters'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import StorageTab from '@components/molecules/StorageTab'
 import Header from '@components/organisms/header/Header'
 import StorageBox from '@components/molecules/StorageBox'
 import { StorageBoxData } from '@components/molecules/StorageBox'
-import { useEffect } from 'react'
 import StorageCoupon, { StorageCouponData } from '@components/molecules/StorageCoupon'
 
 export type Focus = 'randomBox' | 'coupon'
@@ -48,25 +46,6 @@ const StorageTemplate = (props: Props) => {
       onRefresh={props.onRefreshCouponList}
     />
   )
-  // useEffect(() => {
-  //   const couponComponents = props.couponData.map(
-  //     item => {
-  //       return (
-  //         <StorageCoupon
-  //           key={item.id}
-  //           id={item.id}
-  //           image={item.image}
-  //           name={item.name}
-  //           price={item.price}
-  //           confirmableDays={item.confirmableDays}
-  //           onPressConfirm={item.onPressConfirm}
-  //           onPressRefund={item.onPressRefund}
-  //         />
-  //       )
-  //     }
-  //   )
-  //   setCoupons(couponComponents)
-  // }, [props.couponData])
 
   return (
     <View style={styles.container}>
