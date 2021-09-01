@@ -11,12 +11,13 @@ import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
 
 const HomePage = ({route, navigation}: HomeProps) => {
-  const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+  const [{ cart }, { }] = useContext(CartContext)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [noticeData, setNoticeData] = useState<NoticeItemProps[]>()
   const [popularBoxData, setPopularBoxData] = useState<BoxItemProps[]>()
   const [allBoxData, setAllBoxData] = useState<BoxItemProps[]>()
   const [refreshing, setRefreshing] = useState<boolean>(true)
+  const [throttled, setThrottled] = useState<boolean>(false)
 
   const openUrl = async (url: string) => {
     const supported = await Linking.canOpenURL(url)
@@ -132,12 +133,20 @@ const HomePage = ({route, navigation}: HomeProps) => {
   }
 
   const setDatas = async () => {
+    if (throttled) {
+      return
+    }
+
     console.log('set datas')
+    setThrottled(true)
     setRefreshing(true)
+    
     await setNoticeDataState()
     await setPopularBoxDataState()
     await setAllBoxDataState()
+    
     setRefreshing(false)
+    setTimeout(() => setThrottled(false), 3000)
   }
 
   useEffect(() => {

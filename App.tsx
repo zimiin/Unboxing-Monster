@@ -6,6 +6,7 @@ import MainBottomTab from '@components/navigations/MainBottomTab'
 import { RootStackParamList } from '@constants/navigationTypes'
 import CartContextProvider from '@src/stores/CartContext'
 import OpenStack from '@components/navigations/OpenStack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 

@@ -1,6 +1,5 @@
-module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
-  plugins: [
+const plugins = () => {
+  const defaultPlugins = [
     [
       'module-resolver',
       {
@@ -12,5 +11,16 @@ module.exports = {
         },
       }, 
     ],
-  ],
+  ];
+
+  if (process.env.NODE_ENV === "production") {
+    defaultPlugins.push("transform-remove-console");
+  }
+
+  return defaultPlugins
+}
+
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: plugins(),
 };

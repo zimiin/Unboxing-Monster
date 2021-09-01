@@ -1,7 +1,5 @@
 import React from 'react'
 import { 
-  StyleProp, 
-  TextStyle,
   TextProps,
 } from 'react-native'
 import {

@@ -15,6 +15,7 @@ import {
 interface Props {
   onPressLookAround: () => void,
   onPressFacebook: () => void,
+  onPressApple: () => void,
 }
 
 const LoginTemplate = (props: Props) => {
@@ -72,7 +73,7 @@ const LoginTemplate = (props: Props) => {
 
           <IconButton24
             image={ICONS.apple}
-            onPress={() => console.log("apple login pressed")}
+            onPress={props.onPressApple}
             style={styles.SNSIcon}
           />
         </View>
