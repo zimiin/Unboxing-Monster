@@ -198,6 +198,29 @@ export type PaymentCompleteProps = {
   navigation: PaymentCompleteNavigationProp
 }
 
+// CustomBox Stack
+export type CustomBoxStackParamList = {
+  CustomBoxInit: undefined,
+  BoxMakingStep1: undefined,
+  BoxMakingStep2: undefined,
+  BoxMakingStep3: undefined,
+  BoxMakingStep4: undefined,
+}
+
+export type CustomBoxInitRouteProp = RouteProp<CustomBoxStackParamList, 'CustomBoxInit'>
+export type CustomBoxInitNavigationProp = StackNavigationProp<CustomBoxStackParamList, 'CustomBoxInit'>
+export type CustomBoxInitProps = {
+  route: CustomBoxInitRouteProp,
+  navigation: CustomBoxInitNavigationProp
+}
+
+export type BoxMakingStep1RouteProp = RouteProp<CustomBoxStackParamList, 'BoxMakingStep1'>
+export type BoxMakingStep1NavigationProp = StackNavigationProp<CustomBoxStackParamList, 'BoxMakingStep1'>
+export type BoxMakingStep1Props = {
+  route: BoxMakingStep1RouteProp,
+  navigation: BoxMakingStep1NavigationProp
+}
+
 // Storage Stack
 export type StorageStackParamList = {
   Storage: undefined,
