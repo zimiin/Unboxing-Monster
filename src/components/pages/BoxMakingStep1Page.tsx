@@ -6,6 +6,7 @@ import { useContext } from 'react'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   const [{ boxPrice }, { setBoxPrice }] = useContext(CustomBoxContext)
+  const boxPrices: number[] = [5000, 10000, 20000, 50000]
 
   return (
     <BoxMakingStep1Template
@@ -13,7 +14,8 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       screenTitle='커스텀 박스 만들기'
       onPressGoBack={() => navigation.goBack()}
       onPressNext={() => navigation.navigate('BoxMakingStep2')}
-      boxPrice={boxPrice}
+      boxPrices={boxPrices}
+      selectedBoxPrice={boxPrice}
     />
   )
 }

@@ -8,13 +8,16 @@ import {
   Text,
   StyleSheet,
 } from 'react-native'
+import BoxPriceCheckButton from '@components/atoms/button/BoxPriceCheckButton'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   screenTitle: string,
   hasPreviousScreen: boolean,
   onPressGoBack: () => void,
   onPressNext: () => void,
-  boxPrice: number,
+  boxPrices: number[],
+  selectedBoxPrice: number,
 }
 
 const BoxMakingStep1Template = (props: Props) => {
@@ -27,17 +30,21 @@ const BoxMakingStep1Template = (props: Props) => {
       />
 
       <View style={styles.screen}>
-        <Bold
-          style={styles.instruction}
-        >
+        <Bold style={styles.instruction}>
           {'만들고 싶은 박스의' + '\n'
           + '크기를 선택해 주세요.'}
         </Bold>
+
+        <BoxPriceCheckButton
+          onPress={() => {}}
+          image={IMAGES.box_price}
+          checked={true}
+        />
       </View>
 
       <FullWidthButton
         onPress={props.onPressNext}
-        content={props.boxPrice?.toString() + '원 박스에 담기'}
+        content={props.selectedBoxPrice?.toString() + '원 박스에 담기'}
       />
     </>
   )
