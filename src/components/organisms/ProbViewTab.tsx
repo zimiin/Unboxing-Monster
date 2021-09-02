@@ -9,6 +9,8 @@ import {
 } from 'react-native'
 import { Item } from '@constants/types'
 import BoxProbView from "@components/molecules/BoxProbView";
+import { PieChart } from "react-native-chart-kit";
+import HorizontalRule from "@components/atoms/HorizontalRule";
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -40,7 +42,59 @@ const ProbViewTab = ({ items, probs } : { items: Item[], probs: number[] }) => {
         <BoxProbView probs={probs} items={items}/>
       ) : (
         <View>
-          <Text>실시간 현황입니다.</Text>
+          <View style={{
+            marginLeft: 24,
+            marginRight: 24,
+          }}>
+          <Text style={{
+            marginTop: 25,
+            fontSize: 14,
+            fontWeight: 'bold'
+          }}>실시간 현황</Text>
+          <View style={{
+            backgroundColor: "#f9f9f9",
+            paddingTop: 16,
+            marginTop: 13,
+            marginBottom: 28,
+          }}>
+            <PieChart
+              backgroundColor="#f9f9f9"
+              data={[
+                {
+                  name: "Seoul",
+                  population: 2150,
+                  color: "rgba(131, 167, 234, 1)",
+                },
+                {
+                  name: "Toronto",
+                  population: 2800,
+                  color: "#F00",
+                }]}
+              width={Dimensions.get('window').width * (312 / 360)}
+              height={Dimensions.get('window').width * (150 / 360)}
+              chartConfig={{
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              }}
+              paddingLeft={"241"}
+              accessor={"population"}
+              center={[-150, 0]}
+              hasLegend={false}
+              absolute
+            />
+            <Text>asdf</Text>
+            <Text>asdf</Text>
+
+            <Text>asdf</Text>
+            <Text>asdf</Text>
+          </View>
+          </View>
+          <HorizontalRule/>
+          <View style={{
+            marginLeft: 24,
+            marginRight: 24,
+          }}>
+            <Text style={{fontSize: 14, fontWeight: 'bold', marginTop: 22, marginBottom: 7}}>최근 1등 당점자 현황</Text>
+          </View>
         </View>
       )}
     </>

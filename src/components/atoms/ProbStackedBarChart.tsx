@@ -1,14 +1,10 @@
 import React from "react"
-import { useState } from "react"
 import {
-  StyleSheet,
-  View,
   ViewStyle,
 } from 'react-native'
 
 import { StackedBarChart } from "react-native-chart-kit"
 import { StackedBarChartData } from "react-native-chart-kit/dist/StackedBarChart"
-View
 
 const ProbStackedBarChart = ({data, style}: {data: StackedBarChartData, style: Partial<ViewStyle> | undefined}) => {
   return (
