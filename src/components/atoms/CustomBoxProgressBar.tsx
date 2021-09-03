@@ -8,11 +8,11 @@ import {
 } from 'react-native'
 
 interface Props extends ViewProps{
-  step: number,
+  progress: number,
 }
 
 const CustomBoxProgressBar = (props: Props) => {
-  const { step, style, ...rest } = props
+  const { progress, style, ...rest } = props
 
   return (
     <>
@@ -26,7 +26,7 @@ const CustomBoxProgressBar = (props: Props) => {
         <View 
           style={[
             styles.progress,
-            step ? {width: scale(step / 4 * 312)} : null
+            progress ? {width: scale(progress * 312)} : null
           ]}
         />
       </View>

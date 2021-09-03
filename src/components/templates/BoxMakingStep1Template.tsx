@@ -30,7 +30,7 @@ const BoxMakingStep1Template = (props: Props) => {
 
       <View style={styles.screen}>
         <CustomBoxProgressBar 
-          step={1}
+          progress={1 / 4}
           style={styles.progressBar}
         />
 
