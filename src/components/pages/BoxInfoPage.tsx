@@ -11,6 +11,7 @@ import BoxListItem from '@components/molecules/BoxListItem'
 import { BoxInfoProps } from '@constants/navigationTypes'
 import { BoxWithItems } from '@constants/types'
 import { CartContext } from '@src/stores/CartContext'
+import { defaultBox } from '@constants/images'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
@@ -77,7 +78,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
 
   return (
     <BoxInfoTemplate
-      boxImage={<BoxInfoImage image={data.image}/>}
+      boxImage={<BoxInfoImage image={data.image ? {uri: data.image} : defaultBox}/>}
       boxName={data.title}
       boxPrice={<BoxPriceInfo price={data.price}/>}
       boxDetail={<Body content={data.detail}/>}

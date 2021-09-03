@@ -45,7 +45,7 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
   return (
     <AddToCartTemplate
       boxName={data ? data.title : ''}
-      boxImage={data ? data.image : defaultBox}
+      boxImage={data ? {uri: data.image} : defaultBox}
       boxPrice={data ? data.price : 0}
       count={count}
       goBackAction={() => navigation.goBack()}

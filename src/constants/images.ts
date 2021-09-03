@@ -31,4 +31,5 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   check_circle: require('assets/images/check_circle.png'),
 }
 
-export const defaultBox = "https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png"
+export const defaultBoxUri: string = 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'
+export const defaultBox: ImageSourcePropType = {uri: defaultBoxUri}

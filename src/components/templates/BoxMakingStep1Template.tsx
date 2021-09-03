@@ -7,6 +7,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
 } from 'react-native'
 import { IMAGES } from '@constants/images'
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
@@ -42,6 +43,15 @@ const BoxMakingStep1Template = (props: Props) => {
           {props.error}
         </Text>
         
+        <View
+          style={{
+            flexDirection: 'row',
+          }}
+        >
+          {/* <Image
+            source={}
+          /> */}
+        </View>
       </View>
 
       <FullWidthButton

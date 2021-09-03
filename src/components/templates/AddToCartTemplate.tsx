@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  ImageSourcePropType,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import BoxInfoImage from '@components/atoms/BoxInfoImage'
@@ -16,7 +17,7 @@ import PlusButton from '@components/atoms/button/PlusButton'
 import { StyleSheet } from 'react-native'
 
 interface Props {
-  boxImage: string,
+  boxImage: ImageSourcePropType,
   boxName: string,
   boxPrice: number,
   count: number,
