@@ -8,16 +8,15 @@ import {
   Text,
   StyleSheet,
 } from 'react-native'
-import BoxPriceCheckButton from '@components/atoms/button/BoxPriceCheckButton'
 import { IMAGES } from '@constants/images'
+import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
 
 interface Props {
   screenTitle: string,
   hasPreviousScreen: boolean,
+  error: string,
   onPressGoBack: () => void,
   onPressNext: () => void,
-  boxPrices: number[],
-  selectedBoxPrice: number,
 }
 
 const BoxMakingStep1Template = (props: Props) => {
@@ -30,21 +29,24 @@ const BoxMakingStep1Template = (props: Props) => {
       />
 
       <View style={styles.screen}>
+        <CustomBoxProgressBar 
+          step={1}
+          style={styles.progressBar}
+        />
+
         <Bold style={styles.instruction}>
-          {'만들고 싶은 박스의' + '\n'
-          + '크기를 선택해 주세요.'}
+          {'최소 보상 상품을 선택해주세요.'}
         </Bold>
 
-        <BoxPriceCheckButton
-          onPress={() => {}}
-          image={IMAGES.box_price}
-          checked={true}
-        />
+        <Text style={styles.error}>
+          {props.error}
+        </Text>
+        
       </View>
 
       <FullWidthButton
         onPress={props.onPressNext}
-        content={props.selectedBoxPrice?.toString() + '원 박스에 담기'}
+        content={'다음'}
       />
     </>
   )
@@ -56,13 +58,21 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: 'white',
+    paddingHorizontal: scale(24)
+  },
+  progressBar: {
+    marginTop: verticalScale(12),
   },
   instruction: {
     fontSize: 20,
     lineHeight: 30,
     letterSpacing: -0.6,
     marginTop: verticalScale(32),
-    marginLeft: scale(24)
   },
-
+  error: {
+    fontSize: 13,
+    color: '#ec4f47',
+    letterSpacing: -0.32,
+    marginTop: verticalScale(2),
+  }
 })
