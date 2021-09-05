@@ -7,11 +7,9 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
 } from 'react-native'
-import { IMAGES } from '@constants/images'
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
-import PrizeRadioButton from '@components/molecules/PrizeRadioButton'
+import ItemRadioButton from '@components/molecules/ItemRadioButton'
 
 interface Props {
   screenTitle: string,
@@ -44,7 +42,7 @@ const BoxMakingStep1Template = (props: Props) => {
           {props.error}
         </Text>
         
-        <PrizeRadioButton
+        <ItemRadioButton
           id={0}
           image={{ uri: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg'}}
           name='나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이'
@@ -84,5 +82,6 @@ const styles = StyleSheet.create({
     color: '#ec4f47',
     letterSpacing: -0.32,
     marginTop: verticalScale(2),
+    height: 19,
   }
 })

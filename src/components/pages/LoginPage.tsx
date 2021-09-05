@@ -5,6 +5,7 @@ import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useContext } from 'react'
 import { SignUpContext } from '@src/stores/SignUpContext'
+import { URLS } from '@constants/urls'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
@@ -55,7 +56,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
 
     const response = await fetch(
-      'http://3.37.238.160/auth/login/facebook', {
+      URLS.unboxing_api + 'auth/login/facebook', {
         method: 'GET',
         headers: {
           Accept: 'application/json',

@@ -3,6 +3,7 @@ import { SplashProps } from "@constants/navigationTypes"
 import SplashTemplate from "@components/templates/SplashTemplate"
 import { useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { URLS } from '@constants/urls'
 
 const SplashPage = ({route, navigation} : SplashProps) => {
   const [animating, setAnimatinng] = useState(true)
@@ -16,7 +17,7 @@ const SplashPage = ({route, navigation} : SplashProps) => {
       const token = await AsyncStorage.getItem('@access_token')
 
       const response = await fetch(
-        'http://3.37.238.160/', {
+        URLS.unboxing_api + '', {
           method: 'GET',
           headers: {
             Accept: 'application/json',

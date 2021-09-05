@@ -21,7 +21,8 @@ interface Props extends ViewProps{
   checked: boolean,
   onPress: () => void,
 }
-const PrizeRadioButton = (props: Props) => {
+
+const ItemRadioButton = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
@@ -55,7 +56,7 @@ const PrizeRadioButton = (props: Props) => {
   )
 }
 
-export default PrizeRadioButton
+export default ItemRadioButton
 
 const styles = StyleSheet.create({
   container: {

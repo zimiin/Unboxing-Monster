@@ -3,15 +3,31 @@ import { BoxMakingStep1Props } from '@constants/navigationTypes'
 import { CustomBoxContext } from '@src/stores/CustomBoxContext'
 import React, { useState, useEffect } from 'react'
 import { useContext } from 'react'
+import { Item } from '@constants/types'
+import { URLS } from '@constants/urls'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
-  const [{ items }, { addItems }] = useContext(CustomBoxContext)
-  const boxPrices: number[] = [5000, 10000, 20000, 50000]
+  const [{ selectedItems }, { addSelectedItems }] = useContext(CustomBoxContext)
+  const [itemData, setItemData] = useState<Item[]>([])
+  const [selectedItem, setSelectedItem] = useState<number>()
   const [error, setError] = useState<string>('')
+  // itemData에는 아이템 데이터만 갖고있고, 선택 정보는 selectedItem활용
 
   useEffect(() => {
-    setError('한 개는 반드시 선택해야 합니다')
+    const setItemDataState = async () => {
+      try {
+        const response = await fetch(URLS.unboxing_api + 'item')
+
+      } catch (error) {
+        console.log('Error in setItemDataState', error)
+      }
+    }
+
+    setItemDataState()
   }, [])
+
+  // next 눌렀을 때 처리 함수
+  // 선택된거 없으면 에러
   
   return (
     <BoxMakingStep1Template

@@ -5,6 +5,7 @@ import { defaultBox } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'
 import { useContext } from 'react'
 import { AddToCartNavigationProp, AddToCartRouteProp } from '@constants/navigationTypes'
+import { URLS } from '@constants/urls'
 
 const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navigation: AddToCartNavigationProp }) => {
   const [data, setData] = useState<BoxWithItems>()
@@ -29,7 +30,7 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
 
   useEffect(() => {
     const getBoxInfo = async (boxId: number) => {
-      let url = 'http://3.37.238.160/box/' + boxId
+      let url = URLS.unboxing_api + 'box/' + boxId
       let response = await fetch(url)
       if (response.status === 200) {
         let json = await response.json()

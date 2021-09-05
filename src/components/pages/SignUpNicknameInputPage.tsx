@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useContext } from 'react'
 import { AccessToken } from 'react-native-fbsdk-next'
+import { URLS } from '@constants/urls'
 
 const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) => {
   const [{email, phone, phoneConfirm, nickname, provider, providerToken}, {setNickname}] = useContext(SignUpContext)
@@ -15,7 +16,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const requestJoin = async () => {
     try {
     const response = await fetch(
-      'http://3.37.238.160/auth/join/' + provider, {
+      URLS.unboxing_api + 'auth/join/' + provider, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -48,7 +49,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const requestLogin = async () => {
     try {
       const response = await fetch(
-        'http://3.37.238.160/auth/login/' + provider, {
+        URLS.unboxing_api + 'auth/login/' + provider, {
           method: 'GET',
           headers: {
             Accept: 'application/json',

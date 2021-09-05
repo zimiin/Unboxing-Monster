@@ -3,6 +3,7 @@ import { LoadingProps } from '@constants/navigationTypes'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { URLS } from '@constants/urls'
 
 const LoadingPage = ({route, navigation}: LoadingProps) => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -12,7 +13,7 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
       for (let itemId of item) {
         try {
           const response = await fetch(
-            'http://3.37.238.160/coupon',
+            URLS.unboxing_api + 'coupon',
             {
               method: 'POST',
               headers: {
@@ -39,7 +40,7 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
 
     const requestBoxOpen = async () => {
       try {
-        const url = 'http://3.37.238.160/box/open/' + route.params.boxId
+        const url = URLS.unboxing_api + 'box/open/' + route.params.boxId
           + '?count=' + route.params.count
         const response = await fetch(url, {
           method: 'GET',

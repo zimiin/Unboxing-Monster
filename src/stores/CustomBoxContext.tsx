@@ -3,22 +3,22 @@ import React, { useState } from "react"
 type Context = [
   {
     boxPrice: number,
-    items: number[],
+    selectedItems: number[],
   },
   {
     setBoxPrice: (price: number) => void,
-    addItems: (ids: number[]) => void,
+    addSelectedItems: (ids: number[]) => void,
   }
 ]
 
 const defaultContext: Context = [
   {
     boxPrice: 0,
-    items: [],
+    selectedItems: [],
   },
   {
     setBoxPrice: (price: number) => { },
-    addItems: (ids: number[]) => { },
+    addSelectedItems: (ids: number[]) => { },
   }
 ]
 
@@ -30,16 +30,16 @@ interface Props {
 
 const CustomBoxContextProvider = (props: Props) => {
   const [boxPrice, setBoxPrice] = useState<number>(0)
-  const [items, setItems] = useState<number[]>([])
+  const [selectedItems, setSelectedItems] = useState<number[]>([])
 
-  const addItems = (ids: number[]) => {
-    let newItems = items
+  const addSelectedItems = (ids: number[]) => {
+    let newItems = selectedItems
     newItems.push(...ids)
-    setItems(newItems)
+    setSelectedItems(newItems)
   }
 
   return (
-    <CustomBoxContext.Provider value={[{ boxPrice, items }, { setBoxPrice, addItems }]}>
+    <CustomBoxContext.Provider value={[{ boxPrice, selectedItems }, { setBoxPrice, addSelectedItems }]}>
       {props.children}
     </CustomBoxContext.Provider>
   )

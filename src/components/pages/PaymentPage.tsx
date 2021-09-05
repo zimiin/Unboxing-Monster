@@ -4,6 +4,7 @@ import { PaymentProps } from '@constants/navigationTypes'
 import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
+import { URLS } from '@constants/urls'
 
 interface BoxIdCount {
   boxId: number,
@@ -27,7 +28,7 @@ const PaymentPage = (props: PaymentProps) => {
       try {
         for (let [boxId, item] of cart) {
           if (item.checked === true) {
-            const url = 'http://3.37.238.160/box/' + boxId
+            const url = URLS.unboxing_api + 'box/' + boxId
             const response = await fetch(url)
             const json = await response.json()
 
@@ -85,7 +86,7 @@ const PaymentPage = (props: PaymentProps) => {
   useEffect(() => {
     const setPointState = async () => {
       try {
-        const url = 'http://3.37.238.160/users/' + 'k1804801727'
+        const url = URLS.unboxing_api + 'users/' + 'k1804801727'
         const response = await fetch(url)
         const json = await response.json()
 
@@ -105,7 +106,7 @@ const PaymentPage = (props: PaymentProps) => {
   const makePayment = async () => {
     try {
       const response = await fetch(
-        'http://3.37.238.160/purchase', {
+        URLS.unboxing_api + 'purchase', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
