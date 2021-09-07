@@ -2,24 +2,33 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
 import { scale, verticalScale } from '@constants/figure'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   View,
   Text,
   StyleSheet,
 } from 'react-native'
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
-import ItemRadioButton from '@components/molecules/ItemRadioButton'
+import ItemRadioButton, { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
+import { FlatList } from 'react-native-gesture-handler'
 
 interface Props {
   screenTitle: string,
   hasPreviousScreen: boolean,
   error: string,
+  itemRadioButtonData?: ItemRadioButtonProps[],
   onPressGoBack: () => void,
   onPressNext: () => void,
 }
 
 const BoxMakingStep1Template = (props: Props) => {
+  const items = (
+    <FlatList
+      renderItem={ItemRadioButton}
+      data={props.itemRadioButtonData || []}
+    />
+  )
+
   return (
     <>
       <Header
@@ -42,14 +51,7 @@ const BoxMakingStep1Template = (props: Props) => {
           {props.error}
         </Text>
         
-        <ItemRadioButton
-          id={0}
-          image={{ uri: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg'}}
-          name='나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이나는 낭만고양이'
-          price={1000}
-          onPress={() => console.log('Hey!')}
-          checked={true}
-        />
+        {items}
       </View>
 
       <FullWidthButton

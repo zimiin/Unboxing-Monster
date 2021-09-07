@@ -13,7 +13,7 @@ import {
   ImageSourcePropType,
 } from 'react-native'
 
-interface Props extends ViewProps{
+export interface ItemRadioButtonProps extends ViewProps{
   id: number,
   image: ImageSourcePropType,
   name: string,
@@ -22,14 +22,14 @@ interface Props extends ViewProps{
   onPress: () => void,
 }
 
-const ItemRadioButton = (props: Props) => {
+const ItemRadioButton = ({ item }: { item: ItemRadioButtonProps }) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
-      style={[styles.container, props.style]}
+      onPress={item.onPress}
+      style={[styles.container, item.style]}
     >
       <Image
-        source={props.image || defaultBox}
+        source={item.image || defaultBox}
         style={styles.image}
       />
 
@@ -39,17 +39,17 @@ const ItemRadioButton = (props: Props) => {
           ellipsizeMode='tail'
           style={styles.name}
         >
-          {props.name || ''}
+          {item.name || ''}
         </Bold>
 
         <Text style={styles.price}>
-          {props.price ? props.price.toLocaleString() + ' 원' : '0 원'}
+          {item.price ? item.price.toLocaleString() + ' 원' : '0 원'}
         </Text>
       </View>
 
       <View style={styles.radioButtonContainer}>
         <RadioButton
-          checked={props.checked}
+          checked={item.checked}
         />
       </View>
     </TouchableOpacity>
