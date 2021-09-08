@@ -75,3 +75,13 @@ export const getUserInfoFromToken = async (accessToken: string) => {
   }
 }
 
+export const printAsyncStorage = async () => {
+  const token = await AsyncStorage.getItem('@access_token')
+  console.log('@access_token: ', token)
+  const nickname = await AsyncStorage.getItem('@nickname')
+  console.log('@nickname: ', nickname)
+  const email = await AsyncStorage.getItem('@email')
+  console.log('@email: ', email)
+  const phone = await AsyncStorage.getItem('@phone')
+  console.log('@phone: ', phone)
+}

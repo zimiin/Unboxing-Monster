@@ -5,7 +5,7 @@ import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
 import { IMPData, IMPConst } from 'iamport-react-native'
-import { NavigationRouteContext } from '@react-navigation/native'
+import {getEmailFromAsyncStorage, getNicknameFromAsyncStorage, getPhoneFromAsyncStorage} from '@src/utils/asyncStorageUtils'
 
 interface BoxIdCount {
   boxId: number,
@@ -185,6 +185,16 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     setUseAllPoint(!useAllPoint)
   }
 
+  const merchantTitle = () => {
+    if (boxData) {
+      if (boxData.length === 1) {
+        return boxData[0].name
+      } else {
+        return boxData[0].name + ' 외 ' + (boxData.length - 1).toString() + '개'
+      }
+    }
+  }
+
   const makePayment = async () => {
     const data: PaymentParams = {
       params: {
@@ -193,14 +203,12 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         display: {card_quota: []},
         merchant_uid: "ORD20180131-0000011",
         amount: (totalPrice - usingPoint).toString(),
-        name: '엄청난 박스',
-        buyer_tel: '01029276105',
-        buyer_name: '',
+        name: merchantTitle() || '',
+        buyer_tel: await getPhoneFromAsyncStorage() || '01000000000',
+        buyer_name: await getNicknameFromAsyncStorage() || '',
+        buyer_email: await getEmailFromAsyncStorage() || '',
         app_scheme: 'exampleforrn',
         tax_free: undefined,
-        buyer_email: 'wlals6105@naver.com',
-        buyer_addr: undefined,
-        buyer_postcode: undefined,
         custom_data: undefined,
         vbank_due: undefined,
         popup: undefined,

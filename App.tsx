@@ -7,11 +7,13 @@ import { RootStackParamList } from '@constants/navigationTypes'
 import CartContextProvider from '@src/stores/CartContext'
 import OpenStack from '@components/navigations/OpenStack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { printAsyncStorage } from '@src/utils/loginUtils'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
   // AsyncStorage.clear()
+  printAsyncStorage()
 
   return (
     <CartContextProvider>
