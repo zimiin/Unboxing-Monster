@@ -10,6 +10,8 @@ import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import { HomeStackParamList } from '@constants/navigationTypes'
+import PGPaymentPage from '@components/pages/PGPaymentPage'
+import PaymentResultPage from '@components/pages/PaymentResultPage'
 
 const HomeStackScreen = () => {
   const HomeStack = createStackNavigator<HomeStackParamList>()
@@ -65,6 +67,16 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="PaymentComplete"
         component={PaymentCompletePage}
+      />
+
+      <HomeStack.Screen
+        name="PGPayment"
+        component={PGPaymentPage}
+      />
+
+      <HomeStack.Screen
+        name="PaymentResult"
+        component={PaymentResultPage}
       />
     </HomeStack.Navigator>
   )

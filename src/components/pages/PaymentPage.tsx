@@ -4,13 +4,40 @@ import { PaymentProps } from '@constants/navigationTypes'
 import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
+import { IMPData, IMPConst } from 'iamport-react-native'
+import { NavigationRouteContext } from '@react-navigation/native'
 
 interface BoxIdCount {
   boxId: number,
   count: number
 }
 
-const PaymentPage = (props: PaymentProps) => {
+interface PaymentParams {
+  params: IMPData.PaymentData;
+  tierCode?: string;
+}
+
+export type PaymentMethod = {
+  value: string,
+  label: string,
+}
+
+export const PAYMENT_METHODS: PaymentMethod[] = [
+  {
+    value: 'card',
+    label: '신용카드',
+  },
+  {
+    value: 'vbank',
+    label: '가상계좌',
+  },
+  {
+    value: 'trans',
+    label: '실시간 계좌이체',
+  },
+]
+
+const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
   const [boxData, setBoxData] = useState<PaymentBoxItemProps[]>()
   const [totalPrice, setTotalPrice] = useState<number>(0)
@@ -18,7 +45,7 @@ const PaymentPage = (props: PaymentProps) => {
   const [point, setPoint] = useState<number>(0)
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
-  const [paymentMethod, setPaymentMethod] = useState<string>('신용카드')
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
 
   useEffect(() => {
     const setBoxDataState = async () => {
@@ -102,7 +129,7 @@ const PaymentPage = (props: PaymentProps) => {
     setPointState()
   }, [])
 
-  const makePayment = async () => {
+  const requestPurchase = async () => {
     try {
       const response = await fetch(
         'http://3.37.238.160/purchase', {
@@ -125,7 +152,7 @@ const PaymentPage = (props: PaymentProps) => {
         throw 'Payment failed. : ' + json.message
       }
       
-      props.navigation.push('PaymentComplete', {paymentId: json.id})
+      navigation.push('PaymentComplete', {paymentId: json.id})
     } catch (error) {
       console.error(error)
     }
@@ -162,19 +189,57 @@ const PaymentPage = (props: PaymentProps) => {
     setUseAllPoint(!useAllPoint)
   }
 
+  const makePayment = async () => {
+    const data: PaymentParams = {
+      params: {
+        pg: 'danal_tpay',
+        pay_method: PAYMENT_METHODS[1].value,
+        currency: undefined,
+        notice_url: undefined,
+        display: undefined,
+        merchant_uid: '000000',
+        name: '엄청난 박스',
+        amount: '5000',
+        app_scheme: 'exampleforrn',
+        tax_free: undefined,
+        buyer_name: '',
+        buyer_tel: '01029276105',
+        buyer_email: 'wlals6105@naver.com',
+        buyer_addr: undefined,
+        buyer_postcode: undefined,
+        custom_data: undefined,
+        vbank_due: undefined,
+        popup: undefined,
+        digital: undefined,
+        language: undefined,
+        biz_num: '2460302264',
+        customer_uid: undefined,
+        naverPopupMode: undefined,
+        naverUseCfm: undefined,
+        naverProducts: undefined,
+        m_redirect_url: IMPConst.M_REDIRECT_URL,
+        escrow: false,
+      },
+      tierCode: 'ADD',
+    }
+
+    navigation.navigate('PGPayment', data)
+  }
+
   return (
     <PaymentTemplate
       screenTitle={'결제'}
       canGoBack={true}
-      onPressBack={() => props.navigation.goBack()}
+      onPressBack={() => navigation.goBack()}
       boxData={boxData || []}
       currentPoint={point}
       usingPoint={usingPoint}
       onChangeUsingPointAmount={setUsingPointFromInput}
       useAllPoint={useAllPoint}
       onPressUseAllPoint={onPressUseAllPoint}
-      paymentMethod={paymentMethod}
-      onChangePaymentMethod={setPaymentMethod}
+      paymentMethods={PAYMENT_METHODS}
+      selectedPaymentMethod={selectedPaymentMethod}
+      onChangePaymentMethod={setSelectedPaymentMethod}
       totalPrice={totalPrice}
       finalPrice={totalPrice - usingPoint}
       onPressMakePayment={() => makePayment()}
