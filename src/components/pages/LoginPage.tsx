@@ -5,6 +5,8 @@ import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useContext } from 'react'
 import { SignUpContext } from '@src/stores/SignUpContext'
+import { getUserInfoFromToken, storeUserInfo } from '@src/utils/loginUtils'
+import { User } from '@constants/types'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
@@ -68,9 +70,10 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     const json = await response.json()
 
     if (response.status === 200) {
-      await AsyncStorage.setItem('@access_token', json.access_token)
+      const user: User = await getUserInfoFromToken(json.access_token)
+      await storeUserInfo(json.access_token, 'test', user.email, '01029276105')
       navigation.replace('Main')
-      console.log('@access_token:', json.access_token)
+
     } else if (response.status === 404) {
       console.log('need to sign up')
       setProvider('facebook')

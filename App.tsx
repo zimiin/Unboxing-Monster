@@ -11,6 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const Stack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
+  // AsyncStorage.clear()
+
   return (
     <CartContextProvider>
       <NavigationContainer>

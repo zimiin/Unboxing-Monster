@@ -43,9 +43,10 @@ const PaymentTemplate = (props: Props) => {
   const paymentMethodRadioButtons = useMemo(() => {
     return (
       props.paymentMethods.map(
-        (method) => {
+        (method, index) => {
           return (
             <TextRadioButton
+              key={index}
               status={props.selectedPaymentMethod.label}
               onPress={() => props.onChangePaymentMethod(method)}
               style={styles.radioButton}
