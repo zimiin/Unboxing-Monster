@@ -221,6 +221,13 @@ export type BoxMakingStep1Props = {
   navigation: BoxMakingStep1NavigationProp
 }
 
+export type BoxMakingStep2RouteProp = RouteProp<CustomBoxStackParamList, 'BoxMakingStep2'>
+export type BoxMakingStep2NavigationProp = StackNavigationProp<CustomBoxStackParamList, 'BoxMakingStep2'>
+export type BoxMakingStep2Props = {
+  route: BoxMakingStep2RouteProp,
+  navigation: BoxMakingStep2NavigationProp
+}
+
 // Storage Stack
 export type StorageStackParamList = {
   Storage: undefined,

@@ -1,13 +1,22 @@
 import React, { useState } from "react"
+import { ImageSourcePropType } from "react-native"
+
+export type CustomBoxItem = {
+  id: number,
+  image: ImageSourcePropType,
+  name: string,
+  price: number,
+}
 
 type Context = [
   {
     boxPrice: number,
-    selectedItems: number[],
+    selectedItems: CustomBoxItem[],
   },
   {
     setBoxPrice: (price: number) => void,
-    addSelectedItems: (ids: number[]) => void,
+    addSelectedItems: (ids: CustomBoxItem[]) => void,
+    clearSelectedItems: () => void,
   }
 ]
 
@@ -18,7 +27,8 @@ const defaultContext: Context = [
   },
   {
     setBoxPrice: (price: number) => { },
-    addSelectedItems: (ids: number[]) => { },
+    addSelectedItems: (ids: CustomBoxItem[]) => { },
+    clearSelectedItems: () => { },
   }
 ]
 
@@ -30,16 +40,20 @@ interface Props {
 
 const CustomBoxContextProvider = (props: Props) => {
   const [boxPrice, setBoxPrice] = useState<number>(0)
-  const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [selectedItems, setSelectedItems] = useState<CustomBoxItem[]>([])
 
-  const addSelectedItems = (ids: number[]) => {
+  const addSelectedItems = (ids: CustomBoxItem[]) => {
     let newItems = selectedItems
     newItems.push(...ids)
     setSelectedItems(newItems)
   }
 
+  const clearSelectedItems = () => {
+    setSelectedItems([])
+  }
+
   return (
-    <CustomBoxContext.Provider value={[{ boxPrice, selectedItems }, { setBoxPrice, addSelectedItems }]}>
+    <CustomBoxContext.Provider value={[{ boxPrice, selectedItems }, { setBoxPrice, addSelectedItems, clearSelectedItems }]}>
       {props.children}
     </CustomBoxContext.Provider>
   )

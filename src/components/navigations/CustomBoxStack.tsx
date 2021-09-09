@@ -4,6 +4,7 @@ import CustomBoxInitPage from '@components/pages/CustomBoxInitPage'
 import { CustomBoxStackParamList } from '@constants/navigationTypes'
 import BoxMakingStep1Page from '@components/pages/BoxMakingStep1Page'
 import CustomBoxContextProvider from '@src/stores/CustomBoxContext'
+import BoxMakingStep2Page from '@components/pages/BoxMakingStep2Page'
 
 const CustomBoxStack = () => {
   const CustomBoxStack = createStackNavigator<CustomBoxStackParamList>()
@@ -28,7 +29,7 @@ const CustomBoxStack = () => {
 
         <CustomBoxStack.Screen
           name="BoxMakingStep2"
-          component={BoxMakingStep1Page}
+          component={BoxMakingStep2Page}
         />
 
         <CustomBoxStack.Screen

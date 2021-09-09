@@ -32,9 +32,14 @@ const BoxMakingStep1Template = (props: Props) => {
         price={item.price}
         checked={item.checked}
         onPress={() => props.onPressItemRadioButton(item.id)}
+        style={styles.renderItem}
       />
     )
   }
+
+  const footer = (
+    <View style={styles.footer}/>
+  )
 
   return (
     <>
@@ -61,6 +66,7 @@ const BoxMakingStep1Template = (props: Props) => {
         <FlatList
           renderItem={renderItem}
           data={props.itemRadioButtonData || []}
+          ListFooterComponent={footer}
         />
       </View>
 
@@ -95,5 +101,13 @@ const styles = StyleSheet.create({
     letterSpacing: -0.32,
     marginTop: verticalScale(2),
     height: 19,
+  },
+  renderItem: {
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f8f8f8',
+  },
+  footer: {
+    height: 34,
   }
 })

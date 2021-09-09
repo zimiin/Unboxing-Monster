@@ -1,6 +1,6 @@
 import BoxMakingStep1Template from '@components/templates/BoxMakingStep1Template'
 import { BoxMakingStep1Props } from '@constants/navigationTypes'
-import { CustomBoxContext } from '@src/stores/CustomBoxContext'
+import { CustomBoxContext, CustomBoxItem } from '@src/stores/CustomBoxContext'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useContext } from 'react'
 import { Item } from '@constants/types'
@@ -8,8 +8,8 @@ import { URLS } from '@constants/urls'
 import { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
-  const [{ selectedItems }, { addSelectedItems }] = useContext(CustomBoxContext)
-  const [itemRadioButtonData, setItemRadioButtonData] = useState<ItemRadioButtonProps[]>()
+  const [{ selectedItems }, { addSelectedItems, clearSelectedItems }] = useContext(CustomBoxContext)
+  const [itemRadioButtonData, setItemRadioButtonData] = useState<ItemRadioButtonProps[]>([])
   const [itemList, setItemList] = useState<Item[]>()
   const [error, setError] = useState<string>('')
 
@@ -50,7 +50,7 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       } 
     )
 
-    setItemRadioButtonData(data)
+    setItemRadioButtonData(data || [])
   }, [itemList])
 
   const onPressItemRadioButton = useCallback((id: number) => {
@@ -58,6 +58,8 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       console.log('undefined itemRadiobuttondata')
       return
     } 
+
+    setError('')
 
     let newData = itemRadioButtonData.slice()
     const index = newData.findIndex(elem => elem.id === id)
@@ -68,9 +70,34 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
     setItemRadioButtonData(newData)
   }, [itemRadioButtonData])
 
-  const onPressNext = useCallback(() => {
+  const onPressNext = () => {
+    clearSelectedItems()
+    
+    let items: CustomBoxItem[] = []
+    const length = itemRadioButtonData.length
+
+    for (let i = 0; i < length; i++) {
+      const data = itemRadioButtonData[i]
+      
+      if (data.checked === true) {
+        items.push({
+          id: data.id,
+          name: data.name,
+          image: data.image,
+          price: data.price,
+        })
+      }
+    }
+
+    if (items.length === 0) {
+      setError('하나 이상의 상품을 선택해주세요.')
+      return
+    }
+
+    addSelectedItems(items)
+
     navigation.navigate('BoxMakingStep2')
-  }, [])
+  }
   
   return (
     <BoxMakingStep1Template
