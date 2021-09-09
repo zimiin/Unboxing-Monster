@@ -5,13 +5,36 @@ import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
 import { URLS } from '@constants/urls'
+import { IMPData, IMPConst } from 'iamport-react-native'
+import {getEmailFromAsyncStorage, getNicknameFromAsyncStorage, getPhoneFromAsyncStorage} from '@src/utils/asyncStorageUtils'
 
 interface BoxIdCount {
   boxId: number,
   count: number
 }
 
-const PaymentPage = (props: PaymentProps) => {
+interface PaymentParams {
+  params: IMPData.PaymentData;
+  tierCode?: string;
+}
+
+export type PaymentMethod = {
+  value: string,
+  label: string,
+}
+
+export const PAYMENT_METHODS: PaymentMethod[] = [
+  {
+    value: 'card',
+    label: '신용카드',
+  },
+  {
+    value: 'trans',
+    label: '실시간 계좌이체',
+  },
+]
+
+const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
   const [boxData, setBoxData] = useState<PaymentBoxItemProps[]>()
   const [totalPrice, setTotalPrice] = useState<number>(0)
@@ -19,7 +42,7 @@ const PaymentPage = (props: PaymentProps) => {
   const [point, setPoint] = useState<number>(0)
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
-  const [paymentMethod, setPaymentMethod] = useState<string>('신용카드')
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
 
   useEffect(() => {
     const setBoxDataState = async () => {
@@ -103,7 +126,7 @@ const PaymentPage = (props: PaymentProps) => {
     setPointState()
   }, [])
 
-  const makePayment = async () => {
+  const requestPurchase = async () => {
     try {
       const response = await fetch(
         URLS.unboxing_api + 'purchase', {
@@ -126,7 +149,7 @@ const PaymentPage = (props: PaymentProps) => {
         throw 'Payment failed. : ' + json.message
       }
       
-      props.navigation.push('PaymentComplete', {paymentId: json.id})
+      navigation.push('PaymentComplete', {paymentId: json.id})
     } catch (error) {
       console.error(error)
     }
@@ -163,19 +186,53 @@ const PaymentPage = (props: PaymentProps) => {
     setUseAllPoint(!useAllPoint)
   }
 
+  const merchantTitle = () => {
+    if (boxData) {
+      if (boxData.length === 1) {
+        return boxData[0].name
+      } else {
+        return boxData[0].name + ' 외 ' + (boxData.length - 1).toString() + '개'
+      }
+    }
+  }
+
+  const makePayment = async () => {
+    const data: PaymentParams = {
+      params: {
+        pg: 'danal_tpay',
+        pay_method: selectedPaymentMethod.value,
+        display: {card_quota: []},
+        merchant_uid: "ORD20180131-0000011",
+        amount: (totalPrice - usingPoint).toString(),
+        name: merchantTitle() || '',
+        buyer_tel: await getPhoneFromAsyncStorage() || '01000000000',
+        buyer_name: await getNicknameFromAsyncStorage() || '',
+        buyer_email: await getEmailFromAsyncStorage() || '',
+        app_scheme: 'Unboxing_pre',
+        biz_num: '2460302264',
+        m_redirect_url: IMPConst.M_REDIRECT_URL,
+        escrow: false,
+      },
+      tierCode: '',
+    }
+
+    navigation.navigate('PGPayment', data)
+  }
+
   return (
     <PaymentTemplate
       screenTitle={'결제'}
       canGoBack={true}
-      onPressBack={() => props.navigation.goBack()}
+      onPressBack={() => navigation.goBack()}
       boxData={boxData || []}
       currentPoint={point}
       usingPoint={usingPoint}
       onChangeUsingPointAmount={setUsingPointFromInput}
       useAllPoint={useAllPoint}
       onPressUseAllPoint={onPressUseAllPoint}
-      paymentMethod={paymentMethod}
-      onChangePaymentMethod={setPaymentMethod}
+      paymentMethods={PAYMENT_METHODS}
+      selectedPaymentMethod={selectedPaymentMethod}
+      onChangePaymentMethod={setSelectedPaymentMethod}
       totalPrice={totalPrice}
       finalPrice={totalPrice - usingPoint}
       onPressMakePayment={() => makePayment()}

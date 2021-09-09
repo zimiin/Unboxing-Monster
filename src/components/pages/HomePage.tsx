@@ -10,6 +10,7 @@ import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
 import { URLS } from '@constants/urls'
+import { printAsyncStorage } from '@src/utils/loginUtils'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -126,11 +127,6 @@ const HomePage = ({route, navigation}: HomeProps) => {
     } catch (error) {
       console.log('Error in setAllBoxDataState', error)
     }
-  }
-
-  const printAsyncStorage = async () => {
-    const token = await AsyncStorage.getItem('@access_token')
-    console.log('@access_token: ', token)
   }
 
   const setDatas = async () => {

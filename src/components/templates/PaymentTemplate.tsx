@@ -2,7 +2,7 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import ContentBox from '@components/atoms/ContentBox'
 import Header from '@components/organisms/header/Header'
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import TextRadioButton from '@components/atoms/button/TextRadioButton'
 import { SCREEN_WIDTH } from '@constants/figure'
 import EdgeAlignedRow from '@components/atoms/EdgeAlignedRow'
 import Bold from '@components/atoms/typography/Bold'
+import { PaymentMethod } from '@components/pages/PaymentPage'
 
 interface Props {
   screenTitle: string,
@@ -30,14 +31,34 @@ interface Props {
   onChangeUsingPointAmount: (point: string) => void,
   useAllPoint: boolean,
   onPressUseAllPoint: () => void,
-  paymentMethod: string,
-  onChangePaymentMethod: (method: string) => void,
+  paymentMethods: PaymentMethod[],
+  selectedPaymentMethod: PaymentMethod,
+  onChangePaymentMethod: (method: PaymentMethod) => void,
   totalPrice: number,
   finalPrice: number,
   onPressMakePayment: () => void,
 }
 
 const PaymentTemplate = (props: Props) => {
+  const paymentMethodRadioButtons = useMemo(() => {
+    return (
+      props.paymentMethods.map(
+        (method, index) => {
+          return (
+            <TextRadioButton
+              key={index}
+              status={props.selectedPaymentMethod.label}
+              onPress={() => props.onChangePaymentMethod(method)}
+              style={styles.radioButton}
+            >
+              {method.label}
+            </TextRadioButton>
+          )
+        }
+      )
+    )
+  }, [props.selectedPaymentMethod])
+
   const boxItems = props.boxData.map((item) => 
     <PaymentBoxItem
       key={item.id}
@@ -148,45 +169,7 @@ const PaymentTemplate = (props: Props) => {
         <ContentBox title='결제수단'
           style={styles.paymentMethodContentBox}>
           <View style={styles.radioButtonContainer}>
-            <TextRadioButton
-              status={props.paymentMethod}
-              onPress={() => props.onChangePaymentMethod('신용카드')}
-              style={styles.radioButton}
-            >
-              신용카드
-            </TextRadioButton>
-
-            <TextRadioButton
-              status={props.paymentMethod}
-              onPress={() => props.onChangePaymentMethod('무통장입금')}
-              style={styles.radioButton}
-            >
-              무통장입금
-            </TextRadioButton>
-
-            <TextRadioButton
-              status={props.paymentMethod}
-              onPress={() => props.onChangePaymentMethod('삼성페이')}
-              style={styles.radioButton}
-            >
-              삼성페이
-            </TextRadioButton>
-
-            <TextRadioButton
-              status={props.paymentMethod}
-              onPress={() => props.onChangePaymentMethod('카카오페이')}
-              style={styles.radioButton}
-            >
-              카카오페이
-            </TextRadioButton>
-
-            <TextRadioButton
-              status={props.paymentMethod}
-              onPress={() => props.onChangePaymentMethod('토스')}
-              style={styles.radioButton}
-            >
-              토스
-            </TextRadioButton>
+            {paymentMethodRadioButtons}
           </View>
         </ContentBox>
 
