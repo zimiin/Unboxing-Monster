@@ -2,7 +2,7 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
 import { scale, verticalScale } from '@constants/figure'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   View,
   Text,
@@ -19,15 +19,22 @@ interface Props {
   itemRadioButtonData?: ItemRadioButtonProps[],
   onPressGoBack: () => void,
   onPressNext: () => void,
+  onPressItemRadioButton: (id: number) => void,
 }
 
 const BoxMakingStep1Template = (props: Props) => {
-  const items = (
-    <FlatList
-      renderItem={ItemRadioButton}
-      data={props.itemRadioButtonData || []}
-    />
-  )
+  const renderItem = ({item}: {item: ItemRadioButtonProps}) => {
+    return (
+      <ItemRadioButton
+        id={item.id}
+        image={item.image}
+        name={item.name}
+        price={item.price}
+        checked={item.checked}
+        onPress={() => props.onPressItemRadioButton(item.id)}
+      />
+    )
+  }
 
   return (
     <>
@@ -39,19 +46,22 @@ const BoxMakingStep1Template = (props: Props) => {
 
       <View style={styles.screen}>
         <CustomBoxProgressBar 
-          progress={1 / 4}
+          progress={1 / 3}
           style={styles.progressBar}
         />
 
         <Bold style={styles.instruction}>
-          {'최소 보상 상품을 선택해주세요.'}
+          {'박스에 넣을 상품을 선택해주세요.'}
         </Bold>
 
         <Text style={styles.error}>
           {props.error}
         </Text>
-        
-        {items}
+
+        <FlatList
+          renderItem={renderItem}
+          data={props.itemRadioButtonData || []}
+        />
       </View>
 
       <FullWidthButton

@@ -1,4 +1,4 @@
-import RadioButton from '@components/atoms/button/RadioButton'
+import CheckBox from '@components/atoms/button/CheckBox'
 import Bold from '@components/atoms/typography/Bold'
 import { scale } from '@constants/figure'
 import { defaultBox } from '@constants/images'
@@ -19,17 +19,17 @@ export interface ItemRadioButtonProps extends ViewProps{
   name: string,
   price: number,
   checked: boolean,
-  onPress: () => void,
+  onPress?: () => void,
 }
 
-const ItemRadioButton = ({ item }: { item: ItemRadioButtonProps }) => {
+const ItemRadioButton = (props: ItemRadioButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={item.onPress}
-      style={[styles.container, item.style]}
+      onPress={props.onPress}
+      style={[styles.container, props.style]}
     >
       <Image
-        source={item.image || defaultBox}
+        source={props.image || defaultBox}
         style={styles.image}
       />
 
@@ -39,17 +39,17 @@ const ItemRadioButton = ({ item }: { item: ItemRadioButtonProps }) => {
           ellipsizeMode='tail'
           style={styles.name}
         >
-          {item.name || ''}
+          {props.name || ''}
         </Bold>
 
         <Text style={styles.price}>
-          {item.price ? item.price.toLocaleString() + ' 원' : '0 원'}
+          {props.price ? props.price.toLocaleString() + ' 원' : '0 원'}
         </Text>
       </View>
 
       <View style={styles.radioButtonContainer}>
-        <RadioButton
-          checked={item.checked}
+        <CheckBox
+          checked={props.checked}
         />
       </View>
     </TouchableOpacity>

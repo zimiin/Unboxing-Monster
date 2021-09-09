@@ -9,52 +9,68 @@ import { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   const [{ selectedItems }, { addSelectedItems }] = useContext(CustomBoxContext)
-  const [itemData, setItemData] = useState<Item[]>([])
-  const [selectedItem, setSelectedItem] = useState<number>()
+  const [itemRadioButtonData, setItemRadioButtonData] = useState<ItemRadioButtonProps[]>()
+  const [itemList, setItemList] = useState<Item[]>()
   const [error, setError] = useState<string>('')
 
   useEffect(() => {
-    const setItemDataState = async () => {
+    const getItemData = async () => {
       try {
         const response = await fetch(URLS.unboxing_api + 'item')
-        const json = await response.json()
-
+        
         if (response.status !== 200) {
+          const json = await response.json()
           throw 'status: ' + response.status + ', message: ' + json.message + ', url: ' + response.url
         }
 
-        setItemData(json)
+        const json: Item[] = await response.json()
+
+        return json
       } catch (error) {
         console.log('Error in setItemDataState', error)
+        throw error
       }
     }
 
-    setItemDataState()
+    getItemData().then(result => {
+      setItemList(result)      
+    })
   }, [])
 
-  const itemRadioButtonData: ItemRadioButtonProps[] = useMemo(() => {
-    if (itemData === undefined) {
-      return []
-    }
-
-    const newData: ItemRadioButtonProps[] = itemData.map(
+  useEffect(() => {
+    const data = itemList?.map(
       (item) => {
         return {
           id: item.id,
           image: { uri: item.image },
           name: item.title,
           price: item.price,
-          checked: selectedItem === item.id ? true : false,
-          onPress: () => setSelectedItem(item.id),
+          checked: false,
         }
-      }
+      } 
     )
 
-    return newData
-  }, [itemData, selectedItem])
+    setItemRadioButtonData(data)
+  }, [itemList])
 
-  // next 눌렀을 때 처리 함수
-  // 선택된거 없으면 에러
+  const onPressItemRadioButton = useCallback((id: number) => {
+    if (itemRadioButtonData === undefined) {
+      console.log('undefined itemRadiobuttondata')
+      return
+    } 
+
+    let newData = itemRadioButtonData.slice()
+    const index = newData.findIndex(elem => elem.id === id)
+
+    const curCheckedValue = newData[index].checked
+    newData[index].checked = !curCheckedValue
+
+    setItemRadioButtonData(newData)
+  }, [itemRadioButtonData])
+
+  const onPressNext = useCallback(() => {
+    navigation.navigate('BoxMakingStep2')
+  }, [])
   
   return (
     <BoxMakingStep1Template
@@ -63,7 +79,8 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       itemRadioButtonData={itemRadioButtonData}
       error={error}
       onPressGoBack={() => navigation.goBack()}
-      onPressNext={() => navigation.navigate('BoxMakingStep2')}
+      onPressNext={onPressNext}
+      onPressItemRadioButton={onPressItemRadioButton}
     />
   )
 }

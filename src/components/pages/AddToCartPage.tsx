@@ -1,5 +1,5 @@
 import AddToCartTemplate from '@components/templates/AddToCartTemplate'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { BoxWithItems } from 'constants/types'
 import { defaultBox } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'

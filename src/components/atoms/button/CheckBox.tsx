@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image'
 
 interface CheckBoxProps extends TouchableOpacityProps {
   checked: boolean,
-  onPress: () => void,
+  onPress?: () => void,
 }
 
 const CheckBox = (props: CheckBoxProps) => {
