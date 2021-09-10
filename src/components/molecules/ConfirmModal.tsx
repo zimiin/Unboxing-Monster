@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import GreyButton from "@components/atoms/button/GreyButton"
 import { scale } from "@src/constants/figure"
+import { COLORS } from '@constants/colors'
 
 interface Props {
   visible: boolean,
@@ -29,7 +30,7 @@ const ConfirmModal = (props: Props) => {
           <View style={styles.buttonContainer}>
             <GreyButton
               onPress={props.onRequestClose}
-              style={styles.button}
+              style={[styles.button]}
             >
               취소
             </GreyButton>
@@ -39,7 +40,7 @@ const ConfirmModal = (props: Props) => {
                 props.onConfirm()
                 props.onRequestClose()
               }}
-              style={styles.button}
+              style={[styles.button]}
             >
               확인
             </GreyButton>
@@ -72,5 +73,8 @@ const styles = StyleSheet.create({
     width: scale(140),
     marginHorizontal: scale(4),
     marginBottom: 12,
+  },
+  blueButton: {
+    backgroundColor: COLORS.main,
   }
 })

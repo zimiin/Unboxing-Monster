@@ -26,4 +26,5 @@ export const ICONS = {
   kakao_talk: require('assets/images/kakao_talk.png'),
   radio_box_chkd: require('assets/images/radio_box_chkd.png'),
   radio_box_unchkd: require('assets/images/radio_box_unchkd.png'),
+  edit: require('assets/images/edit_2.png')
 }

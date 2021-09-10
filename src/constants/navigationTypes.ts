@@ -204,7 +204,6 @@ export type CustomBoxStackParamList = {
   BoxMakingStep1: undefined,
   BoxMakingStep2: undefined,
   BoxMakingStep3: undefined,
-  BoxMakingStep4: undefined,
 }
 
 export type CustomBoxInitRouteProp = RouteProp<CustomBoxStackParamList, 'CustomBoxInit'>
@@ -226,6 +225,13 @@ export type BoxMakingStep2NavigationProp = StackNavigationProp<CustomBoxStackPar
 export type BoxMakingStep2Props = {
   route: BoxMakingStep2RouteProp,
   navigation: BoxMakingStep2NavigationProp
+}
+
+export type BoxMakingStep3RouteProp = RouteProp<CustomBoxStackParamList, 'BoxMakingStep3'>
+export type BoxMakingStep3NavigationProp = StackNavigationProp<CustomBoxStackParamList, 'BoxMakingStep3'>
+export type BoxMakingStep3Props = {
+  route: BoxMakingStep3RouteProp,
+  navigation: BoxMakingStep3NavigationProp
 }
 
 // Storage Stack
