@@ -7,39 +7,74 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native'
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
 import ItemRadioButton, { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
 import { FlatList } from 'react-native-gesture-handler'
+import SearchBar from '@components/atoms/SearchBar'
+
+export type RenderItem = {
+  itemData: ItemRadioButtonProps,
+  filtered: Boolean,
+  searched: Boolean,
+}
 
 interface Props {
   screenTitle: string,
   hasPreviousScreen: boolean,
   error: string,
-  itemRadioButtonData?: ItemRadioButtonProps[],
+  itemData?: RenderItem[],
+  searchInput: string,
+  sortOptions: string[],
+  sorted: string,
+  onPressSortOption: (option: string) => void,
   onPressGoBack: () => void,
   onPressNext: () => void,
   onPressItemRadioButton: (id: number) => void,
+  onChangeSearchInput: (input: string) => void,
 }
 
 const BoxMakingStep1Template = (props: Props) => {
-  const renderItem = ({item}: {item: ItemRadioButtonProps}) => {
-    return (
-      <ItemRadioButton
-        id={item.id}
-        image={item.image}
-        name={item.name}
-        price={item.price}
-        checked={item.checked}
-        onPress={() => props.onPressItemRadioButton(item.id)}
-        style={styles.renderItem}
-      />
-    )
+  const renderItem = ({ item }: { item: RenderItem }) => {
+    if (item.filtered === true && item.searched === true) {
+      return (
+        <ItemRadioButton
+          id={item.itemData.id}
+          image={item.itemData.image}
+          name={item.itemData.name}
+          price={item.itemData.price}
+          checked={item.itemData.checked}
+          onPress={() => props.onPressItemRadioButton(item.itemData.id)}
+          style={styles.renderItem}
+        />
+      )
+    } else {
+      return (<></>)
+    }
   }
 
   const footer = (
     <View style={styles.footer}/>
   )
+
+  const filters = () => {
+    return props.sortOptions.map(
+      (filter, index) => {
+        return (
+          <TouchableOpacity
+            key={index}
+            style={styles.filter}
+            onPress={() => props.onPressSortOption(filter)}
+          >
+            <Text style={props.sorted === filter ? styles.blueText : styles.greyText}>
+              {filter}
+            </Text>
+          </TouchableOpacity>
+        )
+      }
+    )
+  }
 
   return (
     <>
@@ -63,10 +98,21 @@ const BoxMakingStep1Template = (props: Props) => {
           {props.error}
         </Text>
 
+        <SearchBar
+          input={props.searchInput}
+          onChangeText={props.onChangeSearchInput}
+          style={styles.searchBar}
+        />
+
+        <View style={styles.filterContainer}>
+          {filters()}
+        </View>
+
         <FlatList
           renderItem={renderItem}
-          data={props.itemRadioButtonData || []}
+          data={props.itemData || []}
           ListFooterComponent={footer}
+          keyExtractor={(item: RenderItem) => item.itemData.id.toString()}
         />
       </View>
 
@@ -102,6 +148,20 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(2),
     height: 19,
   },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+  },
+  filter: {
+    marginLeft: 10,
+  },
+  blueText: {
+    color: '#004fd1',
+  },
+  greyText: {
+    color: '#060606',
+  },
   renderItem: {
     paddingVertical: 16,
     borderBottomWidth: 1,
@@ -109,5 +169,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 34,
+  },
+  searchBar: {
+    marginTop: 2,
   }
 })

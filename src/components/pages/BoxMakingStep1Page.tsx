@@ -1,17 +1,23 @@
-import BoxMakingStep1Template from '@components/templates/BoxMakingStep1Template'
+import BoxMakingStep1Template, { RenderItem } from '@components/templates/BoxMakingStep1Template'
 import { BoxMakingStep1Props } from '@constants/navigationTypes'
 import { CustomBoxContext, CustomBoxItem } from '@src/stores/CustomBoxContext'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useContext } from 'react'
 import { Item } from '@constants/types'
 import { URLS } from '@constants/urls'
-import { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
+import { debounce } from 'lodash'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   const [{ selectedItems }, { addSelectedItems, clearSelectedItems }] = useContext(CustomBoxContext)
-  const [itemRadioButtonData, setItemRadioButtonData] = useState<ItemRadioButtonProps[]>([])
-  const [itemList, setItemList] = useState<Item[]>()
+  const [ascendingParsedItemData, setAscendingParsedItemData] = useState<RenderItem[]>([])
+  const [descendingParsedItemData, setDescendingParsedItemData] = useState<RenderItem[]>([])
+  const [rawItemData, setRawItemData] = useState<Item[]>()
   const [error, setError] = useState<string>('')
+  const [searchInput, setSearchInput] = useState<string>('')
+  const sortOptions = ['낮은가격순', '높은가격순']
+  const [sorted, setSorted] = useState<string>(sortOptions[0])
+
+  console.log('=== BoxMakingStep1Page rendered!!')
 
   useEffect(() => {
     const getItemData = async () => {
@@ -33,58 +39,84 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
     }
 
     getItemData().then(result => {
-      setItemList(result)      
+      setRawItemData(result)
     })
   }, [])
 
   useEffect(() => {
-    const data = itemList?.map(
+    if (rawItemData === undefined) {
+      return
+    }
+
+    const data: RenderItem[] = rawItemData.map(
       (item) => {
         return {
-          id: item.id,
-          image: { uri: item.image },
-          name: item.title,
-          price: item.price,
-          checked: false,
+          itemData: {
+            id: item.id,
+            image: { uri: item.image },
+            name: item.title,
+            price: item.price,
+            checked: false,
+          },
+          filtered: true,
+          searched: true,
         }
       } 
     )
 
-    setItemRadioButtonData(data || [])
-  }, [itemList])
+    const ascendingData = data.sort((a, b) => a.itemData.price - b.itemData.price)
+    const descendingData = ascendingData.slice().reverse()
+
+    setAscendingParsedItemData(ascendingData)
+    setDescendingParsedItemData(descendingData)
+  }, [rawItemData])
+
+  const modifyItemData = useCallback((data: { index: number, item: RenderItem }[]) => {
+    let newAscendingData = ascendingParsedItemData.slice()
+    let newDescendingData = descendingParsedItemData.slice()
+
+    for (var i = 0; i < data.length; i++) {
+      const index = data[i].index
+      const reverseIndex = ascendingParsedItemData.length - data[i].index - 1
+      
+      newAscendingData[index] = data[i].item
+      newDescendingData[reverseIndex] = data[i].item
+    }
+      
+    setAscendingParsedItemData(newAscendingData)
+    setDescendingParsedItemData(newDescendingData)
+  }, [ascendingParsedItemData, descendingParsedItemData])
 
   const onPressItemRadioButton = useCallback((id: number) => {
-    if (itemRadioButtonData === undefined) {
+    if (ascendingParsedItemData === undefined) {
       console.log('undefined itemRadiobuttondata')
       return
-    } 
+    }
 
     setError('')
 
-    let newData = itemRadioButtonData.slice()
-    const index = newData.findIndex(elem => elem.id === id)
-
-    const curCheckedValue = newData[index].checked
-    newData[index].checked = !curCheckedValue
-
-    setItemRadioButtonData(newData)
-  }, [itemRadioButtonData])
+    const index = ascendingParsedItemData.findIndex(elem => elem.itemData.id === id)
+    const curData = ascendingParsedItemData[index]
+    
+    curData.itemData.checked = !curData.itemData.checked
+    modifyItemData([{index: index, item: curData}])
+  }, [ascendingParsedItemData])
 
   const onPressNext = () => {
     clearSelectedItems()
     
     let items: CustomBoxItem[] = []
-    const length = itemRadioButtonData.length
+    const length = ascendingParsedItemData.length
 
     for (let i = 0; i < length; i++) {
-      const data = itemRadioButtonData[i]
+      const data = ascendingParsedItemData[i]
       
-      if (data.checked === true) {
+      if (data.itemData.checked === true) {
         items.push({
-          id: data.id,
-          name: data.name,
-          image: data.image,
-          price: data.price,
+          id: data.itemData.id,
+          name: data.itemData.name,
+          image: data.itemData.image,
+          price: data.itemData.price,
         })
       }
     }
@@ -95,19 +127,57 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
     }
 
     addSelectedItems(items)
-
     navigation.navigate('BoxMakingStep2')
   }
-  
+
+  const search = useCallback(
+    debounce((input: string) => {
+      console.log('===search', input)
+      let output: {index: number, item: RenderItem}[] = []
+      const len = ascendingParsedItemData.length
+
+      if (input === '') {
+        for (var i = 0; i < len; i++) {
+          var curItem = ascendingParsedItemData[i]
+          curItem.searched = true
+          output.push({index: i, item: curItem})
+        }
+      } else {
+        for (var i = 0; i < len; i++) {
+          var curItem = ascendingParsedItemData[i]
+
+          if (curItem.itemData.name.indexOf(input) > -1) {
+            curItem.searched = true
+            output.push({index: i, item: curItem})
+          } else {
+            curItem.searched = false
+          }
+        }
+      }
+
+      modifyItemData(output)
+    }, 1000)
+  , [ascendingParsedItemData])
+
+  const onChangeSearchInput = (input: string) => {
+    setSearchInput(input)
+    search(input)
+  }
+
   return (
     <BoxMakingStep1Template
       hasPreviousScreen={true}
       screenTitle='커스텀 박스 만들기'
-      itemRadioButtonData={itemRadioButtonData}
+      sorted={sorted}
+      itemData={sorted === '낮은가격순' ? ascendingParsedItemData : descendingParsedItemData}
       error={error}
+      searchInput={searchInput}
+      sortOptions={sortOptions}
+      onPressSortOption={setSorted}
       onPressGoBack={() => navigation.goBack()}
       onPressNext={onPressNext}
       onPressItemRadioButton={onPressItemRadioButton}
+      onChangeSearchInput={onChangeSearchInput}
     />
   )
 }
