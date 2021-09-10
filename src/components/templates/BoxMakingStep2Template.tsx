@@ -19,6 +19,8 @@ import { COLORS } from '@constants/colors'
 import { ICONS } from '@constants/icons'
 import { FlatList } from 'react-native-gesture-handler'
 import ModalCloseButton from '@components/atoms/button/ModalCloseButton'
+import InputField from '@components/atoms/InputField'
+import EditIcon from '@components/atoms/icon/EditIcon'
 
 interface Props {
   screenTitle: string,
@@ -26,12 +28,13 @@ interface Props {
   boxImage: number,
   showBoxListModal: boolean,
   boxList: { id: number, image: ImageSourcePropType }[],
+  boxName?: string,
   onPressBoxImage: () => void,
   onPressGoBack: () => void,
   onPressNext: () => void,
   onRequestCloseModal: () => void,
   onPressBoxListElem: (id: number) => void,
-
+  onChangeBoxName: (input: string) => void,
 }
 
 const BoxMakingStep2Template = (props: Props) => {
@@ -84,15 +87,23 @@ const BoxMakingStep2Template = (props: Props) => {
               style={styles.boxBackground}
             />
 
-            <Image
-              source={ICONS.edit}
-              style={[styles.editIcon, styles.editIconInBox]}
+            <EditIcon
+              style={styles.editIconInBox}
             />
           </TouchableOpacity>
 
-          <Text style={styles.subtitle}>
-            박스 이름
-          </Text>
+          <View style={styles.inputfield}>
+            <InputField
+              input={props.boxName || ''}
+              value={props.boxName}
+              onChangeText={props.onChangeBoxName}
+            />
+
+            <EditIcon
+              style={styles.editIconOnInputField}
+            />
+          </View>
+
           <Text style={styles.subtitle}>
             박스 가격
           </Text>
@@ -177,10 +188,6 @@ const styles = StyleSheet.create({
     borderRadius: scale(12),
     marginTop: scale(10),
   },
-  editIcon: {
-    width: scale(16),
-    height: scale(16),
-  },
   editIconInBox: {
     position: 'absolute',
     right: scale(12),
@@ -216,5 +223,14 @@ const styles = StyleSheet.create({
   },
   headerFooter: {
     height: 7,
+  },
+  inputfield: {
+    marginTop: 32,
+  },
+  editIconOnInputField: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    bottom: 37,
   }
 })
