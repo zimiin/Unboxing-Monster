@@ -6,9 +6,10 @@ import { useContext } from 'react'
 import { Item } from '@constants/types'
 import { URLS } from '@constants/urls'
 import { debounce } from 'lodash'
+import { log } from '@src/utils/debug'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
-  const [{ selectedItems }, { addSelectedItems, clearSelectedItems }] = useContext(CustomBoxContext)
+  const [{ selectedItems }, { replaceSelectedItems }] = useContext(CustomBoxContext)
   const [ascendingParsedItemData, setAscendingParsedItemData] = useState<RenderItem[]>([])
   const [descendingParsedItemData, setDescendingParsedItemData] = useState<RenderItem[]>([])
   const [rawItemData, setRawItemData] = useState<Item[]>()
@@ -16,8 +17,7 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   const [searchInput, setSearchInput] = useState<string>('')
   const sortOptions = ['낮은가격순', '높은가격순']
   const [sorted, setSorted] = useState<string>(sortOptions[0])
-
-  console.log('=== BoxMakingStep1Page rendered!!')
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   useEffect(() => {
     const getItemData = async () => {
@@ -103,14 +103,12 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   }, [ascendingParsedItemData])
 
   const onPressNext = () => {
-    clearSelectedItems()
-    
     let items: CustomBoxItem[] = []
     const length = ascendingParsedItemData.length
-
+  
     for (let i = 0; i < length; i++) {
       const data = ascendingParsedItemData[i]
-      
+  
       if (data.itemData.checked === true) {
         items.push({
           id: data.itemData.id,
@@ -120,16 +118,20 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
         })
       }
     }
-
+  
     if (items.length === 0) {
       setError('하나 이상의 상품을 선택해주세요.')
       return
     }
-
-    addSelectedItems(items)
+  
+    replaceSelectedItems(items)
+    setShowModal(true)
+  }
+  
+  const moveToStep2 = () => {
     navigation.navigate('BoxMakingStep2')
   }
-
+  
   const search = useCallback(
     debounce((input: string) => {
       console.log('===search', input)
@@ -173,6 +175,9 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       error={error}
       searchInput={searchInput}
       sortOptions={sortOptions}
+      showModal={showModal}
+      moveToStep2={moveToStep2}
+      closeModal={() => setShowModal(false)}
       onPressSortOption={setSorted}
       onPressGoBack={() => navigation.goBack()}
       onPressNext={onPressNext}

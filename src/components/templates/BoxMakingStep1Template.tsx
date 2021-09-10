@@ -2,7 +2,7 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
 import { scale, verticalScale } from '@constants/figure'
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   View,
   Text,
@@ -13,6 +13,9 @@ import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
 import ItemRadioButton, { ItemRadioButtonProps } from '@components/molecules/ItemRadioButton'
 import { FlatList } from 'react-native-gesture-handler'
 import SearchBar from '@components/atoms/SearchBar'
+import ConfirmModal from '@components/molecules/ConfirmModal'
+import { CustomBoxContext, CustomBoxItem } from '@src/stores/CustomBoxContext'
+import ItemInfoRow from '@components/molecules/ItemInfoRow'
 
 export type RenderItem = {
   itemData: ItemRadioButtonProps,
@@ -28,6 +31,9 @@ interface Props {
   searchInput: string,
   sortOptions: string[],
   sorted: string,
+  showModal: boolean,
+  moveToStep2: () => void,
+  closeModal: () => void,
   onPressSortOption: (option: string) => void,
   onPressGoBack: () => void,
   onPressNext: () => void,
@@ -36,6 +42,8 @@ interface Props {
 }
 
 const BoxMakingStep1Template = (props: Props) => {
+  const [{selectedItems}, {}] = useContext(CustomBoxContext)
+
   const renderItem = ({ item }: { item: RenderItem }) => {
     if (item.filtered === true && item.searched === true) {
       return (
@@ -54,6 +62,17 @@ const BoxMakingStep1Template = (props: Props) => {
     }
   }
 
+  const renderItemInSelectedList = ({item}: {item: CustomBoxItem}) => {
+    return (
+      <ItemInfoRow
+        image={item.image}
+        name={item.name}
+        price={item.price}
+        style={styles.renderItemInSelectedList}
+      />
+    )
+  }
+
   const footer = (
     <View style={styles.footer}/>
   )
@@ -67,7 +86,7 @@ const BoxMakingStep1Template = (props: Props) => {
             style={styles.filter}
             onPress={() => props.onPressSortOption(filter)}
           >
-            <Text style={props.sorted === filter ? styles.blueText : styles.greyText}>
+            <Text style={props.sorted === filter ? styles.boldText : styles.greyText}>
               {filter}
             </Text>
           </TouchableOpacity>
@@ -85,7 +104,7 @@ const BoxMakingStep1Template = (props: Props) => {
       />
 
       <View style={styles.screen}>
-        <CustomBoxProgressBar 
+        <CustomBoxProgressBar
           progress={1 / 3}
           style={styles.progressBar}
         />
@@ -120,6 +139,25 @@ const BoxMakingStep1Template = (props: Props) => {
         onPress={props.onPressNext}
         content={'다음'}
       />
+
+      <ConfirmModal
+        visible={props.showModal}
+        onRequestClose={props.closeModal}
+        onConfirm={props.moveToStep2}
+      >
+        <View style={styles.modalContent}>
+          <View style={styles.modalTitleContainer}>
+            <Bold style={styles.modalTitle}>
+              선택 상품 목록
+            </Bold>
+          </View>
+
+          <FlatList
+            renderItem={renderItemInSelectedList}
+            data={selectedItems}
+          />
+        </View>
+      </ConfirmModal>
     </>
   )
 }
@@ -151,16 +189,16 @@ const styles = StyleSheet.create({
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 10,
+    marginVertical: 10,
   },
   filter: {
     marginLeft: 10,
   },
-  blueText: {
-    color: '#004fd1',
+  boldText: {
+    fontWeight: 'bold',
   },
   greyText: {
-    color: '#060606',
+    color: 'rgba(6, 6, 6, 0.5)',
   },
   renderItem: {
     paddingVertical: 16,
@@ -172,5 +210,26 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     marginTop: 2,
+  },
+  modalTitle: {
+    fontSize: 16,
+    marginTop: 16,
+  },
+  modalTitleContainer: {
+    width: '100%',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    marginBottom: 8,
+    paddingBottom: 8,
+    borderBottomColor: '#f8f8f8',
+  },
+  modalContent: {
+    paddingHorizontal: scale(12),
+    marginBottom: 15,
+    width: '100%',
+    height: verticalScale(400),
+  },
+  renderItemInSelectedList: {
+    marginVertical: 10,
   }
 })
