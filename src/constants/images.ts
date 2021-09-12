@@ -34,13 +34,13 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
 export const defaultBoxUri: string = 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'
 export const defaultBox: ImageSourcePropType = {uri: defaultBoxUri}
 
-export const BOXES: ImageSourcePropType[] = [
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882347-25678185-b1c0-4b11-a885-505f61796275.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882357-235dfdc8-8748-4164-a843-cf60d4eadf23.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882364-08e8b749-d5fb-496a-8aca-1b6153d22038.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882385-63dbdd85-97a5-40fd-9bb5-513564376c24.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882398-5a76660c-262f-46f7-b95a-c0fc3cb6e72e.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882415-9230ab17-8c6b-4aa2-ae73-2865deb5c4cd.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882422-b99761ff-5429-4d79-9fb5-00d4d47b1281.png'},
-  {uri: 'https://user-images.githubusercontent.com/45932570/132882437-e4a7cb1c-d26e-486b-800e-59d705cc9ebf.png'},
+export const BOXES: string[] = [
+  'https://user-images.githubusercontent.com/45932570/132882347-25678185-b1c0-4b11-a885-505f61796275.png',
+  'https://user-images.githubusercontent.com/45932570/132882357-235dfdc8-8748-4164-a843-cf60d4eadf23.png' ,
+  'https://user-images.githubusercontent.com/45932570/132882364-08e8b749-d5fb-496a-8aca-1b6153d22038.png',
+  'https://user-images.githubusercontent.com/45932570/132882385-63dbdd85-97a5-40fd-9bb5-513564376c24.png',
+  'https://user-images.githubusercontent.com/45932570/132882398-5a76660c-262f-46f7-b95a-c0fc3cb6e72e.png',
+  'https://user-images.githubusercontent.com/45932570/132882415-9230ab17-8c6b-4aa2-ae73-2865deb5c4cd.png',
+  'https://user-images.githubusercontent.com/45932570/132882422-b99761ff-5429-4d79-9fb5-00d4d47b1281.png',
+  'https://user-images.githubusercontent.com/45932570/132882437-e4a7cb1c-d26e-486b-800e-59d705cc9ebf.png',
 ]
