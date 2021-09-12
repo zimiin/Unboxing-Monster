@@ -14,13 +14,13 @@ import {
   ImageSourcePropType,
   Modal,
 } from 'react-native'
-import {BOXES, defaultBox} from '@constants/images'
+import {defaultBox} from '@constants/images'
 import { COLORS } from '@constants/colors'
-import { ICONS } from '@constants/icons'
 import { FlatList } from 'react-native-gesture-handler'
 import ModalCloseButton from '@components/atoms/button/ModalCloseButton'
 import InputField from '@components/atoms/InputField'
 import EditIcon from '@components/atoms/icon/EditIcon'
+import Slider from '@react-native-community/slider'
 
 interface Props {
   screenTitle: string,
@@ -29,6 +29,10 @@ interface Props {
   showBoxListModal: boolean,
   boxList: { id: number, image: ImageSourcePropType }[],
   boxName?: string,
+  minPrice: number,
+  maxPrice: number,
+  boxPrice: number,
+  onPriceInputChange: (value: number) => void,
   onPressBoxImage: () => void,
   onPressGoBack: () => void,
   onPressNext: () => void,
@@ -104,9 +108,25 @@ const BoxMakingStep2Template = (props: Props) => {
             />
           </View>
 
-          <Text style={styles.subtitle}>
-            박스 가격
-          </Text>
+          <Slider
+            style={{ 
+              width: scale(312), 
+              marginTop: 20,
+            }}
+            minimumValue={props.minPrice}
+            maximumValue={props.maxPrice}
+            value={props.minPrice}
+            onValueChange={props.onPriceInputChange}
+            step={100}
+            minimumTrackTintColor="rgba(6, 6, 6, 0.2)"
+            maximumTrackTintColor="rgba(6, 6, 6, 0.2)"
+            thumbTintColor={COLORS.main}
+          />
+
+          <Bold style={styles.price}>
+            {props.boxPrice + '원'}
+          </Bold>
+
         </ScrollView>
 
         <Modal
@@ -162,10 +182,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-  },
-  subtitle: {
-    fontSize: 17,
-    fontWeight: '400',
   },
   box: {
     width: scale(102),
@@ -232,5 +248,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
     right: 0,
     bottom: 37,
+  },
+  price: {
+    fontSize: 17,
+    alignSelf: 'center',
+    marginTop: 5,
   }
 })

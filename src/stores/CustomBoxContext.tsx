@@ -11,10 +11,12 @@ export type CustomBoxItem = {
 type Context = [
   {
     boxPrice: number,
+    boxName: string,
     selectedItems: CustomBoxItem[],
   },
   {
     setBoxPrice: (price: number) => void,
+    setBoxName: (name: string) => void,
     addSelectedItems: (items: CustomBoxItem[]) => void,
     clearSelectedItems: () => void,
     replaceSelectedItems: (items: CustomBoxItem[]) => void,
@@ -24,10 +26,12 @@ type Context = [
 const defaultContext: Context = [
   {
     boxPrice: 0,
+    boxName: '',
     selectedItems: [],
   },
   {
     setBoxPrice: (price: number) => { },
+    setBoxName: (name: string) => { },
     addSelectedItems: (items: CustomBoxItem[]) => { },
     clearSelectedItems: () => { },
     replaceSelectedItems: (items: CustomBoxItem[]) => { },
@@ -42,6 +46,7 @@ interface Props {
 
 const CustomBoxContextProvider = (props: Props) => {
   const [boxPrice, setBoxPrice] = useState<number>(0)
+  const [boxName, setBoxName] = useState<string>('')
   const [selectedItems, setSelectedItems] = useState<CustomBoxItem[]>([])
 
   const addSelectedItems = (items: CustomBoxItem[]) => {
@@ -59,7 +64,7 @@ const CustomBoxContextProvider = (props: Props) => {
   }
 
   return (
-    <CustomBoxContext.Provider value={[{ boxPrice, selectedItems }, { setBoxPrice, addSelectedItems, clearSelectedItems, replaceSelectedItems }]}>
+    <CustomBoxContext.Provider value={[{ boxPrice, boxName, selectedItems }, { setBoxPrice, setBoxName, addSelectedItems, clearSelectedItems, replaceSelectedItems }]}>
       {props.children}
     </CustomBoxContext.Provider>
   )
