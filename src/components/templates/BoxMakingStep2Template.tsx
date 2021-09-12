@@ -124,7 +124,7 @@ const BoxMakingStep2Template = (props: Props) => {
           />
 
           <Bold style={styles.price}>
-            {props.boxPrice + '원'}
+            {props.boxPrice?.toLocaleString() + '원'}
           </Bold>
 
         </ScrollView>
