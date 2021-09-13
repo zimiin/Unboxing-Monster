@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
@@ -13,7 +13,8 @@ import {
   ImageSourcePropType,
 } from 'react-native'
 import { COLORS } from '@constants/colors'
-import { PieChart } from 'react-native-chart-kit'
+import { PieChart } from 'react-native-svg-charts'
+import SquareDot from '@components/atoms/SquareDot'
 
 interface Props {
   screenTitle: string,
@@ -21,65 +22,26 @@ interface Props {
   boxImage: ImageSourcePropType,
   boxPrice: number,
   boxName: string,
+  probs: number[],
   onPressGoBack: () => void,
   onPressNext: () => void,
 }
 
 const BoxMakingStep3Template = (props: Props) => {
-  const data = [
-    {
-      name: "Seoul",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Beijing",
-      population: 527612,
-      color: "red",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "New York",
-      population: 8538000,
-      color: "#ffffff",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    }
-  ]
+  const randomColor = [COLORS.main, 'pink', 'purple', 'grey']
 
-  const chartConfig = {
-    backgroundColor: "#e26a00",
-    backgroundGradientFrom: "#fb8c00",
-    backgroundGradientTo: "#ffa726",
-    decimalPlaces: 2, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: {
-      borderRadius: 16
-    },
-    propsForDots: {
-      r: "6",
-      strokeWidth: "2",
-      stroke: "#ffa726"
-    }
-  }
+  // console.log('===probs', props.probs)
+  const pieData = useMemo(() => 
+    props.probs
+    .filter((value) => value > 0)
+    .map((value, index) => ({
+      value,
+      svg: {
+        fill: randomColor[index % 4],
+        onPress: () => console.log('press', index),
+      },
+      key: `pie-${index}`,
+    })), [props.probs])
 
   return (
     <>
@@ -120,18 +82,25 @@ const BoxMakingStep3Template = (props: Props) => {
           </View>
 
           <View style={styles.probContainer}>
-            <PieChart
-              data={data}
-              width={280}
-              height={220}
-              chartConfig={chartConfig}
-              accessor={"population"}
-              backgroundColor={"transparent"}
-              paddingLeft={"15"}
-              center={[10, 50]}
-              absolute
-              hasLegend={false}
+            <PieChart 
+              style={styles.pieChart}
+              data={pieData}
+              innerRadius={0}
+              padAngle={0}
             />
+
+            <View>
+              <View style={styles.legendItem}>
+                <SquareDot 
+                  size={scale(10)}
+                  color={COLORS.main}
+                />
+
+                <Bold style={styles.legendText}>
+                  {'뒷다리살 (50%)'}
+                </Bold>
+              </View>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -203,5 +172,18 @@ const styles = StyleSheet.create({
     marginTop: 32,
     paddingHorizontal: scale(24),
     paddingVertical: scale(31),
+  },
+  pieChart: { 
+    height: scale(136) 
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  legendText: {
+    fontSize: scale(12),
+    letterSpacing: -0.3,
+    color: '#060606',
+    marginLeft: 11,
   }
 })
