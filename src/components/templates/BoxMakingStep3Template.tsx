@@ -84,9 +84,9 @@ const BoxMakingStep3Template = (props: Props) => {
       </View>
 
       <View style={styles.priceContainer}>
-        <Text style={styles.boxName}>
+        <Bold style={styles.boxName}>
           {props.boxName}
-        </Text>
+        </Bold>
       </View>
 
       <View style={styles.pieChartContainer}>

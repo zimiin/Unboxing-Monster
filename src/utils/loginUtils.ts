@@ -1,6 +1,5 @@
 import { User } from "@constants/types"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { AccessToken } from "react-native-fbsdk-next"
 
 export const storeUserInfo = async (accessToken: string, nickname: string, email: string, phone: string) => {
   await AsyncStorage.setItem('@access_token', accessToken)
@@ -9,8 +8,16 @@ export const storeUserInfo = async (accessToken: string, nickname: string, email
   await AsyncStorage.setItem('@phone', phone)
 }
 
-const getUserIdFromToken = async (accessToken: string) => {
+export const getAccessToken = async () => {
+  return await AsyncStorage.getItem('@access_token')
+}
+
+const getUserIdFromToken = async (accessToken: string | null) => {
   try {
+    if (accessToken === null) {
+      throw 'No access token passed'
+    }
+
     const response = await fetch(
       // TODO server 주소 constant로 변경
       'http://3.37.238.160/', {
@@ -34,6 +41,16 @@ const getUserIdFromToken = async (accessToken: string) => {
   } catch (error) {
     console.log('=====Error in getUserIdUsingToken=====', error)
     throw error
+  }
+}
+
+export const getLoginUserId = async () => {
+  try {
+    const access_token = await getAccessToken()
+    const id = await getUserIdFromToken(access_token)
+    return id
+  } catch (error) {
+    console.log('=====Error in getLoginUserId=====', error)
   }
 }
 

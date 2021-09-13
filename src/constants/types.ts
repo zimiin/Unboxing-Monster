@@ -29,6 +29,11 @@ export type BoxWithItems = {
   items: Item[]
 }
 
+export type BoxItem = {
+  boxId: number,
+  itemId: number,
+}
+
 export type Notice = {
   id: number
   imgUrl: string
