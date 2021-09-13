@@ -7,6 +7,7 @@ const LoginRequestPage = ({ route, navigation }: LoginRequestProps) => {
     <LoginRequestTemplate
       hasPreviousScreen={true}
       goBackToPrevScreen={() => navigation.goBack()}
+      onPressLogin={() => navigation.push('Login')}
     />
   )
 }
