@@ -8,9 +8,9 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   Image,
   ImageSourcePropType,
+  FlatList,
 } from 'react-native'
 import { COLORS } from '@constants/colors'
 import { PieChart } from 'react-native-svg-charts'
@@ -23,25 +23,103 @@ interface Props {
   boxPrice: number,
   boxName: string,
   probs: number[],
+  itemInfo: {id: number, name: string}[],
   onPressGoBack: () => void,
   onPressNext: () => void,
 }
 
-const BoxMakingStep3Template = (props: Props) => {
-  const randomColor = [COLORS.main, 'pink', 'purple', 'grey']
+type ChartData = {
+  id: number, 
+  name: string,
+  prob: number,
+  color: string, 
+}
 
-  // console.log('===probs', props.probs)
-  const pieData = useMemo(() => 
+const BoxMakingStep3Template = (props: Props) => {
+  const chartColors = [COLORS.main, '#93e13c', '#ffd733', '#ff7c28', '#e63334', '#e21c54', '#b420c8', '#7b2cff', '#4755ff', '#0091ff']
+  const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
+  
+  const chartData: ChartData[] = useMemo(() => {
+    return props.itemInfo.map(
+      (item, index) => {
+        return {
+          id: item.id,
+          name: item.name,
+          prob: props.probs[index],
+          color: index < 10 ? chartColors[index] : randomColor()
+        }
+      }
+    )
+  }, [props.itemInfo, props.probs])
+
+  const pieData = useMemo(() =>
     props.probs
-    .filter((value) => value > 0)
-    .map((value, index) => ({
-      value,
-      svg: {
-        fill: randomColor[index % 4],
-        onPress: () => console.log('press', index),
-      },
-      key: `pie-${index}`,
-    })), [props.probs])
+      .filter((value) => value > 0)
+      .map(
+        (value, index) => (
+          {
+            value,
+            svg: {
+              fill: chartData[index].color,
+              onPress: () => { },
+            },
+            key: `pie-${index}`,
+          }
+        )
+      ), [props.probs, chartData])
+
+  const upperComponents = (
+    <>
+      <View style={styles.imagePriceContainer}>
+        <Image
+          source={props.boxImage}
+          style={styles.boxImage}
+        />
+
+        <Bold style={styles.price}>
+          {props.boxPrice?.toLocaleString() + ' 원'}
+        </Bold>
+
+        <View style={styles.imageBackground} />
+      </View>
+
+      <View style={styles.priceContainer}>
+        <Text style={styles.boxName}>
+          {props.boxName}
+        </Text>
+      </View>
+
+      <View style={styles.pieChartContainer}>
+        <PieChart
+          style={styles.pieChart}
+          data={pieData}
+          innerRadius={0}
+          padAngle={0}
+        />
+      </View>
+    </>
+  )
+
+  const legendItem = ({ item }: { item: ChartData }) => {
+    const prob = (item.prob * 100).toFixed(2)
+
+    return (
+      <View style={styles.legendItem}>
+        <SquareDot
+          size={scale(10)}
+          color={item.color}
+        />
+
+        <Text style={styles.legendText}>
+          {item.name + ' (' + prob + '%)'}
+        </Text>
+      </View>
+    )
+  }
+
+  const footer = (
+    <View style={styles.footer}/>
+  )
 
   return (
     <>
@@ -61,48 +139,15 @@ const BoxMakingStep3Template = (props: Props) => {
           {'박스 생성 결과를 확인해주세요.'}
         </Bold>
 
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.imagePriceContainer}>
-            <Image
-              source={props.boxImage}
-              style={styles.boxImage}
-            />
-
-            <Bold style={styles.price}>
-              {props.boxPrice?.toLocaleString() + ' 원'}
-            </Bold>
-
-            <View style={styles.imageBackground}/>
-          </View>
-
-          <View style={styles.priceContainer}>
-            <Text style={styles.boxName}>
-              {props.boxName}
-            </Text>
-          </View>
-
-          <View style={styles.probContainer}>
-            <PieChart 
-              style={styles.pieChart}
-              data={pieData}
-              innerRadius={0}
-              padAngle={0}
-            />
-
-            <View>
-              <View style={styles.legendItem}>
-                <SquareDot 
-                  size={scale(10)}
-                  color={COLORS.main}
-                />
-
-                <Bold style={styles.legendText}>
-                  {'뒷다리살 (50%)'}
-                </Bold>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
+        <FlatList
+          ListHeaderComponent={upperComponents}
+          renderItem={legendItem}
+          data={chartData}
+          numColumns={2}
+          columnWrapperStyle={styles.legend}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={footer}
+        />
       </View>
 
       <FullWidthButton
@@ -130,9 +175,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.6,
     marginTop: verticalScale(32),
     marginBottom: 20,
-  },
-  scrollView: {
-    flex: 1,
   },
   imagePriceContainer: {
     height: scale(144),
@@ -166,9 +208,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 12,
   },
-  probContainer: {
+  pieChartContainer: {
     backgroundColor: COLORS.grey_box,
-    borderRadius: scale(6),
+    borderTopLeftRadius: scale(6),
+    borderTopRightRadius: scale(6),
     marginTop: 32,
     paddingHorizontal: scale(24),
     paddingVertical: scale(31),
@@ -176,14 +219,30 @@ const styles = StyleSheet.create({
   pieChart: { 
     height: scale(136) 
   },
+  legend: {
+    backgroundColor: COLORS.grey_box,
+    paddingHorizontal: scale(25),
+  },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 7,
+    width: scale(132),
+    paddingLeft: scale(5),
+    paddingRight: scale(7),
   },
   legendText: {
     fontSize: scale(12),
     letterSpacing: -0.3,
     color: '#060606',
     marginLeft: 11,
+    fontWeight: '500',
+  },
+  footer: {
+    backgroundColor: COLORS.grey_box,
+    paddingBottom: 28,
+    marginBottom: 32,
+    borderBottomLeftRadius: scale(6),
+    borderBottomRightRadius: scale(6),
   }
 })

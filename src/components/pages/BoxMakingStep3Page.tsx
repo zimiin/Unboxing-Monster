@@ -7,6 +7,17 @@ import { generateProbability } from '@src/utils/probabilites'
 const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
 
+  const itemInfo: {id: number, name: string}[] = useMemo(() => {
+    return selectedItems.map(
+      item => {
+        return {
+          id: item.id,
+          name: item.name
+        }
+      }
+    )
+  }, [selectedItems])
+
   const itemPrices: number[] = useMemo(() => {
     return selectedItems.map(
       item => item.price
@@ -25,6 +36,7 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
       boxPrice={boxPrice}
       boxName={boxName}
       probs={probabilites}
+      itemInfo={itemInfo}
       onPressGoBack={() => navigation.goBack()}
       onPressNext={() => {}}
     />
