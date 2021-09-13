@@ -5,11 +5,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-
 import SubTitle from '@components/atoms/typography/SubTitle'
-
 import { CONTENT_WIDTH } from '@constants/figure'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const PolicyDescriptionItem = ({ title, description }: { title: string, description: object }) => {
   const [toggle, setToggle] = useState(false)
@@ -20,14 +18,14 @@ const PolicyDescriptionItem = ({ title, description }: { title: string, descript
 
   const upIcon = (
     <Image
-      source={ICONS.upArrow}
+      source={IMAGES.upArrow}
       style={styles.icon}
     />
   )
 
   const downIcon = (
     <Image
-      source={ICONS.downArrow}
+      source={IMAGES.downArrow}
       style={styles.icon}
     />
   )

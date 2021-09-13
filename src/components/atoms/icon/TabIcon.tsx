@@ -2,19 +2,18 @@ import React from 'react'
 import {
   Image
 } from 'react-native'
-
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const TabIcon = ({ tabName, focused }: { tabName: string, focused: boolean }) => {
-  let icon
+  let icon = IMAGES.home
   if (tabName === 'Home') {
-    icon = focused ? ICONS.home_focused : ICONS.home
+    icon = focused ? IMAGES.home_focused : IMAGES.home
   } else if (tabName === 'CustomBox') {
-    icon = focused ? ICONS.customBox_focused : ICONS.customBox
+    icon = focused ? IMAGES.customBox_focused : IMAGES.customBox
   } else if (tabName === 'Storage') {
-    icon = focused ? ICONS.storage_focused : ICONS.storage
+    icon = focused ? IMAGES.storage_focused : IMAGES.storage
   } else if (tabName === 'MyPage') {
-    icon = focused ? ICONS.myPage_focused : ICONS.myPage
+    icon = focused ? IMAGES.myPage_focused : IMAGES.myPage
   }
 
   return (

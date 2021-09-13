@@ -3,14 +3,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native'
-
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const BackButton = () => {
   return (
     <TouchableOpacity>
       <Image
-        source={ICONS.leftArrow}
+        source={IMAGES.leftArrow}
         style={{
           width: 24,
           height: 24,

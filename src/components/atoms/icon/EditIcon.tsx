@@ -1,5 +1,5 @@
 import React from 'react'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import { scale } from '@constants/figure'
 import {
   View,
@@ -17,7 +17,7 @@ interface Props {
 const EditIcon = (props: Props) => {
   return (
     <Image
-      source={ICONS.edit}
+      source={IMAGES.edit}
       style={[styles.editIcon, props.style]}
     />
   )

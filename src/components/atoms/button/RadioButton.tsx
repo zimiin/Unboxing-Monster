@@ -1,5 +1,5 @@
 import { scale } from '@constants/figure'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
   StyleSheet,
@@ -21,7 +21,7 @@ const RadioButton = (props: Props) => {
       {...rest}
     >
       <Image
-        source={checked ? ICONS.radio_box_chkd : ICONS.radio_box_unchkd}
+        source={checked ? IMAGES.radio_box_chkd : IMAGES.radio_box_unchkd}
         style={styles.icon}
       />
     </TouchableOpacity>

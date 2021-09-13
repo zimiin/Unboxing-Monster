@@ -4,8 +4,11 @@ import React from "react"
 
 const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
   const startCustomBoxMaking = async () => {
-    navigation.navigate('Auth', { screen: 'LoginRequest' })
+    // 로그인 확인해서
+      // 로그인 안돼있으면
+      navigation.navigate('Auth', { screen: 'LoginRequest' })
     
+    // 돼있으면
     // navigation.navigate('BoxMakingStep1')
   }
 
