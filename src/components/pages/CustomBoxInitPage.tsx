@@ -1,15 +1,32 @@
 import CustomBoxInitTemplate from "@components/templates/CustomBoxInitTemplate"
 import { CustomBoxInitProps } from "@constants/navigationTypes"
+import { getAccessToken } from "@src/utils/asyncStorageUtils"
 import React from "react"
 
 const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
+  const hasLoggedIn = async () => {
+    const access_token = await getAccessToken()
+    if (access_token !== null) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const startCustomBoxMaking = async () => {
-    // 로그인 확인해서
-      // 로그인 안돼있으면
+    if (await hasLoggedIn()) {
+      navigation.navigate('BoxMakingStep1')
+    } else {
       navigation.navigate('Auth', { screen: 'LoginRequest' })
-    
-    // 돼있으면
-    // navigation.navigate('BoxMakingStep1')
+    }
+  }
+
+  const moveToMyCustomBox = async () => {
+    if (await hasLoggedIn()) {
+      navigation.navigate('MyCustomBox')
+    } else {
+      navigation.navigate('Auth', { screen: 'LoginRequest' })
+    }
   }
 
   return (
@@ -17,7 +34,7 @@ const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
       screenTitle='커스텀 박스'
       hasPreviousScreen={false}
       onPressMakeCustomBox={startCustomBoxMaking}
-      onPressMyCustomBox={() => { }}
+      onPressMyCustomBox={moveToMyCustomBox}
     />
   )
 }

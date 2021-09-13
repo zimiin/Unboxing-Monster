@@ -1,15 +1,12 @@
 import { User } from "@constants/types"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { getAccessToken } from "./asyncStorageUtils"
 
 export const storeUserInfo = async (accessToken: string, nickname: string, email: string, phone: string) => {
   await AsyncStorage.setItem('@access_token', accessToken)
   await AsyncStorage.setItem('@nickname', nickname)
   await AsyncStorage.setItem('@email', email)
   await AsyncStorage.setItem('@phone', phone)
-}
-
-export const getAccessToken = async () => {
-  return await AsyncStorage.getItem('@access_token')
 }
 
 const getUserIdFromToken = async (accessToken: string | null) => {

@@ -11,3 +11,7 @@ export const getNicknameFromAsyncStorage = async () => {
 export const getEmailFromAsyncStorage = async () => {
   return await AsyncStorage.getItem('@email')
 }
+
+export const getAccessToken = async () => {
+  return await AsyncStorage.getItem('@access_token')
+}
