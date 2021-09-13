@@ -69,7 +69,7 @@ const BoxProbView = ({probs, items}: {probs: number[], items: Item[]}) => {
         </View>
       ))}
     </ScrollView>
-    <View style={styles.tableBottomBorder}/>
+    {/* <View style={styles.tableBottomBorder}/> */}
   </View>
   )
 }
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   barchartLegendTop: {
     position: 'absolute', 
     width: WIDTH * (36 / 360), 
-    top: 44, 
+    top: 47, 
     left: WIDTH * (24 / 360), 
     borderBottomColor: 'rgb(143, 143, 143)', 
     borderBottomWidth: 1, 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   barchartLegendBottom: {
     position: 'absolute', 
     width: WIDTH * (36 / 360), 
-    top: 298, 
+    top: 301, 
     left: WIDTH * (24 / 360), 
     borderBottomColor: 'rgb(143, 143, 143)', 
     borderBottomWidth: 1, 
@@ -111,8 +111,6 @@ const styles = StyleSheet.create({
     width: WIDTH * (204 / 360), 
     top: 36, 
     left: WIDTH * (140 / 360), 
-    borderBottomColor: 'rgb(160, 160, 160)', 
-    borderBottomWidth: 1, 
     paddingBottom: 13
   },
   tableLeftCategoryText: {
@@ -127,8 +125,6 @@ const styles = StyleSheet.create({
     width: WIDTH * (204 / 360), 
     top: 36, 
     left: WIDTH * (140 / 360), 
-    borderBottomColor: 'rgb(160, 160, 160)', 
-    borderBottomWidth: 1, 
     paddingBottom: 13
   },
   tableRightCategoryText: {
@@ -143,7 +139,10 @@ const styles = StyleSheet.create({
     top: 64, 
     left: WIDTH * (140 / 360), 
     height: 256, 
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: 'rgb(160, 160, 160)', 
   },
   oddEntry: {
     backgroundColor: '#f9f9f9', 

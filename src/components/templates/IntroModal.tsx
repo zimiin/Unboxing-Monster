@@ -49,7 +49,7 @@ const IntroModal = (props: IntroModalProps)  => {
         <SwiperSlide image={IMAGES.intro_03} onPressFn={props.setModalVisible}>
           사전에 알수 없는{"\n"}미래의 블록 정보를 이용해서{"\n"}박스를 열어요
         </SwiperSlide>
-        <SwiperSlide image={IMAGES.intro_03} onPressFn={props.setModalVisible} useEndBtn={true} endBtnText={'확인'}>
+        <SwiperSlide image={IMAGES.intro_04} onPressFn={props.setModalVisible} useEndBtn={true} endBtnText={'확인'}>
           모든 과정은{"\n"}블록체인에 남아 있어요
         </SwiperSlide>
       </Swiper>
