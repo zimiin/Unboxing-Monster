@@ -4,10 +4,10 @@ import { BoxWithItems } from 'constants/types'
 import { defaultBox } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'
 import { useContext } from 'react'
-import { AddToCartNavigationProp, AddToCartRouteProp } from '@constants/navigationTypes'
+import { AddToCartProps } from '@constants/navigationTypes'
 import { URLS } from '@constants/urls'
 
-const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navigation: AddToCartNavigationProp }) => {
+const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
   const [data, setData] = useState<BoxWithItems>()
   const [count, setCount] = useState(1)
   const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
@@ -25,7 +25,7 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
     if (data) {
       modifyBoxCount(data?.id, count)
     }
-    navigation.navigate('Home')
+    navigation.navigate('Main')
   }
 
   useEffect(() => {

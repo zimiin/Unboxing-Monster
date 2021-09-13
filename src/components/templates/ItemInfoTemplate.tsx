@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   StyleSheet,
   ScrollView,
+  SafeAreaView,
 } from 'react-native'
 import Header from '@components/organisms/header/Header'
 import { ItemInfoNavigationProp } from '@constants/navigationTypes'
@@ -20,16 +21,17 @@ type ItemInfoTemplateProps = {
 const ItemInfoTemplate = (props: ItemInfoTemplateProps) => {
   return (
     <>
-      <Header title={props.title} canGoBack={true} goBackAction={() => props.navigation.goBack()}/>
-      <HorizontalRule/>
-      
-      <ScrollView style={styles.screen}>
-        <ItemInfoImage image={props.image} title={props.title} price={props.price}/>
-        <HorizontalRule/>
-        <ItemInfoDetail detail={props.detail}/>
-      </ScrollView>
-    </>
+      <Header title={props.title} canGoBack={true} goBackAction={() => props.navigation.goBack()} />
+      <HorizontalRule />
 
+      <SafeAreaView style={styles.screen}>
+        <ScrollView>
+          <ItemInfoImage image={props.image} title={props.title} price={props.price} />
+          <HorizontalRule />
+          <ItemInfoDetail detail={props.detail} />
+        </ScrollView>
+      </SafeAreaView>
+    </>
   )
 }
 

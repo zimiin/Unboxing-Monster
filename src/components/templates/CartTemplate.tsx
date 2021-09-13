@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import Header from '@components/organisms/header/Header'
@@ -130,6 +131,8 @@ const CartTemplate = (props: Props) => {
           </Text>  
         </TouchableOpacity>
       </ScrollView>
+
+      <SafeAreaView style={styles.safeArea}/>
     </>
   )
 }
@@ -177,5 +180,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  safeArea: {
+    backgroundColor: 'white',
   }
 })

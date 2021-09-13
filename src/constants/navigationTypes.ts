@@ -8,6 +8,13 @@ export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>,
   Main: undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
+  BoxInfo: { boxId: number }
+  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string }
+  ProbInfo: { boxId: number, boxPrice: number, items: Item[] }
+  AddToCart: { boxId: number }
+  Cart: undefined
+  Payment: undefined
+  PaymentComplete: { paymentId: number }
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -23,6 +30,54 @@ export type MainProps = {
 export type OpenNavigationProp = StackNavigationProp<RootStackParamList, 'Open'>
 export type OpenProps = {
   navigation: OpenNavigationProp
+}
+
+export type BoxInfoNavigationProp = StackNavigationProp<RootStackParamList, 'BoxInfo'>
+export type BoxInfoRouteProp = RouteProp<RootStackParamList, 'BoxInfo'>
+export type BoxInfoProps = {
+  route: BoxInfoRouteProp
+  navigation: BoxInfoNavigationProp
+}
+
+export type ItemInfoNavigationProp = StackNavigationProp<RootStackParamList, 'ItemInfo'>
+export type ItemInfoRouteProp = RouteProp<RootStackParamList, 'ItemInfo'>
+export type ItemInfoProps = {
+  route: ItemInfoRouteProp
+  navigation: ItemInfoNavigationProp
+}
+
+export type ProbInfoNavigationProp = StackNavigationProp<RootStackParamList, 'ProbInfo'>
+export type ProbInfoRouteProp = RouteProp<RootStackParamList, 'ProbInfo'>
+export type ProbInfoProps = {
+  route: ProbInfoRouteProp
+  navigation: ProbInfoNavigationProp
+}
+
+export type AddToCartNavigationProp = StackNavigationProp<RootStackParamList, 'AddToCart'>
+export type AddToCartRouteProp = RouteProp<RootStackParamList, 'AddToCart'>
+export type AddToCartProps = {
+  route: AddToCartRouteProp
+  navigation: AddToCartNavigationProp
+}
+
+export type CartNavigationProp = StackNavigationProp<RootStackParamList, 'Cart'>
+export type CartRouteProp = RouteProp<RootStackParamList, 'Cart'>
+export type CartProps = {
+  navigation: CartNavigationProp
+}
+
+export type PaymentNavigationProp = StackNavigationProp<RootStackParamList, 'Payment'>
+export type PaymentRouteProp = RouteProp<RootStackParamList, 'Payment'>
+export type PaymentProps = {
+  route: PaymentRouteProp
+  navigation: PaymentNavigationProp
+}
+
+export type PaymentCompleteNavigationProp = StackNavigationProp<RootStackParamList, 'PaymentComplete'>
+export type PaymentCompleteRouteProp = RouteProp<RootStackParamList, 'PaymentComplete'>
+export type PaymentCompleteProps = {
+  route: PaymentCompleteRouteProp
+  navigation: PaymentCompleteNavigationProp
 }
 
 // Auth Stack
@@ -133,77 +188,22 @@ export type MyPageTabProps = {
 // Home Stack
 export type HomeStackParamList = {
   Home: undefined
-  BoxInfo: { boxId: number }
-  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string}
-  ProbInfo: { boxId: number, boxPrice: number, items: Item[]}
-  AddToCart: { boxId: number }
   Search: undefined
-  Cart: undefined
-  Payment: undefined
-  PaymentComplete: { paymentId: number }
 }
 
-export type HomeNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>
 export type HomeRouteProp = RouteProp<HomeStackParamList, 'Home'>
+export type HomeNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<HomeStackParamList, 'Home'>,
+  StackNavigationProp<RootStackParamList, 'Main'>
+>
 export type HomeProps = {
   route: HomeRouteProp,
   navigation: HomeNavigationProp
 }
 
-export type BoxInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'BoxInfo'>
-export type BoxInfoRouteProp = RouteProp<HomeStackParamList, 'BoxInfo'>
-export type BoxInfoProps = {
-  route: BoxInfoRouteProp
-  navigation: BoxInfoNavigationProp
-}
-
-export type ItemInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'ItemInfo'>
-export type ItemInfoRouteProp = RouteProp<HomeStackParamList, 'ItemInfo'>
-export type ItemInfoProps = {
-  route: ItemInfoRouteProp
-  navigation: ItemInfoNavigationProp
-}
-
-export type ProbInfoNavigationProp = StackNavigationProp<HomeStackParamList, 'ProbInfo'>
-export type ProbInfoRouteProp = RouteProp<HomeStackParamList, 'ProbInfo'>
-export type ProbInfoProps = {
-  route: ProbInfoRouteProp
-  navigation: ProbInfoNavigationProp
-}
-
-export type AddToCartNavigationProp = StackNavigationProp<HomeStackParamList, 'AddToCart'>
-export type AddToCartRouteProp = RouteProp<HomeStackParamList, 'AddToCart'>
-export type AddToCartProps = {
-  route: AddToCartRouteProp
-  navigation: AddToCartNavigationProp
-}
-
 export type SearchNavigationProp = StackNavigationProp<HomeStackParamList, 'Search'>
 export type SearchProps = {
   navigation: SearchNavigationProp
-}
-
-export type CartNavigationProp = StackNavigationProp<HomeStackParamList, 'Cart'>
-export type CartRouteProp = RouteProp<HomeStackParamList, 'Cart'>
-export type CartProps = {
-  navigation: CartNavigationProp
-}
-
-export type PaymentNavigationProp = StackNavigationProp<HomeStackParamList, 'Payment'>
-export type PaymentRouteProp = RouteProp<HomeStackParamList, 'Payment'>
-export type PaymentProps = {
-  route: PaymentRouteProp
-  navigation: PaymentNavigationProp
-}
-
-export type PaymentCompleteNavigationProp = CompositeNavigationProp<
-  StackNavigationProp<HomeStackParamList, 'PaymentComplete'>,
-  BottomTabNavigationProp<BottomTabParamList, 'Home'>
->
-export type PaymentCompleteRouteProp = RouteProp<HomeStackParamList, 'PaymentComplete'>
-export type PaymentCompleteProps = {
-  route: PaymentCompleteRouteProp
-  navigation: PaymentCompleteNavigationProp
 }
 
 // CustomBox Stack

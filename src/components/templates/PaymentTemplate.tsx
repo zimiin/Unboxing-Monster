@@ -7,6 +7,7 @@ import {
   View,
   Text,
   StyleSheet,
+  SafeAreaView,
 
 } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
@@ -222,10 +223,12 @@ const PaymentTemplate = (props: Props) => {
         </ContentBox>
       </ScrollView>
 
-      <FullWidthButton
-        content='결제'
-        onPress={props.onPressMakePayment}
-      />
+      <SafeAreaView style={styles.bottomButtonContainer}>
+        <FullWidthButton
+          content='결제'
+          onPress={props.onPressMakePayment}
+        />
+      </SafeAreaView>
     </>
   )
 }
@@ -297,5 +300,8 @@ const styles = StyleSheet.create({
   },
   finalPrice: {
     fontSize: 16,
+  },
+  bottomButtonContainer: {
+    backgroundColor: COLORS.main
   }
 })
