@@ -5,7 +5,7 @@ import { Item } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
-  Auth: undefined,
+  Auth: NavigatorScreenParams<AuthStackParamList>,
   Main: undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
 }
@@ -33,6 +33,7 @@ export type AuthStackParamList = {
   SignUpPhoneInput: undefined,
   SignUpPhoneConfirmInput: undefined,
   SignUpNicknameInput: undefined,
+  LoginRequest: undefined,
 }
 
 export type SplashNavigationProp = CompositeNavigationProp<
@@ -84,6 +85,13 @@ export type SignUpNicknameInputNavigationProp = CompositeNavigationProp<
 export type SignUpNicknameInputProps = {
   route: SignUpNicknameInputRouteProp,
   navigation: SignUpNicknameInputNavigationProp,
+}
+
+export type LoginRequestRouteProp = RouteProp<AuthStackParamList, 'LoginRequest'>
+export type LoginRequestNavigationProp = StackNavigationProp<AuthStackParamList, 'LoginRequest'>
+export type LoginRequestProps = {
+  route: LoginRequestRouteProp,
+  navigation: LoginRequestNavigationProp
 }
 
 // Bottom Tab
@@ -207,7 +215,13 @@ export type CustomBoxStackParamList = {
 }
 
 export type CustomBoxInitRouteProp = RouteProp<CustomBoxStackParamList, 'CustomBoxInit'>
-export type CustomBoxInitNavigationProp = StackNavigationProp<CustomBoxStackParamList, 'CustomBoxInit'>
+export type CustomBoxInitNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<CustomBoxStackParamList, 'CustomBoxInit'>,
+  CompositeNavigationProp<
+    StackNavigationProp<BottomTabParamList, 'CustomBox'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
 export type CustomBoxInitProps = {
   route: CustomBoxInitRouteProp,
   navigation: CustomBoxInitNavigationProp

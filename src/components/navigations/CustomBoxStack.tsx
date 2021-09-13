@@ -6,6 +6,7 @@ import BoxMakingStep1Page from '@components/pages/BoxMakingStep1Page'
 import CustomBoxContextProvider from '@src/stores/CustomBoxContext'
 import BoxMakingStep2Page from '@components/pages/BoxMakingStep2Page'
 import BoxMakingStep3Page from '@components/pages/BoxMakingStep3Page'
+import LoginRequestPage from '@components/pages/LoginRequestPage'
 
 const CustomBoxStack = () => {
   const CustomBoxStack = createStackNavigator<CustomBoxStackParamList>()
