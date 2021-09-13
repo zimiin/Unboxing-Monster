@@ -44,11 +44,11 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
     setShowBoxListModal(false)
   }
 
-  const minBoxPrice = useMemo(() => {
+  const maxBoxPrice = useMemo(() => {
     return selectedItems[0]?.price
   }, [selectedItems])
 
-  const maxBoxPrice = useMemo(() => {
+  const minBoxPrice = useMemo(() => {
     if (selectedItems.length) {
       const lastIdx = selectedItems.length - 1
       return selectedItems[lastIdx].price

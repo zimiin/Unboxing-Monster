@@ -104,10 +104,10 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
 
   const onPressNext = () => {
     let items: CustomBoxItem[] = []
-    const length = ascendingParsedItemData.length
+    const length = descendingParsedItemData.length
   
     for (let i = 0; i < length; i++) {
-      const data = ascendingParsedItemData[i]
+      const data = descendingParsedItemData[i]
   
       if (data.itemData.checked === true) {
         items.push({
