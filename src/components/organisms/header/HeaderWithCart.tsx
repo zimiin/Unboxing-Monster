@@ -11,7 +11,7 @@ import globalStyles from '@constants/globalStyles'
 interface Props {
   title: string
   canGoBack: boolean
-  goBackAction: () => void
+  goBackAction?: () => void
   onPressCart: () => void
   cartItemCount?: number,
 }

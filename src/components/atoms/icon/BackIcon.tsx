@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Image,
 } from 'react-native'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import { ImageStyle } from 'react-native'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 const BackIcon = (props: Props) => {
   return (
     <Image
-      source={ICONS.leftArrow}
+      source={IMAGES.leftArrow}
       style={[{
         width: 24,
         height: 24,

@@ -5,13 +5,14 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
 import CheckBox from '@components/atoms/button/CheckBox'
 import { BoxId } from '@constants/types'
-import { defaultBox } from '@constants/images'
+import { defaultBoxUri } from '@constants/images'
 import CartItem from '@components/molecules/CartItem'
 
 
@@ -34,7 +35,7 @@ export interface BoxInfo {
 const defaultBoxInfo: BoxInfo = {
   name: '',
   price: 0,
-  image: defaultBox
+  image: defaultBoxUri
 }
 
 export type BoxData = Map<BoxId, BoxInfo>
@@ -130,6 +131,8 @@ const CartTemplate = (props: Props) => {
           </Text>  
         </TouchableOpacity>
       </ScrollView>
+
+      <SafeAreaView style={styles.safeArea}/>
     </>
   )
 }
@@ -177,5 +180,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  safeArea: {
+    backgroundColor: 'white',
   }
 })

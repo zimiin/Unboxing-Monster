@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   canGoBack: boolean
@@ -41,7 +41,7 @@ const HeaderWhileSearching = (props: Props) => {
           onPress={() => setSearchValue('')}
         >
           <Image
-            source={ICONS.xCircle}
+            source={IMAGES.xCircle}
             style={styles.xIcon}
           />
         </TouchableOpacity>

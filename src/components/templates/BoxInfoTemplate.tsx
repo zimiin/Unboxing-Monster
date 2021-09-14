@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native'
 import SubTitle from '@components/atoms/typography/SubTitle'
 import FullWidthButton from '@components/atoms/button/FullWidthButton'
@@ -16,6 +17,7 @@ import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 import { BoxInfoNavigationProp } from '@constants/navigationTypes'
 import Title from '@components/atoms/typography/Title'
 import HorizontalRule from '@components/atoms/HorizontalRule'
+import { COLORS } from '@constants/colors'
 
 type BoxInfoTemplateProps = {
   boxImage: object,
@@ -108,10 +110,12 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
         </ScrollView>
       </View>
 
-      <FullWidthButton 
-        onPress={props.onPressAddToCart}
-        content='장바구니에 담기'
-      />
+      <SafeAreaView style={styles.bottomButtonContainer}>
+        <FullWidthButton 
+          onPress={props.onPressAddToCart}
+          content='장바구니에 담기'
+        />
+      </SafeAreaView>
     </>
   )
 }
@@ -153,5 +157,8 @@ const styles = StyleSheet.create({
   },
   policyContainer: {
     marginTop: 31,
+  },
+  bottomButtonContainer: {
+    backgroundColor: COLORS.main
   }
 })

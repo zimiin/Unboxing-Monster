@@ -1,0 +1,142 @@
+import React, { useState, useEffect, useContext, useMemo } from 'react'
+import { BoxMakingStep2Props } from '@constants/navigationTypes'
+import BoxMakingStep3Template from '@components/templates/BoxMakingStep3Template'
+import { CustomBoxContext } from '@src/stores/CustomBoxContext'
+import { generateProbability } from '@src/utils/probabilites'
+import { URLS } from '@constants/urls'
+import { Box, BoxItem } from '@constants/types'
+import { getLoginUserId } from '@src/utils/loginUtils'
+import AddToCartTemplate from '@components/templates/AddToCartTemplate'
+import { CartContext } from '@src/stores/CartContext'
+
+const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
+  const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
+  const [{}, {modifyBoxCount}] = useContext(CartContext)
+
+  const itemInfo: {id: number, name: string}[] = useMemo(() => {
+    return selectedItems.map(
+      item => {
+        return {
+          id: item.id,
+          name: item.name
+        }
+      }
+    )
+  }, [selectedItems])
+
+  const itemPrices: number[] = useMemo(() => {
+    return selectedItems.map(
+      item => item.price
+    )
+  }, [selectedItems])
+
+  const probabilites: number[] = useMemo(() => {
+    return generateProbability(itemPrices, boxPrice, 0.5)
+  }, [itemPrices, boxPrice])
+
+  const requestPostBox = async () => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'box', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title: boxName,
+            price: boxPrice,
+            ownerId: await getLoginUserId(),
+            image: boxImage,
+            detail: '',
+          })
+        }
+      )
+
+      if (response.status !== 201) {
+        const json = await response.json()
+        throw 'status ' + response.status + ', message: ' + json.message + ', url: ' + response.url
+      }
+
+      const json: Box = await response.json()
+      return json.id
+    } catch (error) {
+      console.log('Error in requestPostBox', error)
+      throw error
+    }
+  }
+
+  const mapBoxAndSelectedItems = async (boxId: number) => {
+    const boxitem: BoxItem[] = selectedItems.map(
+      item => ({
+        boxId: boxId,
+        itemId: item.id
+      })
+    )
+
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'boxitem', {
+          method: 'POST',
+          headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: boxitem
+        })
+      });
+
+      if (response.status !== 201) {
+        const json = await response.json()
+        throw 'status ' + response.status + ', message: ' + json.message + ', url: ', response.url
+      }
+
+    } catch (error) {
+      console.log('Error in mapBoxAndSelectedItems', error)
+      throw error
+    }
+  }
+
+  const saveBoxInDB = async () => {
+    try {
+      const boxId = await requestPostBox()
+      await mapBoxAndSelectedItems(boxId)
+
+      return boxId
+    } catch (error) {
+      console.log('Error in saveBoxInDB', error)
+      throw error
+    }
+  }
+
+  const addToCart = async (boxId: number) => {
+    modifyBoxCount(boxId, +1)
+  }
+
+  const completeBoxMaking = async () => {
+    try {
+      const boxId = await saveBoxInDB()
+      addToCart(boxId)
+      navigation.popToTop()
+    } catch (error) {
+      console.log('Error in completeBoxMaking', error)
+    }
+  }
+  
+  return (
+    <BoxMakingStep3Template
+      screenTitle={'커스텀 박스 만들기'}
+      hasPreviousScreen={true}
+      boxImage={{uri: boxImage}}
+      boxPrice={boxPrice}
+      boxName={boxName}
+      probs={probabilites}
+      itemInfo={itemInfo}
+      onPressGoBack={() => navigation.goBack()}
+      onPressNext={completeBoxMaking}
+    />
+  )
+}
+
+export default BoxMakingStep3Page

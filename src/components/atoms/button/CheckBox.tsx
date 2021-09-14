@@ -1,17 +1,15 @@
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
-  View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   TouchableOpacityProps,
+  Image,
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 
 interface CheckBoxProps extends TouchableOpacityProps {
   checked: boolean,
-  onPress: () => void,
+  onPress?: () => void,
 }
 
 const CheckBox = (props: CheckBoxProps) => {
@@ -20,8 +18,8 @@ const CheckBox = (props: CheckBoxProps) => {
       onPress={props.onPress}
       style={props.style}
     >
-      <FastImage
-        source={props.checked ? ICONS.checkBox_checked : ICONS.checkBox_unchecked}
+      <Image
+        source={props.checked ? IMAGES.checkBox_checked : IMAGES.checkBox_unchecked}
         style={styles.checkBox}
       />
 

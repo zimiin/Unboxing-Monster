@@ -1,7 +1,6 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import IconButton24 from '@components/atoms/button/IconButton24'
 import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@constants/figure'
-import { ICONS } from '@constants/icons'
 import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
@@ -54,25 +53,25 @@ const LoginTemplate = (props: Props) => {
 
         <View style={styles.SNSIconView}>
           <IconButton24
-            image={ICONS.naver}
+            image={IMAGES.naver}
             onPress={() => console.log("Naver login pressed")}
             style={styles.SNSIcon}
           />
 
           <IconButton24
-            image={ICONS.kakao_talk}
+            image={IMAGES.kakao_talk}
             onPress={() => console.log("kakao_talk login pressed")}
             style={styles.SNSIcon}
           />
 
           <IconButton24
-            image={ICONS.facebook}
+            image={IMAGES.facebook}
             onPress={props.onPressFacebook}
             style={styles.SNSIcon}
           />
 
           <IconButton24
-            image={ICONS.apple}
+            image={IMAGES.apple}
             onPress={props.onPressApple}
             style={styles.SNSIcon}
           />

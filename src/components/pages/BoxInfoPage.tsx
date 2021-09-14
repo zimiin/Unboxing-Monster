@@ -11,6 +11,8 @@ import BoxListItem from '@components/molecules/BoxListItem'
 import { BoxInfoProps } from '@constants/navigationTypes'
 import { BoxWithItems } from '@constants/types'
 import { CartContext } from '@src/stores/CartContext'
+import { defaultBox } from '@constants/images'
+import { URLS } from '@constants/urls'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
@@ -28,7 +30,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
 
   useEffect(() => {
     const getBoxInfo = async (boxId: number) => {
-      let url = 'http://3.37.238.160/box/' + boxId
+      let url = URLS.unboxing_api + 'box/' + boxId
       let response = await fetch(url)
       if (response.status === 200) {
         let json = await response.json()
@@ -77,7 +79,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
 
   return (
     <BoxInfoTemplate
-      boxImage={<BoxInfoImage image={data.image}/>}
+      boxImage={<BoxInfoImage image={data.image ? {uri: data.image} : defaultBox}/>}
       boxName={data.title}
       boxPrice={<BoxPriceInfo price={data.price}/>}
       boxDetail={<Body content={data.detail}/>}

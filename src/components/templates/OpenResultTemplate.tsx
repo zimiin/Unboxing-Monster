@@ -19,8 +19,6 @@ interface Props {
   openResultData: OpenResultItem[],
 }
 
-const defaultImage = {uri: defaultBox}
-
 const OpenResultTemplate = (props: Props) => {
   const renderItem = ({ item }: { item: OpenResultItem }) => {
     return (
@@ -59,7 +57,7 @@ const OpenResultTemplate = (props: Props) => {
   const singleResult = () => (
     <SingleOpenResultItem
       key={props.openResultData[0].key || 0}
-      image={props.openResultData[0].image || defaultImage}
+      image={props.openResultData[0].image || defaultBox}
       name={props.openResultData[0].name || ''}
       price={props.openResultData[0].price || 0}
     />

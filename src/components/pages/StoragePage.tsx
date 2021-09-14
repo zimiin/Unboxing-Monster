@@ -6,6 +6,7 @@ import { BoxStorage, CouponWithItem } from "@constants/types"
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import { StorageCouponData } from "@components/molecules/StorageCoupon"
 import { StorageProps } from "@constants/navigationTypes"
+import { URLS } from '@constants/urls'
 
 const StoragePage = ({route, navigation}: StorageProps) => {
   const [focus, setFocus] = useState<Focus>('randomBox')
@@ -18,7 +19,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const fetchBoxStorage = async () => {
     try {
-      const url = 'http://3.37.238.160/box-storage/' + 'k1804801727'
+      const url = URLS.unboxing_api + 'box-storage/' + 'k1804801727'
       const response = await fetch(
         url, {
         method: 'GET',
@@ -86,7 +87,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const fetchCoupon = async () => {
     try {
-      const url = 'http://3.37.238.160/coupon/' + 'k1804801727'
+      const url = URLS.unboxing_api + 'coupon/' + 'k1804801727'
       const response = await fetch(
         url, {
         method: 'GET',

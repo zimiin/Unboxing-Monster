@@ -22,7 +22,6 @@ export interface StorageBoxData {
   onPress: () => void,
 }
 
-const defaultBoxURI = { uri: defaultBox }
 const defaultOpenFunction = () => {
   console.log("No function passed to StorageBox component.")
 }
@@ -35,7 +34,7 @@ const StorageBox = ({ item }: {item: StorageBoxData}) => {
     >
       <Image
         source={item.image}
-        style={styles.image || defaultBoxURI}
+        style={styles.image || defaultBox}
       />
 
       <View>

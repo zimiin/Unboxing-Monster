@@ -1,12 +1,12 @@
 import SignUpInputTemplate from '@components/templates/SignUpInputTemplate'
 import { SignUpNicknameInputProps } from '@constants/navigationTypes'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SignUpContext } from '@src/stores/SignUpContext'
+import { storeUserInfo } from '@src/utils/loginUtils'
 import React from 'react'
 import { useState } from 'react'
-import { useEffect } from 'react'
 import { useContext } from 'react'
 import { AccessToken } from 'react-native-fbsdk-next'
+import { URLS } from '@constants/urls'
 
 const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) => {
   const [{email, phone, phoneConfirm, nickname, provider, providerToken}, {setNickname}] = useContext(SignUpContext)
@@ -15,7 +15,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const requestJoin = async () => {
     try {
     const response = await fetch(
-      'http://3.37.238.160/auth/join/' + provider, {
+      URLS.unboxing_api + 'auth/join/' + provider, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -48,7 +48,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const requestLogin = async () => {
     try {
       const response = await fetch(
-        'http://3.37.238.160/auth/login/' + provider, {
+        URLS.unboxing_api + 'auth/login/' + provider, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -66,32 +66,32 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       }
 
       return json.access_token
+
     } catch (error) {
       console.log('Error in requestLogin:', error)
-      return ''
+      throw error
     }
   }
 
   const Login = async () => {
-    const loginResult = await requestLogin()
-
-    if (loginResult === '') {
-      return 'failed'
-    } else {
-      AsyncStorage.setItem('@access_token', loginResult)
-      return 'succeed'
+    try {
+      const accessToken = await requestLogin()
+      return accessToken
+    } catch (error) {
+      console.log('=====Error in Login()=====', error)
+      throw error
     }
   }
 
   const onPressComplete = async () => {
-    if (await requestJoin() === 'succeed') {
-      if (await Login() === 'succeed') {
-        navigation.replace('Main')
-      } else {
-        console.log('Failed to login')
-      }
-    } else {
-      console.log('Failed to join')
+    try {
+      await requestJoin()
+      const accessToken = await Login()
+      await storeUserInfo(accessToken, nickname, email, phone)
+      navigation.replace('Main')
+
+    } catch (error) {
+      console.log('=====Error in onPressComplete()=====', error)
     }
   }
 

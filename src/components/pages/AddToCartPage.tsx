@@ -1,12 +1,13 @@
 import AddToCartTemplate from '@components/templates/AddToCartTemplate'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { BoxWithItems } from 'constants/types'
 import { defaultBox } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'
 import { useContext } from 'react'
-import { AddToCartNavigationProp, AddToCartRouteProp } from '@constants/navigationTypes'
+import { AddToCartProps } from '@constants/navigationTypes'
+import { URLS } from '@constants/urls'
 
-const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navigation: AddToCartNavigationProp }) => {
+const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
   const [data, setData] = useState<BoxWithItems>()
   const [count, setCount] = useState(1)
   const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
@@ -24,12 +25,12 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
     if (data) {
       modifyBoxCount(data?.id, count)
     }
-    navigation.navigate('Home')
+    navigation.navigate('Main')
   }
 
   useEffect(() => {
     const getBoxInfo = async (boxId: number) => {
-      let url = 'http://3.37.238.160/box/' + boxId
+      let url = URLS.unboxing_api + 'box/' + boxId
       let response = await fetch(url)
       if (response.status === 200) {
         let json = await response.json()
@@ -45,7 +46,7 @@ const AddToCartPage = ({ route, navigation }: { route: AddToCartRouteProp, navig
   return (
     <AddToCartTemplate
       boxName={data ? data.title : ''}
-      boxImage={data ? data.image : defaultBox}
+      boxImage={data ? {uri: data.image} : defaultBox}
       boxPrice={data ? data.price : 0}
       count={count}
       goBackAction={() => navigation.goBack()}
