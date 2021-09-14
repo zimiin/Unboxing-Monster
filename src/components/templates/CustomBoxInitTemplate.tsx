@@ -5,24 +5,28 @@ import {
   StyleSheet,
   Image,
 } from 'react-native'
-import Header from '@components/organisms/header/Header'
 import { IMAGES } from '@constants/images'
 import { SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
+import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 
 interface Props {
   screenTitle: string,
   hasPreviousScreen: boolean,
+  cartItemCount: number,
   onPressMakeCustomBox: () => void,
   onPressMyCustomBox: () => void,
+  onPressCart: () => void,
 }
 
 const CustomBoxInitTemplate = (props: Props) => {
   return (
     <>
-      <Header
+      <HeaderWithCart
         canGoBack={props.hasPreviousScreen}
         title={props.screenTitle}
+        onPressCart={props.onPressCart}
+        cartItemCount={props.cartItemCount}
       />
 
       <View style={styles.screen}>

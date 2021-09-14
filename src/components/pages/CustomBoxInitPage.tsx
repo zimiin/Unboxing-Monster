@@ -1,9 +1,12 @@
 import CustomBoxInitTemplate from "@components/templates/CustomBoxInitTemplate"
 import { CustomBoxInitProps } from "@constants/navigationTypes"
+import { CartContext } from "@src/stores/CartContext"
 import { getAccessToken } from "@src/utils/asyncStorageUtils"
-import React from "react"
+import React, { useContext } from "react"
 
 const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
+  const [{cart}, {}] = useContext(CartContext)
+
   const hasLoggedIn = async () => {
     const access_token = await getAccessToken()
     if (access_token !== null) {
@@ -33,8 +36,10 @@ const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
     <CustomBoxInitTemplate
       screenTitle='커스텀 박스'
       hasPreviousScreen={false}
+      cartItemCount={cart.size}
       onPressMakeCustomBox={startCustomBoxMaking}
       onPressMyCustomBox={moveToMyCustomBox}
+      onPressCart={() => navigation.navigate('Cart')}
     />
   )
 }

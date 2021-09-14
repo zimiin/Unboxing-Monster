@@ -250,7 +250,13 @@ export type BoxMakingStep3Props = {
 }
 
 export type MyCustomBoxRouteProp = RouteProp<CustomBoxStackParamList, 'MyCustomBox'>
-export type MyCustomBoxNavigationProp = StackNavigationProp<CustomBoxStackParamList, 'MyCustomBox'>
+export type MyCustomBoxNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<CustomBoxStackParamList, 'MyCustomBox'>,
+  CompositeNavigationProp<
+    StackNavigationProp<BottomTabParamList, 'CustomBox'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
 export type MyCustomBoxProps = {
   route: MyCustomBoxRouteProp,
   navigation: MyCustomBoxNavigationProp
