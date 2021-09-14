@@ -6,12 +6,10 @@ import { useContext } from 'react'
 import { Item } from '@constants/types'
 import { URLS } from '@constants/urls'
 import { debounce } from 'lodash'
-import { log } from '@src/utils/debug'
 
 const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   const [{ selectedItems }, { replaceSelectedItems }] = useContext(CustomBoxContext)
-  const [ascendingParsedItemData, setAscendingParsedItemData] = useState<RenderItem[]>([])
-  const [descendingParsedItemData, setDescendingParsedItemData] = useState<RenderItem[]>([])
+  const [sortedItemList, setSortedItemList] = useState<RenderItem[]>([])
   const [rawItemData, setRawItemData] = useState<Item[]>()
   const [error, setError] = useState<string>('')
   const [searchInput, setSearchInput] = useState<string>('')
@@ -64,50 +62,32 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       } 
     )
 
-    const ascendingData = data.sort((a, b) => a.itemData.price - b.itemData.price)
-    const descendingData = ascendingData.slice().reverse()
-
-    setAscendingParsedItemData(ascendingData)
-    setDescendingParsedItemData(descendingData)
+    const sortedData = data.sort((a, b) => a.itemData.price - b.itemData.price)
+    setSortedItemList(sortedData)
   }, [rawItemData])
 
-  const modifyItemData = useCallback((data: { index: number, item: RenderItem }[]) => {
-    let newAscendingData = ascendingParsedItemData.slice()
-    let newDescendingData = descendingParsedItemData.slice()
-
-    for (var i = 0; i < data.length; i++) {
-      const index = data[i].index
-      const reverseIndex = ascendingParsedItemData.length - data[i].index - 1
-      
-      newAscendingData[index] = data[i].item
-      newDescendingData[reverseIndex] = data[i].item
-    }
-      
-    setAscendingParsedItemData(newAscendingData)
-    setDescendingParsedItemData(newDescendingData)
-  }, [ascendingParsedItemData, descendingParsedItemData])
-
   const onPressItemRadioButton = useCallback((id: number) => {
-    if (ascendingParsedItemData === undefined) {
+    if (sortedItemList === undefined) {
       console.log('undefined itemRadiobuttondata')
       return
     }
 
     setError('')
 
-    const index = ascendingParsedItemData.findIndex(elem => elem.itemData.id === id)
-    const curData = ascendingParsedItemData[index]
+    var newSortedItemList = sortedItemList.slice()
+    const index = newSortedItemList.findIndex(elem => elem.itemData.id === id)
+    const curItem = newSortedItemList[index]
+    curItem.itemData.checked = !curItem.itemData.checked
     
-    curData.itemData.checked = !curData.itemData.checked
-    modifyItemData([{index: index, item: curData}])
-  }, [ascendingParsedItemData])
+    setSortedItemList(newSortedItemList)
+  }, [sortedItemList])
 
   const onPressNext = () => {
     let items: CustomBoxItem[] = []
-    const length = descendingParsedItemData.length
+    const length = sortedItemList.length
   
-    for (let i = 0; i < length; i++) {
-      const data = descendingParsedItemData[i]
+    for (let i = length - 1; i >= 0; i--) {
+      const data = sortedItemList[i]
   
       if (data.itemData.checked === true) {
         items.push({
@@ -134,44 +114,46 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
   
   const search = useCallback(
     debounce((input: string) => {
-      console.log('===search', input)
-      let output: {index: number, item: RenderItem}[] = []
-      const len = ascendingParsedItemData.length
+      var newItemList = sortedItemList.slice()
+      const len = newItemList.length
 
       if (input === '') {
-        for (var i = 0; i < len; i++) {
-          var curItem = ascendingParsedItemData[i]
+        for (let i = 0; i < len; i++) {
+          let curItem = newItemList[i]
           curItem.searched = true
-          output.push({index: i, item: curItem})
         }
       } else {
-        for (var i = 0; i < len; i++) {
-          var curItem = ascendingParsedItemData[i]
+        for (let i = 0; i < len; i++) {
+          let curItem = newItemList[i]
 
           if (curItem.itemData.name.indexOf(input) > -1) {
             curItem.searched = true
-            output.push({index: i, item: curItem})
           } else {
             curItem.searched = false
           }
         }
       }
 
-      modifyItemData(output)
+      setSortedItemList(newItemList)
     }, 1000)
-  , [ascendingParsedItemData])
+  , [sortedItemList])
 
   const onChangeSearchInput = (input: string) => {
     setSearchInput(input)
     search(input)
   }
 
+  const reversedItemList = useMemo(() => {
+    let newList = sortedItemList.slice()
+    return newList.reverse()
+  }, [sortedItemList])
+
   return (
     <BoxMakingStep1Template
       hasPreviousScreen={true}
       screenTitle='커스텀 박스 만들기'
       sorted={sorted}
-      itemData={sorted === '낮은가격순' ? ascendingParsedItemData : descendingParsedItemData}
+      itemData={sorted === '낮은가격순' ? sortedItemList : reversedItemList}
       error={error}
       searchInput={searchInput}
       sortOptions={sortOptions}
