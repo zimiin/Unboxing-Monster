@@ -18,7 +18,7 @@
 		6C6D775726BA970B00DAA715 /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6D775426BA970B00DAA715 /* GmarketSansTTFBold.ttf */; };
 		6C7A975926BA9A51007C016C /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A975826BA9A51007C016C /* Fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		B6B68E2B26D79E7000CB09E9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B68E2A26D79E7000CB09E9 /* File.swift */; };
+		B6FF8A4626F0D97000D61598 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF8A4526F0D97000D61598 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +51,8 @@
 		6E5BE28393041C963632C32E /* Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre-Unboxing_preTests/Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Unboxing_pre/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B6B68E2926D79E6F00CB09E9 /* Unboxing_pre-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Unboxing_pre-Bridging-Header.h"; sourceTree = "<group>"; };
-		B6B68E2A26D79E7000CB09E9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		B6FDA7DA26F07F5D00E5D42E /* Unboxing_pre.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Unboxing_pre.entitlements; path = Unboxing_pre/Unboxing_pre.entitlements; sourceTree = "<group>"; };
+		B6FF8A4526F0D97000D61598 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		D38B381B942A83C9996A0B62 /* Pods-Unboxing_pre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre.debug.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre/Pods-Unboxing_pre.debug.xcconfig"; sourceTree = "<group>"; };
 		E4971882990B3C64C73A8D26 /* libPods-Unboxing_pre-Unboxing_preTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unboxing_pre-Unboxing_preTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -105,8 +105,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				B6B68E2A26D79E7000CB09E9 /* File.swift */,
 				B6B68E2926D79E6F00CB09E9 /* Unboxing_pre-Bridging-Header.h */,
+				B6FF8A4526F0D97000D61598 /* File.swift */,
 			);
 			name = Unboxing_pre;
 			sourceTree = "<group>";
@@ -450,7 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				B6B68E2B26D79E7000CB09E9 /* File.swift in Sources */,
+				B6FF8A4626F0D97000D61598 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
