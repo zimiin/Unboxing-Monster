@@ -118,6 +118,9 @@ const LoginPage = ({route, navigation}: LoginProps) => {
         throw 'credentialState is ' + credentialState + '(not authorized)'
       }
 
+      console.log('===appleLoginIOS')
+      console.log(appleAuthRequestResponse.email)
+      console.log(appleAuthRequestResponse.fullName)
       // 서버에 회원가입 여부 확인
 
       // 돼잇으면 그대로 로그인, 아니면 회원가입 페이지로
@@ -133,7 +136,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       const state = uuid()
 
       appleAuthAndroid.configure({
-        clientId: 'monster.unboxing',
+        clientId: 'monster.unboxing.client-android',
         redirectUri: 'https://unboxing.monster',
         responseType: appleAuthAndroid.ResponseType.ALL,
         scope: appleAuthAndroid.Scope.ALL,
