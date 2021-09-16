@@ -99,29 +99,31 @@ const LoginPage = ({route, navigation}: LoginProps) => {
 
   useEffect(() => {
     if (appleAuth.isSupported) {
-      // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
       return appleAuth.onCredentialRevoked(async () => {
-        console.warn('If this function executes, User Credentials have been Revoked');
-      });
+        console.log('If this function executes, User Credentials have been Revoked');
+      })
     }
-  }, []); // passing in an empty array as the second argument ensures this is only ran once when component mounts initially.
+  }, [])
 
   const appleLoginIOS = async () => {
     try {
-      // performs login request
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
         requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
+      })
 
-      // get current authentication state for user
-      // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
-
-      // use credentialState response to ensure the user is authenticated
-      if (credentialState === appleAuth.State.AUTHORIZED) {
-        // user is authenticated
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
+      
+      if (credentialState !== appleAuth.State.AUTHORIZED) {
+        throw 'credentialState is ' + credentialState + '(not authorized)'
       }
+
+      console.log('===appleLoginIOS')
+      console.log(appleAuthRequestResponse.email)
+      console.log(appleAuthRequestResponse.fullName)
+      // 서버에 회원가입 여부 확인
+
+      // 돼잇으면 그대로 로그인, 아니면 회원가입 페이지로
     } catch (error) {
       console.log('Error in appleLoginIOS', error)
       console.log(error)
@@ -130,34 +132,20 @@ const LoginPage = ({route, navigation}: LoginProps) => {
 
   const appleLoginAndroid = async () => {
     try {
-      // Generate secure, random values for state and nonce
-      const rawNonce = uuid();
-      // const state = uuid();
+      const rawNonce = uuid()
+      const state = uuid()
 
-      // Configure the request
       appleAuthAndroid.configure({
-        // The Service ID you registered with Apple
-        clientId: 'com.example.client-android',
-
-        // Return URL added to your Apple dev console. We intercept this redirect, but it must still match
-        // the URL you provided to Apple. It can be an empty route on your backend as it's never called.
-        redirectUri: 'https://example.com/auth/callback',
-
-        // The type of response requested - code, id_token, or both.
+        clientId: 'monster.unboxing.client-android',
+        redirectUri: 'https://unboxing.monster',
         responseType: appleAuthAndroid.ResponseType.ALL,
-
-        // The amount of user information requested from Apple.
         scope: appleAuthAndroid.Scope.ALL,
-
-        // Random nonce value that will be SHA256 hashed before sending to Apple.
         nonce: rawNonce,
+        state,
+      })
 
-        // Unique state value used to prevent CSRF attacks. A UUID will be generated if nothing is provided.
-        // state,
-      });
-
-      // Open the browser window for user sign in
-      const response = await appleAuthAndroid.signIn();
+      const response = await appleAuthAndroid.signIn()
+      console.log('response',response)
 
       // Send the authorization code to your backend for verification
     } catch (error) {
