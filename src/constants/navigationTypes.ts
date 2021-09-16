@@ -2,19 +2,22 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Item } from '@constants/types'
+import { IMPData } from 'iamport-react-native'
 
 // Root Stack
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>,
   Main: undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
-  BoxInfo: { boxId: number }
-  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string }
-  ProbInfo: { boxId: number, boxPrice: number, items: Item[] }
-  AddToCart: { boxId: number }
-  Cart: undefined
-  Payment: undefined
-  PaymentComplete: { paymentId: number }
+  BoxInfo: { boxId: number },
+  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string },
+  ProbInfo: { boxId: number, boxPrice: number, items: Item[] },
+  AddToCart: { boxId: number },
+  Cart: undefined,
+  Payment: undefined,
+  PGPayment: PaymentParams | undefined,
+  PGPaymentResult: any,
+  PaymentComplete: { paymentId: number },
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -66,11 +69,31 @@ export type CartProps = {
   navigation: CartNavigationProp
 }
 
+// Payment
+export interface PaymentParams {
+  params: IMPData.PaymentData;
+  tierCode?: string;
+}
+
 export type PaymentNavigationProp = StackNavigationProp<RootStackParamList, 'Payment'>
 export type PaymentRouteProp = RouteProp<RootStackParamList, 'Payment'>
 export type PaymentProps = {
   route: PaymentRouteProp
   navigation: PaymentNavigationProp
+}
+
+export type PGPaymentNavigationProp = StackNavigationProp<RootStackParamList, 'PGPayment'>
+export type PGPaymentRouteProp = RouteProp<RootStackParamList, 'PGPayment'>
+export type PGPaymentProps = {
+  route: PGPaymentRouteProp
+  navigation: PGPaymentNavigationProp
+}
+
+export type PGPaymentResultNavigationProp = StackNavigationProp<RootStackParamList, 'PGPaymentResult'>
+export type PGPaymentResultRouteProp = RouteProp<RootStackParamList, 'PGPaymentResult'>
+export type PGPaymentResultProps = {
+  route: PGPaymentResultRouteProp
+  navigation: PGPaymentResultNavigationProp
 }
 
 export type PaymentCompleteNavigationProp = StackNavigationProp<RootStackParamList, 'PaymentComplete'>

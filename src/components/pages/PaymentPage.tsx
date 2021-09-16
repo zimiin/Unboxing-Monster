@@ -196,18 +196,44 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     }
   }
 
+  const getMerchantUid = (name: string | null) => {
+    try {
+      if (name === null) {
+        throw `name can't be null`
+      }
+
+      const date = new Date()
+      let uid = name + '-'
+
+      uid = uid + ((date.getDate() < 10) ? "0" : "") + date.getDate() + "/" + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + date.getFullYear()
+      uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds()
+      
+      console.log(uid)
+      return uid
+    } catch (error) {
+      console.log('Error in getMerchantUid', error)
+      throw error
+    }
+  }
+
   const makePayment = async () => {
+    try {
+    const phone = await getPhoneFromAsyncStorage()
+    const name = await getNicknameFromAsyncStorage()
+    const email = await getEmailFromAsyncStorage()
+    const merchantUid = getMerchantUid(name)
+
     const data: PaymentParams = {
       params: {
         pg: 'danal_tpay',
         pay_method: selectedPaymentMethod.value,
         display: {card_quota: []},
-        merchant_uid: "ORD20180131-0000011",
+        merchant_uid: merchantUid,
         amount: (totalPrice - usingPoint).toString(),
         name: merchantTitle() || '',
-        buyer_tel: await getPhoneFromAsyncStorage() || '01000000000',
-        buyer_name: await getNicknameFromAsyncStorage() || '',
-        buyer_email: await getEmailFromAsyncStorage() || '',
+        buyer_tel: phone || '01000000000',
+        buyer_name: name || '',
+        buyer_email: email || '',
         app_scheme: 'Unboxing_pre',
         biz_num: '2460302264',
         m_redirect_url: IMPConst.M_REDIRECT_URL,
@@ -217,6 +243,9 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     }
 
     navigation.navigate('PGPayment', data)
+    } catch (error) {
+      console.log('Error in makePayment', error)
+    }
   }
 
   return (

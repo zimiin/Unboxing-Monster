@@ -1,15 +1,10 @@
 import React from 'react';
-import type { StackScreenProps } from '@react-navigation/stack';
-// import type { RootStackParamList } from '../NavigationService';
-// import { Icon, IconButton, List, Text } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-svg';
 import { TouchableOpacity } from 'react-native';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { PGPaymentResultProps } from '@constants/navigationTypes';
 
-// type Props = StackScreenProps<RootStackParamList, 'PaymentResult'>;
-
-function PaymentResultPage({ route, navigation }) {
+function PGPaymentResultPage({ route, navigation }: PGPaymentResultProps) {
   const imp_success = route.params?.imp_success;
   const success = route.params?.success;
   const imp_uid = route.params?.imp_uid;
@@ -35,6 +30,8 @@ function PaymentResultPage({ route, navigation }) {
         alignItems: 'center',
       }}
     >
+      <Text>Hello???</Text>
+      
       {isSuccess ? (
         <Text>Succeed!</Text>
       ) : (
@@ -58,7 +55,7 @@ function PaymentResultPage({ route, navigation }) {
         </>
       )}
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('PaymentComplete', {paymentId: 1})}
       >
         <Text>돌아가기</Text>
       </TouchableOpacity>
@@ -67,4 +64,4 @@ function PaymentResultPage({ route, navigation }) {
   );
 }
 
-export default PaymentResultPage;
+export default PGPaymentResultPage;
