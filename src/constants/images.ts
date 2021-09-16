@@ -41,6 +41,7 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   downArrow: require('assets/images/down_arrow.png'),
   upArrow: require('assets/images/up_arrow.png'),
   leftArrow: require('assets/images/left_arrow.png'),
+  rightArrow: require('assets/images/right_arrow.png'),
   cart: require('assets/images/cart.png'),
   search: require('assets/images/search.png'),
   xCircle: require('assets/images/x_circle.png'),

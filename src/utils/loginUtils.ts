@@ -1,4 +1,5 @@
 import { User } from "@constants/types"
+import { URLS } from "@constants/urls"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { getAccessToken } from "./asyncStorageUtils"
 
@@ -36,7 +37,7 @@ const getUserIdFromToken = async (accessToken: string | null) => {
     return json.userId
 
   } catch (error) {
-    console.log('=====Error in getUserIdUsingToken=====', error)
+    console.log('Error in getUserIdUsingToken', error)
     throw error
   }
 }
@@ -47,7 +48,8 @@ export const getLoginUserId = async () => {
     const id = await getUserIdFromToken(access_token)
     return id
   } catch (error) {
-    console.log('=====Error in getLoginUserId=====', error)
+    console.log('Error in getLoginUserId', error)
+    throw error
   }
 }
 
@@ -72,7 +74,7 @@ const getUserFromId = async (id: string) => {
     return user
 
   } catch (error) {
-    console.log('=====Error in getUserFromId=====', error)
+    console.log('Error in getUserFromId::', error)
     throw error
   }
 }
@@ -84,7 +86,7 @@ export const getUserInfoFromToken = async (accessToken: string) => {
     return user
 
   } catch (error) {
-    console.log('=====Error in getUserInfoFromToken=====', error)
+    console.log('Error in getUserInfoFromToken', error)
     throw error
   }
 }
@@ -98,4 +100,33 @@ export const printAsyncStorage = async () => {
   console.log('@email: ', email)
   const phone = await AsyncStorage.getItem('@phone')
   console.log('@phone: ', phone)
+}
+
+export const hasLoggedIn = async () => {
+  try {
+    const access_token = await getAccessToken()
+
+    if (access_token === null) {
+      return false
+    }
+
+    const response = await fetch(
+      URLS.unboxing_api, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + access_token
+      }
+    })
+
+    if (response.status === 401) {
+      return false
+    } else if (response.status === 200) {
+      return true
+    }
+  } catch (error) {
+    console.log('Error in hasLoggedIn', error)
+    throw error
+  }
 }

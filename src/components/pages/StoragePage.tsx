@@ -7,9 +7,10 @@ import { StorageBoxData } from '@components/molecules/StorageBox'
 import { StorageCouponData } from "@components/molecules/StorageCoupon"
 import { StorageProps } from "@constants/navigationTypes"
 import { URLS } from '@constants/urls'
-import { getLoginUserId } from '@src/utils/loginUtils'
+import { getLoginUserId, hasLoggedIn } from '@src/utils/loginUtils'
 
 const StoragePage = ({route, navigation}: StorageProps) => {
+  const [loginState, setLoginState] = useState<boolean>(false)
   const [focus, setFocus] = useState<Focus>('randomBox')
   const [boxData, setBoxData] = useState<StorageBoxData[]>()
   const [couponData, setCouponData] = useState<StorageCouponData[]>()
@@ -17,7 +18,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   const [boxRefreshThrottled, setBoxRefreshThrottled] = useState<boolean>(false)
   const [refreshingCouponList, setRefreshingCouponList] = useState<boolean>(false)
   const [couponRefreshThrottled, setCouponRefreshThrottled] = useState<boolean>(false)
-
   
   const fetchBoxStorage = async () => {
     try {
@@ -39,54 +39,57 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
       return await response.json()
     } catch (error) {
-      console.log(error)
+      console.log('Error in fetchBoxStorage::', error)
+      throw error
     }
   }
 
   const setBoxDataState = async () => {
-    if (boxRefreshThrottled) {
-      return
+    try {
+      if (boxRefreshThrottled) {
+        return
+      }
+
+      setBoxRefreshThrottled(true)
+      setRefreshingBoxList(true)
+
+      const json: BoxStorage[] = await fetchBoxStorage()
+      let boxDataValue: StorageBoxData[] = []
+
+      for (let item of json) {
+        boxDataValue.push({
+          id: item.id,
+          image: { uri: item.box.image },
+          name: item.box.title,
+          count: item.count,
+          openOneBox: () => {
+            navigation.navigate('Open', {
+              screen: 'Loading',
+              params: {
+                boxId: item.boxId,
+                count: 1
+              }
+            })
+          },
+          openAllBox: () => {
+            navigation.navigate('Open', {
+              screen: 'Loading',
+              params: {
+                boxId: item.boxId,
+                count: item.count
+              }
+            })
+          },
+          onPress: () => { }
+        })
+      }
+
+      setBoxData(boxDataValue)
+      setRefreshingBoxList(false)
+      setTimeout(() => setBoxRefreshThrottled(false), 3000)
+    } catch (error) {
+      console.log('Error in setBoxDataState::', error)
     }
-
-    console.log('setBoxDataState')
-
-    setBoxRefreshThrottled(true)
-    setRefreshingBoxList(true)
-
-    const json: BoxStorage[] = await fetchBoxStorage()
-    let boxDataValue: StorageBoxData[] = []
-
-    for (let item of json) {
-      boxDataValue.push({
-        id: item.id,
-        image: { uri: item.box.image },
-        name: item.box.title,
-        count: item.count,
-        openOneBox: () => {
-          navigation.navigate('Open', {
-            screen: 'Loading',
-            params: {
-              boxId: item.boxId,
-              count: 1
-            }
-          })
-        },
-        openAllBox: () => {
-          navigation.navigate('Open', {
-            screen: 'Loading',
-            params: {
-              boxId: item.boxId,
-              count: item.count
-            }
-          })
-        },
-        onPress: () => { }
-      })
-    }
-
-    setBoxData(boxDataValue)
-    setRefreshingBoxList(false)
-    setTimeout(() => setBoxRefreshThrottled(false), 3000)
   }
 
   const fetchCoupon = async () => {
@@ -108,7 +111,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
       return await response.json()
     } catch (error) {
-      console.log('Error in fetchCoupon', error)
+      console.log('Error in fetchCoupon::', error)
       throw error
     }
   }
@@ -118,8 +121,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       if (couponRefreshThrottled) {
         return
       }
-
-      console.log('setCouponDataState')
 
       setRefreshingCouponList(true)
       setCouponRefreshThrottled(true)
@@ -144,19 +145,27 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       setRefreshingCouponList(false)
       setTimeout(() => setCouponRefreshThrottled(false), 3000)
     } catch (error) {
-      console.log('Error in setCouponDataState', error)
+      console.log('Error in setCouponDataState::', error)
     }
   }
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      setBoxDataState()
-      setCouponDataState()
+      hasLoggedIn().then(
+        result => {
+          if (result === true) {
+            setLoginState(true)
+            setBoxDataState()
+            setCouponDataState()
+          }
+        }
+      )
     })
   }, [])
 
   return (
     <StorageTemplate
+      loginState={loginState}
       focusOn={focus}
       onPressRandomBoxTab={() => setFocus('randomBox')}
       onPressCouponTab={() => setFocus('coupon')}
@@ -166,6 +175,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       onRefreshBoxList={setBoxDataState}
       refreshingCouponList={refreshingCouponList}
       onRefreshCouponList={setCouponDataState}
+      onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
     />
   )
 }

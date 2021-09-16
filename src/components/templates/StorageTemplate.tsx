@@ -11,10 +11,12 @@ import Header from '@components/organisms/header/Header'
 import StorageBox from '@components/molecules/StorageBox'
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import StorageCoupon, { StorageCouponData } from '@components/molecules/StorageCoupon'
+import LoginNotice from '@components/organisms/LoginNotice'
 
 export type Focus = 'randomBox' | 'coupon'
 
 interface Props {
+  loginState: boolean,
   focusOn: Focus,
   onPressRandomBoxTab: () => void,
   onPressCouponTab: () => void,
@@ -24,6 +26,7 @@ interface Props {
   onRefreshBoxList: () => void,
   refreshingCouponList: boolean,
   onRefreshCouponList: () => void,
+  onPressLogin: () => void,
 }
 
 const StorageTemplate = (props: Props) => {
@@ -47,6 +50,30 @@ const StorageTemplate = (props: Props) => {
     />
   )
 
+  const storageTabContent = (
+    <>
+      <View style={styles.tab}>
+        <View style={styles.tabItemContainer}>
+          <StorageTab
+            title='랜덤박스'
+            focused={props.focusOn === 'randomBox'}
+            onPress={props.onPressRandomBoxTab}
+          />
+        </View>
+
+        <View style={styles.tabItemContainer}>
+          <StorageTab
+            title='모바일쿠폰'
+            focused={props.focusOn === 'coupon'}
+            onPress={props.onPressCouponTab}
+          />
+        </View>
+      </View>
+
+      {props.focusOn === 'randomBox' ? boxes : coupons}
+    </>
+  )
+
   return (
     <View style={styles.container}>
       <Header
@@ -56,26 +83,12 @@ const StorageTemplate = (props: Props) => {
 
       <HorizontalRule />
 
-      <View style={styles.tab}>
-        <View style={styles.tabItemContainer}>
-          <StorageTab 
-            title='랜덤박스'
-            focused={props.focusOn === 'randomBox'}
-            onPress={props.onPressRandomBoxTab}
-          />
-        </View>
-        
-        <View style={styles.tabItemContainer}>
-          <StorageTab 
-            title='모바일쿠폰' 
-            focused={props.focusOn === 'coupon'}
-            onPress={props.onPressCouponTab}
-          />
-        </View>
-      </View>
-
-      {props.focusOn === 'randomBox' ? boxes : coupons}
-    </View>
+      {props.loginState === false ? 
+        <LoginNotice 
+          onPressLogin={props.onPressLogin}
+        /> 
+        : storageTabContent}
+    </View >
   )
 }
 

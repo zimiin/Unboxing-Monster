@@ -3,18 +3,10 @@ import { CustomBoxInitProps } from "@constants/navigationTypes"
 import { CartContext } from "@src/stores/CartContext"
 import { getAccessToken } from "@src/utils/asyncStorageUtils"
 import React, { useContext } from "react"
+import { hasLoggedIn } from "@src/utils/loginUtils"
 
 const CustomBoxInitPage = ({ route, navigation }: CustomBoxInitProps) => {
   const [{cart}, {}] = useContext(CartContext)
-
-  const hasLoggedIn = async () => {
-    const access_token = await getAccessToken()
-    if (access_token !== null) {
-      return true
-    } else {
-      return false
-    }
-  }
 
   const startCustomBoxMaking = async () => {
     if (await hasLoggedIn()) {
