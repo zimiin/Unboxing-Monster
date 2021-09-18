@@ -5,6 +5,7 @@ export interface Box {
   title: string
   price: number
   image: string
+  isLocal: boolean
   detail: string
   ownerId: string
   sales: number

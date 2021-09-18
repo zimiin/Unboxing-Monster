@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  Image,
 } from 'react-native'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import HorizontalRule from '@components/atoms/HorizontalRule'
@@ -14,6 +15,7 @@ import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@const
 import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem, { BoxItemProps } from '@components/molecules/BoxItem'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   onPressSearchBar: () => void,

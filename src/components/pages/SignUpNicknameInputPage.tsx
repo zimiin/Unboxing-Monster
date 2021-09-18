@@ -14,8 +14,8 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
 
   const requestJoin = async () => {
     try {
-    const response = await fetch(
-      URLS.unboxing_api + 'auth/join/' + provider, {
+      const response = await fetch(
+        URLS.unboxing_api + 'auth/join/' + provider, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -23,25 +23,20 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
           'Authorization': 'Bearer ' + providerToken,
         },
         body: JSON.stringify({
-          email: email
-          // phone, nickname 추가
+          email: email,
+          nickname: nickname
         })
       }
-    )
-
-    const json = await response.json()
-
-    if (response.status !== 201) {
-      console.log('Error in requestJoin, status:', response.status,
-      'message:', json.message, 'url:', response.url)
-      console.log('provider Token', providerToken)
-      return 'failed'
-    }
-
-    return 'succeed'
+      )
+      
+      if (response.status !== 201) {
+        const json = await response.json()
+        console.log('token', providerToken)
+        throw 'Failed to POST ' + response.url + ', status ' + response.status + ', message: ' + json.message
+      }
     } catch (error) {
       console.log('Error in requestJoin', error)
-      return 'failed'
+      throw error
     }
   }
 
@@ -91,7 +86,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       navigation.replace('Main')
 
     } catch (error) {
-      console.log('=====Error in onPressComplete()=====', error)
+      console.log("Error in onPressComplete", error)
     }
   }
 

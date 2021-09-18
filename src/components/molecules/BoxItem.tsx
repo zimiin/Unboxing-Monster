@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * (5 / 12),
     height: SCREEN_WIDTH * (5 / 12),
     borderRadius: 10,
-    borderWidth: 0.07
+    borderWidth: 0.07,
+    resizeMode: 'contain'
   },
   name: {
     marginTop: 14,

@@ -10,6 +10,7 @@ import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
 import { URLS } from '@constants/urls'
 import { printAsyncStorage } from '@src/utils/loginUtils'
+import { IMAGES } from '@constants/images'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -84,7 +85,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
         (box: Box) => {
           return {
             key: box.id,
-            image: {uri: box.image},
+            image: box.isLocal ? IMAGES[box.image] : {uri: box.image},
             name: box.title,
             price: box.price,
             onPress: () => navigation.push('BoxInfo', { boxId: box.id })
@@ -114,7 +115,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
         (box: Box) => {
           return {
             key: box.id,
-            image: { uri: box.image },
+            image: box.isLocal ? IMAGES[box.image] : { uri: box.image },
             name: box.title,
             price: box.price,
             onPress: () => navigation.push('BoxInfo', { boxId: box.id })
