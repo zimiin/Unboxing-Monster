@@ -11,32 +11,29 @@ export interface Box {
   sales: number
 }
 
+export type ItemId = number
+
 export type Item = {
-  id: number
+  id: ItemId
   title: string
   price: number
   image: string
   detail: string
 }
 
-export type BoxWithItems = {
-  id: BoxId
-  title: string
-  price: number
-  image: string
-  detail: string
-  ownerId: string
-  sales: number
+export interface BoxWithItems extends Box {
   items: Item[]
 }
 
 export type BoxItem = {
-  boxId: number,
-  itemId: number,
+  boxId: BoxId,
+  itemId: ItemId,
 }
 
+export type NoticeId = number
+
 export type Notice = {
-  id: number
+  id: NoticeId
   imgUrl: string
   srcUrl: string
 }

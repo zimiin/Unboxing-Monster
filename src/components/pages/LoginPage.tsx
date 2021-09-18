@@ -121,9 +121,16 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       console.log('===appleLoginIOS')
       console.log(appleAuthRequestResponse.email)
       console.log(appleAuthRequestResponse.fullName)
-      // 서버에 회원가입 여부 확인
+      console.log(appleAuthRequestResponse.authorizationCode)
+      
+      // 애플 토큰을 받아올 수 있어야 함
 
-      // 돼잇으면 그대로 로그인, 아니면 회원가입 페이지로
+      // 토큰으로 서버에 회원가입 여부 확인
+      // auth/login
+
+      // 돼잇으면 그대로 로그인
+      // 아니면 회원가입 페이지로
+        // 이메일, token, provider 저장하고 phone input부터 시작
     } catch (error) {
       console.log('Error in appleLoginIOS', error)
       console.log(error)

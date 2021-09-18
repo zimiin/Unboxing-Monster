@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import {
   View,
   StyleSheet,
@@ -11,22 +11,12 @@ import BoxListItem from '@components/molecules/BoxListItem'
 import { BoxInfoProps } from '@constants/navigationTypes'
 import { BoxWithItems } from '@constants/types'
 import { CartContext } from '@src/stores/CartContext'
-import { defaultBox } from '@constants/images'
+import { defaultBox, IMAGES } from '@constants/images'
 import { URLS } from '@constants/urls'
 
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
-
-  const [data, setData] = useState<BoxWithItems>({
-    id: route.params.boxId,
-    title: '',
-    price: 0,
-    image: '',
-    detail: '',
-    ownerId: '',
-    sales: 0,
-    items: [],
-  })
+  const [data, setData] = useState<BoxWithItems>()
 
   useEffect(() => {
     const getBoxInfo = async (boxId: number) => {
@@ -43,50 +33,49 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     getBoxInfo(route.params.boxId)
   }, [])
 
-  const getItems = () => {
+  const items = useMemo(() => {
     return (
-      data.items.map(
+      data?.items.map(
         (item) => {
           return (
             <View
               style={styles.itemContainer}
               key={item.id}
             >
-              <BoxListItem 
+              <BoxListItem
                 image={item.image}
                 title={item.title}
                 price={item.price}
-                onPress = {
-                  () => navigation.push('ItemInfo', 
-                      {
-                        itemId: item.id, 
-                        itemImage: item.image,
-                        itemTitle: item.title,
-                        itemPrice: item.price,
-                        itemDetail: item.detail,
-                      }
-                    )
-                  }
+                onPress={
+                  () => navigation.push('ItemInfo',
+                    {
+                      itemId: item.id,
+                      itemImage: item.image,
+                      itemTitle: item.title,
+                      itemPrice: item.price,
+                      itemDetail: item.detail,
+                    }
+                  )
+                }
               />
             </View>
           )
         }
       )
     )
-  }
+  }, [data])
 
-  const items = getItems()
-
+  // 데이터 없을 때 처리
   return (
     <BoxInfoTemplate
-      boxImage={<BoxInfoImage image={data.image ? {uri: data.image} : defaultBox}/>}
-      boxName={data.title}
-      boxPrice={<BoxPriceInfo price={data.price}/>}
-      boxDetail={<Body content={data.detail}/>}
-      boxItems={items}
+      boxImage={<BoxInfoImage image={data?.isLocal ? IMAGES[data.image] : data?.image ? {uri: data.image} : defaultBox}/>}
+      boxName={data?.title || ''}
+      boxPrice={<BoxPriceInfo price={data?.price || 0}/>}
+      boxDetail={<Body content={data?.detail || ''}/>}
+      boxItems={items || []}
       navigation={navigation}
-      onPressAddToCart={() => navigation.push('AddToCart', {boxId: data.id})}
-      onPressProbInfo={() => navigation.push('ProbInfo', {boxId: data.id, boxPrice: data.price, items: data.items})}
+      onPressAddToCart={() => navigation.push('AddToCart', {boxId: data?.id || 0})}
+      onPressProbInfo={() => navigation.push('ProbInfo', {boxId: data?.id || 0, boxPrice: data?.price || 0, items: data?.items || []})}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
     />
   )
