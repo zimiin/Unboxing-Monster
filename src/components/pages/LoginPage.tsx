@@ -122,7 +122,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       console.log(appleAuthRequestResponse.email)
       console.log(appleAuthRequestResponse.fullName)
       console.log(appleAuthRequestResponse.authorizationCode)
-      
+      console.log('Identity token', appleAuthRequestResponse.identityToken)
       // 애플 토큰을 받아올 수 있어야 함
 
       // 토큰으로 서버에 회원가입 여부 확인
@@ -165,6 +165,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     try { 
       if (Platform.OS === 'ios') {
         appleLoginIOS()
+        // appleLoginAndroid()
       } else {
         appleLoginAndroid()
       }

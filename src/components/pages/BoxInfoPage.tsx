@@ -65,7 +65,6 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
     )
   }, [data])
 
-  // 데이터 없을 때 처리
   return (
     <BoxInfoTemplate
       boxImage={<BoxInfoImage image={data?.isLocal ? IMAGES[data.image] : data?.image ? {uri: data.image} : defaultBox}/>}

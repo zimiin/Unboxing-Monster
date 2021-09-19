@@ -231,10 +231,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-
-subprojects {
-    repositories {
-        mavenCentral()
-        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
-    }
-}
