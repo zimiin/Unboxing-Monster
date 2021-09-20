@@ -9,6 +9,7 @@ export interface Box {
   detail: string
   ownerId: string
   sales: number
+  isManager: boolean
 }
 
 export type ItemId = number
