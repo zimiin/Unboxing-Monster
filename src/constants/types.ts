@@ -44,8 +44,9 @@ export type CartItem = {
 }
 
 export interface User {
-  id: string,
   email: string,
+  id: string,
+  nickname: string,
   point: number,
 }
 

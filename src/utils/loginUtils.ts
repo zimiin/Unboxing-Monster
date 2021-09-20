@@ -10,6 +10,14 @@ export const storeUserInfo = async (accessToken: string, nickname: string, email
   await AsyncStorage.setItem('@phone', phone)
 }
 
+export const printAsyncStorage = async () => {
+  console.log('@access_token', await AsyncStorage.getItem('@access_token'))
+  console.log('@nickname', await AsyncStorage.getItem('@nickname'))
+  console.log('@email', await AsyncStorage.getItem('@email'))
+  console.log('@phone', await AsyncStorage.getItem('@phone'))
+}
+
+// 이게 결국 필요없어짐. 나중에 삭제
 const getUserIdFromToken = async (accessToken: string | null) => {
   try {
     if (accessToken === null) {
@@ -17,8 +25,7 @@ const getUserIdFromToken = async (accessToken: string | null) => {
     }
 
     const response = await fetch(
-      // TODO server 주소 constant로 변경
-      'http://3.37.238.160/', {
+      URLS.unboxing_api, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -35,7 +42,6 @@ const getUserIdFromToken = async (accessToken: string | null) => {
     }
 
     return json.userId
-
   } catch (error) {
     console.log('Error in getUserIdUsingToken', error)
     throw error
@@ -53,53 +59,29 @@ export const getLoginUserId = async () => {
   }
 }
 
-const getUserFromId = async (id: string) => {
+export const getUserInfoFromToken = async (accessToken: string) => {
   try {
     const response = await fetch(
-      'http://3.37.238.160/users/' + id, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
+      URLS.unboxing_api + 'users', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
       }
-    )
+    })
 
     if (response.status !== 200) {
       const json = await response.json()
-      throw 'status: ' + response.status + ', message: ' + json.message + ', url: ' + response.url
+      throw 'GET ' + response.url + ' error status ' + response.status + ' ' + json.message
     }
 
     const user: User = await response.json()
     return user
-
-  } catch (error) {
-    console.log('Error in getUserFromId::', error)
-    throw error
-  }
-}
-
-export const getUserInfoFromToken = async (accessToken: string) => {
-  try {
-    const id = await getUserIdFromToken(accessToken)
-    const user: User = await getUserFromId(id)
-    return user
-
   } catch (error) {
     console.log('Error in getUserInfoFromToken', error)
     throw error
   }
-}
-
-export const printAsyncStorage = async () => {
-  const token = await AsyncStorage.getItem('@access_token')
-  console.log('@access_token: ', token)
-  const nickname = await AsyncStorage.getItem('@nickname')
-  console.log('@nickname: ', nickname)
-  const email = await AsyncStorage.getItem('@email')
-  console.log('@email: ', email)
-  const phone = await AsyncStorage.getItem('@phone')
-  console.log('@phone: ', phone)
 }
 
 export const hasLoggedIn = async () => {

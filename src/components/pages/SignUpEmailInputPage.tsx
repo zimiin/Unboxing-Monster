@@ -30,7 +30,7 @@ const SignUpEmailInputPage = ({ route, navigation }: SignUpEmailInputProps) => {
       setCanGoNext(false)
       setError('유효한 이메일 주소를 입력해주세요.')
     } else {
-      navigation.navigate('SignUpPhoneInput')
+      navigation.navigate('SignUpNicknameInput')
     }
   }
 

@@ -5,21 +5,38 @@ import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
 
+export const removeHyphensInPhone = (phone: string) => {
+  let newPhone = phone.slice()
+  while (newPhone.includes('-')) {
+    newPhone = newPhone.replace('-', '')
+  }
+  return newPhone
+}
+
 const SignUpPhoneInputPage = ({ route, navigation }: SignUpPhoneInputProps) => {
   const [{ phone }, { setPhone }] = useContext(SignUpContext)
-  const [canGoNext, setCanGoNext] = useState<boolean>(false)
+  const [phoneInput, setPhoneInput] = useState<string>('')
+  const [validPhoneInput, setValidPhoneInput] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
-  const onChangeText = (input: string) => {
-    setPhone(input)
-    if (input === '') {
-      setCanGoNext(false)
+  const validatePhone = () => {
+    var phoneRule1 = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
+    var phoneRule2 = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/
+
+    if (phoneRule1.test(phoneInput) || phoneRule2.test(phoneInput)) {
+      setError('')
+      setValidPhoneInput(true)
+      return true
     } else {
-      setCanGoNext(true)
+      setError('올바른 형식으로 입력해주세요. 010-1234-5678 또는 01012345678')
+      setValidPhoneInput(false)
+      return false
     }
   }
 
   const onPressNext = () => {
-    if (canGoNext) {
+    if (validatePhone()) {
+      setPhone(removeHyphensInPhone(phoneInput))
       navigation.navigate('SignUpPhoneConfirmInput')
     }
   }
@@ -31,11 +48,13 @@ const SignUpPhoneInputPage = ({ route, navigation }: SignUpPhoneInputProps) => {
       onPressGoBack={() => navigation.goBack()}
       label='상품을 수신할 핸드폰 번호를 입력해주세요'
       keyboardType='numeric'
-      canGoNext={canGoNext}
-      input={phone}
-      onChangeText={onChangeText}
+      canGoNext={validPhoneInput}
+      input={phoneInput}
+      onChangeText={setPhoneInput}
       onPressNext={onPressNext}
+      onSubmitEditing={validatePhone}
       buttonText='다음'
+      error={error}
     />
   )
 }

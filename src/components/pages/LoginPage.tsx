@@ -9,91 +9,110 @@ import { URLS } from '@constants/urls'
 import { getUserInfoFromToken, storeUserInfo } from '@src/utils/loginUtils'
 import { User } from '@constants/types'
 import { Platform } from 'react-native'
-import { appleAuth, appleAuthAndroid } from '@invertase/react-native-apple-authentication'
+import { appleAuth, appleAuthAndroid, AppleRequestResponse } from '@invertase/react-native-apple-authentication'
 import { v4 as uuid } from 'uuid'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
 
-  const getFacebookToken = async () => {
+  const requestLogin = async (provider: string, token: string) => {
     try {
-      const result = await LoginManager.logInWithPermissions(["public_profile", 'email'])
-      console.log('result: ', result)
-      
-      if (result.isCancelled) {
-        console.log("Login cancelled")
-        return undefined
-      }
-
-      console.log("Permissions: " + result.grantedPermissions!.toString())
-      const data = await AccessToken.getCurrentAccessToken()
-      return data?.accessToken.toString()
-    } catch (error) {
-      console.log('Error from getFacebookToken: ', error)
-    }
-  }
-
-  const getFacebookEmail = async () => {
-    const data = await AccessToken.getCurrentAccessToken()
-    const facebookToken = data?.accessToken
-    const userId = data?.userID
-
-    const response = await fetch(
-      'https://graph.facebook.com/' + userId + '?fields=email&access_token=' + facebookToken
-    )
-
-    const json = await response.json()
-
-    if (response.status !== 200) {
-      console.log('Response status:', response.status, 'Message:', json.message)
-      return ''
-    }
-
-    return json.email
-  }
-
-  const facebookLogin = async () => {
-    const facebookToken = await getFacebookToken()
-
-    console.log(facebookToken)
-    if (facebookToken === undefined) {
-      return
-    }
-
-    const response = await fetch(
-      URLS.unboxing_api + 'auth/login/facebook', {
+      const response = await fetch(
+        URLS.unboxing_api + 'auth/login/' + provider, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + facebookToken,
+          'Authorization': 'Bearer ' + token,
+        }
+      })
+
+      if (response.status === 200) {
+        const json: {"access_token": string} = await response.json()
+        const user: User = await getUserInfoFromToken(json.access_token)
+
+        await storeUserInfo(json.access_token, user.nickname, user.email, '')
+
+        return true
+      } else if (response.status === 404) {
+        console.log('Need to sign up')
+        return false
+      } else {
+        const json = await response.json()
+        throw 'GET ' + response.url + ' error status ' + response.status + ', message: ' + json.message
+      }
+    } catch (error) {
+      console.log('Error in requestLogin', error)
+      throw error
+    }
+  }
+
+  const getFacebookToken = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions(["public_profile", 'email'])
+      
+      if (result.isCancelled) {
+        throw "Login cancelled"
+      }
+
+      const data = await AccessToken.getCurrentAccessToken()
+      
+      if (data === null || data === undefined) {
+        throw `Couldn't get current access token`
+      }
+
+      return data.accessToken.toString()
+    } catch (error) {
+      console.log('Error in getFacebookToken', error)
+      throw error
+    }
+  }
+
+  const getFacebookEmail = async () => {
+    try {
+      const data = await AccessToken.getCurrentAccessToken()
+      const facebookToken = data?.accessToken
+      const userId = data?.userID
+
+      const response = await fetch(
+        'https://graph.facebook.com/' + userId + '?fields=email&access_token=' + facebookToken
+      )
+
+      const json = await response.json()
+
+      if (response.status !== 200) {
+        throw 'Response status:' + response.status + 'Message:' + json.message
+      }
+
+      return json.email
+    } catch (error) {
+      console.log('Error in getFacebookEmail', error);
+      throw error
+    }
+  }
+
+  const facebookLogin = async () => {
+    try {
+      const facebookToken = await getFacebookToken()
+      const loginResult = await requestLogin('facebook', facebookToken)
+      
+      if (loginResult) {
+        navigation.replace('Main')
+      } else {
+        setProvider('facebook')
+        setProviderToken(facebookToken)
+
+        const email = await getFacebookEmail()
+
+        if (email === undefined || email === '' || email === null) {
+          navigation.push('SignUpEmailInput')
+        } else {
+          setEmail(email)
+          navigation.push('SignUpNicknameInput')
         }
       }
-    )
-
-    const json = await response.json()
-
-    if (response.status === 200) {
-      const user: User = await getUserInfoFromToken(json.access_token)
-      await storeUserInfo(json.access_token, 'test', user.email, '01029276105')
-      navigation.replace('Main')
-
-    } else if (response.status === 404) {
-      console.log('need to sign up')
-      setProvider('facebook')
-      setProviderToken(facebookToken)
-      const email = await getFacebookEmail()
-
-      if (email === undefined || email === '' || email === null) {
-        navigation.push('SignUpEmailInput')
-      } else {
-        setEmail(email)
-        navigation.push('SignUpPhoneInput')
-      }
-    } else {
-      // 로그인 에러 안내창 띄우기
-      console.log('Error occured while executing fetch login!!!')
-      return
+    } catch (error) {
+      console.log('Error in facebookLogin', error)
     }
   }
 
@@ -105,7 +124,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }, [])
 
-  const appleLoginIOS = async () => {
+  const getAppleRequestResponse = async () => {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
@@ -113,18 +132,47 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       })
 
       const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
-      
+
       if (credentialState !== appleAuth.State.AUTHORIZED) {
         throw 'credentialState is ' + credentialState + '(not authorized)'
       }
 
-      console.log('===appleLoginIOS')
-      console.log(appleAuthRequestResponse.email)
-      console.log(appleAuthRequestResponse.fullName)
-      console.log(appleAuthRequestResponse.authorizationCode)
-      console.log('Identity token', appleAuthRequestResponse.identityToken)
-      // 애플 토큰을 받아올 수 있어야 함
+      return appleAuthRequestResponse
+    } catch (error) {
+      console.log('Error in getAppleRequestResponse', error)
+      throw error
+    }
+  }
 
+  const getAppTokenForAppleLogin = async (appleAuthRequestResponse: AppleRequestResponse) => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'auth/token/apple?code=' + appleAuthRequestResponse.authorizationCode, {
+          headers: {
+            Accept: 'text/plain',
+            'Content-Type': 'application/json'
+          }
+        })
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'GET ' + response.url + ' error status ' + response.status + ', message: ' + json.message
+      }
+
+      const token = await response.text()
+      return token
+    } catch (error) {
+      console.log('Error in getTokenForAppleLogin', error)
+      throw error
+    }
+  }
+
+  const appleLoginIOS = async () => {
+    try {
+      const appleAuthRequestResponse = await getAppleRequestResponse()
+      const token = await getAppTokenForAppleLogin(appleAuthRequestResponse)
+      // const loginResult = await requestLogin(token)
+      
       // 토큰으로 서버에 회원가입 여부 확인
       // auth/login
 
@@ -165,7 +213,6 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     try { 
       if (Platform.OS === 'ios') {
         appleLoginIOS()
-        // appleLoginAndroid()
       } else {
         appleLoginAndroid()
       }
