@@ -14,7 +14,7 @@ const defaultNotice: NoticeItemProps[] = [{
 }]
 
 interface Props {
-  noticeData: NoticeItemProps[] | undefined
+  noticeData?: NoticeItemProps[]
 }
 
 const NoticeBoard = (props: Props) => {

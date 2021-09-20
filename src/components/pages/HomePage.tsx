@@ -138,9 +138,9 @@ const HomePage = ({route, navigation}: HomeProps) => {
     setThrottled(true)
     setRefreshing(true)
     
-    await setNoticeDataState()
-    await setPopularBoxDataState()
-    await setAllBoxDataState()
+    setNoticeDataState()
+    setPopularBoxDataState()
+    setAllBoxDataState()
     
     setRefreshing(false)
     setTimeout(() => setThrottled(false), 3000)
@@ -156,7 +156,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       onPressSearchBar={() => navigation.push('Search')}
       onPressCart={() => navigation.push('Cart')}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
-      noticeData={noticeData || []}
+      noticeData={noticeData}
       popularBoxData={popularBoxData || []}
       customBoxData={popularBoxData || []}
       allBoxData={allBoxData || []} 

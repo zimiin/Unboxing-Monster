@@ -21,7 +21,7 @@ interface Props {
   onPressSearchBar: () => void,
   onPressCart: () => void,
   cartItemCount: number | undefined,
-  noticeData: NoticeItemProps[],
+  noticeData?: NoticeItemProps[],
   popularBoxData: BoxItemProps[],
   customBoxData: BoxItemProps[],
   allBoxData: BoxItemProps[],
