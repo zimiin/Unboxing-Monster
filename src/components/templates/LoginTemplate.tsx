@@ -53,12 +53,6 @@ const LoginTemplate = (props: Props) => {
 
         <View style={styles.SNSIconView}>
           <IconButton24
-            image={IMAGES.naver}
-            onPress={() => console.log("Naver login pressed")}
-            style={styles.SNSIcon}
-          />
-
-          <IconButton24
             image={IMAGES.kakao_talk}
             onPress={() => console.log("kakao_talk login pressed")}
             style={styles.SNSIcon}

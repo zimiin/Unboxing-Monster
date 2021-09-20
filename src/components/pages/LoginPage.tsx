@@ -47,6 +47,12 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }
 
+  const storeSignUpInfoInContext = (provider: string, providerToken: string, email?: string) => {
+    setProvider(provider)
+    setProviderToken(providerToken)
+    setEmail(email || '')
+  }
+
   const getFacebookToken = async () => {
     try {
       const result = await LoginManager.logInWithPermissions(["public_profile", 'email'])
@@ -99,15 +105,12 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       if (loginResult) {
         navigation.replace('Main')
       } else {
-        setProvider('facebook')
-        setProviderToken(facebookToken)
-
         const email = await getFacebookEmail()
+        storeSignUpInfoInContext('facebook', facebookToken, email)
 
         if (email === undefined || email === '' || email === null) {
           navigation.push('SignUpEmailInput')
         } else {
-          setEmail(email)
           navigation.push('SignUpNicknameInput')
         }
       }
@@ -124,12 +127,16 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }, [])
 
-  const getAppleRequestResponse = async () => {
+  const getAppleCodeEmailIOS = async (): Promise<{code: string, email?: string}> => {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
         requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
       })
+
+      if (appleAuthRequestResponse === undefined) {
+        throw 'appleAuthRequestResponse is null'
+      }
 
       const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
 
@@ -137,59 +144,22 @@ const LoginPage = ({route, navigation}: LoginProps) => {
         throw 'credentialState is ' + credentialState + '(not authorized)'
       }
 
-      return appleAuthRequestResponse
+      if (appleAuthRequestResponse.authorizationCode === null) {
+        throw 'appleAuthRequestResponse.authorizationCode is null'
+      }
+
+      return {code: appleAuthRequestResponse.authorizationCode, email: appleAuthRequestResponse.email || ''}
     } catch (error) {
       console.log('Error in getAppleRequestResponse', error)
       throw error
     }
   }
-
-  const getAppTokenForAppleLogin = async (appleAuthRequestResponse: AppleRequestResponse) => {
-    try {
-      const response = await fetch(
-        URLS.unboxing_api + 'auth/token/apple?code=' + appleAuthRequestResponse.authorizationCode, {
-          headers: {
-            Accept: 'text/plain',
-            'Content-Type': 'application/json'
-          }
-        })
-
-      if (response.status !== 200) {
-        const json = await response.json()
-        throw 'GET ' + response.url + ' error status ' + response.status + ', message: ' + json.message
-      }
-
-      const token = await response.text()
-      return token
-    } catch (error) {
-      console.log('Error in getTokenForAppleLogin', error)
-      throw error
-    }
-  }
-
-  const appleLoginIOS = async () => {
-    try {
-      const appleAuthRequestResponse = await getAppleRequestResponse()
-      const token = await getAppTokenForAppleLogin(appleAuthRequestResponse)
-      // const loginResult = await requestLogin(token)
-      
-      // 토큰으로 서버에 회원가입 여부 확인
-      // auth/login
-
-      // 돼잇으면 그대로 로그인
-      // 아니면 회원가입 페이지로
-        // 이메일, token, provider 저장하고 phone input부터 시작
-    } catch (error) {
-      console.log('Error in appleLoginIOS', error)
-      console.log(error)
-    }
-  }
-
-  const appleLoginAndroid = async () => {
+  
+  const getAppleCodeEmailAndroid = async (): Promise<{code: string, email?: string}> => {
     try {
       const rawNonce = uuid()
       const state = uuid()
-
+      
       appleAuthAndroid.configure({
         clientId: 'monster.unboxing.client-android',
         redirectUri: 'https://unboxing.monster',
@@ -198,26 +168,76 @@ const LoginPage = ({route, navigation}: LoginProps) => {
         nonce: rawNonce,
         state,
       })
-
+      
       const response = await appleAuthAndroid.signIn()
-      console.log('response',response)
-
-      // Send the authorization code to your backend for verification
+      return {code: response.code, email: response.user?.email}
     } catch (error) {
-      console.log('Error in appleLoginAndroid', error)
+      console.log('Error in getAppleCodeAndroid', error)
       throw error
     }
   }
+  
+  const getAppleToken = async (isAndroid: boolean, code: string) => {
+    try {
+      let url = new URL(URLS.unboxing_api + 'auth/token/apple')
 
+      url.searchParams.append('code', code)
+      if (isAndroid) {
+        url.searchParams.append('isAndroid', 'true')
+      }
+
+      const response = await fetch(
+        url.toString(), {
+        method: 'GET',
+        headers: {
+          Accept: 'text/plain',
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+
+      return await response.text()
+    } catch (error) {
+      console.log('Error in getAppleToken', error)
+      throw error
+    }
+  }
+  
   const appleLogin = async () => {
-    try { 
-      if (Platform.OS === 'ios') {
-        appleLoginIOS()
+    try {
+      if (Platform.OS === 'android') {
+        var {code, email} = await getAppleCodeEmailAndroid()
+        var token = await getAppleToken(true, code)
+        var loginResult = await requestLogin('apple-a', token)
       } else {
-        appleLoginAndroid()
+        var {code, email} = await getAppleCodeEmailIOS()
+        var token = await getAppleToken(false, code)
+        var loginResult = await requestLogin('apple', token)
+      }
+
+      if (loginResult) {
+        navigation.replace('Main')
+      } else {
+        let provider = 'apple'
+        if (Platform.OS === 'android') {
+          provider += '-a'
+        }
+
+        storeSignUpInfoInContext(provider, token, email)
+
+        if (email) {
+          navigation.navigate('SignUpNicknameInput')
+        } else {
+          navigation.navigate('SignUpEmailInput')
+        }
       }
     } catch (error) {
-      console.log(error)
+      console.log('Error in appleLoginAndroid', error)
+      throw error
     }
   }
   
