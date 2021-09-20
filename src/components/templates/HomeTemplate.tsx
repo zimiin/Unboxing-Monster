@@ -12,23 +12,23 @@ import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
 import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@constants/figure'
-import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem, { BoxItemProps } from '@components/molecules/BoxItem'
-import { IMAGES } from '@constants/images'
+import { Notice } from '@constants/types'
 
 interface Props {
   onPressSearchBar: () => void,
   onPressCart: () => void,
   cartItemCount: number | undefined,
-  noticeData?: NoticeItemProps[],
+  noticeData?: Notice[],
   popularBoxData: BoxItemProps[],
   customBoxData: BoxItemProps[],
   allBoxData: BoxItemProps[],
   modalVisible: boolean,
+  refreshing: boolean,
   setModalVisible: Dispatch<SetStateAction<boolean>>,
   onRefresh: () => void,
-  refreshing: boolean,
+  openIntroModal?: () => void,
 }
 
 const HorizontalListBlank = () => (
@@ -63,6 +63,7 @@ const HomeTemplate = (props: Props) => {
     <>
       <NoticeBoard
         noticeData={props.noticeData}
+        openIntroModal={props.openIntroModal}
       />
 
       <View>
