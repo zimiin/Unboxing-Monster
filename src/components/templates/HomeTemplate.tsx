@@ -2,16 +2,14 @@ import React, { Dispatch, SetStateAction } from 'react'
 import {
   View,
   StyleSheet,
-  ActivityIndicator,
   FlatList,
-  Image,
 } from 'react-native'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { DESIGN_HEIGHT, DESIGN_WIDTH, scale, SCREEN_HEIGHT, SCREEN_WIDTH, verticalScale } from '@constants/figure'
+import { scale, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
@@ -23,7 +21,7 @@ interface Props {
   cartItemCount: number | undefined,
   noticeData?: Notice[],
   popularBoxData?: Box[],
-  customBoxData: Props[],
+  customBoxData?: Box[],
   allBoxData: Props[],
   modalVisible: boolean,
   refreshing: boolean,
@@ -98,7 +96,7 @@ const HomeTemplate = (props: Props) => {
 
       <FlatList
         renderItem={renderBoxItem}
-        // data={props.customBoxData}
+        data={props.customBoxData}
         horizontal={true}
         ListEmptyComponent={HorizontalListEmptyComponent}
         ListHeaderComponent={HorizontalListBlank}

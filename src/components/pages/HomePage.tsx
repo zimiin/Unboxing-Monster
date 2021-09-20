@@ -15,6 +15,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [noticeData, setNoticeData] = useState<Notice[]>()
   const [popularBoxData, setPopularBoxData] = useState<Box[]>()
+  const [customBoxData, setCustomBoxData] = useState<Box[]>()
   const [allBoxData, setAllBoxData] = useState<Props[]>()
   const [refreshing, setRefreshing] = useState<boolean>(true)
   const [throttled, setThrottled] = useState<boolean>(false)
@@ -37,7 +38,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
     }
   }
 
-  const getPopularBoxData = async () => {
+  const getPopularBoxData = async (): Promise<Box[] | undefined> => {
     try {
       const url = URLS.unboxing_api + 'box/popular'
       const response = await fetch(url)
@@ -51,6 +52,25 @@ const HomePage = ({route, navigation}: HomeProps) => {
       return popularBoxes
     } catch (error) {
       console.log('Error in setPopularBoxDataState', error)
+    }
+  }
+
+  const getCustomBoxData = async (): Promise<Box[] | undefined> => {
+    try {
+      const url = new URL(URLS.unboxing_api + 'box/custom/random')
+      url.searchParams.append('take', '5')
+      
+      const response = await fetch(url.toString())
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+
+      const customBoxes: Box[] = await response.json()
+      return customBoxes
+    } catch (error) {
+      console.log('Error in getCustomBoxData', error)
     }
   }
 
@@ -95,6 +115,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
     
     getNoticeData().then(data => setNoticeData(data))
     getPopularBoxData().then(data => setPopularBoxData(data))
+    getCustomBoxData().then(data => setCustomBoxData(data))
     setAllBoxDataState()
     
     setRefreshing(false)
@@ -112,9 +133,9 @@ const HomePage = ({route, navigation}: HomeProps) => {
       onPressCart={() => navigation.push('Cart')}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
       noticeData={noticeData}
-      popularBoxData={[]}
-      // customBoxData={popularBoxData || []}
-      allBoxData={allBoxData || []} 
+      popularBoxData={popularBoxData}
+      customBoxData={customBoxData?.length === 0 || customBoxData === undefined ? popularBoxData : customBoxData}
+      // allBoxData={allBoxData || []}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       onRefresh={setDatas}
