@@ -5,10 +5,8 @@ import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import HomeTemplate from '@components/templates/HomeTemplate'
 import { Box, Notice } from '@constants/types'
-import { Props } from '@components/molecules/BoxItem'
 import { URLS } from '@constants/urls'
 import { printAsyncStorage } from '@src/utils/loginUtils'
-import { IMAGES } from '@constants/images'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -16,7 +14,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [noticeData, setNoticeData] = useState<Notice[]>()
   const [popularBoxData, setPopularBoxData] = useState<Box[]>()
   const [customBoxData, setCustomBoxData] = useState<Box[]>()
-  const [allBoxData, setAllBoxData] = useState<Props[]>()
+  const [allBoxData, setAllBoxData] = useState<Box[]>()
   const [refreshing, setRefreshing] = useState<boolean>(true)
   const [throttled, setThrottled] = useState<boolean>(false)
 
@@ -74,33 +72,20 @@ const HomePage = ({route, navigation}: HomeProps) => {
     }
   }
 
-  const setAllBoxDataState = async () => {
+  const getAllBoxData = async (): Promise<Box[] | undefined> => {
     try {
       const url = URLS.unboxing_api + 'box'
       const response = await fetch(url)
-      const json = await response.json()
-
+      
       if (response.status !== 200) {
-        throw 'Reponse status: ' + response.status
-        + ', url: ' + response.url
-        + ', message: ' + json.message
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
       }
 
-      const boxes: Props[] = json.map(
-        (box: Box) => {
-          return {
-            key: box.id,
-            image: box.isLocal ? IMAGES[box.image] : { uri: box.image },
-            name: box.title,
-            price: box.price,
-            onPress: () => navigation.push('BoxInfo', { boxId: box.id })
-          }
-        }
-      )
-
-      setAllBoxData(boxes)
+      const boxes: Box[] = await response.json()
+      return boxes
     } catch (error) {
-      console.log('Error in setAllBoxDataState', error)
+      console.log('Error in getAllBoxData', error)
     }
   }
 
@@ -116,7 +101,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
     getNoticeData().then(data => setNoticeData(data))
     getPopularBoxData().then(data => setPopularBoxData(data))
     getCustomBoxData().then(data => setCustomBoxData(data))
-    setAllBoxDataState()
+    getAllBoxData().then(data => setAllBoxData(data))
     
     setRefreshing(false)
     setTimeout(() => setThrottled(false), 3000)
@@ -135,7 +120,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       noticeData={noticeData}
       popularBoxData={popularBoxData}
       customBoxData={customBoxData?.length === 0 || customBoxData === undefined ? popularBoxData : customBoxData}
-      // allBoxData={allBoxData || []}
+      allBoxData={allBoxData}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       onRefresh={setDatas}

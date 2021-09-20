@@ -22,7 +22,7 @@ interface Props {
   noticeData?: Notice[],
   popularBoxData?: Box[],
   customBoxData?: Box[],
-  allBoxData: Props[],
+  allBoxData?: Box[],
   modalVisible: boolean,
   refreshing: boolean,
   setModalVisible: Dispatch<SetStateAction<boolean>>,
@@ -120,7 +120,7 @@ const HomeTemplate = (props: Props) => {
       <FlatList
         numColumns={2}
         renderItem={renderBoxItem}
-        // data={props.allBoxData}
+        data={props.allBoxData}
         ListEmptyComponent={verticalListEmptyComponent}
         ListHeaderComponent={aboveItems}
         centerContent={true}
