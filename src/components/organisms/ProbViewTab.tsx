@@ -14,7 +14,7 @@ import HorizontalRule from "@components/atoms/HorizontalRule";
 
 const WIDTH = Dimensions.get('window').width;
 
-const ProbViewTab = ({ items, probs } : { items: Item[], probs: number[] }) => {
+const ProbViewTab = ({ items, probs, boxId } : { items: Item[], probs: number[], boxId: number }) => {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -62,12 +62,12 @@ const ProbViewTab = ({ items, probs } : { items: Item[], probs: number[] }) => {
               data={[
                 {
                   name: "Seoul",
-                  population: 2150,
+                  population: 1,
                   color: "rgba(131, 167, 234, 1)",
                 },
                 {
                   name: "Toronto",
-                  population: 2800,
+                  population: 1,
                   color: "#F00",
                 }]}
               width={Dimensions.get('window').width * (312 / 360)}

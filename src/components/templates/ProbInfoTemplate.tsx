@@ -14,6 +14,7 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import ProbViewTab from '@components/organisms/ProbViewTab'
 
 type ProbInfoTemplateProps = {
+  boxId: number,
   navigation: ProbInfoNavigationProp,
   items: Item[],
   probs: number[],
@@ -32,7 +33,7 @@ const ProbInfoTemplate = (props: ProbInfoTemplateProps) => {
           cartItemCount={cart.size > 0 ? cart.size : undefined}
         />
         <HorizontalRule/>
-        <ProbViewTab probs={props.probs} items={props.items}/>
+        <ProbViewTab probs={props.probs} items={props.items} boxId={props.boxId}/>
       </View>
     </>
 
