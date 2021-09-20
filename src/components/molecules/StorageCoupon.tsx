@@ -23,7 +23,6 @@ export interface StorageCouponData {
   onPress: () => void,
 }
 
-const defaultBoxURI = { uri: defaultBox }
 const defaultFunction = () => {
   console.log("No function passed to StorageCoupon")
 }
@@ -35,7 +34,7 @@ const StorageCoupon = ({ item }: { item: StorageCouponData }) => {
       onPress={item.onPress}
     >
       <Image
-        source={item.image || defaultBoxURI}
+        source={item.image || defaultBox}
         style={styles.image}
       />
 

@@ -4,6 +4,7 @@ import { PaymentCompleteProps } from '@constants/navigationTypes'
 import { useEffect, useContext } from 'react'
 import { CartContext } from '@src/stores/CartContext'
 import { CommonActions, NavigationContainer } from '@react-navigation/native'
+import { URLS } from '@constants/urls'
 
 const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
@@ -14,7 +15,7 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
 
       try {
         const response = await fetch(
-          'http://3.37.238.160/purchase/' + paymentId, {
+          URLS.unboxing_api + 'purchase/' + paymentId, {
           method: 'GET',
           headers: {
             Accept: 'application/json',

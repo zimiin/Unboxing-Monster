@@ -3,17 +3,17 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const DeleteButton = ({onPress}: {onPress: () => void}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
     >
-      <FastImage
-        source={ICONS.x}
+      <Image
+        source={IMAGES.x}
         style={{
           width: 16,
           height: 16,

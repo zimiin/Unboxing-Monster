@@ -20,15 +20,13 @@ export interface PaymentBoxItemProps extends ViewProps {
   price: number,
 }
 
-const defaultImg = {uri: defaultBox}
-
 const PaymentBoxItem = (props: PaymentBoxItemProps) => {
   const { image, name, count, price, style, ...rest } = props
 
   return (
     <View style={[styles.container, style]}>
       <Image
-        source={image || defaultImg}
+        source={image || defaultBox}
         style={styles.image}
       />
 

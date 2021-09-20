@@ -5,6 +5,8 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  ImageSourcePropType,
+  SafeAreaView,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import BoxInfoImage from '@components/atoms/BoxInfoImage'
@@ -14,9 +16,10 @@ import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
 import MinusButton from '@components/atoms/button/MinusButton'
 import PlusButton from '@components/atoms/button/PlusButton'
 import { StyleSheet } from 'react-native'
+import { COLORS } from '@constants/colors'
 
 interface Props {
-  boxImage: string,
+  boxImage: ImageSourcePropType,
   boxName: string,
   boxPrice: number,
   count: number,
@@ -73,15 +76,16 @@ const AddToCartTemplate = (props: Props) => {
         </View>
       </ScrollView>
 
-      {/* 담기 버튼 */}
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={props.onPressAdd}
-      >
-        <Text style={styles.add}>
-          담기
-        </Text>
-      </TouchableOpacity>
+      <SafeAreaView style={styles.bottomButtonContainer}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={props.onPressAdd}
+        >
+          <Text style={styles.add}>
+            담기
+          </Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </>
   )
 }
@@ -127,6 +131,9 @@ const styles = StyleSheet.create({
   totalText: {
     fontSize: 16,
     marginRight: 5,
+  },
+  bottomButtonContainer: {
+    backgroundColor: COLORS.main,
   },
   addButton: {
     height: 56,

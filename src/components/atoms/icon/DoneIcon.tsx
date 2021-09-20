@@ -1,15 +1,13 @@
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
-  View,
-  Text,
+  Image,
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 
 const DoneIcon = () => {
   return (
-    <FastImage
-      source={ICONS.done}
+    <Image
+      source={IMAGES.done}
       style={{
         width: 88,
         height: 88,

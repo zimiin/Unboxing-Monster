@@ -6,8 +6,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
-
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 type ToIntroButtonProps = {
   setModalVisible: Dispatch<SetStateAction<boolean>>
@@ -22,7 +21,7 @@ class ToIntroButton extends Component<ToIntroButtonProps> {
         </Text>
 
         <Image
-          source={ICONS.info}
+          source={IMAGES.info}
           style={styles.icon}
         />
       </TouchableOpacity>

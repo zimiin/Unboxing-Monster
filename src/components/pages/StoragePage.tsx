@@ -6,6 +6,8 @@ import { BoxStorage, CouponWithItem } from "@constants/types"
 import { StorageBoxData } from '@components/molecules/StorageBox'
 import { StorageCouponData } from "@components/molecules/StorageCoupon"
 import { StorageProps } from "@constants/navigationTypes"
+import { URLS } from '@constants/urls'
+import { getLoginUserId } from '@src/utils/loginUtils'
 
 const StoragePage = ({route, navigation}: StorageProps) => {
   const [focus, setFocus] = useState<Focus>('randomBox')
@@ -16,9 +18,12 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   const [refreshingCouponList, setRefreshingCouponList] = useState<boolean>(false)
   const [couponRefreshThrottled, setCouponRefreshThrottled] = useState<boolean>(false)
 
+  
   const fetchBoxStorage = async () => {
     try {
-      const url = 'http://3.37.238.160/box-storage/' + 'k1804801727'
+      const userId = await getLoginUserId()
+      const url = URLS.unboxing_api + 'box-storage/' + userId
+      console.log(url)
       const response = await fetch(
         url, {
         method: 'GET',
@@ -86,7 +91,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const fetchCoupon = async () => {
     try {
-      const url = 'http://3.37.238.160/coupon/' + 'k1804801727'
+      const userId = await getLoginUserId()
+      const url = URLS.unboxing_api + 'coupon/' + userId
       const response = await fetch(
         url, {
         method: 'GET',
@@ -102,39 +108,44 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
       return await response.json()
     } catch (error) {
-      console.log(error)
+      console.log('Error in fetchCoupon', error)
+      throw error
     }
   }
 
   const setCouponDataState = async () => {
-    if (couponRefreshThrottled) {
-      return
+    try {
+      if (couponRefreshThrottled) {
+        return
+      }
+
+      console.log('setCouponDataState')
+
+      setRefreshingCouponList(true)
+      setCouponRefreshThrottled(true)
+
+      const json: CouponWithItem[] = await fetchCoupon()
+      let couponDataValue: StorageCouponData[] = []
+
+      for (let coupon of json) {
+        couponDataValue.push({
+          id: coupon.id,
+          image: { uri: coupon.item.image },
+          name: coupon.item.title,
+          price: coupon.item.price,
+          confirmableDays: 10,
+          onPressConfirm: () => { console.log('Confirm to use ' + coupon.itemId) },
+          onPressRefund: () => { console.log('Decide to refund ' + coupon.itemId) },
+          onPress: () => { }
+        })
+      }
+
+      setCouponData(couponDataValue)
+      setRefreshingCouponList(false)
+      setTimeout(() => setCouponRefreshThrottled(false), 3000)
+    } catch (error) {
+      console.log('Error in setCouponDataState', error)
     }
-
-    console.log('setCouponDataState')
-
-    setRefreshingCouponList(true)
-    setCouponRefreshThrottled(true)
-
-    const json: CouponWithItem[] = await fetchCoupon()
-    let couponDataValue: StorageCouponData[] = []
-
-    for (let coupon of json) {
-      couponDataValue.push({
-        id: coupon.id,
-        image: { uri: coupon.item.image },
-        name: coupon.item.title,
-        price: coupon.item.price,
-        confirmableDays: 10,
-        onPressConfirm: () => { console.log('Confirm to use ' + coupon.itemId) },
-        onPressRefund: () => { console.log('Decide to refund ' + coupon.itemId) },
-        onPress: () => { }
-      })
-    }
-
-    setCouponData(couponDataValue)
-    setRefreshingCouponList(false)
-    setTimeout(() => setCouponRefreshThrottled(false), 3000)
   }
 
   useEffect(() => {

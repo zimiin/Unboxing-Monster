@@ -4,12 +4,12 @@ import {
   Text,
   Image,
 } from 'react-native'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const SearchIcon = () => {
   return (
     <Image
-      source={ICONS.search}
+      source={IMAGES.search}
       style={{
         width: 20,
         height: 20,

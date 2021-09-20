@@ -3,12 +3,13 @@ import { HomeProps } from '@constants/navigationTypes'
 import { useState, useContext } from 'react'
 import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import HomeTemplate from '@components/templates/HomeTemplate'
 import { Box, Notice } from '@constants/types'
 import { NoticeItemProps } from '@components/molecules/NoticeItem'
 import { Linking } from 'react-native'
 import { BoxItemProps } from '@components/molecules/BoxItem'
+import { URLS } from '@constants/urls'
+import { printAsyncStorage } from '@src/utils/loginUtils'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -31,7 +32,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   const setNoticeDataState = async () => {
     try {
-      const url = 'http://3.37.238.160/notice'
+      const url = URLS.unboxing_api + 'notice'
       const response = await fetch(url)
       
       const json = await response.json()
@@ -69,7 +70,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   const setPopularBoxDataState = async () => {
     try {
-      const url = 'http://3.37.238.160/box/popular'
+      const url = URLS.unboxing_api + 'box/popular'
       const response = await fetch(url)
       const json = await response.json()
 
@@ -99,7 +100,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   const setAllBoxDataState = async () => {
     try {
-      const url = 'http://3.37.238.160/box'
+      const url = URLS.unboxing_api + 'box'
       const response = await fetch(url)
       const json = await response.json()
 
@@ -125,11 +126,6 @@ const HomePage = ({route, navigation}: HomeProps) => {
     } catch (error) {
       console.log('Error in setAllBoxDataState', error)
     }
-  }
-
-  const printAsyncStorage = async () => {
-    const token = await AsyncStorage.getItem('@access_token')
-    console.log('@access_token: ', token)
   }
 
   const setDatas = async () => {

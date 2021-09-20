@@ -4,6 +4,7 @@ import { OpenResultProps } from '@constants/navigationTypes'
 import { CommonActions } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import { URLS } from '@constants/urls'
 
 const OpenResultPage = ({route, navigation}: OpenResultProps) => {
   const [openResultData, setOpenResultData] = useState<OpenResultItem []>()
@@ -15,7 +16,7 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
 
       for (let i = 0; i < result.length; i++) {
         try {
-          const url = 'http://3.37.238.160/item/' + result[i]
+          const url = URLS.unboxing_api + 'item/' + result[i]
           const response = await fetch(
             url, {
               method: 'GET',

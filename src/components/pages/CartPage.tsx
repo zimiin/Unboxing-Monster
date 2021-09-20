@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { CartNavigationProp } from '@constants/navigationTypes'
 import { BoxId } from '@constants/types'
+import { URLS } from '@constants/urls'
 
 const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
   const [{cart}, {modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll}] = useContext(CartContext)
@@ -48,7 +49,7 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
       let data: BoxData = new Map<BoxId, BoxInfo>()
 
       for (let [boxId, item] of cart) {
-        let url = 'http://3.37.238.160/box/' + boxId
+        let url = URLS.unboxing_api + 'box/' + boxId
         let response = await fetch(url)
 
         if (response.status === 200) {

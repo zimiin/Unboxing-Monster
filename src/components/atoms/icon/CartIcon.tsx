@@ -4,12 +4,12 @@ import {
   Text,
   Image,
 } from 'react-native'
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 
 const CartIcon = () => {
   return (
     <Image
-      source={ICONS.cart}
+      source={IMAGES.cart}
       style={{
         width: 20,
         height: 20,

@@ -8,6 +8,7 @@ import SignUpContextProvider from "@src/stores/SignUpContext"
 import SignUpPhoneConfirmInputPage from "@components/pages/SignUpPhoneConfirmInputPage"
 import SignUpNicknameInputPage from "@components/pages/SignUpNicknameInputPage"
 import SignUpEmailInputPage from "@components/pages/SignUpEmailInputPage"
+import LoginRequestPage from "@components/pages/LoginRequestPage"
 
 const Stack = createStackNavigator<AuthStackParamList>()
 
@@ -48,6 +49,11 @@ const AuthStack = () => {
         <Stack.Screen
           name="SignUpNicknameInput"
           component={SignUpNicknameInputPage}
+        />
+
+        <Stack.Screen
+          name="LoginRequest"
+          component={LoginRequestPage}
         />
       </Stack.Navigator>
     </SignUpContextProvider>

@@ -3,17 +3,17 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native'
-import { ICONS } from '@constants/icons'
-import FastImage from 'react-native-fast-image'
+import { IMAGES } from '@constants/images'
 
 const PlusButton = ({ onPress }: { onPress: () => void }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
     >
-      <FastImage
-        source={ICONS.plus}
+      <Image
+        source={IMAGES.plus}
         style={{
           width: 16,
           height: 16,

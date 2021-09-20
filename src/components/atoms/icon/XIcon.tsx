@@ -1,11 +1,11 @@
-import { ICONS } from '@constants/icons'
+import { IMAGES } from '@constants/images'
 import React from 'react'
-import FastImage from 'react-native-fast-image'
+import { Image } from 'react-native'
 
 const XIcon = () => {
   return (
-    <FastImage
-      source={ICONS.x}
+    <Image
+      source={IMAGES.x}
       style={{
         width: 16,
         height: 16,

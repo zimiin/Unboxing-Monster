@@ -3,16 +3,22 @@ import { LoadingProps } from '@constants/navigationTypes'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { URLS } from '@constants/urls'
+import { getLoginUserId } from '@src/utils/loginUtils'
 
 const LoadingPage = ({route, navigation}: LoadingProps) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     const postCoupon = async (item: number[]) => {
-      for (let itemId of item) {
-        try {
+      console.log('===postCoupon')
+
+      try {
+        const userId = await getLoginUserId()
+
+        for (let itemId of item) {
           const response = await fetch(
-            'http://3.37.238.160/coupon',
+            URLS.unboxing_api + 'coupon',
             {
               method: 'POST',
               headers: {
@@ -20,7 +26,7 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                ownerId: 'k1804801727',
+                ownerId: userId,
                 itemId: itemId,
                 qr: 'https://user-images.githubusercontent.com/45932570/129915902-c08ed219-fcc7-495d-b712-d8e2b3f6a4d4.png'
               })
@@ -31,15 +37,18 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
             const json = await response.json()
             throw json.message + ' url: ' + response.url
           }
-        } catch (error) {
-          console.error(error)
         }
+      } catch (error) {
+        console.error('Error in postCoupon', error)
+        throw error
       }
     }
 
     const requestBoxOpen = async () => {
       try {
-        const url = 'http://3.37.238.160/box/open/' + route.params.boxId
+        console.log('===requestBoxOpen')
+
+        const url = URLS.unboxing_api + 'box/open/' + route.params.boxId
           + '?count=' + route.params.count
         const response = await fetch(url, {
           method: 'GET',
@@ -48,7 +57,7 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
             'Content-Type': 'text/html'
           }
         })
-        
+
         if (response.status === 500) {
           setModalVisible(true)
           throw 'Bolckchain server error'
@@ -66,7 +75,7 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
 
         navigation.push('Opening', { result: json.result })
       } catch (error) {
-        console.error(error)
+        console.error('Error in requestBoxOpen', error)
       }
     }
 
