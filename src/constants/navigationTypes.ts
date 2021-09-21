@@ -1,7 +1,7 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Item } from '@constants/types'
+import { Box, Item } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
@@ -11,7 +11,7 @@ export type RootStackParamList = {
   BoxInfo: { boxId: number }
   ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string }
   ProbInfo: { boxId: number, boxPrice: number, items: Item[] }
-  AddToCart: { boxId: number }
+  AddToCart: { boxData: Box }
   Cart: undefined
   Payment: undefined
   PaymentComplete: { paymentId: number }

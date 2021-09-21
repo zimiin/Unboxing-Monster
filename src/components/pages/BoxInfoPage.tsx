@@ -76,7 +76,7 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
       boxDetail={data?.detail}
       boxItems={items || []}
       navigation={navigation}
-      onPressAddToCart={data ? () => navigation.push('AddToCart', {boxId: data.id}) : () => console.log('No data')}
+      onPressAddToCart={data ? () => navigation.push('AddToCart', {boxData: data}) : () => console.log('No data')}
       onPressProbInfo={data ? () => navigation.push('ProbInfo', {boxId: data.id, boxPrice: data.price, items: data.items}) : () => console.log('No data')}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
     />

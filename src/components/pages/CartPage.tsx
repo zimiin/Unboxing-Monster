@@ -81,7 +81,6 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
         if (boxData?.has(boxId)) {
           price += item.count * boxData?.get(boxId)?.price!
         } else {
-          console.log('boxData does not have ', boxId)
           price = 0
           break
         }
