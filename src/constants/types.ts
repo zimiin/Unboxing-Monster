@@ -41,11 +41,6 @@ export type Notice = {
   srcUrl: string
 }
 
-export type CartItem = {
-  count: number
-  checked: boolean
-}
-
 export interface User {
   email: string,
   id: string,

@@ -211,30 +211,32 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     try {
       if (Platform.OS === 'android') {
         var {code, email} = await getAppleCodeEmailAndroid()
-        var token = await getAppleToken(true, code)
-        var loginResult = await requestLogin('apple-a', token)
+        console.log('code', code)
+        console.log('email', email)
+        // var token = await getAppleToken(true, code)
+        // var loginResult = await requestLogin('apple-a', token)
       } else {
         var {code, email} = await getAppleCodeEmailIOS()
         var token = await getAppleToken(false, code)
         var loginResult = await requestLogin('apple', token)
       }
 
-      if (loginResult) {
-        navigation.replace('Main')
-      } else {
-        let provider = 'apple'
-        if (Platform.OS === 'android') {
-          provider += '-a'
-        }
+      // if (loginResult) {
+      //   navigation.replace('Main')
+      // } else {
+      //   let provider = 'apple'
+      //   if (Platform.OS === 'android') {
+      //     provider += '-a'
+      //   }
 
-        storeSignUpInfoInContext(provider, token, email)
+      //   storeSignUpInfoInContext(provider, token, email)
 
-        if (email) {
-          navigation.navigate('SignUpNicknameInput')
-        } else {
-          navigation.navigate('SignUpEmailInput')
-        }
-      }
+      //   if (email) {
+      //     navigation.navigate('SignUpNicknameInput')
+      //   } else {
+      //     navigation.navigate('SignUpEmailInput')
+      //   }
+      // }
     } catch (error) {
       console.log('Error in appleLoginAndroid', error)
       throw error

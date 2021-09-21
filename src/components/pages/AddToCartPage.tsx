@@ -7,7 +7,7 @@ import { AddToCartProps } from '@constants/navigationTypes'
 
 const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
   const [count, setCount] = useState(1)
-  const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
+  const [{ cart }, { modifyBoxCount, addBoxData }] = useContext(CartContext)
 
   const boxData = useMemo(() => route.params.boxData, [])
 
@@ -22,6 +22,7 @@ const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
 
   const addAction = () => {
     modifyBoxCount(boxData.id, count)
+    addBoxData(boxData)
     navigation.navigate('Main')
   }
 
