@@ -14,6 +14,7 @@ import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
 import NoDataBox from '@components/molecules/NoDataBox'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   onPressSearchBar: () => void,
@@ -55,7 +56,7 @@ const HomeTemplate = (props: Props) => {
       <View style={styles.boxItem}>
         <BoxItem
           key={item.id}
-          image={{uri: item.image}}
+          image={item.isLocal ? IMAGES[item.image] : {uri: item.image}}
           name={item.title}
           price={item.price}
           onPress={() => props.onPressBoxItem ? props.onPressBoxItem(item.id) : console.log(item.id, 'box pressed')}

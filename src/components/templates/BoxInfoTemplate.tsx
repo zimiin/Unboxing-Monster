@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  ImageSourcePropType,
 } from 'react-native'
 import SubTitle from '@components/atoms/typography/SubTitle'
 import FullWidthButton from '@components/atoms/button/FullWidthButton'
@@ -18,12 +19,15 @@ import { BoxInfoNavigationProp } from '@constants/navigationTypes'
 import Title from '@components/atoms/typography/Title'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import { COLORS } from '@constants/colors'
+import BoxInfoImage from '@components/atoms/BoxInfoImage'
+import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
+import Body from '@components/atoms/typography/Body'
 
 type BoxInfoTemplateProps = {
-  boxImage: object,
-  boxName: string,
-  boxPrice: object,
-  boxDetail: object,
+  boxImage?: ImageSourcePropType,
+  boxName?: string,
+  boxPrice?: number,
+  boxDetail?: string,
   boxItems: object,
   onPressAddToCart: () => void,
   onPressProbInfo: () => void,
@@ -47,65 +51,53 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
 
       <View style={styles.screen}>
         <IntroModal modalVisible={introModalVisible} setModalVisible={setIntroModalVisible}></IntroModal>
+
         <ScrollView>
-          {/* 박스 대표 이미지 */}
-          <View style={styles.boxImageContainer}>
-            {props.boxImage}
-          </View>
+          <BoxInfoImage
+            image={props.boxImage} 
+          />
 
-          {/* Content Container */}
           <View style={styles.contentContainer}>
-            {/* 박스명 */}
-            <View style={styles.boxNameContainer}>
-              <Title
-                content={props.boxName}
-              />
-            </View>
+            <Title
+              style={styles.boxName}
+              content={props.boxName}
+            />
 
-            {/* 박스가격 */}
-            <View style={styles.boxPriceContainer}>
-              {props.boxPrice}
-            </View>
+            <BoxPriceInfo
+              price={props.boxPrice}
+              style={styles.boxPrice}
+            />
 
-            {/* 박스소개 (제목) */}
-            <View style={styles.subTitleContainer}>
-              <SubTitle
-                content={'이 박스는요'}
-              />
-            </View>
+            <SubTitle
+              style={styles.subTitle}
+              content={'이 박스는요'}
+            />
 
-            {/* 박스소개 */}
-            <View style={styles.boxDetailContainer}>
-              {props.boxDetail}
-            </View>
+            <Body 
+              content={props.boxDetail} 
+              style={styles.boxDetail}
+            />
 
-            {/* 구성상품 (제목) */}
-            <View style={styles.subTitleContainer}>
-              <SubTitle
-                content='구성상품'
-              />
-            </View>
+            <SubTitle
+              content={'구성상품'}
+              style={styles.subTitle}
+            />
 
-            {/* 구성상품 */}
             <View style={styles.boxItemContainer}>
               {props.boxItems}
             </View>
           </View>
           
-          {/* 언박싱 인트로 이동 버튼 */}
           <ToIntroButton setModalVisible={setIntroModalVisible}/>
 
-          {/* 자세한 확률 알아보기 버튼 */}
           <View style={styles.probButtonContainer}>
             <ToProbabilityButton onPress={props.onPressProbInfo}/>
           </View>
 
-          {/* 안내사항 */}
           <View style={styles.policyContainer}>
             <PolicyDescriptionList />
           </View>
 
-          {/* Footer */}
           <Footer />                
         </ScrollView>
       </View>
@@ -127,24 +119,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  boxImageContainer: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_WIDTH,
-  },
   contentContainer: {
     width: CONTENT_WIDTH,
     alignSelf: 'center',
   },
-  boxNameContainer: {
+  boxName: {
     marginTop: 26,
   },
-  boxPriceContainer: {
+  boxPrice: {
     marginTop: 5,
   },
-  subTitleContainer: {
+  subTitle: {
     marginTop: 26,  
   },
-  boxDetailContainer: {
+  boxDetail: {
     marginTop: 4,
   },
   boxItemContainer: {

@@ -126,6 +126,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       onRefresh={setDatas}
       refreshing={refreshing}
       openIntroModal={() => setModalVisible(true)}
+      onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
     />
   )
 }

@@ -7,7 +7,7 @@ import NoticeItem from '@components/molecules/NoticeItem'
 import { SCREEN_WIDTH } from "@constants/figure"
 import { COLORS } from "@constants/colors"
 import { Notice } from "@constants/types"
-import { Linking } from 'react-native'
+import { openUrl } from "@src/utils/utils"
 
 const openIntroModalUrl = 'https://open.Intro.Modal'
 
@@ -20,16 +20,6 @@ const defaultNotice: Notice[] = [{
 interface Props {
   noticeData?: Notice[],
   openIntroModal?: () => void,
-}
-
-const openUrl = async (url: string) => {
-  const supported = await Linking.canOpenURL(url)
-
-  if (supported) {
-    Linking.openURL(url)
-  } else {
-    console.log("Don't know how to open URI: " + url)
-  }
 }
 
 const NoticeBoard = (props: Props) => {

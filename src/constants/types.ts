@@ -16,6 +16,8 @@ export type ItemId = number
 
 export type Item = {
   id: ItemId
+  productId: string
+  seller: number
   title: string
   price: number
   image: string

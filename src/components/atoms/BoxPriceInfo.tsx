@@ -1,15 +1,15 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ViewStyle } from 'react-native'
 import {
   Text,
   View,
 } from 'react-native'
 
-const BoxPriceInfo = ({ price }: { price: number }) => {
+const BoxPriceInfo = ({ price, style }: { price?: number, style?: ViewStyle }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text style={styles.priceText}>
-        {price}
+        {price?.toLocaleString() || ''}
       </Text>
 
       <Text style={styles.wonText}>

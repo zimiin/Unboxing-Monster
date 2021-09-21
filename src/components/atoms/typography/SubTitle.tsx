@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyleProp, TextStyle } from 'react-native'
+import { TextStyle } from 'react-native'
 import {
   Text,
 } from 'react-native'
 
 interface Props {
   content: string, 
-  style?: StyleProp<TextStyle>
+  style?: TextStyle
 }
 
 const SubTitle = (props: Props) => {
