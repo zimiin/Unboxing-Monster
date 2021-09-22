@@ -41,6 +41,7 @@ interface Props {
   finalPrice: number,
   phoneInput?: string,
   savePhone: boolean,
+  phoneInputError: string,
   onPressSavePhone: () => void,
   onPressBack: () => void,
   onChangeUsingPointAmount: (point: string) => void,
@@ -214,6 +215,8 @@ const PaymentTemplate = (props: Props) => {
         <Text>다음에도 사용하기</Text>
       </View>
 
+      {props.phoneInputError ? <Text style={styles.phoneInputError}>{props.phoneInputError}</Text> : null}
+
       <HorizontalRule style={styles.horizontalRule}/>
 
       <ContentBox title='최종 결제 금액'>
@@ -346,6 +349,12 @@ const styles = StyleSheet.create({
   pointInputAndroid: {
     position: 'absolute',
     right: scale(16)
+  },
+  phoneInputError: {
+    marginLeft: scale(24),
+    marginTop: 5,
+    fontSize: scale(11),
+    color: '#ec4f47',
   },
   flexEnd: { 
     alignSelf: 'flex-end' 

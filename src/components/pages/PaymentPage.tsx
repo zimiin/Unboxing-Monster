@@ -5,8 +5,9 @@ import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
 import { URLS } from '@constants/urls'
 import { IMPData, IMPConst } from 'iamport-react-native'
-import {getAccessTokenFromAsyncStorage, getEmailFromAsyncStorage, getPhoneFromAsyncStorage} from '@src/utils/asyncStorageUtils'
+import {getAccessTokenFromAsyncStorage, getEmailFromAsyncStorage, getPhoneFromAsyncStorage, setPhoneToAsyncStorage} from '@src/utils/asyncStorageUtils'
 import { User } from '@constants/types'
+import { removeHyphens, validatePhone } from '@src/utils/utils'
 
 interface BoxIdCount {
   boxId: number,
@@ -40,7 +41,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
-  const [phoneInput, setPhoneInput] = useState<string>()
+  const [phoneInput, setPhoneInput] = useState<string>('')
+  const [phoneInputError, setPhoneInputError] = useState<string>('')
   const [savePhone, setSavePhone] = useState<boolean>(true)
 
   const totalPrice = useMemo(() => {
@@ -146,7 +148,22 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     return title
   }, [boxData, boxIdCounts])
 
+  const onChangePhoneInput = (input: string) => {
+    setPhoneInputError('')
+    setPhoneInput(input)
+  }
+
   const makePayment = async () => {
+    if (validatePhone(phoneInput) === false) {
+      setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
+      return
+    }
+
+    const phone = removeHyphens(phoneInput)
+    if (savePhone) {
+      setPhoneToAsyncStorage(phone)
+    }
+
     const data: PaymentParams = {
       params: {
         pg: 'danal_tpay',
@@ -155,7 +172,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         merchant_uid: "ORD20180131-0000011",
         amount: (totalPrice - usingPoint).toString(),
         name: merchantTitle,
-        buyer_tel: await getPhoneFromAsyncStorage() || '01000000000',
+        buyer_tel: phone,
         buyer_name: '',
         buyer_email: await getEmailFromAsyncStorage() || '',
         app_scheme: 'Unboxing_pre',
@@ -182,8 +199,9 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       finalPrice={totalPrice - usingPoint}
       phoneInput={phoneInput}
       savePhone={savePhone}
+      phoneInputError={phoneInputError}
       onPressSavePhone={() => setSavePhone(!savePhone)}
-      onChangePhoneInput={setPhoneInput}
+      onChangePhoneInput={onChangePhoneInput}
       onPressBack={() => navigation.goBack()}
       onChangeUsingPointAmount={setUsingPointFromInput}
       onPressUseAllPoint={onPressUseAllPoint}
