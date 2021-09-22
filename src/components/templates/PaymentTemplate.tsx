@@ -11,6 +11,8 @@ import {
   FlatList,
   ImageSourcePropType,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import PaymentBoxItem from '@components/molecules/PaymentBoxItem'
@@ -25,22 +27,27 @@ import { PaymentMethod } from '@components/pages/PaymentPage'
 import { Cart, CartContext } from '@src/stores/CartContext'
 import {BoxId, Box} from '@constants/types'
 import { IMAGES } from '@constants/images'
+import GreyInputBox from '@components/atoms/GreyInputBox'
 
 interface Props {
   screenTitle: string,
   canGoBack: boolean,
-  onPressBack: () => void,
   currentPoint: number,
   usingPoint: number,
-  onChangeUsingPointAmount: (point: string) => void,
   useAllPoint: boolean,
-  onPressUseAllPoint: () => void,
   paymentMethods: PaymentMethod[],
   selectedPaymentMethod: PaymentMethod,
-  onChangePaymentMethod: (method: PaymentMethod) => void,
   totalPrice: number,
   finalPrice: number,
+  phoneInput?: string,
+  savePhone: boolean,
+  onPressSavePhone: () => void,
+  onPressBack: () => void,
+  onChangeUsingPointAmount: (point: string) => void,
+  onPressUseAllPoint: () => void,
+  onChangePaymentMethod: (method: PaymentMethod) => void,
   onPressMakePayment: () => void,
+  onChangePhoneInput: (input: string) => void,
 }
 
 const PaymentTemplate = (props: Props) => {
@@ -134,8 +141,10 @@ const PaymentTemplate = (props: Props) => {
             center={
               <View style={styles.pointInputView}>
                 <TextInput
-                  style={styles.tableText}
-                  defaultValue={'0'}
+                  style={[
+                    styles.tableText, 
+                    Platform.OS == 'ios' ? styles.pointInputIos : styles.pointInputAndroid
+                  ]}
                   value={props.usingPoint.toString()}
                   onChangeText={props.onChangeUsingPointAmount}
                   keyboardType='numeric'
@@ -184,6 +193,28 @@ const PaymentTemplate = (props: Props) => {
       </ContentBox>
 
       <HorizontalRule />
+
+      <Bold style={styles.title}>핸드폰 번호 입력</Bold>
+
+      <View style={styles.phoneInputRow}>
+        <GreyInputBox
+          value={props.phoneInput}
+          onChangeText={props.onChangePhoneInput}
+          keyboardType={'numeric'}
+          returnKeyType={'done'}
+          style={styles.phoneInputBox}
+        />
+
+        <CheckBox
+          style={styles.phoneCheckBox}
+          checked={props.savePhone}
+          onPress={props.onPressSavePhone}
+        />
+
+        <Text>다음에도 사용하기</Text>
+      </View>
+
+      <HorizontalRule style={styles.horizontalRule}/>
 
       <ContentBox title='최종 결제 금액'>
         <View style={styles.finalPriceContainer}>
@@ -243,7 +274,10 @@ const PaymentTemplate = (props: Props) => {
 
       <HorizontalRule />
 
-      <View style={styles.container}>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <FlatList
           ListHeaderComponent={productInfoHeader}
           renderItem={boxListRenderItem}
@@ -251,7 +285,7 @@ const PaymentTemplate = (props: Props) => {
           keyExtractor={(item) => item.boxId.toString()}
           ListFooterComponent={productInfoFooter}
         />
-      </View>
+      </KeyboardAvoidingView>
 
       <SafeAreaView style={styles.bottomButtonContainer}>
         <FullWidthButton
@@ -305,6 +339,14 @@ const styles = StyleSheet.create({
     height: '100%',
     width: scale(108),
   },
+  pointInputIos: {
+    position: 'absolute',
+    right: scale(22)
+  },
+  pointInputAndroid: {
+    position: 'absolute',
+    right: scale(16)
+  },
   flexEnd: { 
     alignSelf: 'flex-end' 
   },
@@ -342,5 +384,17 @@ const styles = StyleSheet.create({
   },
   bottomButtonContainer: {
     backgroundColor: COLORS.main
+  },
+  phoneInputRow: {
+    flexDirection: 'row',
+    paddingHorizontal: scale(24),
+    alignItems: 'center',
+  },
+  phoneInputBox: {
+    flex: 1,
+    paddingHorizontal: scale(9),
+  },
+  phoneCheckBox: {
+    marginHorizontal: scale(9),
   }
 })

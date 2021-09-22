@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TouchableOpacityProps,
   Image,
+  ViewStyle,
 } from 'react-native'
 
 interface CheckBoxProps extends TouchableOpacityProps {
+  style?: ViewStyle,
   checked: boolean,
   onPress?: () => void,
 }

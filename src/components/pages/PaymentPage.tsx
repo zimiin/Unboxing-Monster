@@ -40,6 +40,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
+  const [phoneInput, setPhoneInput] = useState<string>()
+  const [savePhone, setSavePhone] = useState<boolean>(true)
 
   const totalPrice = useMemo(() => {
     let sum = 0
@@ -99,7 +101,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     }
 
     getPoint().then(result => setPoint(result || 0))
-  })
+    getPhoneFromAsyncStorage().then(phone => setPhoneInput(phone || ''))
+  }, [])
 
   const setUsingPointFromInput = (input: string) => {
     if (input === '') {
@@ -170,17 +173,21 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     <PaymentTemplate
       screenTitle={'결제'}
       canGoBack={true}
-      onPressBack={() => navigation.goBack()}
       currentPoint={point}
       usingPoint={usingPoint}
-      onChangeUsingPointAmount={setUsingPointFromInput}
       useAllPoint={useAllPoint}
-      onPressUseAllPoint={onPressUseAllPoint}
       paymentMethods={PAYMENT_METHODS}
       selectedPaymentMethod={selectedPaymentMethod}
-      onChangePaymentMethod={setSelectedPaymentMethod}
       totalPrice={totalPrice}
       finalPrice={totalPrice - usingPoint}
+      phoneInput={phoneInput}
+      savePhone={savePhone}
+      onPressSavePhone={() => setSavePhone(!savePhone)}
+      onChangePhoneInput={setPhoneInput}
+      onPressBack={() => navigation.goBack()}
+      onChangeUsingPointAmount={setUsingPointFromInput}
+      onPressUseAllPoint={onPressUseAllPoint}
+      onChangePaymentMethod={setSelectedPaymentMethod}
       onPressMakePayment={() => makePayment()}
     />
   )
