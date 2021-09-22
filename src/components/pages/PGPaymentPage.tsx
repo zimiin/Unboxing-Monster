@@ -55,6 +55,10 @@ function Loading() {
 
 const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
   const params = route.params?.params;
+  if (params === undefined) {
+    throw `params can't be null`
+  }
+
   const tierCode = route.params?.tierCode;
   const userCode = getUserCode(params!.pg, tierCode);
 
@@ -64,8 +68,11 @@ const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
         userCode={userCode}
         tierCode={tierCode}
         loading={<Loading />}
-        data={params!}
-        callback={(response) => navigation.replace('PGPaymentResult', response)}
+        data={params}
+        callback={(response) => {
+          navigation.replace('PaymentComplete', response)
+          console.log('Payment complete')
+        }}
       />
     </SafeAreaView>
   );

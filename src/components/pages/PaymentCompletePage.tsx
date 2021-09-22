@@ -1,86 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PaymentCompleteTemplate from '@components/templates/PaymentCompleteTemplate'
 import { PaymentCompleteProps } from '@constants/navigationTypes'
 import { useEffect, useContext } from 'react'
 import { CartContext } from '@src/stores/CartContext'
-import { CommonActions, NavigationContainer } from '@react-navigation/native'
-import { URLS } from '@constants/urls'
 
 const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
+  const [isLoading, setIsLoaing] = useState<boolean>(true)
+  const paymentSuccess = route.params?.success
+
+  console.log(route.params)
 
   useEffect(() => {
-    const getPaidItemList = async () => {
-      const paymentId = route.params.paymentId
-
-      try {
-        const response = await fetch(
-          URLS.unboxing_api + 'purchase/' + paymentId, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
-        })
-
-        if (response.status !== 200) {
-          throw "Couldn't get response from /purchase/" + paymentId
-        }
-
-        const json = await response.json()
-        return json.boxes
-      } catch (error) {
-        console.log(error)
+    try {
+      if (paymentSuccess === false) {
+        setIsLoaing(false)
+        return
       }
-    }
 
-    interface PaidItem {
-      id: number,
-      title: string,
-      price: number,
-      image: string,
-      detail: string,
-      ownerId: string,
-      sales: number,
-      count: number
-    }
-
-    const deletePaidItemsFromCart = async () => {
-      const paidItemList: PaidItem[] = await getPaidItemList()
-      let boxes: number[] = []
-
-      for (let item of paidItemList) {
-        boxes.push(item.id)
-      }
       
-      deleteFromCart(boxes)
-    }
+      // validation 진행
+        // 실패면 에러 띄우기
 
-    deletePaidItemsFromCart()
+        // 성공이면 성공 페이지
+        // 장바구니에서 삭제
+    } catch (error) {
+      console.log('Error in useEffect of PaymentCompletePage ', error)
+    }
   }, [])
 
   return (
     <PaymentCompleteTemplate
-      onPressGoHome={() => {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{
-              name: 'Home'
-            }]
-          })
-        )
-      }}
-      onPressGoStorage={() => {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{
-              name: 'Storage'
-            }]
-          })
-        )
-      }}
+      isLoading={isLoading}
+      paymentSuccess={paymentSuccess}
+      onPressGoHome={() => navigation.replace('Main')}
+      onPressGoStorage={() => navigation.replace('Main', {screen: 'Storage'})}
     />
   )
 }

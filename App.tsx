@@ -16,7 +16,7 @@ import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
-import PGPaymentResultPage from '@components/pages/PGPaymentResult'
+import PaymentValidationPage from '@components/pages/PaymentValidationPage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -86,11 +86,6 @@ const App = () => {
           <Stack.Screen
             name="PGPayment"
             component={PGPaymentPage}
-          />
-
-          <Stack.Screen
-            name="PGPaymentResult"
-            component={PGPaymentResultPage}
           />
         </Stack.Navigator>
       </NavigationContainer>

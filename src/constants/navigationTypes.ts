@@ -7,7 +7,7 @@ import { Box, Item } from '@constants/types'
 // Root Stack
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>,
-  Main: undefined,
+  Main: NavigatorScreenParams<BottomTabParamList> | undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
   BoxInfo: { boxId: number },
   ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string },
@@ -16,8 +16,7 @@ export type RootStackParamList = {
   Cart: undefined,
   Payment: undefined,
   PGPayment: PaymentParams | undefined,
-  PGPaymentResult: any,
-  PaymentComplete: { paymentId: number },
+  PaymentComplete: any,
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -87,13 +86,6 @@ export type PGPaymentRouteProp = RouteProp<RootStackParamList, 'PGPayment'>
 export type PGPaymentProps = {
   route: PGPaymentRouteProp
   navigation: PGPaymentNavigationProp
-}
-
-export type PGPaymentResultNavigationProp = StackNavigationProp<RootStackParamList, 'PGPaymentResult'>
-export type PGPaymentResultRouteProp = RouteProp<RootStackParamList, 'PGPaymentResult'>
-export type PGPaymentResultProps = {
-  route: PGPaymentResultRouteProp
-  navigation: PGPaymentResultNavigationProp
 }
 
 export type PaymentCompleteNavigationProp = StackNavigationProp<RootStackParamList, 'PaymentComplete'>
