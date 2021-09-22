@@ -5,6 +5,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native'
+import { Text } from 'react-native-animatable'
 
 import TextTicker from 'react-native-text-ticker'
 
@@ -13,19 +14,21 @@ const SCROLLER_WIDTH = Dimensions.get('window').width - 48
 const Scroller = () => {
   const content = () => {
     // 차후 여기서 디비에서 데이터 가져옴
-    return 'User***님이 최상급 한우에 당첨되셨습니다.      User***님이 최상급 한우에 당첨되셨습니다.      User***님이 최상급 한우에 당첨되셨습니다.'
+    return ' ✨ User***님이 최상급 한우에 당첨되셨습니다. ✨     ✨ User***님이 최상급 한우에 당첨되셨습니다. ✨    ✨ User***님이 최상급 한우에 당첨되셨습니다. ✨'
   }
 
   return (
     <View style={styles.container}>
       <TextTicker
         style={styles.text}
-        duration={10000}
         loop
+        duration={10000}
+        scrollSpeed={0}
+        bounceSpeed={0}
         repeatSpacer={50}
         bounce={false}
         bouncePadding={{
-          left: 30,
+
         }}
       >
         {content()}
@@ -56,7 +59,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
     },
     text: {
-        color: '#fffffc',
+        color: '#ffea72',
         fontSize: 15,
+        fontFamily: 'DungGeunMo'
     }
 });
