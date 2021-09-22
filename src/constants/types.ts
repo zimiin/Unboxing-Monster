@@ -9,12 +9,15 @@ export interface Box {
   detail: string
   ownerId: string
   sales: number
+  isManager: boolean
 }
 
 export type ItemId = number
 
 export type Item = {
   id: ItemId
+  productId: string
+  seller: number
   title: string
   price: number
   image: string
@@ -36,11 +39,6 @@ export type Notice = {
   id: NoticeId
   imgUrl: string
   srcUrl: string
-}
-
-export type CartItem = {
-  count: number
-  checked: boolean
 }
 
 export interface User {

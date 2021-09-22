@@ -2,14 +2,14 @@ import 'react-native-get-random-values'
 import React, { useEffect } from 'react'
 import LoginTemplate from '@components/templates/LoginTemplate'
 import { LoginProps } from '@constants/navigationTypes'
-import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next'
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next'
 import { useContext } from 'react'
 import { SignUpContext } from '@src/stores/SignUpContext'
 import { URLS } from '@constants/urls'
 import { getUserInfoFromToken, storeUserInfo } from '@src/utils/loginUtils'
 import { User } from '@constants/types'
 import { Platform } from 'react-native'
-import { appleAuth, appleAuthAndroid, AppleRequestResponse } from '@invertase/react-native-apple-authentication'
+import { appleAuth, appleAuthAndroid } from '@invertase/react-native-apple-authentication'
 import { v4 as uuid } from 'uuid'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
@@ -211,6 +211,8 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     try {
       if (Platform.OS === 'android') {
         var {code, email} = await getAppleCodeEmailAndroid()
+        console.log('code', code)
+        console.log('email', email)
         var token = await getAppleToken(true, code)
         var loginResult = await requestLogin('apple-a', token)
       } else {

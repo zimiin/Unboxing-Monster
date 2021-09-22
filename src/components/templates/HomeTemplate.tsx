@@ -2,33 +2,34 @@ import React, { Dispatch, SetStateAction } from 'react'
 import {
   View,
   StyleSheet,
-  ActivityIndicator,
   FlatList,
-  Image,
 } from 'react-native'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@constants/figure'
-import { NoticeItemProps } from '@components/molecules/NoticeItem'
+import { scale, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
-import BoxItem, { BoxItemProps } from '@components/molecules/BoxItem'
+import BoxItem from '@components/molecules/BoxItem'
+import { Box, BoxId, Notice } from '@constants/types'
+import NoDataBox from '@components/molecules/NoDataBox'
 import { IMAGES } from '@constants/images'
 
 interface Props {
   onPressSearchBar: () => void,
   onPressCart: () => void,
   cartItemCount: number | undefined,
-  noticeData?: NoticeItemProps[],
-  popularBoxData: BoxItemProps[],
-  customBoxData: BoxItemProps[],
-  allBoxData: BoxItemProps[],
+  noticeData?: Notice[],
+  popularBoxData?: Box[],
+  customBoxData?: Box[],
+  allBoxData?: Box[],
   modalVisible: boolean,
+  refreshing: boolean,
   setModalVisible: Dispatch<SetStateAction<boolean>>,
   onRefresh: () => void,
-  refreshing: boolean,
+  openIntroModal?: () => void,
+  onPressBoxItem?: (boxId: BoxId) => void,
 }
 
 const HorizontalListBlank = () => (
@@ -37,23 +38,28 @@ const HorizontalListBlank = () => (
   />
 )
 
-const ListEmptyComponent = () => (
-  <ActivityIndicator
-    animating={true}
-    color="slategray"
-    size="large"
-    style={{
-      alignSelf: 'center',
-    }}
+const HorizontalListEmptyComponent = () => (
+  <NoDataBox
+    style={styles.horizontalListEmpty}
+  />
+)
+
+const verticalListEmptyComponent = () => (
+  <NoDataBox
+    style={styles.verticalListEmpty}
   />
 )
 
 const HomeTemplate = (props: Props) => {
-  const renderBoxItem = ({item}: {item: BoxItemProps}) => {
+  const renderBoxItem = ({item}: {item: Box}) => {
     return (
       <View style={styles.boxItem}>
         <BoxItem
-          item={item}
+          key={item.id}
+          image={item.isLocal ? IMAGES[item.image] : {uri: item.image}}
+          name={item.title}
+          price={item.price}
+          onPress={() => props.onPressBoxItem ? props.onPressBoxItem(item.id) : console.log(item.id, 'box pressed')}
         />
       </View>
     )
@@ -63,6 +69,7 @@ const HomeTemplate = (props: Props) => {
     <>
       <NoticeBoard
         noticeData={props.noticeData}
+        openIntroModal={props.openIntroModal}
       />
 
       <View>
@@ -75,7 +82,7 @@ const HomeTemplate = (props: Props) => {
 
       <FlatList
         renderItem={renderBoxItem}
-        ListEmptyComponent={ListEmptyComponent}
+        ListEmptyComponent={HorizontalListEmptyComponent}
         data={props.popularBoxData}
         horizontal={true}
         ListHeaderComponent={HorizontalListBlank}
@@ -92,6 +99,7 @@ const HomeTemplate = (props: Props) => {
         renderItem={renderBoxItem}
         data={props.customBoxData}
         horizontal={true}
+        ListEmptyComponent={HorizontalListEmptyComponent}
         ListHeaderComponent={HorizontalListBlank}
         ListFooterComponent={HorizontalListBlank}
         style={[styles.horizontalList, styles.customBoxList]}
@@ -114,7 +122,7 @@ const HomeTemplate = (props: Props) => {
         numColumns={2}
         renderItem={renderBoxItem}
         data={props.allBoxData}
-        ListEmptyComponent={ListEmptyComponent}
+        ListEmptyComponent={verticalListEmptyComponent}
         ListHeaderComponent={aboveItems}
         centerContent={true}
         columnWrapperStyle={styles.columnWrapper}
@@ -134,31 +142,37 @@ const HomeTemplate = (props: Props) => {
 export default HomeTemplate
 
 const styles = StyleSheet.create({
+  horizontalListEmpty: {
+    marginLeft: scale(6),
+  },
+  verticalListEmpty: {
+    marginLeft: scale(24),
+  },
   boxItem: {
-    marginHorizontal: 6 / DESIGN_WIDTH * SCREEN_WIDTH,
+    marginHorizontal: scale(6),
     marginBottom: 26,
   },
   listBlank: {
-    width: 18 / DESIGN_WIDTH * SCREEN_WIDTH
+    width: scale(18),
   },
   listTitle: {
-    marginLeft: 24 / DESIGN_WIDTH * SCREEN_WIDTH,
+    marginLeft: scale(24),
     fontSize: 18,
   },
   popularBoxesTitle: {
-    marginTop: 57 / DESIGN_HEIGHT * SCREEN_HEIGHT,
+    marginTop: verticalScale(57),
   },
   horizontalList: {
-    marginTop: 13 / DESIGN_HEIGHT * SCREEN_HEIGHT,
+    marginTop: verticalScale(13),
   },
   customBoxList: {
-    marginBottom: 8 / DESIGN_HEIGHT * SCREEN_HEIGHT,
+    marginBottom: verticalScale(8),
   },
   horizontalRule: {
-    marginBottom: 32 / DESIGN_HEIGHT * SCREEN_HEIGHT
+    marginBottom: verticalScale(32)
   },
   columnWrapper: {
-    marginHorizontal: 18 / DESIGN_WIDTH * SCREEN_WIDTH,
+    marginHorizontal: scale(18),
   },
   mainFlatList: {
     backgroundColor: 'white',

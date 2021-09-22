@@ -9,7 +9,7 @@ import Badge from '@components/atoms/Badge'
 import globalStyles from '@constants/globalStyles'
 
 interface Props {
-  title: string
+  title?: string
   canGoBack: boolean
   goBackAction?: () => void
   onPressCart: () => void

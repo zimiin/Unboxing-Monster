@@ -3,23 +3,48 @@ import {
   View,
 } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import NoticeItem, { NoticeItemProps } from '@components/molecules/NoticeItem'
+import NoticeItem from '@components/molecules/NoticeItem'
 import { SCREEN_WIDTH } from "@constants/figure"
 import { COLORS } from "@constants/colors"
+import { Notice } from "@constants/types"
+import { openUrl } from "@src/utils/utils"
 
-const defaultNotice: NoticeItemProps[] = [{
+const openIntroModalUrl = 'https://open.Intro.Modal'
+
+const defaultNotice: Notice[] = [{
   id: 0,
-  image: {uri: 'https://user-images.githubusercontent.com/45932570/129535240-50cb4e7b-fb8c-4315-9bfc-6a79a3b7d425.png'},
-  onPress: () => console.log('Notice is pressed')
+  imgUrl: 'https://user-images.githubusercontent.com/45932570/129535240-50cb4e7b-fb8c-4315-9bfc-6a79a3b7d425.png',
+  srcUrl: openIntroModalUrl
 }]
 
 interface Props {
-  noticeData?: NoticeItemProps[]
+  noticeData?: Notice[],
+  openIntroModal?: () => void,
 }
 
 const NoticeBoard = (props: Props) => {
   const isCarousel = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0)
+
+  const renderItem = ({item}: {item: Notice}) => {
+    let onPress: () => void
+
+    if (item.srcUrl === openIntroModalUrl) {
+      onPress = props.openIntroModal ? props.openIntroModal : () => console.log('No openModal function passed')
+    } else {
+      onPress = () => openUrl(item.srcUrl)
+    }
+
+    return (
+      <NoticeItem
+        id={item.id}
+        image={{uri: item.imgUrl}}
+        onPress={onPress}
+      />
+    )
+  }
+
+  const noticeDataToPass = props.noticeData?.length === 0 || props.noticeData === undefined ? defaultNotice : props.noticeData
 
   return (
     <View>
@@ -27,8 +52,8 @@ const NoticeBoard = (props: Props) => {
         layout="default"
         layoutCardOffset={9}
         ref={isCarousel}
-        data={props.noticeData || defaultNotice}
-        renderItem={NoticeItem}
+        data={noticeDataToPass}
+        renderItem={renderItem}
         sliderWidth={SCREEN_WIDTH}
         itemWidth={SCREEN_WIDTH}
         inactiveSlideShift={0}

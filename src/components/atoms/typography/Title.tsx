@@ -1,17 +1,22 @@
 import React from 'react'
 import {
-  Text,
+  Text, TextStyle,
 } from 'react-native'
 
-const Title = ({ content }: { content: string }) => {
+interface Props {
+  content?: string,
+  style?: TextStyle,
+}
+
+const Title = (props: Props) => {
   return (
     <Text
-      style={{
+      style={[{
         fontSize: 20,
         fontWeight: 'bold',
-      }}
+      }, props.style]}
     >
-      {content}
+      {props.content}
     </Text>
   )
 }

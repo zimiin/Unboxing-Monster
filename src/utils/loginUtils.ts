@@ -1,7 +1,7 @@
 import { User } from "@constants/types"
 import { URLS } from "@constants/urls"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { getAccessToken } from "./asyncStorageUtils"
+import { getAccessTokenFromAsyncStorage } from "./asyncStorageUtils"
 
 export const storeUserInfo = async (accessToken: string, nickname: string, email: string, phone: string) => {
   await AsyncStorage.setItem('@access_token', accessToken)
@@ -50,7 +50,7 @@ const getUserIdFromToken = async (accessToken: string | null) => {
 
 export const getLoginUserId = async () => {
   try {
-    const access_token = await getAccessToken()
+    const access_token = await getAccessTokenFromAsyncStorage()
     const id = await getUserIdFromToken(access_token)
     return id
   } catch (error) {
@@ -86,7 +86,7 @@ export const getUserInfoFromToken = async (accessToken: string) => {
 
 export const hasLoggedIn = async () => {
   try {
-    const access_token = await getAccessToken()
+    const access_token = await getAccessTokenFromAsyncStorage()
 
     if (access_token === null) {
       return false

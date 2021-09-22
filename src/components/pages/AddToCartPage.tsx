@@ -1,16 +1,15 @@
 import AddToCartTemplate from '@components/templates/AddToCartTemplate'
-import React, { useState, useEffect, useCallback } from 'react'
-import { BoxWithItems } from 'constants/types'
-import { defaultBox } from '@constants/images'
+import React, { useMemo, useState } from 'react'
+import { IMAGES } from '@constants/images'
 import { CartContext } from '@src/stores/CartContext'
 import { useContext } from 'react'
 import { AddToCartProps } from '@constants/navigationTypes'
-import { URLS } from '@constants/urls'
 
 const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
-  const [data, setData] = useState<BoxWithItems>()
   const [count, setCount] = useState(1)
-  const [{ cart }, { modifyBoxCount, setChecked }] = useContext(CartContext)
+  const [{ cart }, { modifyBoxCount, addBoxData }] = useContext(CartContext)
+
+  const boxData = useMemo(() => route.params.boxData, [])
 
   const minusAction = () => {
     if (count > 1)
@@ -22,32 +21,16 @@ const AddToCartPage = ({ route, navigation }: AddToCartProps) => {
   }
 
   const addAction = () => {
-    if (data) {
-      modifyBoxCount(data?.id, count)
-    }
+    modifyBoxCount(boxData.id, count)
+    addBoxData(boxData)
     navigation.navigate('Main')
   }
 
-  useEffect(() => {
-    const getBoxInfo = async (boxId: number) => {
-      let url = URLS.unboxing_api + 'box/' + boxId
-      let response = await fetch(url)
-      if (response.status === 200) {
-        let json = await response.json()
-        setData(json)
-      } else {
-        console.log('No reponse! url:', url)
-      }
-    }
-
-    getBoxInfo(route.params.boxId)
-  }, [])
-
   return (
     <AddToCartTemplate
-      boxName={data ? data.title : ''}
-      boxImage={data ? {uri: data.image} : defaultBox}
-      boxPrice={data ? data.price : 0}
+      boxName={boxData.title}
+      boxImage={boxData.isLocal ? IMAGES[boxData.image] : {uri: boxData.image}}
+      boxPrice={boxData.price}
       count={count}
       goBackAction={() => navigation.goBack()}
       onPressPlus={plusAction}
