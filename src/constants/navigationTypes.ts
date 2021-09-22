@@ -2,7 +2,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { IMPData } from 'iamport-react-native'
-import { BoxWithItems, Item } from '@constants/types'
+import { BoxWithItems, Coupon, Item, ItemId } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
@@ -316,8 +316,8 @@ export type MyPageProps = {
 // Open Stack
 export type OpenStackParamList = {
   Loading: { boxId: number, count: number },
-  Opening: { result: number[] },
-  OpenResult: { result: number[] }
+  Opening: { result: ItemId[] },
+  OpenResult: { result: ItemId[] }
 }
 
 export type LoadingNavigationProp = CompositeNavigationProp<

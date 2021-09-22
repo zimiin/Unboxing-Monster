@@ -12,20 +12,20 @@ import {
   FlatList
 } from 'react-native'
 import {COLORS} from '@constants/colors'
+import { Item } from '@constants/types'
 
 
 interface Props {
   onPressGoToStorage: () => void,
-  openResultData: OpenResultItem[],
+  openResultData: Item[],
 }
 
 const OpenResultTemplate = (props: Props) => {
-  const renderItem = ({ item }: { item: OpenResultItem }) => {
+  const renderItem = ({ item }: { item: Item }) => {
     return (
       <MultipleOpenResultItem
-        key={item.key}
-        image={item.image}
-        name={item.name}
+        image={{uri: item.image}}
+        name={item.title}
         price={item.price}
       />
     )
@@ -49,6 +49,7 @@ const OpenResultTemplate = (props: Props) => {
           ListFooterComponentStyle={{
             height: SCREEN_HEIGHT * 56 / 720,
           }}
+          keyExtractor={(item, index) => index.toString()}
         />
       </SafeAreaView>
     </View>
@@ -56,10 +57,9 @@ const OpenResultTemplate = (props: Props) => {
 
   const singleResult = () => (
     <SingleOpenResultItem
-      key={props.openResultData[0].key || 0}
-      image={props.openResultData[0].image || defaultBox}
-      name={props.openResultData[0].name || ''}
-      price={props.openResultData[0].price || 0}
+      image={{uri: props.openResultData[0].image}}
+      name={props.openResultData[0].title}
+      price={props.openResultData[0].price}
     />
   )
 

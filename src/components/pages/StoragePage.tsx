@@ -16,12 +16,13 @@ export interface UserCoupon extends Coupon {
 const StoragePage = ({route, navigation}: StorageProps) => {
   const [loginState, setLoginState] = useState<boolean>(false)
   const [focus, setFocus] = useState<Focus>('randomBox')
-  const [boxData, setBoxData] = useState<BoxStorage[]>()
-  const [couponData, setCouponData] = useState<UserCoupon[]>()
+  const [boxData, setBoxData] = useState<BoxStorage[]>([])
+  const [couponData, setCouponData] = useState<UserCoupon[]>([])
   const [refreshingBoxData, setRefreshingBoxData] = useState<boolean>(false)
   const [boxRefreshThrottled, setBoxRefreshThrottled] = useState<boolean>(false)
   const [refreshingCouponData, setRefreshingCouponData] = useState<boolean>(false)
   const [couponRefreshThrottled, setCouponRefreshThrottled] = useState<boolean>(false)
+  const [initCoupon, setInitCoupon] = useState<boolean>(true)
   
   const getBoxStorageData = async () => {
     try {
@@ -97,6 +98,10 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
   }
 
+  const refundExpiredCoupons = (coupons: UserCoupon[]) => {
+    
+  }
+
   const getAndSetCouponData = async () => {
     try {
       if (couponRefreshThrottled) {
@@ -106,7 +111,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       setRefreshingCouponData(true)
       setCouponRefreshThrottled(true)
 
-      getCouponData().then(data => setCouponData(data))
+      let coupons = await getCouponData()
+      console.log(coupons)
+      
+      if (initCoupon) {
+        refundExpiredCoupons(coupons)
+        setInitCoupon(false)
+      }
+      console.log(coupons)
+      setCouponData(coupons)
 
       setRefreshingCouponData(false)
       setTimeout(() => setCouponRefreshThrottled(false), 3000)
@@ -157,8 +170,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       focusOn={focus}
       onPressRandomBoxTab={() => setFocus('randomBox')}
       onPressCouponTab={() => setFocus('coupon')}
-      boxData={boxData || []}
-      couponData={couponData || []}
+      boxData={boxData}
+      couponData={couponData}
       refreshingBoxList={refreshingBoxData}
       onRefreshBoxList={getAndSetBoxData}
       refreshingCouponList={refreshingCouponData}
