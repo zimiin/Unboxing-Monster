@@ -13,11 +13,11 @@ import {
 import { scale } from 'react-native-size-matters'
 
 export interface PaymentBoxItemProps extends ViewProps {
-  id: number,
-  image: ImageSourcePropType,
-  name: string,
-  count: number,
-  price: number,
+  id?: number,
+  image?: ImageSourcePropType,
+  name?: string,
+  count?: number,
+  price?: number,
 }
 
 const PaymentBoxItem = (props: PaymentBoxItemProps) => {

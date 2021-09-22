@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ProbInfoProps } from '@constants/navigationTypes'
 import ProbInfoTemplate from '@components/templates/ProbInfoTemplate'
 import { generateProbability } from '@src/utils/probabilites'
@@ -11,6 +11,7 @@ const ProbInfoPage = ({route, navigation}: ProbInfoProps) => {
   return (
     <>
       <ProbInfoTemplate
+        boxId={route.params.boxId}
         navigation={navigation}
         items={items}
         probs={probabilities}

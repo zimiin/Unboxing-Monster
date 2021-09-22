@@ -1,49 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  FlatList,
+  ImageSourcePropType,
 } from 'react-native'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
 import CheckBox from '@components/atoms/button/CheckBox'
 import { BoxId } from '@constants/types'
-import { defaultBoxUri } from '@constants/images'
 import CartItem from '@components/molecules/CartItem'
-
-
-export interface CartData {
-  boxId: number,
-  count: number,
-  deleteOneFromCart: () => void,
-  addOneToCart: () => void,
-  checked: boolean,
-  setChecked: () => void,
-  delete: () => void
-}
-
-export interface BoxInfo {
-  name: string,
-  price: number,
-  image: string,
-}
-
-const defaultBoxInfo: BoxInfo = {
-  name: '',
-  price: 0,
-  image: defaultBoxUri
-}
-
-export type BoxData = Map<BoxId, BoxInfo>
+import { Cart, CartContext } from '@src/stores/CartContext'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   onPressBack: () => void,
-  cartData: CartData[],
-  boxData: BoxData,
   checkAll: boolean,
   onPressCheckAll: () => void,
   totalBoxCount: number,
@@ -52,31 +27,81 @@ interface Props {
 }
 
 const CartTemplate = (props: Props) => {
+  const [{cart, boxData}, {setChecked, deleteFromCart, modifyBoxCount}] = useContext(CartContext)
 
-  const getItems = () => {
-    if (props.cartData) {
-      return (
-        props.cartData.map((item) => {
-          const boxInfo: BoxInfo = props.boxData.get(item.boxId) || defaultBoxInfo
-          return (
-            <CartItem
-              key={item.boxId}
-              checked={item.checked}
-              image={boxInfo.image}
-              name={boxInfo.name}
-              price={boxInfo.price}
-              count={item.count}
-              onPressCheckBox={item.setChecked}
-              onPressX={item.delete}
-              onPressMinusButton={item.deleteOneFromCart}
-              onPressPlusButton={item.addOneToCart}
-            />
-          )
-        })
-      )
+  const renderItem = ({item}: {item: {boxId: BoxId, cartValue: Cart}}) => {
+    const box = boxData.get(item.boxId)
+    let boxImage: ImageSourcePropType | undefined
+
+    if (box) {
+      if (box.isLocal) {
+        boxImage = IMAGES[box.image]
+      } else {
+        boxImage = {uri: box.image}
+      }
     }
+
+    return (
+      <CartItem
+        key={item.boxId}
+        checked={item.cartValue.checked}
+        image={boxImage}
+        name={box?.title}
+        price={box?.price}
+        count={item.cartValue.count}
+        onPressCheckBox={() => setChecked(item.boxId, !item.cartValue.checked)}
+        onPressX={() => deleteFromCart([item.boxId])}
+        onPressMinusButton={() => modifyBoxCount(item.boxId, -1)}
+        onPressPlusButton={() => modifyBoxCount(item.boxId, +1)}
+      />
+    )
   }
-  const items = getItems()
+
+  const listHeader = (
+    <View style={styles.checkAll}>
+      <CheckBox
+        checked={props.checkAll}
+        onPress={props.onPressCheckAll}
+      />
+
+      <Text
+        style={[
+          styles.text14,
+          { marginLeft: scale(14) }
+        ]}
+      >
+        전체선택
+      </Text>
+    </View>
+  )
+
+  const listFooter = (
+    <>
+      <View style={styles.totalBoxCountPrice}>
+        <Text
+          style={[
+            styles.text14,
+            { flex: 1 }
+          ]}
+        >
+          총 {props.totalBoxCount}박스 결제 금액
+        </Text>
+
+        <Text style={styles.totalBoxPrice}>
+          {props.totalBoxPrice.toLocaleString()} 원
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.purchaseButton}
+        onPress={props.onPressPurchase}
+      >
+        <Text style={styles.purchaseText}>
+          결제하기
+        </Text>
+      </TouchableOpacity>
+    </>
+  )
 
   return (
     <>
@@ -88,49 +113,15 @@ const CartTemplate = (props: Props) => {
 
       <HorizontalRule />
       
-      <ScrollView style={styles.container}>
-        <View style={styles.checkAll}>
-          <CheckBox 
-            checked={props.checkAll}
-            onPress={props.onPressCheckAll}
-          />
-
-          <Text 
-            style={[
-              styles.text14, 
-              {marginLeft: scale(14)}
-            ]}
-          >
-            전체선택
-          </Text>
-        </View>
-
-        {items}
-
-        <View style={styles.totalBoxCountPrice}>
-          <Text
-            style={[
-              styles.text14,
-              { flex:1 }
-            ]}
-          >
-            총 {props.totalBoxCount}박스 결제 금액
-          </Text>
-
-          <Text style={styles.totalBoxPrice}>
-            {props.totalBoxPrice} 원
-          </Text>
-        </View>
-
-        <TouchableOpacity 
-          style={styles.purchaseButton}
-          onPress={props.onPressPurchase}
-        >
-          <Text style={styles.purchaseText}>
-            결제하기  
-          </Text>  
-        </TouchableOpacity>
-      </ScrollView>
+      <View style={styles.container}>
+        <FlatList
+          ListHeaderComponent={listHeader}
+          data={Array.from(cart, ([boxId, cartValue]) => ({boxId, cartValue}))}
+          renderItem={renderItem}
+          keyExtractor={({boxId, cartValue}) => boxId.toString()}
+          ListFooterComponent={listFooter}
+        />
+      </View>
 
       <SafeAreaView style={styles.safeArea}/>
     </>

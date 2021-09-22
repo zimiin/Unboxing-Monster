@@ -1,8 +1,8 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Item } from '@constants/types'
 import { IMPData } from 'iamport-react-native'
+import { Box, Item } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
