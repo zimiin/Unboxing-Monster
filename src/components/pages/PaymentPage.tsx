@@ -8,6 +8,7 @@ import { IMPData, IMPConst } from 'iamport-react-native'
 import {getAccessTokenFromAsyncStorage, getEmailFromAsyncStorage, getPhoneFromAsyncStorage, setPhoneToAsyncStorage} from '@src/utils/asyncStorageUtils'
 import { User } from '@constants/types'
 import { removeHyphens, validatePhone } from '@src/utils/utils'
+import { getUserInfoFromToken } from '@src/utils/loginUtils'
 
 interface BoxIdCount {
   boxId: number,
@@ -153,17 +154,20 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     setPhoneInput(input)
   }
 
-  const getMerchantUid = (name: string | null) => {
+  const getMerchantUid = async () => {
     try {
-      if (name === null) {
-        throw `name can't be null`
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      if (accessToken === null) {
+        throw 'Access token is null'
       }
 
+      const user: User = await getUserInfoFromToken(accessToken)
+      const userId = user.id
       const date = new Date()
-      let uid = name + '-'
 
+      let uid = userId + '-'
       uid = uid + ((date.getDate() < 10) ? "0" : "") + date.getDate() + "/" + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + date.getFullYear()
-      uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds()
+      uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds() + ":" + date.getMilliseconds()
       
       console.log(uid)
       return uid
@@ -177,7 +181,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     try {
       if (validatePhone(phoneInput) === false) {
         setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
-        throw '유효하지 않은 핸드폰번호: ' + phoneInput
+        throw 'Invalid phone number input: ' + phoneInput
       }
 
       const phone = removeHyphens(phoneInput)
@@ -185,7 +189,12 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         setPhoneToAsyncStorage(phone)
       }
 
-      const merchantUid = getMerchantUid('')
+      const merchantUid = await getMerchantUid()
+      const email = await getEmailFromAsyncStorage()
+
+      if (email === null) {
+        throw 'No email address in async storage'
+      }
 
       const data: PaymentParams = {
         params: {
@@ -197,7 +206,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
           name: merchantTitle,
           buyer_tel: phone,
           buyer_name: '',
-          buyer_email: await getEmailFromAsyncStorage() || '',
+          buyer_email: email,
           app_scheme: 'unboxing.monster',
           biz_num: '2460302264',
           m_redirect_url: IMPConst.M_REDIRECT_URL,
