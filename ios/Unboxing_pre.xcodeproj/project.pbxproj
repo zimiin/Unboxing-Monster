@@ -13,10 +13,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		28647997AF4BBB5C2712EE3D /* libPods-Unboxing_pre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49FFCD05ED193BECEAAC3C7E /* libPods-Unboxing_pre.a */; };
 		517E42EE87C37233D9D6D289 /* libPods-Unboxing_pre-Unboxing_preTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4971882990B3C64C73A8D26 /* libPods-Unboxing_pre-Unboxing_preTests.a */; };
-		6C6D775526BA970B00DAA715 /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6D775226BA970B00DAA715 /* GmarketSansTTFLight.ttf */; };
-		6C6D775626BA970B00DAA715 /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6D775326BA970B00DAA715 /* GmarketSansTTFMedium.ttf */; };
-		6C6D775726BA970B00DAA715 /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6D775426BA970B00DAA715 /* GmarketSansTTFBold.ttf */; };
-		6C7A975926BA9A51007C016C /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A975826BA9A51007C016C /* Fonts */; };
+		6C31631426FBC59C004DC57F /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6C31631326FBC59C004DC57F /* Fonts */; };
+		6C31631626FBC807004DC57F /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6C31631526FBC807004DC57F /* Fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B6FF8A4626F0D97000D61598 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF8A4526F0D97000D61598 /* File.swift */; };
 /* End PBXBuildFile section */
@@ -44,10 +42,8 @@
 		49FFCD05ED193BECEAAC3C7E /* libPods-Unboxing_pre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unboxing_pre.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C3D21F7B17406AEE0AA2EE /* Pods-Unboxing_pre-Unboxing_preTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre-Unboxing_preTests.release.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre-Unboxing_preTests/Pods-Unboxing_pre-Unboxing_preTests.release.xcconfig"; sourceTree = "<group>"; };
 		6BBD32476A498CAA43DD9051 /* Pods-Unboxing_pre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre.release.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre/Pods-Unboxing_pre.release.xcconfig"; sourceTree = "<group>"; };
-		6C6D775226BA970B00DAA715 /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
-		6C6D775326BA970B00DAA715 /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
-		6C6D775426BA970B00DAA715 /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
-		6C7A975826BA9A51007C016C /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		6C31631326FBC59C004DC57F /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		6C31631526FBC807004DC57F /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		6E5BE28393041C963632C32E /* Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre-Unboxing_preTests/Pods-Unboxing_pre-Unboxing_preTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Unboxing_pre/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B6B68E2926D79E6F00CB09E9 /* Unboxing_pre-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Unboxing_pre-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -121,16 +117,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6C6D775126BA96CA00DAA715 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				6C6D775426BA970B00DAA715 /* GmarketSansTTFBold.ttf */,
-				6C6D775226BA970B00DAA715 /* GmarketSansTTFLight.ttf */,
-				6C6D775326BA970B00DAA715 /* GmarketSansTTFMedium.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		795999A9D79A4373AC12D5AB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,8 +134,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				6C6D775126BA96CA00DAA715 /* Fonts */,
-				6C7A975826BA9A51007C016C /* Fonts */,
+				6C31631326FBC59C004DC57F /* Fonts */,
+				6C31631526FBC807004DC57F /* Fonts */,
 				13B07FAE1A68108700A75B9A /* Unboxing_pre */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* Unboxing_preTests */,
@@ -277,12 +263,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C6D775526BA970B00DAA715 /* GmarketSansTTFLight.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				6C7A975926BA9A51007C016C /* Fonts in Resources */,
-				6C6D775626BA970B00DAA715 /* GmarketSansTTFMedium.ttf in Resources */,
-				6C6D775726BA970B00DAA715 /* GmarketSansTTFBold.ttf in Resources */,
+				6C31631426FBC59C004DC57F /* Fonts in Resources */,
+				6C31631626FBC807004DC57F /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
