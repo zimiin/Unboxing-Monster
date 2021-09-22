@@ -57,8 +57,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
         return
       }
 
-      console.log('getAndSetBoxData')
-
       setRefreshingBoxData(true)
       setBoxRefreshThrottled(true)
 
@@ -94,14 +92,24 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       const coupons: UserCoupon[] = await response.json()
       return coupons
     } catch (error) {
-      console.log('Error in fetchCoupon::', error)
+      console.log('Error in fetchCoupon', error)
       throw error
     }
   }
 
   const getAndSetCouponData = async () => {
     try {
+      if (couponRefreshThrottled) {
+        return
+      }
+
+      setRefreshingCouponData(true)
+      setCouponRefreshThrottled(true)
+
       getCouponData().then(data => setCouponData(data))
+
+      setRefreshingCouponData(false)
+      setTimeout(() => setCouponRefreshThrottled(false), 3000)
     } catch (error) {
       console.log('Error in getAndSetCouponData', error)
     }
