@@ -1,3 +1,4 @@
+import { verticalScale } from '@constants/figure'
 import React from 'react'
 import { TouchableOpacityProps } from 'react-native'
 import {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#eef1f2',
     width: scale(312),
-    height: 48,
+    height: verticalScale(48),
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',

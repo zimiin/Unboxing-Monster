@@ -144,7 +144,7 @@ const PaymentTemplate = (props: Props) => {
                 <TextInput
                   style={[
                     styles.tableText, 
-                    Platform.OS == 'ios' ? styles.pointInputIos : styles.pointInputAndroid
+                    styles.pointInput,
                   ]}
                   value={props.usingPoint.toString()}
                   onChangeText={props.onChangeUsingPointAmount}
@@ -342,9 +342,10 @@ const styles = StyleSheet.create({
     height: '100%',
     width: scale(108),
   },
-  pointInputIos: {
+  pointInput: {
     position: 'absolute',
-    right: scale(22)
+    right: scale(22),
+    textAlign: 'right',
   },
   pointInputAndroid: {
     position: 'absolute',

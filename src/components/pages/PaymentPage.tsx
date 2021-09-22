@@ -88,8 +88,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
           },
-        }
-        )
+        })
 
         if (response.status !== 200) {
           const json = await response.json()
@@ -139,14 +138,16 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   }
 
   const merchantTitle = useMemo(() => {
-    const box = boxData.get(boxIdCounts[0].boxId)
-    let title = box?.title || ''
+    if (boxIdCounts.length > 0) {
+      const box = boxData.get(boxIdCounts[0].boxId)
+      let title = box?.title || ''
 
-    if (boxIdCounts.length > 1) {
-      title += ' 외 ' + (boxIdCounts.length - 1).toString() + '개'
+      if (boxIdCounts.length > 1) {
+        title += ' 외 ' + (boxIdCounts.length - 1).toString() + '개'
+      }
+
+      return title
     }
-
-    return title
   }, [boxData, boxIdCounts])
 
   const onChangePhoneInput = (input: string) => {
@@ -184,6 +185,11 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         throw 'Invalid phone number input: ' + phoneInput
       }
 
+      // 포인트 처리 된 후에 진행
+      // if (totalPrice - usingPoint === 0) {
+      //   navigation.replace('PaymentComplete')
+      // }
+
       const phone = removeHyphens(phoneInput)
       if (savePhone) {
         setPhoneToAsyncStorage(phone)
@@ -203,7 +209,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
           display: {card_quota: []},
           merchant_uid: merchantUid,
           amount: (totalPrice - usingPoint).toString(),
-          name: merchantTitle,
+          name: merchantTitle || '',
           buyer_tel: phone,
           buyer_name: '',
           buyer_email: email,

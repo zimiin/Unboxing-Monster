@@ -2,11 +2,15 @@ import GreyButton from '@components/atoms/button/GreyButton'
 import DoneIcon from '@components/atoms/icon/DoneIcon'
 import Title from '@components/atoms/typography/Title'
 import React from 'react'
-import { ActivityIndicator, StyleSheet, Text } from 'react-native'
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text } from 'react-native'
 import {
   View,
 } from 'react-native'
-import { verticalScale } from '@constants/figure'
+import { scale, verticalScale } from '@constants/figure'
+import NoticeIcon from '@components/atoms/icon/NoticeIcon'
+import Bold from '@components/atoms/typography/Bold'
+import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
+import { COLORS } from '@constants/colors'
 
 interface Props {
   isLoading: boolean,
@@ -17,36 +21,47 @@ interface Props {
 
 const PaymentCompleteTemplate = (props: Props) => {
   const successScreen = (
-    <View style={styles.container}>
+    <>
       <View style={styles.iconContainer}>
         <DoneIcon />
 
-        <View style={styles.madePayment}>
-          <Title content='결제 완료' />
-        </View>
+        <Bold style={styles.titleText}>
+          결제 완료
+        </Bold>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <GreyButton
-          onPress={props.onPressGoStorage}
-        >
-          보관함으로 가기
-        </GreyButton>
+      <GreyButton
+        onPress={props.onPressGoStorage}
+      >
+        보관함으로 가기
+      </GreyButton>
 
-        <GreyButton
-          onPress={props.onPressGoHome}
-          style={{
-            marginTop: 8,
-          }}
-        >
-          홈으로 돌아가기
-        </GreyButton>
-      </View>
-    </View>
+      <GreyButton
+        onPress={props.onPressGoHome}
+        style={styles.goHomeButton}
+      >
+        홈으로 돌아가기
+      </GreyButton>
+    </>
   )
 
   const failureScreen = (
-    <Text>Failed</Text>
+    <>
+      <View style={styles.centerView}>
+        <NoticeIcon />
+
+        <Bold style={styles.titleText}>
+          결제 실패
+        </Bold>
+      </View>
+
+      <GreyButton
+        onPress={props.onPressGoHome}
+        style={styles.goHomeButton}
+      >
+        홈으로 돌아가기
+      </GreyButton>
+    </>
   )
   
   const resultScreen = (
@@ -54,14 +69,18 @@ const PaymentCompleteTemplate = (props: Props) => {
   )
 
   const loading = (
-    <View style={[styles.container, styles.centerView]}>
+    <View style={styles.centerView}>
       <ActivityIndicator
         size={'large'}
       />
     </View>
   )
 
-  return (props.isLoading ? loading : resultScreen)
+  return (
+    <SafeAreaView style={styles.container}>
+      {props.isLoading ? loading : resultScreen}
+    </SafeAreaView>
+  )
 }
 
 export default PaymentCompleteTemplate
@@ -70,8 +89,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    alignItems: 'center',
   },
   centerView: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -80,11 +101,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  madePayment: {
-    marginTop: verticalScale(7)
+  titleText: {
+    fontSize: scale(20),
+    marginTop: verticalScale(7),
   },
-  buttonContainer: {
-    alignItems: 'center',
-    marginBottom: 60,
+  goHomeButton: {
+    marginTop: 8,
+    marginBottom: verticalScale(60),
   }
 })

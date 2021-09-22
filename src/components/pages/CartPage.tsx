@@ -34,7 +34,9 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
     let count = 0
     
     for (let [boxId, item] of cart) {
-      count += item.count
+      if (item.checked) {
+        count += item.count
+      }
     }
     
     setTotalBoxCount(count)
