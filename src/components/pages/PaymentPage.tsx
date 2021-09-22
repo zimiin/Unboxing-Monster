@@ -153,37 +153,53 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     setPhoneInput(input)
   }
 
-  const makePayment = async () => {
-    if (validatePhone(phoneInput) === false) {
-      setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
-      return
-    }
+  const getMerchantUid = () => {
+    try {
 
-    const phone = removeHyphens(phoneInput)
-    if (savePhone) {
-      setPhoneToAsyncStorage(phone)
+      return ''
+    } catch (error) {
+      console.log('Error in getMerchantUid ', error)
+      throw error
     }
+  }
 
-    const data: PaymentParams = {
-      params: {
-        pg: 'danal_tpay',
-        pay_method: selectedPaymentMethod.value,
-        display: {card_quota: []},
-        merchant_uid: "ORD20180131-0000011",
-        amount: (totalPrice - usingPoint).toString(),
-        name: merchantTitle,
-        buyer_tel: phone,
-        buyer_name: '',
-        buyer_email: await getEmailFromAsyncStorage() || '',
-        app_scheme: 'Unboxing_pre',
-        biz_num: '2460302264',
-        m_redirect_url: IMPConst.M_REDIRECT_URL,
-        escrow: false,
-      },
-      tierCode: '',
+  const onPressMakePayment = async () => {
+    try {
+      if (validatePhone(phoneInput) === false) {
+        setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
+        throw '유효하지 않은 핸드폰번호: ' + phoneInput
+      }
+
+      const phone = removeHyphens(phoneInput)
+      if (savePhone) {
+        setPhoneToAsyncStorage(phone)
+      }
+
+      const merchantUid = getMerchantUid()
+
+      const data: PaymentParams = {
+        params: {
+          pg: 'danal_tpay',
+          pay_method: selectedPaymentMethod.value,
+          display: {card_quota: []},
+          merchant_uid: merchantUid,
+          amount: (totalPrice - usingPoint).toString(),
+          name: merchantTitle,
+          buyer_tel: phone,
+          buyer_name: '',
+          buyer_email: await getEmailFromAsyncStorage() || '',
+          app_scheme: 'unboxing.monster',
+          biz_num: '2460302264',
+          m_redirect_url: IMPConst.M_REDIRECT_URL,
+          escrow: false,
+        },
+        tierCode: '',
+      }
+
+      navigation.navigate('PGPayment', data)
+    } catch (error) {
+      console.log('Error in onPressMakePayment ', error)
     }
-
-    navigation.navigate('PGPayment', data)
   }
 
   return (
@@ -206,7 +222,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onChangeUsingPointAmount={setUsingPointFromInput}
       onPressUseAllPoint={onPressUseAllPoint}
       onChangePaymentMethod={setSelectedPaymentMethod}
-      onPressMakePayment={() => makePayment()}
+      onPressMakePayment={onPressMakePayment}
     />
   )
 }
