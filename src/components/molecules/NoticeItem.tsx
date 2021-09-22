@@ -7,19 +7,19 @@ import {
 import { ImageSourcePropType } from 'react-native'
 import { SCREEN_WIDTH, DESIGN_WIDTH } from '@constants/figure'
 
-export interface NoticeItemProps {
+export interface Props {
   id: number,
   image: ImageSourcePropType,
   onPress: () => void
 }
 
-const NoticeItem = ({ item }: { item: NoticeItemProps }) => {
+const NoticeItem = (props: Props) => {
   return (
     <TouchableOpacity
-      onPress={item.onPress}
+      onPress={props.onPress}
     >
       <Image
-        source={item.image}
+        source={props.image}
         style={styles.image}
         resizeMode='contain'
       />

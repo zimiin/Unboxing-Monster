@@ -1,51 +1,79 @@
 import React from 'react'
 import {
-    View,
-    Image,
-    Text,
-    StyleSheet,
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native'
 
 import { IMAGES } from '@constants/images'
+import { scale } from '@constants/figure'
+import Bold from '@components/atoms/typography/Bold'
+import { openUrl } from '@src/utils/utils'
+
+const openBizNumConfirmPage = () => {
+  openUrl('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2460302264')
+}
 
 const Footer = () => {
-    return (
-        <View style={styles.container}>
-            <Image
-                source={IMAGES.teamName}
-                style={styles.teamName}
-            />
+  return (
+    <View style={styles.container}>
+      <Image
+        source={IMAGES.teamName}
+        style={styles.teamName}
+      />
 
-            <Text style={styles.text}>
-                상호명 : 꾸러기원정대   대표 : 한일석{'\n'}
-                개인정보담당자 : 오선식{'\n'}
-                통신판매업신고 : 2000-서울어디-0000호{'\n'}
-                사업자등록번호 : 209-99-99999 [사업자정보확인]{'\n'}
-                사업장소재지 : 선릉역 아남타워{'\n'}
-                E-mail : unboxing@gmail.com{'\n'}
-                Copyright @ unboxing  All rights reserved.
-            </Text>
-        </View>
-    )
+      <Text style={[styles.text, styles.textMargin]}>
+        상호명 : 꾸러기원정대   대표 : 신지민{'\n'}
+        통신판매업신고 : 2000-서울어디-0000호
+      </Text>
+
+      <View style={styles.buisnessNumberRow}>
+        <Text style={styles.text}>
+          사업자등록번호 : 246-03-02264
+        </Text>
+
+        <TouchableOpacity
+          onPress={openBizNumConfirmPage}
+        >
+          <Bold style={styles.text}>
+            {' [사업자정보확인]'}
+          </Bold>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.text}>
+        사업장소재지 : 서울특별시 서초구 강남대로107길 21, 2층{'\n'}
+        E-mail : ask.unboxing.monster@gmail.com{'\n'}
+        Copyright @ 꾸러기원정대  All rights reserved.
+      </Text>
+    </View>
+  )
 }
 
 export default Footer
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#dee3e5',
-        paddingTop: 33,
-        paddingLeft: 24,
-        paddingBottom: 27,
-    },
-    teamName: {
-        width: 99,
-        height: 15,
-    },
-    text: {
-        fontSize: 12,
-        color: 'rgba(6, 6, 6, 0.5)',
-        lineHeight: 20,
-        marginTop: 16,
-    }
+  container: {
+    backgroundColor: '#dee3e5',
+    paddingTop: 33,
+    paddingHorizontal: scale(24),
+    paddingBottom: 27,
+  },
+  teamName: {
+    width: 99,
+    height: 15,
+  },
+  textMargin: {
+    marginTop: 16,
+  },
+  text: {
+    fontSize: 12,
+    color: 'rgba(6, 6, 6, 0.5)',
+    lineHeight: 20,
+  },
+  buisnessNumberRow: {
+    flexDirection: 'row',
+  }
 })

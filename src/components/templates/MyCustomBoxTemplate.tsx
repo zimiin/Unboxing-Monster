@@ -3,7 +3,7 @@ import GreyBackgroundBox from '@components/molecules/GreyBackgroundBox'
 import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 import { COLORS } from '@constants/colors'
 import { scale, verticalScale } from '@constants/figure'
-import { defaultBox } from '@constants/images'
+import { defaultBox, IMAGES } from '@constants/images'
 import { Box } from '@constants/types'
 import React from 'react'
 import {
@@ -27,7 +27,7 @@ const MyCustomBoxTemplate = (props: Props) => {
   const boxItem = ({item}: {item: Box}) => {
     return (
       <GreyBackgroundBox
-        boxImage={{uri: item.image} || defaultBox}
+        boxImage={item.isLocal ? IMAGES[item.image] : {uri: item.image}}
         style={styles.boxItem}
         onPress={() => props.onPressBoxItem(item.id)}
       >

@@ -9,30 +9,30 @@ import {
 } from 'react-native';
 import { SCREEN_WIDTH } from '@constants/figure';
 
-export interface BoxItemProps {
+export interface Props {
   key: number,
   image: ImageSourcePropType,
   name: string,
   price: number,
-  onPress: () => void,
+  onPress?: () => void,
 }
 
-const BoxItem = ({ item }: { item: BoxItemProps }) => {
+const BoxItem = (props: Props) => {
   return (
     <TouchableOpacity
-      onPress={item.onPress}
+      onPress={props.onPress}
     >
     <Image
-      source={item.image}
+      source={props.image}
       style={styles.image}
     />
 
       <Text style={styles.name}>
-        {item.name}
+        {props.name}
       </Text>
 
       <Text style={styles.price}>
-        {item.price.toLocaleString()}원
+        {props.price.toLocaleString()}원
       </Text>
     </TouchableOpacity>
   );
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * (5 / 12),
     height: SCREEN_WIDTH * (5 / 12),
     borderRadius: 10,
-    borderWidth: 0.07
+    borderWidth: 0.07,
+    resizeMode: 'contain'
   },
   name: {
     marginTop: 14,

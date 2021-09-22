@@ -1,15 +1,15 @@
 import React from 'react'
 import {
-  Text,
+  Text, TextStyle,
 } from 'react-native'
 
-const Body = ({ content }: { content: string }) => {
+const Body = ({ content, style }: { content?: string, style?: TextStyle }) => {
   return (
     <Text
-      style={{
+      style={[{
         fontSize: 12,
         lineHeight: 20,
-      }}
+      }, style]}
     >
       {content}
     </Text>

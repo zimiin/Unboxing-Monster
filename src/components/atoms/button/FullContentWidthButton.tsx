@@ -10,7 +10,7 @@ import Bold from '@components/atoms/typography/Bold'
 
 interface Props extends TouchableOpacityProps {
   children: string,
-  onPress: () => void,
+  onPress?: () => void,
   fontColor?: string,
 }
 

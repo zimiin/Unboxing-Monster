@@ -3,35 +3,30 @@ import { SignUpPhoneConfirmInputProps } from '@constants/navigationTypes'
 import { SignUpContext } from '@src/stores/SignUpContext'
 import React, { useState, useEffect } from 'react'
 import { useContext } from 'react'
+import { removeHyphensInPhone } from './SignUpPhoneInputPage'
 
 const SignUpPhoneConfirmInputPage = ({ route, navigation }: SignUpPhoneConfirmInputProps) => {
-  const [{ phone, phoneConfirm }, { setPhoneConfirm }] = useContext(SignUpContext)
-  const [canGoNext, setCanGoNext] = useState<boolean>(false)
+  const [{ phone }, { }] = useContext(SignUpContext)
+  const [phoneInput, setPhoneInput] = useState<string>('')
+  const [validPhoneInput, setValidPhoneInput] = useState<boolean>(false)
   const [error, setError] = useState<string>()
 
-  const onChangeText = (input: string) => {
-    setError('')
-    setPhoneConfirm(input)
-    if (input === '') {
-      setCanGoNext(false)
-    } else {
-      setCanGoNext(true)
-    }
-  }
-
   const validateInput = () => {
-    if (phone === phoneConfirm) {
-      console.log('valid number')
+    const input = removeHyphensInPhone(phoneInput)
+
+    if (phone === input) {
+      setValidPhoneInput(true)
+      setError('')
       return true
     } else {
-      console.log('invalid number')
+      setValidPhoneInput(false)
       setError('휴대폰 번호가 일치하지 않습니다.')
       return false
     }
   }
 
   const onPressNext = () => {
-    if (validateInput() && canGoNext) {
+    if (validateInput()) {
       navigation.navigate('SignUpNicknameInput')
     }
   }
@@ -43,9 +38,9 @@ const SignUpPhoneConfirmInputPage = ({ route, navigation }: SignUpPhoneConfirmIn
       onPressGoBack={() => navigation.goBack()}
       label='핸드폰 번호를 다시 한 번 입력해주세요'
       keyboardType='numeric'
-      input={phoneConfirm}
-      onChangeText={onChangeText}
-      canGoNext={canGoNext}
+      input={phoneInput}
+      onChangeText={setPhoneInput}
+      canGoNext={validPhoneInput}
       onPressNext={onPressNext}
       error={error}
       onSubmitEditing={validateInput}

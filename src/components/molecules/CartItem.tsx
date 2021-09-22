@@ -3,20 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
+  ImageSourcePropType,
+  Image,
 } from 'react-native'
 import CheckBox from '@components/atoms/button/CheckBox'
-import FastImage from 'react-native-fast-image'
 import SubTitle from '@components/atoms/typography/SubTitle'
 import DeleteButton from '@components/atoms/button/DeleteButton'
 import MinusButton from '@components/atoms/button/MinusButton'
 import PlusButton from '@components/atoms/button/PlusButton'
 import { scale } from 'react-native-size-matters'
+import { defaultBox } from '@constants/images'
 
 interface Props {
   checked: boolean,
-  image: string,
-  name: string,
-  price: number,
+  image?: ImageSourcePropType,
+  name?: string,
+  price?: number,
   count: number,
   onPressCheckBox: () => void,
   onPressX: () => void,
@@ -33,16 +35,16 @@ const CartItem = (props: Props) => {
           onPress={props.onPressCheckBox}
         />
 
-        <FastImage
-          source={{ uri: props.image }}
+        <Image
+          source={props.image || defaultBox}
           style={styles.cartItemImage}
         />
 
         <View style={styles.cartItemNamePrice}>
-          <SubTitle content={props.name}/>
+          <SubTitle content={props.name || ''}/>
 
           <Text style={styles.cartItemPrice}>
-            {props.price}원
+            {props.price?.toLocaleString() || ''}원
           </Text>
         </View>
 
