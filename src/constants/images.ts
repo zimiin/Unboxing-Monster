@@ -58,6 +58,7 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   radio_box_chkd: require('assets/images/radio_box_chkd.png'),
   radio_box_unchkd: require('assets/images/radio_box_unchkd.png'),
   edit: require('assets/images/edit_2.png'),
+  unboxingMonster: require('assets/images/unboxing_monster.png')
 }
 
 export const defaultBoxUri: string = 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'

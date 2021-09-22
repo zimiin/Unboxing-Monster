@@ -12,7 +12,7 @@ import XIcon from '@components/atoms/icon/XIcon'
 import { scale } from 'react-native-size-matters'
 import { defaultBox } from '@constants/images'
 
-export interface StorageBoxData {
+export interface Props {
   id: number,
   image: ImageSourcePropType,
   name: string,
@@ -26,27 +26,27 @@ const defaultOpenFunction = () => {
   console.log("No function passed to StorageBox component.")
 }
 
-const StorageBox = ({ item }: {item: StorageBoxData}) => {
+const StorageBox = (props: Props) => {
   return (
     <TouchableOpacity 
       style={styles.container}
-      onPress={item.onPress}
+      onPress={props.onPress}
     >
       <Image
-        source={item.image}
+        source={props.image}
         style={styles.image || defaultBox}
       />
 
       <View>
         <Bold style={styles.name}>
-          {item.name || ''}
+          {props.name || ''}
         </Bold>
 
         <View style={styles.count}>
           <XIcon />
 
           <Bold style={styles.countValue}>
-            {item.count.toString() || ''}
+            {props.count.toString() || ''}
           </Bold>
         </View>
 
@@ -54,14 +54,14 @@ const StorageBox = ({ item }: {item: StorageBoxData}) => {
           <StorageBoxOpenButton
             buttonStyle={styles.openOneButton}
             textStyle={styles.openOneText}
-            onPress={item.openOneBox || defaultOpenFunction}
+            onPress={props.openOneBox || defaultOpenFunction}
           >
             1개 열기
           </StorageBoxOpenButton>
 
           <StorageBoxOpenButton
             buttonStyle={styles.openAllBoxButton}
-            onPress={item.openAllBox || defaultOpenFunction}
+            onPress={props.openAllBox || defaultOpenFunction}
           >
             모두 열기
           </StorageBoxOpenButton>
