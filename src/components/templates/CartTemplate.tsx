@@ -16,13 +16,19 @@ import { BoxId } from '@constants/types'
 import CartItem from '@components/molecules/CartItem'
 import { Cart, CartContext } from '@src/stores/CartContext'
 import { IMAGES } from '@constants/images'
+import NoticeModal from '@components/molecules/NoticeModal'
+import InfoIcon from '@components/atoms/icon/InfoIcon'
+import { verticalScale } from '@constants/figure'
+import Bold from '@components/atoms/typography/Bold'
 
 interface Props {
-  onPressBack: () => void,
   checkAll: boolean,
-  onPressCheckAll: () => void,
   totalBoxCount: number,
   totalBoxPrice: number,
+  showCustomBoxModal: boolean,
+  onCloseCustomBoxModal: () => void,
+  onPressBack: () => void,
+  onPressCheckAll: () => void,
   onPressPurchase: () => void,
 }
 
@@ -124,6 +130,15 @@ const CartTemplate = (props: Props) => {
       </View>
 
       <SafeAreaView style={styles.safeArea}/>
+
+      <NoticeModal
+        visible={props.showCustomBoxModal}
+        onRequestClose={props.onCloseCustomBoxModal}
+      >
+        <InfoIcon style={styles.infoIcon}/>
+
+        <Bold style={styles.infoText}>{'다른 유저의 커스텀박스가\n내 커스텀박스 리스트에 추가됩니다.'}</Bold>
+      </NoticeModal>
     </>
   )
 }
@@ -174,5 +189,14 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     backgroundColor: 'white',
+  },
+  infoIcon: {
+    marginVertical: verticalScale(10),
+  },
+  infoText: {
+    marginVertical: verticalScale(5),
+    textAlign: 'center',
+    fontSize: scale(13),
+    lineHeight: scale(20),
   }
 })

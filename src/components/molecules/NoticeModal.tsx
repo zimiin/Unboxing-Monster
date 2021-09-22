@@ -10,7 +10,7 @@ import { scale } from "react-native-size-matters"
 interface Props {
   visible: boolean,
   onRequestClose: () => void,
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const NoticeModal = (props: Props) => {
