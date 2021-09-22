@@ -3,6 +3,7 @@ import IMP from 'iamport-react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View } from 'react-native';
+import { PGPaymentProps } from '@constants/navigationTypes';
 
 function getUserCode(pg: string, tierCode?: string, type = 'payment') {
   if (tierCode) {
@@ -52,7 +53,7 @@ function Loading() {
   );
 }
 
-const PGPaymentPage = ({ route, navigation }) => {
+const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
   const params = route.params?.params;
   const tierCode = route.params?.tierCode;
   const userCode = getUserCode(params!.pg, tierCode);
@@ -64,7 +65,7 @@ const PGPaymentPage = ({ route, navigation }) => {
         tierCode={tierCode}
         loading={<Loading />}
         data={params!}
-        callback={(response) => navigation.replace('PaymentResult', response)}
+        callback={(response) => navigation.replace('PGPaymentResult', response)}
       />
     </SafeAreaView>
   );

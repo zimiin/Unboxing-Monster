@@ -153,12 +153,22 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     setPhoneInput(input)
   }
 
-  const getMerchantUid = () => {
+  const getMerchantUid = (name: string | null) => {
     try {
+      if (name === null) {
+        throw `name can't be null`
+      }
 
-      return ''
+      const date = new Date()
+      let uid = name + '-'
+
+      uid = uid + ((date.getDate() < 10) ? "0" : "") + date.getDate() + "/" + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + date.getFullYear()
+      uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds()
+      
+      console.log(uid)
+      return uid
     } catch (error) {
-      console.log('Error in getMerchantUid ', error)
+      console.log('Error in getMerchantUid', error)
       throw error
     }
   }
@@ -175,7 +185,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         setPhoneToAsyncStorage(phone)
       }
 
-      const merchantUid = getMerchantUid()
+      const merchantUid = getMerchantUid('')
 
       const data: PaymentParams = {
         params: {
