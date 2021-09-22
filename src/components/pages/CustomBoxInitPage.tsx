@@ -1,7 +1,7 @@
 import CustomBoxInitTemplate from "@components/templates/CustomBoxInitTemplate"
 import { CustomBoxInitProps } from "@constants/navigationTypes"
 import { CartContext } from "@src/stores/CartContext"
-import { getAccessToken } from "@src/utils/asyncStorageUtils"
+import { getAccessTokenFromAsyncStorage } from "@src/utils/asyncStorageUtils"
 import React, { useContext } from "react"
 import { hasLoggedIn } from "@src/utils/loginUtils"
 

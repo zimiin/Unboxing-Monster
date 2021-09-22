@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
@@ -13,10 +12,10 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import Header from '@components/organisms/header/Header'
 import { scale } from 'react-native-size-matters'
 import CheckBox from '@components/atoms/button/CheckBox'
-import { Box, BoxId } from '@constants/types'
+import { BoxId } from '@constants/types'
 import CartItem from '@components/molecules/CartItem'
 import { Cart, CartContext } from '@src/stores/CartContext'
-import { defaultBox, IMAGES } from '@constants/images'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   onPressBack: () => void,

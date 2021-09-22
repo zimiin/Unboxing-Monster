@@ -2,17 +2,18 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import ContentBox from '@components/atoms/ContentBox'
 import Header from '@components/organisms/header/Header'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
-
+  FlatList,
+  ImageSourcePropType,
+  TextInput,
 } from 'react-native'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { scale } from 'react-native-size-matters'
-import PaymentBoxItem, { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
+import PaymentBoxItem from '@components/molecules/PaymentBoxItem'
 import PointTableRow from '@components/molecules/PointTableRow'
 import { COLORS } from '@constants/colors'
 import CheckBox from '@components/atoms/button/CheckBox'
@@ -21,12 +22,14 @@ import { SCREEN_WIDTH } from '@constants/figure'
 import EdgeAlignedRow from '@components/atoms/EdgeAlignedRow'
 import Bold from '@components/atoms/typography/Bold'
 import { PaymentMethod } from '@components/pages/PaymentPage'
+import { Cart, CartContext } from '@src/stores/CartContext'
+import {BoxId, Box} from '@constants/types'
+import { IMAGES } from '@constants/images'
 
 interface Props {
   screenTitle: string,
   canGoBack: boolean,
   onPressBack: () => void,
-  boxData: PaymentBoxItemProps[],
   currentPoint: number,
   usingPoint: number,
   onChangeUsingPointAmount: (point: string) => void,
@@ -41,6 +44,8 @@ interface Props {
 }
 
 const PaymentTemplate = (props: Props) => {
+  const [{cart, boxData}, {}] = useContext(CartContext)
+
   const paymentMethodRadioButtons = useMemo(() => {
     return (
       props.paymentMethods.map(
@@ -60,18 +65,172 @@ const PaymentTemplate = (props: Props) => {
     )
   }, [props.selectedPaymentMethod])
 
-  const boxItems = props.boxData.map((item) => 
-    <PaymentBoxItem
-      key={item.id}
-      id={item.id}
-      image={item.image}
-      name={item.name}
-      count={item.count}
-      price={item.price}
-      style={{
-        marginVertical: 8,
-      }}
-    />
+  const boxListRenderItem = ({item}: {item: {boxId: BoxId, cartValue: Cart}}) => {
+    if (item.cartValue.checked === false) {
+      return (<></>)
+    }
+    
+    let boxImage: ImageSourcePropType | undefined
+    const box = boxData.get(item.boxId)
+    if (box) {
+      if (box.isLocal) {
+        boxImage = IMAGES[box.image]
+      } else {
+        boxImage = {uri: box.image}
+      }
+    }
+
+    return (
+      <PaymentBoxItem
+        id={item.boxId}
+        image={boxImage}
+        name={box?.title}
+        count={item.cartValue.count}
+        price={box?.price}
+        style={styles.productInfo}
+      />
+    )
+  }
+
+  const productInfoHeader = (
+    <Bold style={styles.title}>
+      상품정보
+    </Bold>
+  )
+
+  const productInfoFooter = (
+    <>
+      <HorizontalRule style={styles.horizontalRule} />
+
+      <ContentBox title='언박싱 포인트'>
+        <View style={styles.pointTable}>
+          <PointTableRow
+            style={styles.pointTableRow}
+            left={
+              <Text style={styles.tableText}>
+                보유
+              </Text>
+            }
+            center={
+              <Text
+                style={[
+                  styles.tableText,
+                  styles.pointText,
+                  styles.flexEnd
+                ]}
+              >
+                {props.currentPoint + ' P'}
+              </Text>
+            }
+          />
+
+          <PointTableRow
+            style={styles.pointTableRow}
+            left={
+              <Text style={styles.tableText}>
+                사용
+              </Text>
+            }
+            center={
+              <View style={styles.pointInputView}>
+                <TextInput
+                  style={styles.tableText}
+                  defaultValue={'0'}
+                  value={props.usingPoint.toString()}
+                  onChangeText={props.onChangeUsingPointAmount}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  selectTextOnFocus={true}
+                />
+
+                <Text
+                  style={[
+                    styles.tableText,
+                    styles.pointText
+                  ]}
+                >
+                  {' P'}
+                </Text>
+              </View>
+            }
+            right={
+              <View style={[
+                styles.flexEnd,
+                styles.pointCheckBoxContainer
+              ]}
+              >
+                <Text style={styles.tableText}>
+                  모두 사용
+                </Text>
+
+                <CheckBox
+                  checked={props.useAllPoint}
+                  onPress={props.onPressUseAllPoint}
+                  style={styles.checkbox}
+                />
+              </View>
+            }
+          />
+        </View>
+      </ContentBox>
+
+      <HorizontalRule />
+
+      <ContentBox title='결제수단'
+        style={styles.paymentMethodContentBox}>
+        <View style={styles.radioButtonContainer}>
+          {paymentMethodRadioButtons}
+        </View>
+      </ContentBox>
+
+      <HorizontalRule />
+
+      <ContentBox title='최종 결제 금액'>
+        <View style={styles.finalPriceContainer}>
+          <EdgeAlignedRow
+            style={styles.totalPriceRow}
+            left={
+              <Text style={styles.finalPriceTitle}>
+                상품 금액
+              </Text>
+            }
+            right={
+              <Text style={styles.finalPrice}>
+                {props.totalPrice.toLocaleString()} 원
+              </Text>
+            }
+          />
+
+          <EdgeAlignedRow
+            style={styles.totalPriceRow}
+            left={
+              <Text style={styles.finalPriceTitle}>
+                언박싱 포인트 사용
+              </Text>
+            }
+            right={
+              <Text style={styles.finalPrice}>
+                -{props.usingPoint.toLocaleString()} 원
+              </Text>
+            }
+          />
+
+          <EdgeAlignedRow
+            style={styles.totalPriceRow}
+            left={
+              <Bold style={styles.finalPriceTitle}>
+                결제 금액
+              </Bold>
+            }
+            right={
+              <Bold style={styles.finalPrice}>
+                {props.finalPrice.toLocaleString() + ' 원'}
+              </Bold>
+            }
+          />
+        </View>
+      </ContentBox>
+    </>
   )
 
   return (
@@ -84,144 +243,15 @@ const PaymentTemplate = (props: Props) => {
 
       <HorizontalRule />
 
-      <ScrollView style={styles.container}>
-        <ContentBox title='상품정보'>
-          <View style={styles.boxInfo}>
-            {boxItems}
-          </View>
-        </ContentBox>
-
-        <HorizontalRule />
-
-        <ContentBox title='언박싱 포인트'>
-          <View style={styles.pointTable}>
-            <PointTableRow
-              style={styles.pointTableRow}
-              left={
-                <Text style={styles.tableText}>
-                  보유
-                </Text>
-              }
-              center={
-                <Text
-                  style={[
-                    styles.tableText, 
-                    styles.pointText,
-                    styles.flexEnd
-                  ]}
-                >
-                  {props.currentPoint + ' P'}
-                </Text>
-              }
-            />
-
-            <PointTableRow
-              style={styles.pointTableRow}
-              left={
-                <Text style={styles.tableText}>
-                  사용
-                </Text>
-              }
-              center={
-                <View style={styles.pointInputView}>
-                  <TextInput 
-                    style={styles.tableText}
-                    defaultValue={'0'}
-                    value={props.usingPoint.toString()}
-                    onChangeText={props.onChangeUsingPointAmount}
-                    keyboardType='numeric'
-                    returnKeyType='done'
-                    selectTextOnFocus={true}
-                  />
-
-                  <Text
-                    style={[
-                      styles.tableText,
-                      styles.pointText
-                    ]}
-                  >
-                    {' P'}
-                  </Text>
-                </View>
-              }
-              right={
-                <View style={[
-                  styles.flexEnd,
-                  styles.pointCheckBoxContainer
-                ]}
-                >
-                  <Text style={styles.tableText}>
-                    모두 사용
-                  </Text>
-
-                  <CheckBox
-                    checked={props.useAllPoint}
-                    onPress={props.onPressUseAllPoint}
-                    style={styles.checkbox}
-                  />
-                </View>
-              }
-            />
-          </View>
-        </ContentBox>
-
-        <HorizontalRule />
-
-        <ContentBox title='결제수단'
-          style={styles.paymentMethodContentBox}>
-          <View style={styles.radioButtonContainer}>
-            {paymentMethodRadioButtons}
-          </View>
-        </ContentBox>
-
-        <HorizontalRule />
-
-        <ContentBox title='최종 결제 금액'>
-          <View style={styles.finalPriceContainer}>
-            <EdgeAlignedRow
-              style={styles.totalPriceRow}
-              left={
-                <Text style={styles.finalPriceTitle}>
-                  상품 금액
-                </Text>
-              }
-              right={
-                <Text style={styles.finalPrice}>
-                  {props.totalPrice.toLocaleString()} 원
-                </Text>
-              }
-            />
-
-            <EdgeAlignedRow
-              style={styles.totalPriceRow}
-              left={
-                <Text style={styles.finalPriceTitle}>
-                  언박싱 포인트 사용
-                </Text>
-              }
-              right={
-                <Text style={styles.finalPrice}>
-                  -{props.usingPoint.toLocaleString()} 원
-                </Text>
-              }
-            />
-
-            <EdgeAlignedRow
-              style={styles.totalPriceRow}
-              left={
-                <Bold style={styles.finalPriceTitle}>
-                  결제 금액
-                </Bold>
-              }
-              right={
-                <Bold style={styles.finalPrice}>
-                  {props.finalPrice.toLocaleString() + ' 원'}
-                </Bold>
-              }
-            />
-          </View>
-        </ContentBox>
-      </ScrollView>
+      <View style={styles.container}>
+        <FlatList
+          ListHeaderComponent={productInfoHeader}
+          renderItem={boxListRenderItem}
+          data={Array.from(cart, ([boxId, cartValue]) => ({boxId: boxId, cartValue: cartValue}))}
+          keyExtractor={(item) => item.boxId.toString()}
+          ListFooterComponent={productInfoFooter}
+        />
+      </View>
 
       <SafeAreaView style={styles.bottomButtonContainer}>
         <FullWidthButton
@@ -240,9 +270,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  boxInfo: {
-    marginTop: 6,
-    marginBottom: 20,
+  title: {
+    fontSize: 15,
+    marginTop: 14,
+    marginLeft: scale(24),
+    marginBottom: 6,
+  },
+  horizontalRule: {
+    marginTop: 17,
+  },
+  productInfo: {
+    marginVertical: 8,
+    marginHorizontal: scale(24),
   },
   pointTable: {
     marginTop: 5,

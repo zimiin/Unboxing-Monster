@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState, useCallback } from 'react'
 import PaymentTemplate from '@components/templates/PaymentTemplate'
 import { PaymentProps } from '@constants/navigationTypes'
 import { CartContext } from '@src/stores/CartContext'
 import { useEffect } from 'react'
-import { PaymentBoxItemProps } from '@components/molecules/PaymentBoxItem'
 import { URLS } from '@constants/urls'
 import { IMPData, IMPConst } from 'iamport-react-native'
-import {getEmailFromAsyncStorage, getNicknameFromAsyncStorage, getPhoneFromAsyncStorage} from '@src/utils/asyncStorageUtils'
+import {getAccessTokenFromAsyncStorage, getEmailFromAsyncStorage, getPhoneFromAsyncStorage} from '@src/utils/asyncStorageUtils'
+import { User } from '@constants/types'
 
 interface BoxIdCount {
   boxId: number,
@@ -35,125 +35,71 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
 ]
 
 const PaymentPage = ({route, navigation}: PaymentProps) => {
-  const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
-  const [boxData, setBoxData] = useState<PaymentBoxItemProps[]>()
-  const [totalPrice, setTotalPrice] = useState<number>(0)
-  const [boxIdCounts, setBoxIdCounts] = useState<BoxIdCount[]>()
+  const [{ cart, boxData }, { }] = useContext(CartContext)
   const [point, setPoint] = useState<number>(0)
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
 
-  useEffect(() => {
-    const setBoxDataState = async () => {
-      let data: PaymentBoxItemProps[] = []
-      
-      try {
-        for (let [boxId, item] of cart) {
-          if (item.checked === true) {
-            const url = URLS.unboxing_api + 'box/' + boxId
-            const response = await fetch(url)
-            const json = await response.json()
-
-            if (response.status !== 200) {
-              throw json.message + ' url: ' + response.url
-            }
-
-            const paymentBoxItem: PaymentBoxItemProps = {
-              id: json.id,
-              image: { uri: json.image },
-              name: json.title,
-              count: item.count,
-              price: item.count * json.price
-            }
-
-            data.push(paymentBoxItem)
-          }
-        }
-      } catch (error) {
-        console.error(error)
-      }
-      setBoxData(data)
-    }
-
-    setBoxDataState()
-  }, [cart])
-
-  useEffect(() => {
+  const totalPrice = useMemo(() => {
     let sum = 0
 
-    if (boxData) {
-      for (let item of boxData) {
-        sum += item.price
+    for (let [boxId, cartValue] of cart) {
+      if (cartValue.checked) {
+        const box = boxData.get(boxId)
+        if (box) {
+          sum += box.price * cartValue.count
+        }
       }
     }
-    
-    setTotalPrice(sum)
-  }, [boxData])
 
-  useEffect(() => {
+    return sum
+  }, [cart, boxData])
+
+  const boxIdCounts = useMemo(() => {
     let boxes: BoxIdCount[] = []
 
-    if (boxData) {
-      for (let item of boxData) {
+    for (let [boxId, cartValue] of cart) {
+      if (cartValue.checked) {
         boxes.push({
-          boxId: item.id,
-          count: item.count
+          boxId: boxId,
+          count: cartValue.count
         })
       }
     }
 
-    setBoxIdCounts(boxes)
-  }, [boxData])
+    return boxes
+  }, [cart])
 
   useEffect(() => {
-    const setPointState = async () => {
+    const getPoint = async () => {
       try {
-        const url = URLS.unboxing_api + 'users/' + 'k1804801727'
-        const response = await fetch(url)
-        const json = await response.json()
-
-        if (response.status !== 200) {
-          throw json.message + 'url : ' + response.url
-        }
-
-        setPoint(json.point)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    
-    setPointState()
-  }, [])
-
-  const requestPurchase = async () => {
-    try {
-      const response = await fetch(
-        URLS.unboxing_api + 'purchase', {
-          method: 'POST',
+        const url = URLS.unboxing_api + 'users'
+        const response = await fetch(
+          url, {
+          method: 'GET',
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
           },
-          body: JSON.stringify({
-            ownerId: "k1804801727",
-            price: totalPrice - usingPoint,
-            boxes: boxIdCounts,
-          })
         }
-      )
-      
-      const json = await response.json()
-      
-      if (response.status !== 201) {
-        throw 'Payment failed. : ' + json.message
+        )
+
+        if (response.status !== 200) {
+          const json = await response.json()
+          throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+        }
+
+        const user: User = await response.json()
+        return user.point
+      } catch (error) {
+        console.error('Error in getPoint', error)
       }
-      
-      navigation.push('PaymentComplete', {paymentId: json.id})
-    } catch (error) {
-      console.error(error)
     }
-  }
+
+    getPoint().then(result => setPoint(result || 0))
+  })
 
   const setUsingPointFromInput = (input: string) => {
     if (input === '') {
@@ -186,15 +132,16 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     setUseAllPoint(!useAllPoint)
   }
 
-  const merchantTitle = () => {
-    if (boxData) {
-      if (boxData.length === 1) {
-        return boxData[0].name
-      } else {
-        return boxData[0].name + ' 외 ' + (boxData.length - 1).toString() + '개'
-      }
+  const merchantTitle = useMemo(() => {
+    const box = boxData.get(boxIdCounts[0].boxId)
+    let title = box?.title || ''
+
+    if (boxIdCounts.length > 1) {
+      title += ' 외 ' + (boxIdCounts.length - 1).toString() + '개'
     }
-  }
+
+    return title
+  }, [boxData, boxIdCounts])
 
   const makePayment = async () => {
     const data: PaymentParams = {
@@ -204,9 +151,9 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         display: {card_quota: []},
         merchant_uid: "ORD20180131-0000011",
         amount: (totalPrice - usingPoint).toString(),
-        name: merchantTitle() || '',
+        name: merchantTitle,
         buyer_tel: await getPhoneFromAsyncStorage() || '01000000000',
-        buyer_name: await getNicknameFromAsyncStorage() || '',
+        buyer_name: '',
         buyer_email: await getEmailFromAsyncStorage() || '',
         app_scheme: 'Unboxing_pre',
         biz_num: '2460302264',
@@ -224,7 +171,6 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       screenTitle={'결제'}
       canGoBack={true}
       onPressBack={() => navigation.goBack()}
-      boxData={boxData || []}
       currentPoint={point}
       usingPoint={usingPoint}
       onChangeUsingPointAmount={setUsingPointFromInput}
