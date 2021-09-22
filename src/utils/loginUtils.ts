@@ -106,9 +106,12 @@ export const hasLoggedIn = async () => {
       return false
     } else if (response.status === 200) {
       return true
+    } else {
+      const json = await response.json()
+      throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
     }
   } catch (error) {
-    console.log('Error in hasLoggedIn', error)
+    console.log('Error in hasLoggedIn ', error)
     throw error
   }
 }

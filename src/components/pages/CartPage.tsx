@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { CartNavigationProp } from '@constants/navigationTypes'
+import { hasLoggedIn } from '@src/utils/loginUtils'
 
 const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
   const [{cart, boxData}, {modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll}] = useContext(CartContext)
@@ -39,7 +40,12 @@ const CartPage = ({ navigation }: {navigation: CartNavigationProp}) => {
     setTotalBoxCount(count)
   }, [cart])
 
-  const beginPayment = () => {
+  const beginPayment = async () => {
+    if (await hasLoggedIn() === false) {
+      navigation.navigate('Auth', {screen: 'LoginRequest'})
+      return
+    }
+
     let canBeginPayment: boolean = false
 
     for (let [boxId, item] of cart) {
