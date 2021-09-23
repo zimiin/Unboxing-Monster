@@ -6,7 +6,7 @@ import { BoxId, BoxStorage, Coupon, Item, ItemId, User } from "@constants/types"
 import { StorageProps } from "@constants/navigationTypes"
 import { URLS } from '@constants/urls'
 import { hasLoggedIn } from '@src/utils/loginUtils'
-import { getAccessTokenFromAsyncStorage } from "@src/utils/asyncStorageUtils"
+import { getAccessTokenFromAsyncStorage, getPhoneFromAsyncStorage } from "@src/utils/asyncStorageUtils"
 import { getDaysBetweenDates } from "@src/utils/utils"
 
 export interface UserCoupon extends Coupon {
@@ -121,11 +121,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
   }
 
-  const removeExpiredCoupons = (coupons: UserCoupon[]) => {
+  const removeExpiredUsedCoupons = (coupons: UserCoupon[]) => {
     const newCoupons: UserCoupon[] = []
     
     try {
       for (let coupon of coupons) {
+        if (coupon.isUsed === true) {
+          continue
+        }
+
         const validDays = getDaysBetweenDates(new Date(), new Date(coupon.Expiration))
         
         if (validDays <= 0) {
@@ -152,7 +156,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       setCouponRefreshThrottled(true)
 
       let coupons = await getCouponData()
-      coupons = removeExpiredCoupons(coupons)
+      coupons = removeExpiredUsedCoupons(coupons)
       
       setCouponData(coupons)
 
@@ -187,11 +191,11 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     })
   }
 
-  const onPressConfirmCoupon = async (coupon: UserCoupon) => {
+  const requestConfirmCoupon = async (coupon: UserCoupon, phone: string) => {
     try {
       const accessToken = await getAccessTokenFromAsyncStorage()
       const url = new URL(URLS.unboxing_api + 'coupon/confirm/' + coupon.id)
-      url.searchParams.append('phone', '01029276105')
+      url.searchParams.append('phone', phone)
 
       const response = await fetch(
         url.toString(), {
@@ -209,8 +213,13 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       }
       console.log('onPressConfirmCoupon status 200')
     } catch (error) {
-      console.log('Error in onPressConfirmCoupon', error)
+      console.log('Error in requestConfirmCoupon', error)
+      throw error
     }
+  }
+
+  const onPressConfirmCoupon = async (coupon: UserCoupon) => {
+    
   }
 
   const onPressRefundCoupon = (coupon: UserCoupon) => {

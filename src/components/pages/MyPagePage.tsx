@@ -1,9 +1,10 @@
 import MyPageTemplate from "@components/templates/MyPageTemplate"
 import { MyPageProps } from "@constants/navigationTypes"
+import { User } from "@constants/types"
 import { URLS } from "@constants/urls"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { CommonActions } from "@react-navigation/native"
-import { getNicknameFromAsyncStorage } from "@src/utils/asyncStorageUtils"
+import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from "@src/utils/asyncStorageUtils"
 import { getLoginUserId, hasLoggedIn } from "@src/utils/loginUtils"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 
@@ -14,18 +15,27 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
 
   const getPoint = useCallback(async () => {
     try {
-      const userId = await getLoginUserId()
-      const response = await fetch(URLS.unboxing_api + 'users/' + userId)
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const response = await fetch(
+        URLS.unboxing_api + 'users', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          }
+        }
+      )
 
       if (response.status !== 200) {
         const json = await response.json()
-        throw 'status ' + response.status + ', message: ' + json.message + ', url: ' + response.url
+        throw 'Failed to GET ' + response.url + ', status ' + response.status + ', ' + json.message
       }
 
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData.point
     } catch (error) {
-      console.log('Error in getPoint::', error)
+      console.log('Error in getPoint', error)
     }
   }, [])
 

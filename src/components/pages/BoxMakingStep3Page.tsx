@@ -8,6 +8,7 @@ import { Box, BoxItem } from '@constants/types'
 import { getLoginUserId } from '@src/utils/loginUtils'
 import AddToCartTemplate from '@components/templates/AddToCartTemplate'
 import { CartContext } from '@src/stores/CartContext'
+import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 
 const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
@@ -36,26 +37,31 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
 
   const requestPostBox = async () => {
     try {
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const nickname = await getNicknameFromAsyncStorage()
+      const items = Array.from(selectedItems, item => item.id)
       const response = await fetch(
         URLS.unboxing_api + 'box', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken,
           },
           body: JSON.stringify({
             title: boxName,
             price: boxPrice,
-            ownerId: await getLoginUserId(),
             image: boxImage,
-            detail: '',
+            isLocal: false,
+            detail: nickname + '님의 ' + boxName + ' 박스입니다.',
+            boxItems: items,
           })
         }
       )
-
+      
       if (response.status !== 201) {
         const json = await response.json()
-        throw 'status ' + response.status + ', message: ' + json.message + ', url: ' + response.url
+        throw 'Failed to POST ' + response.url + ', status ' + response.status + ', ' + json.message
       }
 
       const json: Box = await response.json()
@@ -66,42 +72,42 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
     }
   }
 
-  const mapBoxAndSelectedItems = async (boxId: number) => {
-    const boxitem: BoxItem[] = selectedItems.map(
-      item => ({
-        boxId: boxId,
-        itemId: item.id
-      })
-    )
+  // const mapBoxAndSelectedItems = async (boxId: number) => {
+  //   const boxitem: BoxItem[] = selectedItems.map(
+  //     item => ({
+  //       boxId: boxId,
+  //       itemId: item.id
+  //     })
+  //   )
 
-    try {
-      const response = await fetch(
-        URLS.unboxing_api + 'boxitem', {
-          method: 'POST',
-          headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          data: boxitem
-        })
-      });
+  //   try {
+  //     const response = await fetch(
+  //       URLS.unboxing_api + 'boxitem', {
+  //         method: 'POST',
+  //         headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         data: boxitem
+  //       })
+  //     });
 
-      if (response.status !== 201) {
-        const json = await response.json()
-        throw 'status ' + response.status + ', message: ' + json.message + ', url: ', response.url
-      }
+  //     if (response.status !== 201) {
+  //       const json = await response.json()
+  //       throw 'status ' + response.status + ', message: ' + json.message + ', url: ', response.url
+  //     }
 
-    } catch (error) {
-      console.log('Error in mapBoxAndSelectedItems', error)
-      throw error
-    }
-  }
+  //   } catch (error) {
+  //     console.log('Error in mapBoxAndSelectedItems', error)
+  //     throw error
+  //   }
+  // }
 
   const saveBoxInDB = async () => {
     try {
       const boxId = await requestPostBox()
-      await mapBoxAndSelectedItems(boxId)
+      // await mapBoxAndSelectedItems(boxId)
 
       return boxId
     } catch (error) {

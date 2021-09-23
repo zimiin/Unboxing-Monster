@@ -18,7 +18,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
   const requestLogin = async (provider: string, token: string) => {
     try {
       const response = await fetch(
-        URLS.test + 'auth/login/' + provider, {
+        URLS.unboxing_api + 'auth/login/' + provider, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -179,7 +179,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
   
   const getAppleToken = async (isAndroid: boolean, code: string) => {
     try {
-      let url = new URL(URLS.test + 'auth/token/apple')
+      let url = new URL(URLS.unboxing_api + 'auth/token/apple')
 
       url.searchParams.append('code', code)
       if (isAndroid) {
