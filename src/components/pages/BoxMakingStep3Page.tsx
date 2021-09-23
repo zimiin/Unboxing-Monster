@@ -5,14 +5,12 @@ import { CustomBoxContext } from '@src/stores/CustomBoxContext'
 import { generateProbability } from '@src/utils/probabilites'
 import { URLS } from '@constants/urls'
 import { Box, BoxItem } from '@constants/types'
-import { getLoginUserId } from '@src/utils/loginUtils'
-import AddToCartTemplate from '@components/templates/AddToCartTemplate'
 import { CartContext } from '@src/stores/CartContext'
 import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 
 const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
-  const [{}, {modifyBoxCount}] = useContext(CartContext)
+  const [{}, {modifyBoxCount, addBoxData}] = useContext(CartContext)
 
   const itemInfo: {id: number, name: string}[] = useMemo(() => {
     return selectedItems.map(
@@ -64,66 +62,33 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
         throw 'Failed to POST ' + response.url + ', status ' + response.status + ', ' + json.message
       }
 
-      const json: Box = await response.json()
-      return json.id
+      const box: Box = await response.json()
+      return box
     } catch (error) {
       console.log('Error in requestPostBox', error)
       throw error
     }
   }
 
-  // const mapBoxAndSelectedItems = async (boxId: number) => {
-  //   const boxitem: BoxItem[] = selectedItems.map(
-  //     item => ({
-  //       boxId: boxId,
-  //       itemId: item.id
-  //     })
-  //   )
-
-  //   try {
-  //     const response = await fetch(
-  //       URLS.unboxing_api + 'boxitem', {
-  //         method: 'POST',
-  //         headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         data: boxitem
-  //       })
-  //     });
-
-  //     if (response.status !== 201) {
-  //       const json = await response.json()
-  //       throw 'status ' + response.status + ', message: ' + json.message + ', url: ', response.url
-  //     }
-
-  //   } catch (error) {
-  //     console.log('Error in mapBoxAndSelectedItems', error)
-  //     throw error
-  //   }
-  // }
-
   const saveBoxInDB = async () => {
     try {
-      const boxId = await requestPostBox()
-      // await mapBoxAndSelectedItems(boxId)
-
-      return boxId
+      const box = await requestPostBox()
+      return box
     } catch (error) {
       console.log('Error in saveBoxInDB', error)
       throw error
     }
   }
 
-  const addToCart = async (boxId: number) => {
-    modifyBoxCount(boxId, +1)
+  const addToCart = async (box: Box) => {
+    modifyBoxCount(box.id, +1)
+    addBoxData(box)
   }
 
   const completeBoxMaking = async () => {
     try {
-      const boxId = await saveBoxInDB()
-      addToCart(boxId)
+      const box: Box = await saveBoxInDB()
+      addToCart(box)
       navigation.popToTop()
     } catch (error) {
       console.log('Error in completeBoxMaking', error)
