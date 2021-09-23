@@ -7,6 +7,7 @@ import { StorageProps } from "@constants/navigationTypes"
 import { URLS } from '@constants/urls'
 import { hasLoggedIn } from '@src/utils/loginUtils'
 import { getAccessTokenFromAsyncStorage } from "@src/utils/asyncStorageUtils"
+import { getDaysBetweenDates } from "@src/utils/utils"
 
 export interface UserCoupon extends Coupon {
   owner: User,
@@ -22,7 +23,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   const [boxRefreshThrottled, setBoxRefreshThrottled] = useState<boolean>(false)
   const [refreshingCouponData, setRefreshingCouponData] = useState<boolean>(false)
   const [couponRefreshThrottled, setCouponRefreshThrottled] = useState<boolean>(false)
-  const [initCoupon, setInitCoupon] = useState<boolean>(true)
   
   const getBoxStorageData = async () => {
     try {
@@ -98,8 +98,48 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
   }
 
-  const refundExpiredCoupons = (coupons: UserCoupon[]) => {
+  const requestRefundCoupon = async (coupon: UserCoupon) => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'coupon/refund/' + coupon.id, {
+          method: 'PATCH',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authrization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+          },
+        }
+      )
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to PATCH ' + response.url + ', status ' + response.status + ', message: ' + json.message
+      }
+    } catch (error) {
+      console.log('Error in requestRefundCoupon', error)
+      throw error
+    }
+  }
+
+  const removeExpiredCoupons = (coupons: UserCoupon[]) => {
+    const newCoupons: UserCoupon[] = []
     
+    try {
+      for (let coupon of coupons) {
+        const validDays = getDaysBetweenDates(new Date(), new Date(coupon.Expiration))
+        
+        if (validDays <= 0) {
+          requestRefundCoupon(coupon).catch(error => console.log('Error in removeExpiredCoupons', error))
+        } else {
+          newCoupons.push(coupon)
+        }
+      }
+    } catch (error) {
+      console.log('Error in removeExpiredCoupons', error)
+      throw error
+    }
+
+    return newCoupons
   }
 
   const getAndSetCouponData = async () => {
@@ -112,13 +152,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       setCouponRefreshThrottled(true)
 
       let coupons = await getCouponData()
-      console.log(coupons)
+      coupons = removeExpiredCoupons(coupons)
       
-      if (initCoupon) {
-        refundExpiredCoupons(coupons)
-        setInitCoupon(false)
-      }
-      console.log(coupons)
       setCouponData(coupons)
 
       setRefreshingCouponData(false)
@@ -152,12 +187,34 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     })
   }
 
-  const onPressConfirmCoupon = (couponId: number) => {
-    
+  const onPressConfirmCoupon = async (coupon: UserCoupon) => {
+    try {
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const url = new URL(URLS.unboxing_api + 'coupon/confirm/' + coupon.id)
+      url.searchParams.append('phone', '01029276105')
+
+      const response = await fetch(
+        url.toString(), {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken
+        }
+      })
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to PATCH ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+      console.log('onPressConfirmCoupon status 200')
+    } catch (error) {
+      console.log('Error in onPressConfirmCoupon', error)
+    }
   }
 
-  const onPressRefundCoupon = (couponId: number) => {
-
+  const onPressRefundCoupon = (coupon: UserCoupon) => {
+    requestRefundCoupon(coupon).catch(error => console.log('Error in onPressRefundCoupon', error))
   }
 
   const onPressCoupon = (item: Item) => {

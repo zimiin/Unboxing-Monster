@@ -15,6 +15,7 @@ import MonsterNotice from '@components/molecules/MonsterNotice'
 import { BoxId, BoxStorage, Coupon, Item, ItemId } from '@constants/types'
 import { IMAGES } from '@constants/images'
 import { UserCoupon } from '@components/pages/StoragePage'
+import { getDaysBetweenDates } from '@src/utils/utils'
 
 export type Focus = 'randomBox' | 'coupon'
 
@@ -32,8 +33,8 @@ interface Props {
   onPressLogin: () => void,
   openBox: (boxId: BoxId, count: number) => void,
   onPressBox: (boxId: BoxId) => void,
-  onPressConfirmCoupon: (couponId: number) => void,
-  onPressRefundCoupon: (couponId: number) => void,
+  onPressConfirmCoupon: (coupon: UserCoupon) => void,
+  onPressRefundCoupon: (coupon: UserCoupon) => void,
   onPressCoupon: (item: Item) => void,
 }
 
@@ -60,9 +61,9 @@ const StorageTemplate = (props: Props) => {
         image={{uri: item.item.image}}
         name={item.item.title}
         price={item.item.price}
-        confirmableDays={0}
-        onPressConfirm={() => props.onPressConfirmCoupon(item.id)}
-        onPressRefund={() => props.onPressRefundCoupon(item.id)}
+        confirmableDays={getDaysBetweenDates(new Date(), new Date(item.Expiration))}
+        onPressConfirm={() => props.onPressConfirmCoupon(item)}
+        onPressRefund={() => props.onPressRefundCoupon(item)}
         onPress={() => props.onPressCoupon(item.item)}
       />
     )

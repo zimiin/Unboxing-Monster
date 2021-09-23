@@ -87,8 +87,8 @@ export const getUserInfoFromToken = async (accessToken: string) => {
 export const hasLoggedIn = async () => {
   try {
     const access_token = await getAccessTokenFromAsyncStorage()
-    console.log(access_token)
-    
+    console.log('hasLoggedIn access token', access_token)
+        
     if (access_token === null) {
       return false
     }

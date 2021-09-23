@@ -28,3 +28,13 @@ export const removeHyphens = (str: string) => {
   }
   return newStr
 }
+
+export const getDaysBetweenDates = (date1: Date, date2: Date) => {
+  const time1 = date1.getTime()
+  const time2 = date2.getTime()
+
+  let diff = time1 - time2
+  if (diff < 0) diff = diff * -1
+
+  return Math.floor(diff / (1000 * 60 * 60 * 24))
+}
