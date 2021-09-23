@@ -218,10 +218,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     }
   }
 
-  const onPressConfirmCoupon = async (coupon: UserCoupon) => {
-    
-  }
-
   const onPressRefundCoupon = (coupon: UserCoupon) => {
     requestRefundCoupon(coupon).catch(error => console.log('Error in onPressRefundCoupon', error))
   }
@@ -245,7 +241,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
       openBox={openBox}
       onPressBox={(boxId: BoxId) => navigation.navigate('BoxInfo', {boxId: boxId})}
-      onPressConfirmCoupon={onPressConfirmCoupon}
+      onPressConfirmCoupon={(coupon: Coupon) => navigation.navigate('CouponConfirm', {coupon: coupon})}
       onPressRefundCoupon={onPressRefundCoupon}
       onPressCoupon={onPressCoupon}
     />
