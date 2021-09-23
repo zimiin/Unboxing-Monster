@@ -46,15 +46,27 @@ export interface User {
   id: string,
   nickname: string,
   point: number,
+  isManager: boolean
 }
 
 export interface BoxStorage {
   id: number,
   ownerId: string,
-  boxId: number,
+  boxId: BoxId,
   count: number,
   owner: User,
-  box: Box
+  box: Box,
+}
+
+export interface Coupon {
+  id: number,
+  ownerId: string,
+  itemId: ItemId,
+  isUsed: boolean,
+  createAt: string,
+  refund: boolean,
+  refundAt: string,
+  Expiration: string,
 }
 
 export interface CouponWithItem {

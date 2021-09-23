@@ -1,18 +1,17 @@
-import { OpenResultItem } from '@components/molecules/SingleOpenResultItem'
 import OpenResultTemplate from '@components/templates/OpenResultTemplate'
 import { OpenResultProps } from '@constants/navigationTypes'
-import { CommonActions } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { URLS } from '@constants/urls'
+import { Item } from '@constants/types'
 
 const OpenResultPage = ({route, navigation}: OpenResultProps) => {
-  const [openResultData, setOpenResultData] = useState<OpenResultItem []>()
+  const [openResultData, setOpenResultData] = useState<Item[]>()
   
   useEffect(() => {
     const setOpenResultDataState = async () => {
       const result = route.params.result
-      let data: OpenResultItem[] = []
+      let data: Item[] = []
 
       for (let i = 0; i < result.length; i++) {
         try {
@@ -27,18 +26,13 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
             }
           )
           
-          const json = await response.json()
-
           if (response.status !== 200) {
+            const json = await response.json()
             throw json.message + ' url: ' + response.url
           }
           
-          data.push({
-            key: i,
-            image: {uri: json.image},
-            name: json.title,
-            price: json.price
-          })
+          const item: Item = await response.json()
+          data.push(item)
         } catch (error) {
           console.error(error)
         }

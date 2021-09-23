@@ -15,6 +15,7 @@ import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
 import NoDataBox from '@components/molecules/NoDataBox'
 import { IMAGES } from '@constants/images'
+import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
 
 interface Props {
   onPressSearchBar: () => void,
@@ -110,6 +111,10 @@ const HomeTemplate = (props: Props) => {
     </>
   )
 
+  const footer = (
+    <View style={styles.footer}/>
+  )
+
   return (
     <>
       <HomeScreenHeader
@@ -124,6 +129,7 @@ const HomeTemplate = (props: Props) => {
         data={props.allBoxData}
         ListEmptyComponent={verticalListEmptyComponent}
         ListHeaderComponent={aboveItems}
+        ListFooterComponent={footer}
         centerContent={true}
         columnWrapperStyle={styles.columnWrapper}
         style={styles.mainFlatList}
@@ -131,6 +137,11 @@ const HomeTemplate = (props: Props) => {
         refreshing={props.refreshing}
       />
         
+      <FloatingCartButton
+        style={styles.cartButton}
+        onPress={props.onPressCart}
+      />
+
       <TutorialModal
         modalVisible={props.modalVisible}
         setModalVisible={props.setModalVisible}
@@ -176,5 +187,13 @@ const styles = StyleSheet.create({
   },
   mainFlatList: {
     backgroundColor: 'white',
-  }
+  },
+  cartButton: {
+    position: 'absolute',
+    bottom: scale(17),
+    right: scale(17),
+  },
+  footer: {
+    height: scale(50),
+  },
 })

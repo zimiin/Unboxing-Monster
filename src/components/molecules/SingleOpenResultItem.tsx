@@ -12,7 +12,6 @@ import { scale } from 'react-native-size-matters'
 import Bold from '@components/atoms/typography/Bold'
 
 export interface OpenResultItem {
-  key: number,
   image: ImageSourcePropType,
   name: string,
   price: number

@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
     height: scale(97),
     position: 'absolute',
     top: -scale(23),
+    borderRadius: scale(8),
   },
 })

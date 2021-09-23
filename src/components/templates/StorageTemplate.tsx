@@ -9,30 +9,71 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import StorageTab from '@components/molecules/StorageTab'
 import Header from '@components/organisms/header/Header'
 import StorageBox from '@components/molecules/StorageBox'
-import { StorageBoxData } from '@components/molecules/StorageBox'
-import StorageCoupon, { StorageCouponData } from '@components/molecules/StorageCoupon'
+import StorageCoupon from '@components/molecules/StorageCoupon'
 import LoginNotice from '@components/organisms/LoginNotice'
+import MonsterNotice from '@components/molecules/MonsterNotice'
+import { BoxId, BoxStorage, Coupon, Item, ItemId } from '@constants/types'
+import { IMAGES } from '@constants/images'
+import { UserCoupon } from '@components/pages/StoragePage'
+import { getDaysBetweenDates } from '@src/utils/utils'
+import NoticeModal from '@components/molecules/NoticeModal'
 
 export type Focus = 'randomBox' | 'coupon'
 
 interface Props {
   loginState: boolean,
   focusOn: Focus,
+  boxData: BoxStorage[],
+  couponData: UserCoupon[],
+  refreshingBoxList: boolean,
+  refreshingCouponList: boolean,
   onPressRandomBoxTab: () => void,
   onPressCouponTab: () => void,
-  boxData: StorageBoxData[],
-  couponData: StorageCouponData[],
-  refreshingBoxList: boolean,
   onRefreshBoxList: () => void,
-  refreshingCouponList: boolean,
   onRefreshCouponList: () => void,
   onPressLogin: () => void,
+  openBox: (boxId: BoxId, count: number) => void,
+  onPressBox: (boxId: BoxId) => void,
+  onPressConfirmCoupon: (coupon: UserCoupon) => void,
+  onPressRefundCoupon: (coupon: UserCoupon) => void,
+  onPressCoupon: (item: Item) => void,
 }
 
 const StorageTemplate = (props: Props) => {
+  const boxListRenderItem = ({item}: {item: BoxStorage}) => {
+    return (
+      <StorageBox
+        id={item.boxId}
+        image={item.box.isLocal ? IMAGES[item.box.image] : {uri: item.box.image}}
+        name={item.box.title}
+        count={item.count}
+        openOneBox={() => props.openBox(item.boxId, 1)}
+        openAllBox={() => props.openBox(item.boxId, item.count)}
+        onPress={() => props.onPressBox(item.boxId)}
+      />
+    )
+  }
+
+  const couponListRenderItem = ({ item }: { item: UserCoupon}) => {
+    return (
+      <StorageCoupon
+        id={item.id}
+        itemId={item.itemId}
+        image={{uri: item.item.image}}
+        name={item.item.title}
+        price={item.item.price}
+        confirmableDays={getDaysBetweenDates(new Date(), new Date(item.Expiration))}
+        onPressConfirm={() => props.onPressConfirmCoupon(item)}
+        onPressRefund={() => props.onPressRefundCoupon(item)}
+        onPress={() => props.onPressCoupon(item.item)}
+      />
+    )
+  }
+
   const boxes = (
     <FlatList
-      renderItem={StorageBox}
+      renderItem={boxListRenderItem}
+      ListEmptyComponent={<MonsterNotice notice={'랜덤박스함이 비어있어요'}/>}
       data={props.boxData}
       style={styles.storageData}
       refreshing={props.refreshingBoxList}
@@ -42,7 +83,8 @@ const StorageTemplate = (props: Props) => {
 
   const coupons = (
     <FlatList
-      renderItem={StorageCoupon}
+      renderItem={couponListRenderItem}
+      ListEmptyComponent={<MonsterNotice notice={'모바일쿠폰함이 비어있어요'} />}
       data={props.couponData}
       style={styles.storageData}
       refreshing={props.refreshingCouponList}
@@ -114,5 +156,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
-  }
+  },
+  
 })

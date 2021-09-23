@@ -1,20 +1,22 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { CompositeNavigationProp, NavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Box, Item } from '@constants/types'
+import { IMPData } from 'iamport-react-native'
+import { BoxWithItems, Coupon, Item, ItemId } from '@constants/types'
 
 // Root Stack
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>,
-  Main: undefined,
+  Main: NavigatorScreenParams<BottomTabParamList> | undefined,
   Open: NavigatorScreenParams<OpenStackParamList>,
-  BoxInfo: { boxId: number }
-  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string }
-  ProbInfo: { boxId: number, boxPrice: number, items: Item[] }
-  AddToCart: { boxData: Box }
-  Cart: undefined
-  Payment: undefined
-  PaymentComplete: { paymentId: number }
+  BoxInfo: { boxId: number },
+  ItemInfo: { itemId: number, itemImage: string, itemTitle: string, itemPrice: number, itemDetail: string },
+  ProbInfo: { boxId: number, boxPrice: number, items: Item[] },
+  AddToCart: { boxData: BoxWithItems },
+  Cart: undefined,
+  Payment: undefined,
+  PGPayment: PaymentParams | undefined,
+  PaymentComplete: any,
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -66,11 +68,24 @@ export type CartProps = {
   navigation: CartNavigationProp
 }
 
+// Payment
+export interface PaymentParams {
+  params: IMPData.PaymentData;
+  tierCode?: string;
+}
+
 export type PaymentNavigationProp = StackNavigationProp<RootStackParamList, 'Payment'>
 export type PaymentRouteProp = RouteProp<RootStackParamList, 'Payment'>
 export type PaymentProps = {
   route: PaymentRouteProp
   navigation: PaymentNavigationProp
+}
+
+export type PGPaymentNavigationProp = StackNavigationProp<RootStackParamList, 'PGPayment'>
+export type PGPaymentRouteProp = RouteProp<RootStackParamList, 'PGPayment'>
+export type PGPaymentProps = {
+  route: PGPaymentRouteProp
+  navigation: PGPaymentNavigationProp
 }
 
 export type PaymentCompleteNavigationProp = StackNavigationProp<RootStackParamList, 'PaymentComplete'>
@@ -301,8 +316,8 @@ export type MyPageProps = {
 // Open Stack
 export type OpenStackParamList = {
   Loading: { boxId: number, count: number },
-  Opening: { result: number[] },
-  OpenResult: { result: number[] }
+  Opening: { result: ItemId[] },
+  OpenResult: { result: ItemId[] }
 }
 
 export type LoadingNavigationProp = CompositeNavigationProp<

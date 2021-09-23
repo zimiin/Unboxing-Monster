@@ -11,9 +11,11 @@ import {
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import { defaultBox } from '@constants/images'
+import { ItemId } from '@constants/types'
 
-export interface StorageCouponData {
+export interface Props {
   id: number,
+  itemId: ItemId,
   image: ImageSourcePropType,
   name: string,
   price: number,
@@ -27,14 +29,14 @@ const defaultFunction = () => {
   console.log("No function passed to StorageCoupon")
 }
 
-const StorageCoupon = ({ item }: { item: StorageCouponData }) => {
+const StorageCoupon = (props: Props) => {
   return (
     <TouchableOpacity 
       style={styles.container}
-      onPress={item.onPress}
+      onPress={props.onPress}
     >
       <Image
-        source={item.image || defaultBox}
+        source={props.image || defaultBox}
         style={styles.image}
       />
 
@@ -44,20 +46,20 @@ const StorageCoupon = ({ item }: { item: StorageCouponData }) => {
           style={styles.name}
           numberOfLines={1}
         >
-          {item.name || ''}
+          {props.name || ''}
         </Bold>
 
         <Text style={styles.price}>
-          {item.price.toLocaleString() || ''} 원
+          {props.price.toLocaleString() || ''} 원
         </Text>
 
         <Text style={styles.confirmableDays}>
-          자동 환불까지 {item.confirmableDays || ''}일 남았습니다.
+          자동 환불까지 {props.confirmableDays || ''}일 남았습니다.
         </Text>
 
         <View style={styles.buttonContainer}>
           <StorageCouponConfirmButton
-            onPress={item.onPressConfirm || defaultFunction}
+            onPress={props.onPressConfirm || defaultFunction}
             buttonStyle={styles.confirmButton}
             textStyle={styles.confirmText}
           >
@@ -65,7 +67,7 @@ const StorageCoupon = ({ item }: { item: StorageCouponData }) => {
           </StorageCouponConfirmButton>
 
           <StorageCouponConfirmButton
-            onPress={item.onPressRefund || defaultFunction}
+            onPress={props.onPressRefund || defaultFunction}
             buttonStyle={styles.refundButton}
             textStyle={styles.refundText}
           >

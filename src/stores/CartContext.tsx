@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {ViewProps} from 'react-native'
-import {Box, BoxId } from '@constants/types'
+import {Box, BoxId, BoxWithItems } from '@constants/types'
 
 export type Cart = {
   count: number
@@ -8,24 +8,24 @@ export type Cart = {
 }
 
 type Context = [
-  {cart: Map<BoxId, Cart>, boxData: Map<BoxId, Box>},
+  {cart: Map<BoxId, Cart>, boxData: Map<BoxId, BoxWithItems>},
   {
     modifyBoxCount: (boxId: BoxId, amount: number) => void,
     deleteFromCart: (boxes: number[]) => void,
     setChecked: (boxId: BoxId, bool: boolean) => void,
     setCheckedToAll: (bool: boolean) => void,
-    addBoxData: (data: Box) => void,
+    addBoxData: (data: BoxWithItems) => void,
   }
 ]
 
 const defaultContext: Context = [
-  {cart: new Map<BoxId, Cart>(), boxData: new Map<BoxId, Box>()},
+  { cart: new Map<BoxId, Cart>(), boxData: new Map<BoxId, BoxWithItems>()},
   {
     modifyBoxCount: (boxId: BoxId, amount: number) => {},
     deleteFromCart: (boxes: number[]) => {},
     setChecked: (boxId: BoxId, bool: boolean) => {},
     setCheckedToAll: (bool: boolean) => {},
-    addBoxData: (data: Box) => {},
+    addBoxData: (data: BoxWithItems) => {},
   }
 ]
 
@@ -37,7 +37,7 @@ interface Props extends ViewProps {
 
 const CartContextProvider = (props: Props) => {
   const [cart, setCart] = useState(new Map<BoxId, Cart>())
-  const [boxData, setBoxData] = useState(new Map<BoxId, Box>())
+  const [boxData, setBoxData] = useState(new Map<BoxId, BoxWithItems>())
   
   const modifyBoxCount = (boxId: BoxId, amount: number) => {
     let curCart = new Map(cart)
@@ -94,7 +94,7 @@ const CartContextProvider = (props: Props) => {
     setCart(curCart)
   }
 
-  const addBoxData = (data: Box) => {
+  const addBoxData = (data: BoxWithItems) => {
     if (boxData.get(data.id) === undefined) {
       let curData = new Map(boxData)
       curData.set(data.id, data)
