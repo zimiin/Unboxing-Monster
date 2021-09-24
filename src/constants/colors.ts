@@ -11,3 +11,8 @@ export const COLORS: Colors = {
   grey_box: '#f9f9f9',
   bold_black: '#060606',
 }
+
+export const PROB_COLORS = [
+  "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8",
+  "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8"
+]

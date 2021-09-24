@@ -100,13 +100,14 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const requestRefundCoupon = async (coupon: UserCoupon) => {
     try {
+      const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
         URLS.unboxing_api + 'coupon/refund/' + coupon.id, {
           method: 'PATCH',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'Authrization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+            'Authorization': 'Bearer ' + accessToken
           },
         }
       )
@@ -126,10 +127,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     
     try {
       for (let coupon of coupons) {
-        if (coupon.isUsed === true) {
-          continue
-        }
-
         const validDays = getDaysBetweenDates(new Date(), new Date(coupon.Expiration))
         
         if (validDays <= 0) {
@@ -153,14 +150,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       }
 
       setRefreshingCouponData(true)
-      setCouponRefreshThrottled(true)
-
+      
       let coupons = await getCouponData()
       coupons = removeExpiredUsedCoupons(coupons)
       
       setCouponData(coupons)
-
+      
       setRefreshingCouponData(false)
+
+      setCouponRefreshThrottled(true)
       setTimeout(() => setCouponRefreshThrottled(false), 3000)
     } catch (error) {
       console.log('Error in getAndSetCouponData', error)
