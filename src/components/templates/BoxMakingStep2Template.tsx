@@ -20,7 +20,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import ModalCloseButton from '@components/atoms/button/ModalCloseButton'
 import InputField from '@components/atoms/InputField'
 import EditIcon from '@components/atoms/icon/EditIcon'
-import Slider from '@react-native-community/slider'
+import { Slider } from 'react-native-elements'
 
 interface Props {
   screenTitle: string,
@@ -109,18 +109,15 @@ const BoxMakingStep2Template = (props: Props) => {
           </View>
 
           <Slider
-            style={{ 
-              width: scale(312), 
-              marginTop: 20,
-            }}
+            value={props.boxPrice}
+            onValueChange={props.onPriceInputChange}
             minimumValue={props.minPrice}
             maximumValue={props.maxPrice}
-            value={props.minPrice}
-            onValueChange={props.onPriceInputChange}
             step={100}
-            minimumTrackTintColor="rgba(6, 6, 6, 0.2)"
-            maximumTrackTintColor="rgba(6, 6, 6, 0.2)"
-            thumbTintColor={COLORS.main}
+            style={styles.slider}
+            maximumTrackTintColor={'#CCCCCC'}
+            minimumTrackTintColor={'#9B9B9B'}
+            thumbStyle={{ width: scale(20), height: scale(27), backgroundColor: '#4888F8'}}
           />
 
           <Bold style={styles.price}>
@@ -249,9 +246,14 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 37,
   },
+  slider: {
+    marginTop: verticalScale(20)
+  },
   price: {
     fontSize: 17,
     alignSelf: 'center',
     marginTop: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.grey_text,
   }
 })

@@ -11,7 +11,19 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [boxImageInput, setBoxImageInput] = useState<number>(4)
   const [showBoxListModal, setShowBoxListModal] = useState<boolean>(false)
   const [boxNameInput, setBoxNameInput] = useState<string>()
-  const [boxPriceInput, setBoxPriceInput] = useState<number>()
+  const [boxPriceInput, setBoxPriceInput] = useState<number>(selectedItems[selectedItems.length - 1].price)
+
+  const maxBoxPrice = useMemo(() => {
+    return selectedItems[0]?.price
+  }, [selectedItems])
+
+  const minBoxPrice = useMemo(() => {
+    if (selectedItems.length) {
+      const lastIdx = selectedItems.length - 1
+      return selectedItems[lastIdx].price
+    }
+    return 0
+  }, [selectedItems])
 
   const boxes: { id: number, image: ImageSourcePropType }[] = useMemo(() => {
     return (
@@ -44,18 +56,6 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
     setShowBoxListModal(false)
   }
 
-  const maxBoxPrice = useMemo(() => {
-    return selectedItems[0]?.price
-  }, [selectedItems])
-
-  const minBoxPrice = useMemo(() => {
-    if (selectedItems.length) {
-      const lastIdx = selectedItems.length - 1
-      return selectedItems[lastIdx].price
-    }
-    return 0
-  }, [selectedItems])
-
   const completeStep2 = async () => {
     setBoxName(boxNameInput || await getDefaultBoxName())
     setBoxPrice(boxPriceInput || minBoxPrice)
@@ -73,7 +73,7 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
       boxName={boxNameInput}
       minPrice={minBoxPrice}
       maxPrice={maxBoxPrice}
-      boxPrice={boxPriceInput || minBoxPrice}
+      boxPrice={boxPriceInput}
       onPriceInputChange={setBoxPriceInput}
       onRequestCloseModal={() => setShowBoxListModal(false)}
       onPressBoxImage={() => setShowBoxListModal(true)}

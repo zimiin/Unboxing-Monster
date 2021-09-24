@@ -55,8 +55,7 @@ const BoxMakingStep3Template = (props: Props) => {
     props.probs
       .filter((value) => value > 0)
       .map(
-        (value, index) => (
-          {
+        (value, index) => ({
             value,
             svg: {
               fill: chartData[index].color,
