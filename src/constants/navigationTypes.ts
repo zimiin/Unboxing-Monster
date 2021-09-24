@@ -216,8 +216,16 @@ export type HomeProps = {
   navigation: HomeNavigationProp
 }
 
-export type SearchNavigationProp = StackNavigationProp<HomeStackParamList, 'Search'>
+export type SearchRouteProp = RouteProp<HomeStackParamList, 'Search'>
+export type SearchNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<HomeStackParamList, 'Search'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'Home'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
 export type SearchProps = {
+  route: SearchRouteProp,
   navigation: SearchNavigationProp
 }
 

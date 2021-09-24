@@ -13,13 +13,13 @@ import { scale } from 'react-native-size-matters'
 import { IMAGES } from '@constants/images'
 
 interface Props {
-  canGoBack: boolean
-  goBackAction: () => void
+  canGoBack: boolean,
+  goBackAction?: () => void,
+  searchValue: string,
+  onChangeSearchValue: (input: string) => void,
 }
 
 const HeaderWhileSearching = (props: Props) => {
-  const [searchValue, setSearchValue] = useState('')
-
   const cancelButton = (
     <View style={styles.cancelButtonContainer}>
       <TouchableOpacity
@@ -38,7 +38,7 @@ const HeaderWhileSearching = (props: Props) => {
       <View style={styles.searchBar}>
         <TouchableOpacity
           style={styles.xIconButton}
-          onPress={() => setSearchValue('')}
+          onPress={() => props.onChangeSearchValue('')}
         >
           <Image
             source={IMAGES.xCircle}
@@ -48,13 +48,10 @@ const HeaderWhileSearching = (props: Props) => {
       </View>
 
       <TextInput
-        style={styles.textInput}
-        onChangeText={(content) => setSearchValue(content)}
+        value={props.searchValue}
+        onChangeText={props.onChangeSearchValue}
         autoFocus={true}
-        onSubmitEditing={() => {
-          console.log(searchValue)
-        }}
-        value={searchValue}
+        style={styles.textInput}
       />
     </>
   )
