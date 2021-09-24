@@ -4,12 +4,12 @@ import {
   StyleSheet,
   TextInput,
   TextInputProps,
-  ViewStyle,
   Text,
+  TextStyle,
 } from 'react-native'
 
 interface Props extends TextInputProps {
-  style?: ViewStyle,
+  style?: TextStyle,
   input?: string,
   onChangeText?: (input: string) => void,
   error?: string,

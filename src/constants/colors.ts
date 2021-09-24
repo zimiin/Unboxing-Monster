@@ -1,8 +1,11 @@
+import { ColorValue } from "react-native"
+
 type Colors = {
-  main: string,
-  grey_text: string,
-  grey_box: string,
-  bold_black: string,
+  main: ColorValue,
+  grey_text: ColorValue,
+  grey_box: ColorValue,
+  bold_black: ColorValue,
+  error: ColorValue
 }
 
 export const COLORS: Colors = {
@@ -10,6 +13,7 @@ export const COLORS: Colors = {
   grey_text: 'rgba(6, 6, 6, 0.5)',
   grey_box: '#f9f9f9',
   bold_black: '#060606',
+  error: '#ec4f47',
 }
 
 export const PROB_COLORS = [

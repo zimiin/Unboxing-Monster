@@ -11,8 +11,6 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [boxImageInput, setBoxImageInput] = useState<number>(4)
   const [showBoxListModal, setShowBoxListModal] = useState<boolean>(false)
   const [boxNameInput, setBoxNameInput] = useState<string>()
-  const [boxPriceInput, setBoxPriceInput] = useState<number>(selectedItems[selectedItems.length - 1].price)
-
   const maxBoxPrice = useMemo(() => {
     return selectedItems[0]?.price
   }, [selectedItems])
@@ -24,6 +22,9 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
     }
     return 0
   }, [selectedItems])
+  const [boxPriceInput, setBoxPriceInput] = useState<number>(minBoxPrice)
+  const [textBoxPriceInput, setTextBoxPriceInput] = useState<string>(minBoxPrice.toString())
+  const [error, setError] = useState<string>('')
 
   const boxes: { id: number, image: ImageSourcePropType }[] = useMemo(() => {
     return (
@@ -56,11 +57,36 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
     setShowBoxListModal(false)
   }
 
+  const onChangeNumBoxPriceInput = (input: number) => {
+    setError('')
+    setBoxPriceInput(input)
+    setTextBoxPriceInput(input.toString())
+  }
+
+  const onChangeTextBoxPriceInput = (input: string) => {
+    setError('')
+    const number = input === '' ? 0 : parseInt(input)
+
+    if (input === '') {
+      setBoxPriceInput(0)
+      setTextBoxPriceInput('0')
+    } else {
+      setBoxPriceInput(number)
+      setTextBoxPriceInput(parseInt(input).toString())
+    }
+    
+    if (number < minBoxPrice || maxBoxPrice < number) {
+      setError('가격은 ' + minBoxPrice.toLocaleString() + '원 이상, ' + maxBoxPrice.toLocaleString() + '원 이하여야 합니다.')
+    }
+  }
+
   const completeStep2 = async () => {
-    setBoxName(boxNameInput || await getDefaultBoxName())
-    setBoxPrice(boxPriceInput || minBoxPrice)
-    setBoxImage(BOXES[boxImageInput] || defaultBoxUri)
-    navigation.navigate('BoxMakingStep3')
+    if (error === '') {
+      setBoxName(boxNameInput || await getDefaultBoxName())
+      setBoxPrice(boxPriceInput || minBoxPrice)
+      setBoxImage(BOXES[boxImageInput] || defaultBoxUri)
+      navigation.navigate('BoxMakingStep3')
+    }
   }
 
   return (
@@ -74,13 +100,16 @@ const BoxMakingStep2Page = ({ route, navigation }: BoxMakingStep2Props) => {
       minPrice={minBoxPrice}
       maxPrice={maxBoxPrice}
       boxPrice={boxPriceInput}
-      onPriceInputChange={setBoxPriceInput}
+      textBoxPrice={textBoxPriceInput}
+      error={error}
       onRequestCloseModal={() => setShowBoxListModal(false)}
       onPressBoxImage={() => setShowBoxListModal(true)}
       onPressGoBack={() => navigation.goBack()}
       onPressNext={completeStep2}
       onPressBoxListElem={onPressBoxListElem}
       onChangeBoxName={setBoxNameInput}
+      onChangeNumBoxPriceInput={onChangeNumBoxPriceInput}
+      onChangeTextBoxPriceInput={onChangeTextBoxPriceInput}
     />
   )
 }
