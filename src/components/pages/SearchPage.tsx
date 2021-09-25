@@ -1,14 +1,23 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SearchTemplate from '@components/templates/SearchTemplate'
 import { SearchProps } from '@constants/navigationTypes'
 import { debounce } from 'lodash'
 import { URLS } from '@constants/urls'
 import { Box, BoxId } from '@constants/types'
+import { addRecentlySearchedBoxes, getRecentlySearchedBoxes } from '@src/utils/asyncStorageUtils'
 
 const SearchPage = ({route, navigation}: SearchProps) => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchedValue, setSearchedValue] = useState<string>('')
-  const [result, setResult] = useState<Box[]>()
+  const [onSearching, setOnSearching] = useState<boolean>(false)
+  const [result, setResult] = useState<Box[]>([])
+  const [recentSearchResult, setRecentSearchResult] = useState<Box[]>([])
+
+  useEffect(() => {
+    getRecentlySearchedBoxes()
+    .then(result => setRecentSearchResult(result))
+    .catch(error => console.log('Error in useEffect of SearchPage', error))
+  }, [])
 
   const searchBox = useCallback(debounce(async (boxName: string): Promise<Box[] | undefined> => {
     if (boxName === '') {
@@ -38,6 +47,11 @@ const SearchPage = ({route, navigation}: SearchProps) => {
 
   const onChangeSearchValue = async (value: string) => {
     try {
+      if (value === '') {
+        setOnSearching(false)
+      } else {
+        setOnSearching(true)
+      }
       setSearchInput(value)
       await searchBox(value)
     } catch (error) {
@@ -45,12 +59,24 @@ const SearchPage = ({route, navigation}: SearchProps) => {
     }
   }
 
+  const onPressBoxItem = async (box: Box) => {
+    try{
+      const searchedBoxes = await addRecentlySearchedBoxes(box)
+      setRecentSearchResult(searchedBoxes)
+      navigation.navigate('BoxInfo', { boxId: box.id })
+    } catch (error) {
+      console.log('Error in onPressBoxItem', error)
+    }
+  }
+
   return (
     <SearchTemplate 
       searchInput={searchInput}
       searchedValue={searchedValue}
-      searchResult={result || []}
-      onPressBoxItem={(boxId: BoxId) => navigation.navigate('BoxInfo', {boxId: boxId})}
+      searchResult={result}
+      recentSearchResult={recentSearchResult}
+      onSearching={onSearching}
+      onPressBoxItem={onPressBoxItem}
       onPressBack={() => navigation.goBack()}
       onChangeSearchInput={onChangeSearchValue}
     />

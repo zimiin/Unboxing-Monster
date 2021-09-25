@@ -18,7 +18,9 @@ interface Props {
   searchInput: string,
   searchedValue: string,
   searchResult: Box[],
-  onPressBoxItem: (box: BoxId) => void,
+  recentSearchResult: Box[],
+  onSearching: boolean,
+  onPressBoxItem: (box: Box) => void,
   onChangeSearchInput: (input: string) => void,
   onPressBack: () => void,
 }
@@ -35,7 +37,7 @@ const SearchTemplate = (props: Props) => {
         image={item.isLocal ? IMAGES[item.image] : {uri: item.image}}
         name={item.title}
         price={item.price}
-        onPress={() => props.onPressBoxItem(item.id)}
+        onPress={() => props.onPressBoxItem(item)}
         style={styles.boxItem}
       />
     )
@@ -52,16 +54,21 @@ const SearchTemplate = (props: Props) => {
       <HorizontalRule />
 
       <View style={styles.screen}>
-        <Text style={[styles.title]}>
-          <Text style={styles.titleHighLight}>
-            {props.searchedValue}
+        {props.onSearching && props.searchedValue ?
+          <Text style={styles.title}>
+            <Text style={styles.titleHighLight}>
+              {props.searchedValue}
+            </Text>
+            를 포함하고 있는 박스
           </Text>
-          를 포함하고 있는 박스
-        </Text>
+          :
+          <Text style={styles.title}>최근 검색한 박스</Text>
+        }
+          
 
         <FlatList
           renderItem={boxItem}
-          data={props.searchResult}
+          data={props.onSearching && props.searchedValue ? props.searchResult : props.recentSearchResult}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           ListHeaderComponent={boxListEdgeSpace}
