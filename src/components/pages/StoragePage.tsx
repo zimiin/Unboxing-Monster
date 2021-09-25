@@ -193,6 +193,34 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     navigation.navigate('ItemInfo', {itemId: item.id, itemImage: item.image, itemDetail: item.detail, itemPrice: item.price, itemTitle: item.title})
   }
 
+  const onPressDeleteCoupon = async (couponId: number) => {
+    try {
+      if (await hasLoggedIn() === false) {
+        navigation.navigate('Auth', {screen: 'LoginRequest'})
+        return
+      }
+
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const response = await fetch(
+        URLS.unboxing_api + 'coupon/user/' + couponId, {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          },
+        }
+      )
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to DELETE ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+    } catch (error) {
+      console.log('Error in onPressDeleteCoupon', error)
+    }
+  }
+
   return (
     <StorageTemplate
       loginState={loginState}
@@ -211,6 +239,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       onPressConfirmCoupon={(coupon: Coupon) => navigation.navigate('CouponConfirm', {coupon: coupon})}
       onPressRefundCoupon={(coupon: Coupon) => navigation.navigate('CouponRefund', {coupon: coupon})}
       onPressCoupon={onPressCoupon}
+      onPressDeleteCoupon={onPressDeleteCoupon}
     />
   )
 }

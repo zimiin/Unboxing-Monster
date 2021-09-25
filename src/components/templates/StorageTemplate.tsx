@@ -38,6 +38,7 @@ interface Props {
   onPressConfirmCoupon: (coupon: UserCoupon) => void,
   onPressRefundCoupon: (coupon: UserCoupon) => void,
   onPressCoupon: (item: Item) => void,
+  onPressDeleteCoupon: (couponId: number) => void,
 }
 
 const StorageTemplate = (props: Props) => {
@@ -63,10 +64,13 @@ const StorageTemplate = (props: Props) => {
         image={{uri: item.item.image}}
         name={item.item.title}
         price={item.item.price}
+        isUsed={item.isUsed}
+        isRefunded={item.refund}
         confirmableDays={getDaysBetweenDates(new Date(), new Date(item.Expiration))}
         onPressConfirm={() => props.onPressConfirmCoupon(item)}
         onPressRefund={() => props.onPressRefundCoupon(item)}
         onPress={() => props.onPressCoupon(item.item)}
+        onPressDelete={() => props.onPressDeleteCoupon(item.id)}
       />
     )
   }
