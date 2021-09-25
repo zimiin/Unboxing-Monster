@@ -189,33 +189,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     })
   }
 
-  const requestConfirmCoupon = async (coupon: UserCoupon, phone: string) => {
-    try {
-      const accessToken = await getAccessTokenFromAsyncStorage()
-      const url = new URL(URLS.unboxing_api + 'coupon/confirm/' + coupon.id)
-      url.searchParams.append('phone', phone)
-
-      const response = await fetch(
-        url.toString(), {
-        method: 'PATCH',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken
-        }
-      })
-
-      if (response.status !== 200) {
-        const json = await response.json()
-        throw 'Failed to PATCH ' + response.url + ' status ' + response.status + ', ' + json.message
-      }
-      console.log('onPressConfirmCoupon status 200')
-    } catch (error) {
-      console.log('Error in requestConfirmCoupon', error)
-      throw error
-    }
-  }
-
   const onPressRefundCoupon = (coupon: UserCoupon) => {
     requestRefundCoupon(coupon).catch(error => console.log('Error in onPressRefundCoupon', error))
   }

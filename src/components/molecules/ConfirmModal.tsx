@@ -7,6 +7,7 @@ import {
 import GreyButton from "@components/atoms/button/GreyButton"
 import { scale } from "@src/constants/figure"
 import { COLORS } from '@constants/colors'
+import HalfWidthButton from '@components/atoms/button/HalfWidthButton'
 
 interface Props {
   visible: boolean,
@@ -28,22 +29,21 @@ const ConfirmModal = (props: Props) => {
           {props.children}
 
           <View style={styles.buttonContainer}>
-            <GreyButton
+            <HalfWidthButton
               onPress={props.onRequestClose}
-              style={[styles.button]}
-            >
-              취소
-            </GreyButton>
+              buttonStyle={styles.cancelButton}
+              text={'취소'}
+              textStyle={styles.cancelText}
+            />
 
-            <GreyButton
+            <HalfWidthButton
               onPress={() => {
                 props.onConfirm()
                 props.onRequestClose()
               }}
-              style={[styles.button]}
-            >
-              확인
-            </GreyButton>
+              buttonStyle={styles.confirmButton}
+              text={'확인'}
+            />
           </View>
         </View>
       </View>
@@ -69,12 +69,18 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
   },
-  button: {
+  cancelButton: {
     width: scale(140),
     marginHorizontal: scale(4),
     marginBottom: 12,
+    backgroundColor: COLORS.grey_box,
   },
-  blueButton: {
-    backgroundColor: COLORS.main,
+  cancelText: {
+    color: 'black',
+  },
+  confirmButton: {
+    width: scale(140),
+    marginHorizontal: scale(4),
+    marginBottom: 12,
   }
 })

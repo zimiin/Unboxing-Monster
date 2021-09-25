@@ -29,7 +29,6 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
           throw 'Bolckchain server error'
         }
         
-        
         if (response.status !== 200) {
           const json = await response.json()
           throw 'Failed to GET ' + response.url + ', status ' + response.status + ', ' + json.message
