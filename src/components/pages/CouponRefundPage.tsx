@@ -36,10 +36,19 @@ const CouponRefundPage = ({ route, navigation }: CouponRefundProps) => {
     }
   }
 
+  const onPressRefund = async (coupon: Coupon) => {
+    try {
+      await requestRefundCoupon(coupon)
+      navigation.popToTop()
+    } catch (error) {
+      console.log('Error in onPressRefund', error)
+    }
+  }
+
   return (
     <CouponRefundTemplate
       goToPreviousScreen={() => navigation.goBack()}
-      onPressRefundButton={() => requestRefundCoupon(route.params.coupon)}
+      onPressRefundButton={() => onPressRefund(route.params.coupon)}
     />
   )
 }
