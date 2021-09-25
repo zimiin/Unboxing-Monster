@@ -17,6 +17,7 @@ import { IMAGES } from '@constants/images'
 import { UserCoupon } from '@components/pages/StoragePage'
 import { getDaysBetweenDates } from '@src/utils/utils'
 import NoticeModal from '@components/molecules/NoticeModal'
+import { verticalScale } from '@constants/figure'
 
 export type Focus = 'randomBox' | 'coupon'
 
@@ -73,7 +74,7 @@ const StorageTemplate = (props: Props) => {
   const boxes = (
     <FlatList
       renderItem={boxListRenderItem}
-      ListEmptyComponent={<MonsterNotice notice={'랜덤박스함이 비어있어요'}/>}
+      ListEmptyComponent={<MonsterNotice style={styles.notice} notice={'랜덤박스함이 비어있어요'}/>}
       data={props.boxData}
       style={styles.storageData}
       refreshing={props.refreshingBoxList}
@@ -84,7 +85,7 @@ const StorageTemplate = (props: Props) => {
   const coupons = (
     <FlatList
       renderItem={couponListRenderItem}
-      ListEmptyComponent={<MonsterNotice notice={'모바일쿠폰함이 비어있어요'} />}
+      ListEmptyComponent={<MonsterNotice style={styles.notice} notice={'모바일쿠폰함이 비어있어요'} />}
       data={props.couponData}
       style={styles.storageData}
       refreshing={props.refreshingCouponList}
@@ -157,5 +158,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  
+  notice: {
+    height: verticalScale(450)
+  }
 })

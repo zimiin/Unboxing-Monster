@@ -5,15 +5,21 @@ import React from 'react'
 import {
   View,
   StyleSheet,
+  ViewStyle,
 } from 'react-native'
 
-const MonsterNotice = ({notice}: {notice?: string}) => {
+interface Props {
+  notice?: string,
+  style?: ViewStyle
+}
+
+const MonsterNotice = (props: Props) => {
   return (
-    <View style={styles.emptyComponent}>
+    <View style={[styles.container, props.style]}>
       <UnboxingMonster />
 
       <Bold style={styles.emptyText}>
-        {notice || ''}
+        {props.notice || ''}
       </Bold>
     </View>
   )
@@ -22,9 +28,7 @@ const MonsterNotice = ({notice}: {notice?: string}) => {
 export default MonsterNotice
 
 const styles = StyleSheet.create({
-  emptyComponent: {
-    width: '100%',
-    height: verticalScale(300),
+  container: {
     justifyContent: 'center',
     alignItems: 'center',
   },
