@@ -216,8 +216,16 @@ export type HomeProps = {
   navigation: HomeNavigationProp
 }
 
-export type SearchNavigationProp = StackNavigationProp<HomeStackParamList, 'Search'>
+export type SearchRouteProp = RouteProp<HomeStackParamList, 'Search'>
+export type SearchNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<HomeStackParamList, 'Search'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'Home'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
 export type SearchProps = {
+  route: SearchRouteProp,
   navigation: SearchNavigationProp
 }
 
@@ -280,6 +288,8 @@ export type MyCustomBoxProps = {
 // Storage Stack
 export type StorageStackParamList = {
   Storage: undefined,
+  CouponConfirm: {coupon: Coupon},
+  CouponRefund: {coupon: Coupon}
 }
 
 export type StorageNavigationProp = CompositeNavigationProp<
@@ -293,6 +303,32 @@ export type StorageRouteProp = RouteProp<StorageStackParamList, 'Storage'>
 export type StorageProps = {
   route: StorageRouteProp,
   navigation: StorageNavigationProp
+}
+
+export type CouponConfirmNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<StorageStackParamList, 'CouponConfirm'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'Storage'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
+export type CouponConfirmRouteProp = RouteProp<StorageStackParamList, 'CouponConfirm'>
+export type CouponConfirmProps = {
+  route: CouponConfirmRouteProp,
+  navigation: CouponConfirmNavigationProp
+}
+
+export type CouponRefundNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<StorageStackParamList, 'CouponRefund'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'Storage'>,
+    StackNavigationProp<RootStackParamList, 'Main'>
+  >
+>
+export type CouponRefundRouteProp = RouteProp<StorageStackParamList, 'CouponRefund'>
+export type CouponRefundProps = {
+  route: CouponRefundRouteProp,
+  navigation: CouponRefundNavigationProp
 }
 
 // MyPage Stack

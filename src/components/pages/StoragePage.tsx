@@ -100,13 +100,14 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const requestRefundCoupon = async (coupon: UserCoupon) => {
     try {
+      const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
         URLS.unboxing_api + 'coupon/refund/' + coupon.id, {
           method: 'PATCH',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'Authrization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+            'Authorization': 'Bearer ' + accessToken
           },
         }
       )
@@ -126,10 +127,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     
     try {
       for (let coupon of coupons) {
-        if (coupon.isUsed === true) {
-          continue
-        }
-
         const validDays = getDaysBetweenDates(new Date(), new Date(coupon.Expiration))
         
         if (validDays <= 0) {
@@ -153,14 +150,15 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       }
 
       setRefreshingCouponData(true)
-      setCouponRefreshThrottled(true)
-
+      
       let coupons = await getCouponData()
       coupons = removeExpiredUsedCoupons(coupons)
       
       setCouponData(coupons)
-
+      
       setRefreshingCouponData(false)
+
+      setCouponRefreshThrottled(true)
       setTimeout(() => setCouponRefreshThrottled(false), 3000)
     } catch (error) {
       console.log('Error in getAndSetCouponData', error)
@@ -191,43 +189,36 @@ const StoragePage = ({route, navigation}: StorageProps) => {
     })
   }
 
-  const requestConfirmCoupon = async (coupon: UserCoupon, phone: string) => {
-    try {
-      const accessToken = await getAccessTokenFromAsyncStorage()
-      const url = new URL(URLS.unboxing_api + 'coupon/confirm/' + coupon.id)
-      url.searchParams.append('phone', phone)
+  const onPressCoupon = (item: Item) => {
+    navigation.navigate('ItemInfo', {itemId: item.id, itemImage: item.image, itemDetail: item.detail, itemPrice: item.price, itemTitle: item.title})
+  }
 
+  const onPressDeleteCoupon = async (couponId: number) => {
+    try {
+      if (await hasLoggedIn() === false) {
+        navigation.navigate('Auth', {screen: 'LoginRequest'})
+        return
+      }
+
+      const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
-        url.toString(), {
-        method: 'PATCH',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken
+        URLS.unboxing_api + 'coupon/user/' + couponId, {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          },
         }
-      })
+      )
 
       if (response.status !== 200) {
         const json = await response.json()
-        throw 'Failed to PATCH ' + response.url + ' status ' + response.status + ', ' + json.message
+        throw 'Failed to DELETE ' + response.url + ' status ' + response.status + ', ' + json.message
       }
-      console.log('onPressConfirmCoupon status 200')
     } catch (error) {
-      console.log('Error in requestConfirmCoupon', error)
-      throw error
+      console.log('Error in onPressDeleteCoupon', error)
     }
-  }
-
-  const onPressConfirmCoupon = async (coupon: UserCoupon) => {
-    
-  }
-
-  const onPressRefundCoupon = (coupon: UserCoupon) => {
-    requestRefundCoupon(coupon).catch(error => console.log('Error in onPressRefundCoupon', error))
-  }
-
-  const onPressCoupon = (item: Item) => {
-    navigation.navigate('ItemInfo', {itemId: item.id, itemImage: item.image, itemDetail: item.detail, itemPrice: item.price, itemTitle: item.title})
   }
 
   return (
@@ -245,9 +236,10 @@ const StoragePage = ({route, navigation}: StorageProps) => {
       onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
       openBox={openBox}
       onPressBox={(boxId: BoxId) => navigation.navigate('BoxInfo', {boxId: boxId})}
-      onPressConfirmCoupon={onPressConfirmCoupon}
-      onPressRefundCoupon={onPressRefundCoupon}
+      onPressConfirmCoupon={(coupon: Coupon) => navigation.navigate('CouponConfirm', {coupon: coupon})}
+      onPressRefundCoupon={(coupon: Coupon) => navigation.navigate('CouponRefund', {coupon: coupon})}
       onPressCoupon={onPressCoupon}
+      onPressDeleteCoupon={onPressDeleteCoupon}
     />
   )
 }

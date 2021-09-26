@@ -17,6 +17,7 @@ import { IMAGES } from '@constants/images'
 import { UserCoupon } from '@components/pages/StoragePage'
 import { getDaysBetweenDates } from '@src/utils/utils'
 import NoticeModal from '@components/molecules/NoticeModal'
+import { verticalScale } from '@constants/figure'
 
 export type Focus = 'randomBox' | 'coupon'
 
@@ -37,6 +38,7 @@ interface Props {
   onPressConfirmCoupon: (coupon: UserCoupon) => void,
   onPressRefundCoupon: (coupon: UserCoupon) => void,
   onPressCoupon: (item: Item) => void,
+  onPressDeleteCoupon: (couponId: number) => void,
 }
 
 const StorageTemplate = (props: Props) => {
@@ -62,10 +64,13 @@ const StorageTemplate = (props: Props) => {
         image={{uri: item.item.image}}
         name={item.item.title}
         price={item.item.price}
+        isUsed={item.isUsed}
+        isRefunded={item.refund}
         confirmableDays={getDaysBetweenDates(new Date(), new Date(item.Expiration))}
         onPressConfirm={() => props.onPressConfirmCoupon(item)}
         onPressRefund={() => props.onPressRefundCoupon(item)}
         onPress={() => props.onPressCoupon(item.item)}
+        onPressDelete={() => props.onPressDeleteCoupon(item.id)}
       />
     )
   }
@@ -73,7 +78,7 @@ const StorageTemplate = (props: Props) => {
   const boxes = (
     <FlatList
       renderItem={boxListRenderItem}
-      ListEmptyComponent={<MonsterNotice notice={'랜덤박스함이 비어있어요'}/>}
+      ListEmptyComponent={<MonsterNotice style={styles.notice} notice={'랜덤박스함이 비어있어요'}/>}
       data={props.boxData}
       style={styles.storageData}
       refreshing={props.refreshingBoxList}
@@ -84,7 +89,7 @@ const StorageTemplate = (props: Props) => {
   const coupons = (
     <FlatList
       renderItem={couponListRenderItem}
-      ListEmptyComponent={<MonsterNotice notice={'모바일쿠폰함이 비어있어요'} />}
+      ListEmptyComponent={<MonsterNotice style={styles.notice} notice={'모바일쿠폰함이 비어있어요'} />}
       data={props.couponData}
       style={styles.storageData}
       refreshing={props.refreshingCouponList}
@@ -157,5 +162,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  
+  notice: {
+    height: verticalScale(450)
+  }
 })

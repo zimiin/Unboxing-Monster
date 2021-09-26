@@ -8,13 +8,9 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Item } from '@constants/types'
 import ProbStackedBarChart from "@components/atoms/ProbStackedBarChart";
+import { PROB_COLORS } from "@constants/colors";
 
 const WIDTH = Dimensions.get('window').width;
-const COLORS = [
-  "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8",
-  "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8"
-]
-
 
 
 const BoxProbView = ({probs, items}: {probs: number[], items: Item[]}) => {
@@ -27,7 +23,7 @@ const BoxProbView = ({probs, items}: {probs: number[], items: Item[]}) => {
         data: [
           probs.slice().reverse()
         ],
-        barColors: COLORS
+        barColors: PROB_COLORS
       }}
       style={styles.barchart}
     />
@@ -56,7 +52,7 @@ const BoxProbView = ({probs, items}: {probs: number[], items: Item[]}) => {
         <View key={index} style={index % 2 == 1 ? 
           styles.oddEntry : styles.evenEntry}>
           <View style={styles.leftEntry}>
-            <View style={{backgroundColor: COLORS[items.length - index - 1], ...styles.entryBlock}}/>
+            <View style={{backgroundColor: PROB_COLORS[items.length - index - 1], ...styles.entryBlock}}/>
             <Text style={styles.entryText}>
               {item.title}
             </Text>

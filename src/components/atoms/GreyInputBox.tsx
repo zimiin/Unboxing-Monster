@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardTypeOptions,
   ReturnKeyTypeOptions,
+  TextStyle,
 } from 'react-native'
 
 interface Props {
@@ -15,8 +16,10 @@ interface Props {
   value?: string,
   keyboardType?: KeyboardTypeOptions,
   returnKeyType?: ReturnKeyTypeOptions,
+  placeHolder?: string,
+  textInputStyle?: TextStyle,
   onChangeText?: (input: string) => void,
-  
+  onSubmitEditing?: () => void,
 }
 
 const GreyInputBox = (props: Props) => {
@@ -27,6 +30,9 @@ const GreyInputBox = (props: Props) => {
         onChangeText={props.onChangeText}
         keyboardType={props.keyboardType}
         returnKeyType={props.returnKeyType}
+        placeholder={props.placeHolder}
+        style={props.textInputStyle}
+        onSubmitEditing={props.onSubmitEditing}
       />
     </View>
   )

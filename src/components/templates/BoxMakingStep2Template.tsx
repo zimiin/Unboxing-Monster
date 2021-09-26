@@ -13,6 +13,9 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
   Modal,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
 } from 'react-native'
 import {defaultBox} from '@constants/images'
 import { COLORS } from '@constants/colors'
@@ -20,7 +23,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import ModalCloseButton from '@components/atoms/button/ModalCloseButton'
 import InputField from '@components/atoms/InputField'
 import EditIcon from '@components/atoms/icon/EditIcon'
-import Slider from '@react-native-community/slider'
+import { Slider } from 'react-native-elements'
 
 interface Props {
   screenTitle: string,
@@ -32,13 +35,16 @@ interface Props {
   minPrice: number,
   maxPrice: number,
   boxPrice: number,
-  onPriceInputChange: (value: number) => void,
+  textBoxPrice: string,
+  error: string,
+  onChangeNumBoxPriceInput: (value: number) => void,
   onPressBoxImage: () => void,
   onPressGoBack: () => void,
   onPressNext: () => void,
   onRequestCloseModal: () => void,
   onPressBoxListElem: (id: number) => void,
   onChangeBoxName: (input: string) => void,
+  onChangeTextBoxPriceInput: (input: string) => void,
 }
 
 const BoxMakingStep2Template = (props: Props) => {
@@ -59,6 +65,7 @@ const BoxMakingStep2Template = (props: Props) => {
   const headerFooter = (
     <View style={styles.headerFooter} />
   )
+
   return (
     <>
       <Header
@@ -67,18 +74,26 @@ const BoxMakingStep2Template = (props: Props) => {
         goBackAction={props.onPressGoBack}
       />
 
-      <View style={styles.screen}>
+      <View style={styles.progressBarContainer}>
         <CustomBoxProgressBar
           progress={2 / 3}
           style={styles.progressBar}
         />
+      </View>
 
-        <Bold style={styles.instruction}>
-          {'박스의 정보를 설정해주세요.'}
-        </Bold>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.screen}
+      >
+        <ScrollView 
+          style={styles.horizontalMargin}
+          showsVerticalScrollIndicator={false}
+        >
+          <Bold style={styles.instruction}>
+            {'박스의 정보를 설정해주세요.'}
+          </Bold>
 
-        <ScrollView style={styles.scrollView}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.boxImageContainer}
             onPress={props.onPressBoxImage}
           >
@@ -101,6 +116,7 @@ const BoxMakingStep2Template = (props: Props) => {
               input={props.boxName || ''}
               value={props.boxName}
               onChangeText={props.onChangeBoxName}
+              style={styles.text}
             />
 
             <EditIcon
@@ -109,55 +125,68 @@ const BoxMakingStep2Template = (props: Props) => {
           </View>
 
           <Slider
-            style={{ 
-              width: scale(312), 
-              marginTop: 20,
-            }}
+            value={props.boxPrice}
+            onValueChange={props.onChangeNumBoxPriceInput}
             minimumValue={props.minPrice}
             maximumValue={props.maxPrice}
-            value={props.minPrice}
-            onValueChange={props.onPriceInputChange}
             step={100}
-            minimumTrackTintColor="rgba(6, 6, 6, 0.2)"
-            maximumTrackTintColor="rgba(6, 6, 6, 0.2)"
-            thumbTintColor={COLORS.main}
+            style={styles.slider}
+            maximumTrackTintColor={'#CCCCCC'}
+            minimumTrackTintColor={'#9B9B9B'}
+            thumbStyle={styles.thumbStyle}
           />
 
-          <Bold style={styles.price}>
-            {props.boxPrice?.toLocaleString() + '원'}
-          </Bold>
+          <View style={styles.priceInputContainer}>
+            <TextInput
+              value={props.textBoxPrice}
+              onChangeText={props.onChangeTextBoxPriceInput}
+              style={[
+                styles.text,
+                Platform.OS === "ios" ? styles.underlineInput : null,
+                styles.priceInput
+              ]}
+              keyboardType='numeric'
+              returnKeyType='done'
+              underlineColorAndroid={COLORS.grey_text}
+            />
 
+            <Text style={[styles.text, styles.won]}>{'원'}</Text>
+          </View>
+
+          <Text style={styles.error}>{props.error}</Text>
         </ScrollView>
 
-        <Modal
-          visible={props.showBoxListModal}
-          animationType="fade"
-          transparent={true}
-          onRequestClose={props.onRequestCloseModal}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              <ModalCloseButton
-                onPress={props.onRequestCloseModal}
-                style={styles.closeButton}
-              />
+        <FullWidthButton
+          onPress={props.onPressNext}
+          content={'다음'}
+        />
 
-              <FlatList
-                renderItem={renderItemInBoxList}
-                data={props.boxList}
-                numColumns={2}
-                ListHeaderComponent={headerFooter}
-                ListFooterComponent={headerFooter}
-              />
-            </View>
+      </KeyboardAvoidingView>
+
+
+      <Modal
+        visible={props.showBoxListModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={props.onRequestCloseModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <ModalCloseButton
+              onPress={props.onRequestCloseModal}
+              style={styles.closeButton}
+            />
+
+            <FlatList
+              renderItem={renderItemInBoxList}
+              data={props.boxList}
+              numColumns={2}
+              ListHeaderComponent={headerFooter}
+              ListFooterComponent={headerFooter}
+            />
           </View>
-        </Modal>
-      </View>
-
-      <FullWidthButton
-        onPress={props.onPressNext}
-        content={'다음'}
-      />
+        </View>
+      </Modal>
     </>
   )
 }
@@ -165,13 +194,19 @@ const BoxMakingStep2Template = (props: Props) => {
 export default BoxMakingStep2Template
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
+  progressBarContainer: {
     backgroundColor: 'white',
-    paddingHorizontal: scale(24)
+    paddingHorizontal: scale(24),
   },
   progressBar: {
     marginTop: verticalScale(12),
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  horizontalMargin: {
+    marginHorizontal: scale(24),
   },
   instruction: {
     fontSize: 20,
@@ -179,9 +214,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.6,
     marginTop: verticalScale(32),
     marginBottom: 20,
-  },
-  scrollView: {
-    flex: 1,
   },
   box: {
     width: scale(102),
@@ -208,6 +240,54 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: scale(12),
     bottom: scale(12),
+  },
+  text: {
+    fontSize: scale(16),
+    fontWeight: '500',
+  },
+  underlineInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.grey_text,
+  },
+  won: {
+    marginLeft: scale(4)
+  },
+  inputfield: {
+    marginTop: 32,
+  },
+  editIconOnInputField: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 0,
+    bottom: 37,
+  },
+  slider: {
+    marginTop: verticalScale(20),
+  },
+  thumbStyle: { 
+    width: scale(20), 
+    height: scale(27), 
+    backgroundColor: '#4888F8' 
+  },
+  price: {
+    fontSize: 17,
+    alignSelf: 'center',
+    marginTop: 5,
+  },
+  priceInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: verticalScale(7),
+  },
+  priceInput: {
+    textAlign: 'center',
+  },
+  error: {
+    alignSelf: 'center',
+    marginVertical: verticalScale(10),
+    color: COLORS.error,
+    fontSize: scale(14),
   },
   modalContainer: {
     alignItems: 'center',
@@ -239,19 +319,5 @@ const styles = StyleSheet.create({
   },
   headerFooter: {
     height: 7,
-  },
-  inputfield: {
-    marginTop: 32,
-  },
-  editIconOnInputField: {
-    position: 'absolute',
-    zIndex: 1,
-    right: 0,
-    bottom: 37,
-  },
-  price: {
-    fontSize: 17,
-    alignSelf: 'center',
-    marginTop: 5,
   }
 })

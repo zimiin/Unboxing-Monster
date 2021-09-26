@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { BoxMakingStep2Props } from '@constants/navigationTypes'
 import BoxMakingStep3Template from '@components/templates/BoxMakingStep3Template'
 import { CustomBoxContext } from '@src/stores/CustomBoxContext'
 import { generateProbability } from '@src/utils/probabilites'
 import { URLS } from '@constants/urls'
-import { Box, BoxItem } from '@constants/types'
+import { Box } from '@constants/types'
 import { CartContext } from '@src/stores/CartContext'
 import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 

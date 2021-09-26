@@ -6,8 +6,10 @@ import {
     Image,
     TouchableOpacity,
     ImageSourcePropType,
+    ViewStyle,
 } from 'react-native';
 import { SCREEN_WIDTH } from '@constants/figure';
+import { defaultBox } from '@constants/images';
 
 export interface Props {
   key: number,
@@ -15,24 +17,26 @@ export interface Props {
   name: string,
   price: number,
   onPress?: () => void,
+  style?: ViewStyle
 }
 
 const BoxItem = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
+      style={props.style}
     >
     <Image
-      source={props.image}
+      source={props.image || defaultBox}
       style={styles.image}
     />
 
-      <Text style={styles.name}>
+      <Text style={styles.name || ''}>
         {props.name}
       </Text>
 
       <Text style={styles.price}>
-        {props.price.toLocaleString()}원
+        {props.price?.toLocaleString() || ''}원
       </Text>
     </TouchableOpacity>
   );

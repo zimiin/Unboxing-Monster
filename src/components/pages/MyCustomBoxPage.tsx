@@ -5,6 +5,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react'
 import { Box } from '@constants/types'
 import { URLS } from '@constants/urls'
 import { getLoginUserId } from '@src/utils/loginUtils'
+import { getAccessTokenFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 
 const MyCustomBoxPage = ({ route, navigation }: MyCustomBoxProps) => {
   const [{cart}, {}] = useContext(CartContext)
@@ -12,11 +13,21 @@ const MyCustomBoxPage = ({ route, navigation }: MyCustomBoxProps) => {
 
   const getBoxList = useCallback(async () => {
     try {
-      const response = await fetch(URLS.unboxing_api + 'box')
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const response = await fetch(
+        URLS.unboxing_api + 'box/custom', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          }
+        }
+      )
 
       if (response.status !== 200) {
         const json = await response.json()
-        throw 'status ' + response.status + ', message: ' + json.message + ', url: ' + response.url
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
       }
 
       const boxes: Box[] = await response.json()

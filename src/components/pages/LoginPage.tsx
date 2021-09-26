@@ -239,7 +239,6 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       }
     } catch (error) {
       console.log('Error in appleLoginAndroid', error)
-      throw error
     }
   }
   

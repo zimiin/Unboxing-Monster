@@ -6,6 +6,7 @@ import CustomBoxStack from '@components/navigations/CustomBoxStack'
 import StorageStack from '@components/navigations/StorageStack'
 import MyPageStack from '@components/navigations/MyPageStack'
 import { BottomTabParamList } from '@constants/navigationTypes'
+import { Platform } from 'react-native'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -21,9 +22,9 @@ const MainBottomTab = () => {
         showLabel: false,
         tabStyle: {
           height: 50,
-        }
+        },
+        keyboardHidesTabBar: (Platform.OS === "ios" ? false : true)
       }}
-
     >
       <BottomTab.Screen name="Home" component={HomeStack} />
       <BottomTab.Screen name="CustomBox" component={CustomBoxStack} />

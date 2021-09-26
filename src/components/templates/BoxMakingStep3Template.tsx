@@ -12,7 +12,7 @@ import {
   ImageSourcePropType,
   FlatList,
 } from 'react-native'
-import { COLORS } from '@constants/colors'
+import { COLORS, PROB_COLORS } from '@constants/colors'
 import { PieChart } from 'react-native-svg-charts'
 import SquareDot from '@components/atoms/SquareDot'
 
@@ -36,7 +36,6 @@ type ChartData = {
 }
 
 const BoxMakingStep3Template = (props: Props) => {
-  const chartColors = [COLORS.main, '#93e13c', '#ffd733', '#ff7c28', '#e63334', '#e21c54', '#b420c8', '#7b2cff', '#4755ff', '#0091ff']
   const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
   
   const chartData: ChartData[] = useMemo(() => {
@@ -46,7 +45,7 @@ const BoxMakingStep3Template = (props: Props) => {
           id: item.id,
           name: item.name,
           prob: props.probs[index],
-          color: index < 10 ? chartColors[index] : randomColor()
+          color: index < PROB_COLORS.length ? PROB_COLORS[index] : randomColor()
         }
       }
     )
@@ -56,8 +55,7 @@ const BoxMakingStep3Template = (props: Props) => {
     props.probs
       .filter((value) => value > 0)
       .map(
-        (value, index) => (
-          {
+        (value, index) => ({
             value,
             svg: {
               fill: chartData[index].color,
