@@ -27,6 +27,7 @@ interface Props {
   allBoxData?: Box[],
   modalVisible: boolean,
   refreshing: boolean,
+  scorllerContent: string,
   setModalVisible: Dispatch<SetStateAction<boolean>>,
   onRefresh: () => void,
   openIntroModal?: () => void,
@@ -74,7 +75,7 @@ const HomeTemplate = (props: Props) => {
       />
 
       <View>
-        <Scroller />
+        <Scroller content={props.scorllerContent}/>
       </View>
 
       <Bold style={[styles.listTitle, styles.popularBoxesTitle]}>

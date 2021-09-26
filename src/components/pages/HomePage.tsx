@@ -122,6 +122,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       customBoxData={customBoxData?.length === 0 || customBoxData === undefined ? popularBoxData : customBoxData}
       allBoxData={allBoxData}
       modalVisible={modalVisible}
+      scorllerContent={''}
       setModalVisible={setModalVisible}
       onRefresh={setDatas}
       refreshing={refreshing}
