@@ -78,3 +78,13 @@ export interface CouponWithItem {
   owner: User,
   item: Item,
 }
+
+export interface OpenResult {
+  id: number,
+  boxId: BoxId,
+  userId: string,
+  itemId: ItemId,
+  openAt: string,
+  user: User,
+  item: Item
+}
