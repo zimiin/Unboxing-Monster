@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 
 import { IMAGES } from '@constants/images'
+import { scale, verticalScale } from '@constants/figure'
 
 const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
   image: ImageSourcePropType, 
@@ -26,17 +27,20 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
       >
         <Image source={IMAGES.close_modal}/>
       </TouchableOpacity>
-      <View style={styles.imageContainer}>
-        <Image source={image} style={styles.image}/>
+
+      <View style={styles.centerAlign}>
+        <View style={styles.imageContainer}>
+          <Image source={image} style={styles.image}/>
+        </View>
+        <Text style={styles.text}>{children}</Text>
+        {useEndBtn ? 
+            <TouchableOpacity style={styles.done_btn}
+              onPress={() => onPressFn(false)}
+            >
+              <Text style={styles.done_btn_text}>{endBtnText}</Text>
+            </TouchableOpacity> :
+            null}
       </View>
-      <Text style={styles.text}>{children}</Text>
-      {useEndBtn ? 
-          <TouchableOpacity style={styles.done_btn}
-            onPress={() => onPressFn(false)}
-          >
-            <Text style={styles.done_btn_text}>{endBtnText}</Text>
-          </TouchableOpacity> :
-          null}
     </View>
   )
 }
@@ -44,38 +48,41 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  rightAlign: {
+    alignItems: 'flex-end',
+  },
+  centerAlign: {
     alignItems: 'center',
   },
   text: {
-    position: 'absolute',
     color: '#060606',
     fontFamily: 'GmarketSansTTFMedium',
     letterSpacing: -0.03,
-    lineHeight: 31.5,
+    lineHeight: verticalScale(31.5),
     fontSize: 20,
-    bottom: 211.5,
+    marginTop: verticalScale(25),
     textAlign: 'center'
   },
   imageContainer: {
-    position: 'absolute', 
-    top: 156, 
-    paddingTop: 30,
+    marginTop: verticalScale(122),
   },
   image: {
-    width: 260, 
-    height: 260,
+    width: scale(360), 
+    height: verticalScale(296),
+    resizeMode: 'contain',
   },
   close_btn_img: {
     position: 'absolute',
-    right: 17,
-    top: 36,
+    right: scale(17),
+    top: verticalScale(17),
+    zIndex: 1,
   },
   done_btn: {
-    bottom: -280, 
+    marginTop: verticalScale(75),
     backgroundColor: '#29a3ff', 
-    height: 48, 
-    width: 312,
+    height: verticalScale(48), 
+    width: scale(312),
     alignItems:'center',
     justifyContent:'center',
     borderRadius: 6,
