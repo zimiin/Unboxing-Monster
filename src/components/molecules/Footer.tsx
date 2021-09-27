@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.3,
     color: 'rgba(6, 6, 6, 0.5)',
     lineHeight: 20,
   },

@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: '#29a3ff',
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.38,
+    lineHeight: 18,
   },
   icon: {
     width: 16,

@@ -14,6 +14,7 @@ const Title = (props: Props) => {
       style={[{
         fontSize: 20,
         fontWeight: 'bold',
+        fontFamily: 'NotoSansCJKkr-Bold',
       }, props.style]}
     >
       {props.content}

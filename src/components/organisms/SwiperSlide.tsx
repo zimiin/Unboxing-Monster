@@ -79,9 +79,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   done_btn: {
-    marginTop: verticalScale(75),
+    position: 'absolute',
+    bottom: -verticalScale(100),
     backgroundColor: '#29a3ff', 
-    height: verticalScale(48), 
+    height: 48, 
     width: scale(312),
     alignItems:'center',
     justifyContent:'center',

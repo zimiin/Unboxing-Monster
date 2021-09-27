@@ -27,12 +27,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   priceText: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 18,
+    fontFamily: 'Roboto-Medium',
+    lineHeight: 26,
   },
   wonText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "500",
     marginLeft: 3,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    lineHeight: 26,
   }
 })
