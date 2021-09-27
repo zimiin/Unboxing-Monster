@@ -16,6 +16,7 @@ import { Box, BoxId, Notice } from '@constants/types'
 import NoDataBox from '@components/molecules/NoDataBox'
 import { IMAGES } from '@constants/images'
 import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
+import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 
 interface Props {
   onPressSearchBar: () => void,
@@ -78,9 +79,9 @@ const HomeTemplate = (props: Props) => {
         <Scroller content={props.scorllerContent}/>
       </View>
 
-      <Bold style={[styles.listTitle, styles.popularBoxesTitle]}>
+      <NotoSansBold style={[styles.listTitle, styles.popularBoxesTitle]}>
         인기박스
-      </Bold>
+      </NotoSansBold>
 
       <FlatList
         renderItem={renderBoxItem}
@@ -168,11 +169,14 @@ const styles = StyleSheet.create({
     width: scale(18),
   },
   listTitle: {
+    marginTop: 10,
     marginLeft: scale(24),
     fontSize: 18,
+    lineHeight: 26,
+    letterSpacing: -0.5,
   },
   popularBoxesTitle: {
-    marginTop: verticalScale(57),
+    marginTop: verticalScale(47),
   },
   horizontalList: {
     marginTop: verticalScale(13),

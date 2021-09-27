@@ -6,7 +6,9 @@ import {
   TextInputProps,
   Text,
   TextStyle,
+  View,
 } from 'react-native'
+import NotoSansMedium from '@components/atoms/typography/NotoSansMedium'
 
 interface Props extends TextInputProps {
   style?: TextStyle,
@@ -30,20 +32,27 @@ const InputField = (props: Props) => {
 
   return (
     <>
-      <TextInput
-        placeholderTextColor='rgba(6, 6, 6, 0.3)'
-        onChangeText={onChangeText}
+      <View
         style={[
-          styles.input,
-          borderBottomColor(),
-          style
+          styles.field,
+          borderBottomColor()
         ]}
-        {...rest}
-      />
+      >
+        <TextInput
+          placeholderTextColor='rgba(6, 6, 6, 0.3)'
+          onChangeText={onChangeText}
+          value={input}
+          style={[
+            styles.input,
+            style
+          ]}
+          {...rest}
+        />
+      </View>
 
-      <Text style={styles.error}>
+      <NotoSansMedium style={styles.error}>
         {error}
-      </Text>
+      </NotoSansMedium>
     </>
   )
 }
@@ -51,11 +60,18 @@ const InputField = (props: Props) => {
 export default InputField
 
 const styles = StyleSheet.create({
-  input: {
+  field: {
     width: '100%',
-    height: 50,
+    height: 49,
     borderBottomWidth: 2,
+  },
+  input: {
+    position: 'absolute',
+    zIndex: 1,
+    letterSpacing: -0.47,
     fontSize: 17,
+    color: 'black',
+    marginTop: 11,
   },
   mainColorBorder: { 
     borderBottomColor: COLORS.main 
@@ -71,5 +87,6 @@ const styles = StyleSheet.create({
     height: 17,
     marginTop: 4,
     fontSize: 11,
+    letterSpacing: -0.28,
   }
 })

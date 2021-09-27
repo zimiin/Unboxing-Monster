@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     fontSize: scale(13),
     marginTop: verticalScale(33),
     alignSelf: 'center',
+    letterSpacing: -0.32,
   },
   SNSIconView: {
     flexDirection: 'row',

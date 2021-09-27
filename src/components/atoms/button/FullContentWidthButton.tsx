@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: COLORS.main,
     width: scale(312),
-    height: verticalScale(48),
+    height: 48,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    fontSize: scale(14),
+    fontSize: 14,
   },
   defaultFontColor: {
     color: 'white',

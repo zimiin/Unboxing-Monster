@@ -11,7 +11,7 @@ interface Props extends TextProps {
   children?: (string | Element)[] | string | string[]
 }
 
-const NotoSansRegular = (props: Props) => {
+const NotoSansMedium = (props: Props) => {
   const { style, children, ...rest } = props
 
   return (
@@ -21,10 +21,10 @@ const NotoSansRegular = (props: Props) => {
   )
 }
 
-export default NotoSansRegular
+export default NotoSansMedium
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'NotoSansCJKkr-Regular',
+    fontFamily: 'NotoSansCJKkr-Medium',
   }
 })
