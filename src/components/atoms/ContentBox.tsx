@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
+    lineHeight: 22,
   }
 })

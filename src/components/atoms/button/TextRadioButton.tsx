@@ -41,6 +41,9 @@ const TextRadioButton = (props: Props) => {
       <Text
         style={{
           fontSize: 13,
+          fontFamily: 'NotoSansCJKkr-Medium',
+          letterSpacing: -0.32,
+          color: COLORS.bold_black,
         }}
       >
         {children}
