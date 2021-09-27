@@ -7,6 +7,7 @@ import {
   Text,
   TextStyle,
   View,
+  Platform,
 } from 'react-native'
 import NotoSansMedium from '@components/atoms/typography/NotoSansMedium'
 
@@ -44,7 +45,8 @@ const InputField = (props: Props) => {
           value={input}
           style={[
             styles.input,
-            style
+            style,
+            {top: Platform.OS === 'android' ? -9 : 0}
           ]}
           {...rest}
         />

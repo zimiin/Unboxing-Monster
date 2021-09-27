@@ -54,16 +54,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontSize: scale(14),
+    fontSize: 14,
     letterSpacing: -0.35,
+    lineHeight: 20,
     flex: 1,
     marginTop: 5,
   },
   price: {
     color: 'rgba(6, 6, 6, 0.5)',
-    fontSize: scale(14),
+    fontSize: 14,
     letterSpacing: -0.35,
     marginBottom: 5,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 20,
   },
   image: {
     width: scale(72),
