@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import Bold from '@components/atoms/typography/Bold'
+import { COLORS } from '@constants/colors'
 
 interface Props {
   title: string,
@@ -24,7 +25,12 @@ const StorageTabTitle = (props: Props) => {
       ]}
       onPress={props.onPress}
     >
-      <Bold style={styles.title}>
+      <Bold
+        style={[
+          styles.title,
+          props.focused ? styles.focusedText : styles.nonFocusedText
+        ]}
+      >
         {props.title}
       </Bold>
     </TouchableOpacity>
@@ -50,5 +56,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+    letterSpacing: -0.35,
+  },
+  focusedText: {
+    color: COLORS.bold_black,
+  },
+  nonFocusedText: {
+    color: 'rgba(6, 6, 6, 0.5)'
   }
 })
