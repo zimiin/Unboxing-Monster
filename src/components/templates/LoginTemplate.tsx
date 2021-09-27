@@ -1,6 +1,7 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import IconButton24 from '@components/atoms/button/IconButton24'
-import { DESIGN_HEIGHT, DESIGN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH } from '@constants/figure'
+import NotoSansRegular from '@components/atoms/typography/NotoSansRegular'
+import { DESIGN_HEIGHT, DESIGN_WIDTH, scale, SCREEN_HEIGHT, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
@@ -47,9 +48,9 @@ const LoginTemplate = (props: Props) => {
           구경먼저하기
         </FullContentWidthButton>
 
-        <Text style={styles.SNSText}>
+        <NotoSansRegular style={styles.SNSText}>
           SNS로 계속하기
-        </Text>
+        </NotoSansRegular>
 
         <View style={styles.SNSIconView}>
           <IconButton24
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   unboxingTextView: {
     flexDirection: 'row',
-    marginTop: SCREEN_HEIGHT * 75 / DESIGN_HEIGHT,
+    marginTop: verticalScale(71),
   },
   unboxingText: {
     fontFamily: 'GmarketSansTTFBold',
@@ -100,22 +101,23 @@ const styles = StyleSheet.create({
     lineHeight: 31.5,
   },
   image: {
-    width: SCREEN_WIDTH * 312 / DESIGN_WIDTH,
-    height: SCREEN_HEIGHT * 240 / DESIGN_HEIGHT,
+    width: scale(312),
+    height: verticalScale(240),
     resizeMode: 'contain',
-    marginTop: SCREEN_HEIGHT * 56 / DESIGN_HEIGHT
+    marginTop: verticalScale(46)
   },
   lookAroundButton: {
-    marginTop: 80 / DESIGN_HEIGHT * SCREEN_HEIGHT
+    marginTop: verticalScale(70),
+    justifyContent: 'center',
   },
   SNSText: {
-    fontSize: 13,
-    marginTop: 33 / DESIGN_HEIGHT * SCREEN_HEIGHT,
+    fontSize: scale(13),
+    marginTop: verticalScale(33),
     alignSelf: 'center',
   },
   SNSIconView: {
     flexDirection: 'row',
-    marginTop: 12 / DESIGN_HEIGHT * SCREEN_HEIGHT,
+    marginTop: verticalScale(12),
     alignSelf: 'center',
   },
   SNSIcon: {
