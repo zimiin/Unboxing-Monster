@@ -7,9 +7,12 @@ import {
     TouchableOpacity,
     ImageSourcePropType,
     ViewStyle,
+    Platform,
+    View,
 } from 'react-native';
-import { SCREEN_WIDTH } from '@constants/figure';
+import { scale, SCREEN_WIDTH } from '@constants/figure';
 import { defaultBox } from '@constants/images';
+import NotoSansBold from '@components/atoms/typography/NotoSansBold';
 
 export interface Props {
   key: number,
@@ -24,16 +27,22 @@ const BoxItem = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={props.style}
+      style={[
+        props.style,
+        styles.container,
+        Platform.OS === 'ios' ? styles.iosShadow : styles.androidShadow,
+      ]}
     >
-    <Image
-      source={props.image || defaultBox}
-      style={styles.image}
-    />
+      <Image
+        source={props.image || defaultBox}
+        style={styles.image}
+      />
 
-      <Text style={styles.name || ''}>
-        {props.name}
-      </Text>
+      {/* <View style={styles.nameContainer}> */}
+        <NotoSansBold style={styles.name || ''}>
+          {props.name}
+        </NotoSansBold>
+      {/* </View> */}
 
       <Text style={styles.price}>
         {props.price?.toLocaleString() || ''}원
@@ -45,21 +54,47 @@ const BoxItem = (props: Props) => {
 export default BoxItem
 
 const styles = StyleSheet.create({
-  image: {
-    width: SCREEN_WIDTH * (5 / 12),
-    height: SCREEN_WIDTH * (5 / 12),
+  iosShadow: {
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+  },
+  androidShadow: {
+    elevation: 6,
+  },
+  container: {
     borderRadius: 10,
-    borderWidth: 0.07,
+    width: 170,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    height: 218,
+    backgroundColor: 'white',
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
     resizeMode: 'contain'
   },
+  nameContainer: {
+    marginTop: 9,
+    width: '100%',
+    height: 20,
+  },
   name: {
-    marginTop: 14,
-    fontWeight: 'bold',
+    // position: 'absolute',
+    marginTop: 9,
+    letterSpacing: -0.35,
     fontSize: 14,
+    lineHeight: 20,
   },
   price: {
     fontFamily: 'GmarketSansTTFLight',
-    marginTop: 5,
+    marginTop: 1,
     color: '#060606',
     fontSize: 12,
   }

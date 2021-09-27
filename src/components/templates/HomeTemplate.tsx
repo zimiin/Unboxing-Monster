@@ -90,7 +90,6 @@ const HomeTemplate = (props: Props) => {
         horizontal={true}
         ListHeaderComponent={HorizontalListBlank}
         ListFooterComponent={HorizontalListBlank}
-        style={styles.horizontalList}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -105,7 +104,7 @@ const HomeTemplate = (props: Props) => {
         ListEmptyComponent={HorizontalListEmptyComponent}
         ListHeaderComponent={HorizontalListBlank}
         ListFooterComponent={HorizontalListBlank}
-        style={[styles.horizontalList, styles.customBoxList]}
+        style={[styles.customBoxList]}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -157,29 +156,27 @@ export default HomeTemplate
 const styles = StyleSheet.create({
   horizontalListEmpty: {
     marginLeft: scale(6),
+    marginTop: 13,
   },
   verticalListEmpty: {
     marginLeft: scale(24),
   },
   boxItem: {
     marginHorizontal: scale(6),
-    marginBottom: 26,
+    marginVertical: 13,
   },
   listBlank: {
     width: scale(18),
   },
   listTitle: {
-    marginTop: 10,
+    marginTop: 13,
     marginLeft: scale(24),
     fontSize: 18,
     lineHeight: 26,
     letterSpacing: -0.5,
   },
   popularBoxesTitle: {
-    marginTop: verticalScale(47),
-  },
-  horizontalList: {
-    marginTop: verticalScale(13),
+    marginTop: verticalScale(44),
   },
   customBoxList: {
     marginBottom: verticalScale(8),
