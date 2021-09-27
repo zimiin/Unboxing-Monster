@@ -103,6 +103,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cartItemPrice: {
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 18,
+    letterSpacing: -0.32,
     fontSize: 12,
     color: 'rgba(6, 6, 6, 0.5)',
     marginTop: 1,
@@ -122,6 +125,8 @@ const styles = StyleSheet.create({
   },
   text14: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.35,
+    lineHeight: 20,
   }
 })
