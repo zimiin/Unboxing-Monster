@@ -1,11 +1,13 @@
 import UnboxingMonster from '@components/atoms/icon/UnboxingMonster'
 import Bold from '@components/atoms/typography/Bold'
+import { COLORS } from '@constants/colors'
 import { scale, verticalScale } from '@constants/figure'
 import React from 'react'
 import {
   View,
   StyleSheet,
   ViewStyle,
+  Text,
 } from 'react-native'
 
 interface Props {
@@ -18,9 +20,9 @@ const MonsterNotice = (props: Props) => {
     <View style={[styles.container, props.style]}>
       <UnboxingMonster />
 
-      <Bold style={styles.emptyText}>
+      <Text style={styles.emptyText}>
         {props.notice || ''}
-      </Bold>
+      </Text>
     </View>
   )
 }
@@ -33,7 +35,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: scale(13),
-    marginTop: scale(10),
+    fontSize: 13,
+    marginTop: 10,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    // color: COLORS.bold_black,
+    color: '#4F4F4F',
+    lineHeight: 20,
   }
 })

@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   },
   cancelText: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.35,
   },
   searchBar: {
     backgroundColor: '#f9f9f9',

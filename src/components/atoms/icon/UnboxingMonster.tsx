@@ -20,8 +20,8 @@ export default UnboxingMonster
 
 const styles = StyleSheet.create({
   image: {
-    width: scale(120),
-    height: scale(120),
+    width: 110,
+    height: 110,
     resizeMode: 'contain',
   }
 })
