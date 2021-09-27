@@ -1,3 +1,4 @@
+import { COLORS } from '@constants/colors'
 import { verticalScale } from '@constants/figure'
 import React from 'react'
 import { TouchableOpacityProps } from 'react-native'
@@ -42,6 +43,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 26,
+    color: COLORS.bold_black,
   }
 })
