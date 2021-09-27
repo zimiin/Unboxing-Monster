@@ -17,9 +17,9 @@ const Badge = (props: Props) => {
 
   return (
     <View style={[styles.badge, style]}>
-      <Bold style={styles.count}>
+      <Text style={styles.count}>
         {count ? count.toString() : ''}
-      </Bold>
+      </Text>
     </View>
   )
 }
@@ -31,12 +31,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: COLORS.main,
-    height: 14,
+    height: 11,
+    minWidth: 11,
+    borderRadius: 5,
     paddingHorizontal: 3,
-    minWidth: 14,
-    borderRadius: 7,
   },
   count: {
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 10,
     fontSize: 8,
     color: 'white',
   }
