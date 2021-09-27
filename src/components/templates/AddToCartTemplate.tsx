@@ -1,5 +1,5 @@
 import Header from '@components/organisms/header/Header'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {
   View,
   Text,
@@ -113,11 +113,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   countText: {
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.35,
     fontSize: 14,
     flex: 1,
   },
   count: {
     fontSize: 14,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.35,
     marginHorizontal: scale(19),
   },
   priceContainer: {
@@ -129,6 +133,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   totalText: {
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.35,
     fontSize: 16,
     marginRight: 5,
   },
@@ -145,6 +151,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginVertical: 15,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 26,
   }
 })

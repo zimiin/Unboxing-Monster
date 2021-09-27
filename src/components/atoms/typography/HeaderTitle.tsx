@@ -5,7 +5,7 @@ const HeaderTitle = ({ content }: { content: string }) => {
   return (
     <NotoSansBold
       style={{
-        fontWeight: 'bold',
+        fontFamily: 'NotoSansCJKkr-Bold',
         fontSize: 17,
         letterSpacing: -0.51
       }}
