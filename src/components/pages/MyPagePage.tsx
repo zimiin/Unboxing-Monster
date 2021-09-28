@@ -88,8 +88,8 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
       onPressLogout={logout}
       onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
       onPressCart={() => navigation.navigate('Cart')}
-      onPressPointHistory={() => console.log('Point History')}
-      onPressPaymentHistory={() => console.log('Payment History')}
+      onPressPointHistory={() => navigation.navigate('PointHistory')}
+      onPressPaymentHistory={() => navigation.navigate('PaymentHistory')}
     />
   )
 }

@@ -6,7 +6,6 @@ import MainBottomTab from '@components/navigations/MainBottomTab'
 import { RootStackParamList } from '@constants/navigationTypes'
 import CartContextProvider from '@src/stores/CartContext'
 import OpenStack from '@components/navigations/OpenStack'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { printAsyncStorage } from '@src/utils/loginUtils'
 import BoxInfoPage from '@components/pages/BoxInfoPage'
 import ItemInfoPage from '@components/pages/ItemInfoPage'
@@ -16,7 +15,8 @@ import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
-import PaymentValidationPage from '@components/pages/PaymentValidationPage'
+import PointHistoryPage from '@components/pages/PointHistoryPage'
+import PaymentHistoryPage from '@components/pages/PaymentHistoryPage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -66,6 +66,16 @@ const App = () => {
           <Stack.Screen
             name="Cart"
             component={CartPage}
+          />
+
+          <Stack.Screen
+            name="PointHistory"
+            component={PointHistoryPage}
+          />
+
+          <Stack.Screen
+            name="PaymentHistory"
+            component={PaymentHistoryPage}
           />
 
           <Stack.Screen
