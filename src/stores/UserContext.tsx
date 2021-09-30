@@ -76,23 +76,23 @@ const UserContextProvider = (props: Props) => {
   const [phone, setPhoneState] = useState<string>('')
 
   /** ===== Example ===== */
-  const [userInfo, setUserInfo] = useState<UserInfo>()
+  // const [userInfo, setUserInfo] = useState<UserInfo>()
 
-  const newUserInfo = async (newUserInfo: UserInfo) => {
-    setUserInfo(newUserInfo)
-  }
+  // const newUserInfo = async (newUserInfo: UserInfo) => {
+  //   setUserInfo(newUserInfo)
+  // }
 
-  const updateUserInfo = async (newUserInfo: UserInfo) => {
-    let info = {...userInfo, ...newUserInfo}
-    setUserInfo(info)
+  // const updateUserInfo = async (newUserInfo: UserInfo) => {
+  //   let info = {...userInfo, ...newUserInfo}
+  //   setUserInfo(info)
 
-    saveUserInfoToStorage(JSON.stringfy(info))
-  }
+  //   saveUserInfoToStorage(JSON.stringfy(info))
+  // }
 
-  const removeUserInfo = async () => {
-    removeUserInfoFromStorage()
-    setUserInfo({})
-  }
+  // const removeUserInfo = async () => {
+  //   removeUserInfoFromStorage()
+  //   setUserInfo({})
+  // }
 
   /** ===== End Example ===== */
   

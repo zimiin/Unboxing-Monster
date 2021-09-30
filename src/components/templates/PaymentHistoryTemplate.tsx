@@ -10,21 +10,12 @@ import {
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import Header from '@components/organisms/header/Header'
 import { defaultBox } from '@constants/images'
+import { PurchaseLog } from '@constants/types'
+import { parseDate } from '@src/utils/utils'
 
 interface Props {
   onPressBack: () => void,
-  paymentHistories: {
-    timestamp: string, 
-    isCanceled: boolean, 
-    price: number, 
-    point: number, 
-    boxes: {
-      image: string, 
-      title: string, 
-      count: number, 
-      price: number
-    }[]
-  }[]
+  paymentHistories: PurchaseLog[]
 }
 
 const WIDTH = Dimensions.get('window').width
@@ -45,13 +36,13 @@ const PaymentHistoryTemplate  = (props: Props) => {
 
       <ScrollView style={styles.container}>
         {
-          paymentHistories.map(paymentHistory => (
-            (
+          paymentHistories.map(paymentHistory => {
+            return (
               <>
                 <View style={{marginLeft: WIDTH * (24 / 360), marginRight: WIDTH * (24 / 360), paddingBottom: (18 / 740) * HEIGHT}}>
                   <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: HEIGHT * (17 / 740)}}>
-                    <Text style={{fontSize: 15, lineHeight: HEIGHT * (18 / 740), fontFamily: 'Roboto-Medium', opacity: 0.7}}>{paymentHistory.timestamp}</Text>
-                    {paymentHistory.isCanceled ? <Text style={{fontSize: 13, lineHeight: HEIGHT * (19 / 740), fontFamily: 'NotoSansCJKkr-Regular', opacity: 0.5}}>결제가 취소되었습니다.</Text> : undefined}
+                    <Text style={{fontSize: 15, lineHeight: HEIGHT * (18 / 740), fontFamily: 'Roboto-Medium', opacity: 0.7}}>{parseDate(new Date(paymentHistory.purchaseAt))}</Text>
+                    {paymentHistory.refund ? <Text style={{fontSize: 13, lineHeight: HEIGHT * (19 / 740), fontFamily: 'NotoSansCJKkr-Regular', opacity: 0.5}}>결제가 취소되었습니다.</Text> : undefined}
                   </View >
                   <View style={{borderBottomColor: '#f9f9f9', borderBottomWidth: 2, paddingBottom: HEIGHT * (15 / 740), paddingTop: HEIGHT * (6 / 740), marginBottom: (21 / 740) * HEIGHT}}>
                     {
@@ -66,11 +57,11 @@ const PaymentHistoryTemplate  = (props: Props) => {
                               resizeMode='contain'
                             />
                             <View style={{marginLeft: WIDTH * (15 / 360), width: WIDTH * (125 / 360)}}>
-                              <Text style={{fontFamily: 'NotoSansCJKkr-Bold', fontSize: 15, lineHeight: HEIGHT * (22 / 740), marginTop: HEIGHT * (22 / 740)}}>{box.title}</Text>
+                              <Text style={{fontFamily: 'NotoSansCJKkr-Bold', fontSize: 15, lineHeight: HEIGHT * (22 / 740), marginTop: HEIGHT * (22 / 740)}}>{box.box.title}</Text>
                               <Text style={{fontFamily: 'NotoSansCJKkr-Regular', fontSize: 12, lineHeight: HEIGHT * (18 / 740), opacity: 0.5}}>수량: {box.count} 개</Text>
                             </View>
                             <View style={{width: WIDTH * (98 / 360)}}>
-                              <Text style={{fontFamily: 'NotoSansCJKkr-Medium', fontSize: 16, lineHeight: HEIGHT * (24 / 740), marginTop: HEIGHT * (40 / 740), textAlign: 'right'}}>{box.price.toLocaleString()} 원</Text>
+                              <Text style={{fontFamily: 'NotoSansCJKkr-Medium', fontSize: 16, lineHeight: HEIGHT * (24 / 740), marginTop: HEIGHT * (40 / 740), textAlign: 'right'}}>{(box.box.price * box.count).toLocaleString()} 원</Text>
                             </View>
                           </View>
                         )
@@ -83,17 +74,17 @@ const PaymentHistoryTemplate  = (props: Props) => {
                   </View >
                   <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text style={{fontSize: 14, lineHeight: HEIGHT * (20 / 740), fontFamily: 'NotoSansCJKkr-Regular'}}>언박싱 포인트 사용</Text>
-                    <Text style={{fontSize: 16, lineHeight: HEIGHT * (24 / 740), fontFamily: 'NotoSansCJKkr-Regular'}}>- {paymentHistory.point.toLocaleString()} 원</Text>
+                    <Text style={{fontSize: 16, lineHeight: HEIGHT * (24 / 740), fontFamily: 'NotoSansCJKkr-Regular'}}>- {paymentHistory.usedPoint.toLocaleString()} 원</Text>
                   </View >
                   <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: HEIGHT * (3 / 740)}}>
                     <Text style={{fontSize: 14, lineHeight: HEIGHT * (20 / 740), fontFamily: 'NotoSansCJKkr-Medium'}}>결제 금액</Text>
-                    <Text style={{fontSize: 16, lineHeight: HEIGHT * (24 / 740), fontFamily: 'NotoSansCJKkr-Medium'}}>{(paymentHistory.price - paymentHistory.point).toLocaleString()} 원</Text>
+                    <Text style={{fontSize: 16, lineHeight: HEIGHT * (24 / 740), fontFamily: 'NotoSansCJKkr-Medium'}}>{(paymentHistory.price - paymentHistory.usedPoint).toLocaleString()} 원</Text>
                   </View >
                 </View>
                 <HorizontalRule />
               </>
             )
-          ))
+          })
         }
       </ScrollView>
 

@@ -71,20 +71,10 @@ const App = () => {
               component={CartPage}
             />
 
-          <Stack.Screen
-            name="PointHistory"
-            component={PointHistoryPage}
-          />
-
-          <Stack.Screen
-            name="PaymentHistory"
-            component={PaymentHistoryPage}
-          />
-
-          <Stack.Screen
-            name="AddToCart"
-            component={AddToCartPage}
-          />
+            <Stack.Screen
+              name="AddToCart"
+              component={AddToCartPage}
+            />
 
             <Stack.Screen
               name="Payment"

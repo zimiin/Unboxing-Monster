@@ -33,7 +33,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
         const json: {"access_token": string} = await response.json()
         const user: User = await getUserInfoFromToken(json.access_token)
 
-        await setUserData(user.id, user.nickname, user.email, token, '')
+        await setUserData(user.id, user.nickname, user.email, json.access_token, '')
 
         return true
       } else if (response.status === 404) {

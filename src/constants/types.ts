@@ -88,3 +88,30 @@ export interface OpenResult {
   user: User,
   item: Item
 }
+
+export interface Purchase {
+  id: string,
+  imp_uid: string,
+  ownerId: string,
+  purchaseAt: string,
+  price: number,
+  refund: boolean,
+  refundAt: string,
+  usedPoint: number
+}
+
+export interface BoxPurchase {
+  id: number,
+  boxId: BoxId,
+  purchaseId: string,
+  count: number
+}
+
+export interface BoxPurchaseWithBoxInfo extends BoxPurchase {
+  box: Box
+}
+
+export interface PurchaseLog extends Purchase{
+  owner: User,
+  boxes: BoxPurchaseWithBoxInfo[]
+}
