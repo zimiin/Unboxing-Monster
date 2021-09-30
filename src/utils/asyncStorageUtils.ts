@@ -19,6 +19,24 @@ export const setPhoneToAsyncStorage = async (phone: string) => {
   }
 }
 
+export const getUserIdFromAsyncStorage = async () => {
+  try {
+    return await AsyncStorage.getItem('@userId')
+  } catch (error) {
+    console.log('Error in getUserIdFromAsyncStorage', error)
+    throw error
+  }
+}
+
+export const setUserIdToAsyncStorage = async (userId: string) => {
+  try {
+    await AsyncStorage.setItem('@userId', userId)
+  } catch (error) {
+    console.log('Error in setUserIdToAsyncStorage', error)
+    throw error
+  }
+}
+
 export const getNicknameFromAsyncStorage = async () => {
   try {
     return await AsyncStorage.getItem('@nickname')

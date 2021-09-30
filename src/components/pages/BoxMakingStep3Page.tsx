@@ -6,11 +6,13 @@ import { generateProbability } from '@src/utils/probabilites'
 import { URLS } from '@constants/urls'
 import { Box } from '@constants/types'
 import { CartContext } from '@src/stores/CartContext'
-import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from '@src/utils/asyncStorageUtils'
+// import { getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from '@src/utils/asyncStorageUtils'
+import { UserContext } from '@src/stores/UserContext'
 
 const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
   const [{}, {modifyBoxCount, addBoxData}] = useContext(CartContext)
+  const [{accessToken, nickname}, {}] = useContext(UserContext)
 
   const itemInfo: {id: number, name: string}[] = useMemo(() => {
     return selectedItems.map(
@@ -35,8 +37,6 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
 
   const requestPostBox = async () => {
     try {
-      const accessToken = await getAccessTokenFromAsyncStorage()
-      const nickname = await getNicknameFromAsyncStorage()
       const items = Array.from(selectedItems, item => item.id)
       const response = await fetch(
         URLS.unboxing_api + 'box', {

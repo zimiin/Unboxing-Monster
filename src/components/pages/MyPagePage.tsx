@@ -45,26 +45,20 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
     try {
       hasLoggedIn().then(
         result => {
-          if (isSubscribed) {
             setLoginState(result || false)
-          }
         }
       )
 
       getNicknameFromAsyncStorage().then(
         result => {
-          if (isSubscribed) {
             setNickname(result || '')
-          }
         }
       )
 
       navigation.addListener('focus', () => {
         getPoint().then(
           result => {
-            if (isSubscribed) {
               setPoint(result)
-            }
           }
         )
       })
@@ -72,10 +66,14 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
       console.log('Error in useEffect in MyPagePage::', error)
     }
 
-    return () => {isSubscribed = false}
+    return () => {
+      console.log('=====MyPagePage unmounted')
+      isSubscribed = false
+    }
   }, [])
 
-  const logout = async () => {
+  const logout = async () => {    
+    // @TODO Alert 창 띄우기 
     await AsyncStorage.clear()
     navigation.replace('Auth', {screen: 'Login'})
   }
