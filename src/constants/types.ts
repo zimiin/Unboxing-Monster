@@ -115,3 +115,13 @@ export interface PurchaseLog extends Purchase{
   owner: User,
   boxes: BoxPurchaseWithBoxInfo[]
 }
+
+export interface Point {
+  id: number,
+  userId: string,
+  title: string,
+  point: number,
+  total: number,
+  isAdd: boolean,
+  time: string,
+}
