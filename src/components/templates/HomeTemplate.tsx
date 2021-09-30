@@ -9,7 +9,7 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { scale, verticalScale } from '@constants/figure'
+import { scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(32)
   },
   columnWrapper: {
-    marginHorizontal: scale(18),
+    marginHorizontal: scale((SCREEN_WIDTH - 324) / 2),
   },
   mainFlatList: {
     backgroundColor: 'white',

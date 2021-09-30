@@ -11,6 +11,7 @@ import { Item } from '@constants/types'
 import { PieChart } from "react-native-chart-kit";
 import HorizontalRule from "@components/atoms/HorizontalRule";
 import { URLS } from "@constants/urls";
+import { parseDate } from "@src/utils/utils";
 
 const WIDTH = Dimensions.get('window').width;
 const COLORS = [
@@ -116,7 +117,7 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
               <View style={{marginTop: 22}}>
                 <Text style={{fontSize: 13, fontWeight: 'bold'}}>{`${result.user.nickname} 님이 ${result.item.title}에 당첨되었습니다!`}</Text>
                 <View style={{flex: 1, alignItems: 'flex-end', marginTop: 9}}>
-                  <Text style={{fontSize: 11, opacity: 0.5}}>{`${result.openAt}`}</Text>
+                  <Text style={{fontSize: 11, opacity: 0.5}}>{parseDate(new Date(result.openAt))}</Text>
                 </View>
               </View>
             ))

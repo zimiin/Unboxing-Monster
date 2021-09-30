@@ -68,15 +68,15 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: 10,
-    width: 170,
+    width: 150,
+    height: 200,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    height: 218,
     backgroundColor: 'white',
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     borderRadius: 10,
     resizeMode: 'contain'
   },
