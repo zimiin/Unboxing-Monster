@@ -55,8 +55,8 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
   return (
     <View>
       <View style={{
-        marginLeft: 24,
-        marginRight: 24,
+        marginLeft: WIDTH * (24 / 360),
+        marginRight: WIDTH * (24 / 360),
       }}>
       <Text style={{
         marginTop: 25,
@@ -67,7 +67,8 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
         backgroundColor: "#f9f9f9",
         paddingTop: 16,
         marginTop: 13,
-        marginBottom: 28,
+        paddingBottom: 14,
+        marginBottom: 28
       }}>
         <PieChart
           backgroundColor="#f9f9f9"
@@ -87,15 +88,15 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
             numColumns={2}
             renderItem={
               ({item}) => (
-                <View style={{height: 32, width: 156, paddingLeft: 25}}>
+                <View style={{height: 32, width: WIDTH * (156 / 360), paddingLeft: WIDTH * (25 / 360)}}>
                   <View style={{alignContent: 'flex-start', flex: 1, flexDirection: 'row'}}>
                     <View style={{alignItems: 'center', marginTop: 3}}>
-                      <View style={{height: 7, width: 7, backgroundColor: item.color}}>
+                      <View style={{height: WIDTH * (7 / 360), width: WIDTH * (7 / 360), backgroundColor: item.color}}>
                     </View>
                     </View>
-                    <Text style={{fontSize: 11, marginLeft: 5}}>{item.title}</Text>
+                    <Text style={{fontSize: 11, marginLeft: WIDTH * (5/ 360)}}>{item.title}</Text>
                   </View>
-                  <Text style={{fontSize: 11, marginLeft: 12, position: 'relative', top: -5, fontWeight: 'bold'}}>{(100 * item.count / total_count).toFixed(2)} %</Text>
+                  <Text style={{fontSize: 11, marginLeft: WIDTH * (12 / 360), position: 'relative', top: -5, fontWeight: 'bold'}}>{(100 * item.count / total_count).toFixed(2)} %</Text>
                 </View>
               )}
             data={template}
@@ -105,8 +106,8 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
       </View>
       <HorizontalRule/>
       <View style={{
-        marginLeft: 24,
-        marginRight: 24,
+        marginLeft: WIDTH * (24 / 360),
+        marginRight: WIDTH * (24 / 360),
       }}>
         <Text style={{fontSize: 14, fontWeight: 'bold', marginTop: 22, marginBottom: 7}}>최근 1등 당점자 현황</Text>
         <ScrollView>

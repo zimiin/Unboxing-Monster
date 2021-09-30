@@ -14,6 +14,8 @@ export type RootStackParamList = {
   ProbInfo: { boxId: number, boxPrice: number, items: Item[] },
   AddToCart: { boxData: BoxWithItems },
   Cart: undefined,
+  PaymentHistory: undefined,
+  PointHistory: undefined,
   Payment: undefined,
   PGPayment: PaymentParams | undefined,
   PaymentComplete: any,
@@ -66,6 +68,18 @@ export type CartNavigationProp = StackNavigationProp<RootStackParamList, 'Cart'>
 export type CartRouteProp = RouteProp<RootStackParamList, 'Cart'>
 export type CartProps = {
   navigation: CartNavigationProp
+}
+
+export type PointHistoryNavigationProp = StackNavigationProp<RootStackParamList, 'PointHistory'>
+export type PointHistoryRouteProp = RouteProp<RootStackParamList, 'PointHistory'>
+export type PointHistoryProps = {
+  navigation: PointHistoryNavigationProp
+}
+
+export type PaymentHistoryNavigationProp = StackNavigationProp<RootStackParamList, 'PaymentHistory'>
+export type PaymentHistoryRouteProp = RouteProp<RootStackParamList, 'PaymentHistory'>
+export type PaymentHistoryProps = {
+  navigation: PaymentHistoryNavigationProp
 }
 
 // Payment

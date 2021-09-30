@@ -6,11 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  ImageSourcePropType
+  ImageSourcePropType,
+  Dimensions
 } from 'react-native'
 
 import { IMAGES } from '@constants/images'
 import { scale, verticalScale } from '@constants/figure'
+
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
 
 const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
   image: ImageSourcePropType, 
@@ -59,6 +63,7 @@ const styles = StyleSheet.create({
     color: '#060606',
     fontFamily: 'GmarketSansTTFMedium',
     letterSpacing: -0.03,
+<<<<<<< HEAD
     lineHeight: verticalScale(31.5),
     fontSize: 20,
     marginTop: verticalScale(25),
@@ -84,12 +89,39 @@ const styles = StyleSheet.create({
     backgroundColor: '#29a3ff', 
     height: 48, 
     width: scale(312),
+=======
+    lineHeight: HEIGHT * (31.5 / 740),
+    fontSize: 20,
+    bottom: HEIGHT * (180 / 740),
+    textAlign: 'center'
+  },
+  imageContainer: {
+    position: 'absolute', 
+    top: HEIGHT * (144 / 740), 
+    paddingTop: 30,
+  },
+  image: {
+    width: WIDTH * (260 / 360), 
+    height: HEIGHT * (260 / 740),
+  },
+  close_btn_img: {
+    position: 'absolute',
+    right: WIDTH * (17 / 360),
+    top: HEIGHT * (36 / 740),
+  },
+  done_btn: {
+    position: 'absolute',
+    bottom: HEIGHT * (60 / 740), 
+    backgroundColor: '#29a3ff', 
+    height: HEIGHT * (48 / 740), 
+    width: WIDTH * (312 / 360),
+>>>>>>> master
     alignItems:'center',
     justifyContent:'center',
-    borderRadius: 6,
+    borderRadius: 7,
   },
   done_btn_text: {
-    fontSize:14, 
+    fontSize: 14, 
     color: '#fff', 
     fontWeight: 'bold'
   }

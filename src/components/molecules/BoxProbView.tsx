@@ -11,6 +11,7 @@ import ProbStackedBarChart from "@components/atoms/ProbStackedBarChart";
 import { PROB_COLORS } from "@constants/colors";
 
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 
 const BoxProbView = ({probs, items}: {probs: number[], items: Item[]}) => {
@@ -75,8 +76,8 @@ export default BoxProbView
 const styles = StyleSheet.create({
   barchart: {
     position: 'absolute',
-    top: 50,
-    left: -15
+    top: 50 ,
+    left: WIDTH * (0 / 360)
   },
   barchartLegendTop: {
     position: 'absolute', 

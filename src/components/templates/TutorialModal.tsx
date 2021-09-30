@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  Dimensions,
   Modal,
 } from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
@@ -15,7 +16,6 @@ type TutorialModalProps = {
   modalVisible: boolean
   setModalVisible: Dispatch<SetStateAction<boolean>>
 }
-
 
 const TutorialModal = (props: TutorialModalProps)  => {
   return (
@@ -39,6 +39,7 @@ const TutorialModal = (props: TutorialModalProps)  => {
         activeDot={
           <SwipeDot backgroundColor={'#29a3ff'}/>
         }
+        dotStyle={{position: 'absolute', bottom: Dimensions.get('window').height * (148 / 740)}}
       >
         <SwiperSlide image={IMAGES.tutorial_01} onPressFn={props.setModalVisible}>
           <Bold>UNBOXING</Bold> 은{"\n"}두 가지의 구매방식을{"\n"}지원해요

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import {
+  Dimensions,
   Modal,
 } from 'react-native'
 import { Dispatch, SetStateAction } from 'react'
@@ -33,6 +34,7 @@ const IntroModal = (props: IntroModalProps)  => {
         loop={false} 
         nextButton={<SwipeImage source={IMAGES.btn_next}/>}
         prevButton={<SwipeImage source={IMAGES.btn_prev}/>}
+        dotStyle={{position: 'absolute', bottom: Dimensions.get('window').height * (148 / 740)}}
         dot={
           <SwipeDot backgroundColor={'#eef1f2'}/>
         }
