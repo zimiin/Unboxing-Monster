@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView
 } from 'react-native'
 import { Item } from '@constants/types'
 import BoxProbView from "@components/molecules/BoxProbView";
@@ -17,7 +18,7 @@ const ProbViewTab = ({ items, probs, boxId } : { items: Item[], probs: number[],
   const [selected, setSelected] = useState(0);
 
   return (
-    <>
+    <SafeAreaView>
       <View style={styles.tab}>
         <TouchableOpacity style={styles.tabLeftButton} onPress={() => setSelected(0)}>
           <View style={selected == 0 ? styles.tabSelectedContainer: styles.tabNotSelectedContainer}>
@@ -42,7 +43,7 @@ const ProbViewTab = ({ items, probs, boxId } : { items: Item[], probs: number[],
       ) : (
         <RealtimeProbView items={items} boxId={boxId}/>
       )}
-    </>
+    </SafeAreaView>
   )
 }
 
