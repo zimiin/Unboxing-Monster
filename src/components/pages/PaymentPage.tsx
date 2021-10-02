@@ -36,11 +36,16 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   },
 ]
 
+const toHundreds = (num: number) => {
+  return num - (num % 100)
+}
+
 const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [{ cart, boxData }, { }] = useContext(CartContext)
   const [point, setPoint] = useState<number>(0)
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
+  const [pointInputError, setPointInputError] = useState<string>('')
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
   const [phoneInput, setPhoneInput] = useState<string>('')
   const [phoneInputError, setPhoneInputError] = useState<string>('')
@@ -77,7 +82,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   }, [cart])
 
   useEffect(() => {
-    const getPoint = async () => {
+    const getPoint = async (): Promise<number | undefined> => {
       try {
         const url = URLS.unboxing_api + 'users'
         const response = await fetch(
@@ -102,11 +107,17 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       }
     }
 
-    getPoint().then(result => setPoint(result || 0))
+    getPoint().then(userPoint => {
+      if (userPoint) {
+        setPoint(userPoint)
+      }
+    })
     getPhoneFromAsyncStorage().then(phone => setPhoneInput(phone || ''))
   }, [])
 
   const setUsingPointFromInput = (input: string) => {
+    setPointInputError('')
+
     if (input === '') {
       setUsingPoint(0)
       return
@@ -125,13 +136,15 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   }
 
   const onPressUseAllPoint = () => {
+    setPointInputError('')
+    
     if (useAllPoint) {
       setUsingPoint(0)
     } else {
       if (point > totalPrice) {
-        setUsingPoint(totalPrice)
+        setUsingPoint(toHundreds(totalPrice))
       } else {
-        setUsingPoint(point)
+        setUsingPoint(toHundreds(point))
       }
     }
     setUseAllPoint(!useAllPoint)
@@ -178,10 +191,29 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     }
   }
 
+  const validatePointInput = () => {
+    if (usingPoint % 100 !== 0) {
+      setPointInputError('포인트는 100P 단위로 사용가능합니다.')
+      return false
+    }
+    return true
+  }
+
+  const validatePhoneInput = () => {
+    if (validatePhone(phoneInput) === false) {
+      setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
+      return false
+    }
+    return true
+  }
+
   const onPressMakePayment = async () => {
     try {
-      if (validatePhone(phoneInput) === false) {
-        setPhoneInputError('올바른 핸드폰 번호를 입력해주세요.')
+      if (validatePointInput() === false) {
+        throw 'Invalid point input: ' + usingPoint
+      }
+
+      if (validatePhoneInput() === false) {
         throw 'Invalid phone number input: ' + phoneInput
       }
 
@@ -241,6 +273,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       phoneInput={phoneInput}
       savePhone={savePhone}
       phoneInputError={phoneInputError}
+      pointInputError={pointInputError}
+      onSubmitPhoneInput={validatePhoneInput}
       onPressSavePhone={() => setSavePhone(!savePhone)}
       onChangePhoneInput={onChangePhoneInput}
       onPressBack={() => navigation.goBack()}
@@ -248,6 +282,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onPressUseAllPoint={onPressUseAllPoint}
       onChangePaymentMethod={setSelectedPaymentMethod}
       onPressMakePayment={onPressMakePayment}
+      onSubmitPointInput={validatePointInput}
     />
   )
 }
