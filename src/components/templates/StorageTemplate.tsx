@@ -16,7 +16,6 @@ import { BoxId, BoxStorage, Coupon, Item, ItemId } from '@constants/types'
 import { IMAGES } from '@constants/images'
 import { UserCoupon } from '@components/pages/StoragePage'
 import { getDaysBetweenDates } from '@src/utils/utils'
-import NoticeModal from '@components/molecules/NoticeModal'
 import { verticalScale } from '@constants/figure'
 
 export type Focus = 'randomBox' | 'coupon'

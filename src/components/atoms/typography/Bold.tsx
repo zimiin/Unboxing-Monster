@@ -16,8 +16,10 @@ const Bold = (props: Props) => {
   return (
     <Text 
       {...rest}
-      style={[
-        { fontWeight: 'bold' }, 
+      style={[{ 
+        fontFamily: 'NotoSansCJKkr-Bold',
+        letterSpacing: -0.37,
+      },
         style
       ]}
     >

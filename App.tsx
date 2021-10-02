@@ -15,6 +15,8 @@ import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
+import PaymentValidationPage from '@components/pages/PaymentValidationPage'
+import UserContextProvider from '@src/stores/UserContext'
 import PointHistoryPage from '@components/pages/PointHistoryPage'
 import PaymentHistoryPage from '@components/pages/PaymentHistoryPage'
 
@@ -25,81 +27,73 @@ const App = () => {
   printAsyncStorage()
 
   return (
-    <CartContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName="Auth"
-          screenOptions={{
-            headerShown: false
-          }}
-        > 
-          <Stack.Screen 
-            name="Auth"
-            component={AuthStack}
-          />
+    <UserContextProvider>
+      <CartContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Auth"
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <Stack.Screen
+              name="Auth"
+              component={AuthStack}
+            />
 
-          <Stack.Screen
-            name="Main"
-            component={MainBottomTab}
-          />
+            <Stack.Screen
+              name="Main"
+              component={MainBottomTab}
+            />
 
-          <Stack.Screen
-            name="Open"
-            component={OpenStack}
-          />
+            <Stack.Screen
+              name="Open"
+              component={OpenStack}
+            />
 
-          <Stack.Screen
-            name="BoxInfo"
-            component={BoxInfoPage}
-          />
+            <Stack.Screen
+              name="BoxInfo"
+              component={BoxInfoPage}
+            />
 
-          <Stack.Screen
-            name="ItemInfo"
-            component={ItemInfoPage}
-          />
+            <Stack.Screen
+              name="ItemInfo"
+              component={ItemInfoPage}
+            />
 
-          <Stack.Screen
-            name="ProbInfo"
-            component={ProbInfoPage}
-          />
+            <Stack.Screen
+              name="ProbInfo"
+              component={ProbInfoPage}
+            />
 
-          <Stack.Screen
-            name="Cart"
-            component={CartPage}
-          />
+            <Stack.Screen
+              name="Cart"
+              component={CartPage}
+            />
 
-          <Stack.Screen
-            name="PointHistory"
-            component={PointHistoryPage}
-          />
+            <Stack.Screen
+              name="AddToCart"
+              component={AddToCartPage}
+            />
 
-          <Stack.Screen
-            name="PaymentHistory"
-            component={PaymentHistoryPage}
-          />
+            <Stack.Screen
+              name="Payment"
+              component={PaymentPage}
+            />
 
-          <Stack.Screen
-            name="AddToCart"
-            component={AddToCartPage}
-          />
+            <Stack.Screen
+              name="PaymentComplete"
+              component={PaymentCompletePage}
+            />
 
-          <Stack.Screen
-            name="Payment"
-            component={PaymentPage}
-          />
-
-          <Stack.Screen
-            name="PaymentComplete"
-            component={PaymentCompletePage}
-          />
-
-          <Stack.Screen
-            name="PGPayment"
-            component={PGPaymentPage}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </CartContextProvider>
+            <Stack.Screen
+              name="PGPayment"
+              component={PGPaymentPage}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CartContextProvider>
+    </UserContextProvider>
   )
 }
 

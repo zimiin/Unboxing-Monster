@@ -15,6 +15,8 @@ const SubTitle = (props: Props) => {
       style={[{
         fontSize: 15,
         fontWeight: 'bold',
+        letterSpacing: -0.37,
+        fontFamily: 'NotoSansCJKkr-Bold',
       },
       props.style
     ]}

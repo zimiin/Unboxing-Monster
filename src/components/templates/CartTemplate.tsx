@@ -20,6 +20,7 @@ import NoticeModal from '@components/molecules/NoticeModal'
 import InfoIcon from '@components/atoms/icon/InfoIcon'
 import { verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
+import { COLORS } from '@constants/colors'
 
 interface Props {
   checkAll: boolean,
@@ -147,8 +148,10 @@ export default CartTemplate
 
 const styles = StyleSheet.create({
   text14: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    letterSpacing: -0.32,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    color: '#060606',
   },
   container: {
     flex: 1,
@@ -170,7 +173,9 @@ const styles = StyleSheet.create({
   },
   totalBoxPrice: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.4,
+    color: COLORS.bold_black,
   },
   purchaseButton: {
     width: scale(312),
@@ -185,16 +190,17 @@ const styles = StyleSheet.create({
   purchaseText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 26,
   },
   safeArea: {
     backgroundColor: 'white',
   },
   infoIcon: {
-    marginVertical: verticalScale(10),
+    marginVertical: 25,
   },
   infoText: {
-    marginVertical: verticalScale(5),
+    marginBottom: 15,
     textAlign: 'center',
     fontSize: scale(13),
     lineHeight: scale(20),

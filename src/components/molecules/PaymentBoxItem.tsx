@@ -67,11 +67,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
+    lineHeight: 22,
   },
   count: {
     color: COLORS.grey_text,
+    fontFamily: 'NotoSansCJKkr-Regular',
     fontSize: 12,
     lineHeight: 18,
+    letterSpacing: -0.3,
     marginTop: 3,
   },
   rightView: {
@@ -80,5 +83,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 16,
     marginBottom: 3,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.4,
   }
 })

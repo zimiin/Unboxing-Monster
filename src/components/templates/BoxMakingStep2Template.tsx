@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 30,
     letterSpacing: -0.6,
-    marginTop: verticalScale(32),
+    marginTop: 32,
     marginBottom: 20,
   },
   box: {
@@ -242,8 +242,9 @@ const styles = StyleSheet.create({
     bottom: scale(12),
   },
   text: {
-    fontSize: scale(16),
-    fontWeight: '500',
+    fontSize: 16,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    lineHeight: 20,
   },
   underlineInput: {
     borderBottomWidth: 1,

@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   Image,
+  Text,
 } from 'react-native'
 import Header from '@components/organisms/header/Header'
 import { IMAGES } from '@constants/images'
@@ -30,9 +31,9 @@ const LoginRequestTemplate = (props: Props) => {
           style={styles.infoIcon}
         />
 
-        <Bold style={styles.requestLoginText}>
+        <Text style={styles.requestLoginText}>
           로그인이 필요합니다.
-        </Bold>
+        </Text>
         
         <FullContentWidthButton
           onPress={props.onPressLogin}
@@ -60,8 +61,9 @@ const styles = StyleSheet.create({
   },
   requestLoginText: {
     color: '#060606',
-    fontSize: scale(16),
+    fontSize: 16,
     letterSpacing: -0.68,
+    fontFamily: 'NotoSansCJKkr-Medium',
     marginTop: verticalScale(11),
     marginBottom: verticalScale(237),
   },

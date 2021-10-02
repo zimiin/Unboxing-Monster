@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 18,
-    paddingBottom: 19,
+    paddingVertical: 15,
   },
   text: {
-    fontWeight: 'bold',
+    lineHeight: 26,
+    fontFamily: 'NotoSansCJKkr-Bold',
     fontSize: 16,
     color: 'white',
   }

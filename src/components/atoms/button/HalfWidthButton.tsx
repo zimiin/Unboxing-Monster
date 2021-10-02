@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: scale(14),
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 26,
   }
 })

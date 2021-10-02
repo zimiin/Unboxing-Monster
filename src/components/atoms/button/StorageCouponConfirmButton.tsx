@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import { StyleProp, Text, TextStyle, ViewStyle } from 'react-native'
 import { StyleSheet } from 'react-native'
 import {
   TouchableOpacity,
@@ -8,7 +8,7 @@ import { scale } from 'react-native-size-matters'
 import Bold from '../typography/Bold'
 
 interface Props {
-  onPress: () => void,
+  onPress?: () => void,
   buttonStyle?: StyleProp<ViewStyle>,
   textStyle?: StyleProp<TextStyle>,
   children: string,
@@ -20,9 +20,9 @@ const StorageCouponConfirmButton = (props: Props) => {
       style={[styles.button, props.buttonStyle]}
       onPress={props.onPress}
     >
-      <Bold style={[styles.text, props.textStyle]}>
+      <Text style={[styles.text, props.textStyle]}>
         {props.children}
-      </Bold>
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -39,5 +39,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 13,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.32,
+    lineHeight: 19,
   }
 })

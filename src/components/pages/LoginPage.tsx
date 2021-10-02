@@ -11,9 +11,11 @@ import { User } from '@constants/types'
 import { Platform } from 'react-native'
 import { appleAuth, appleAuthAndroid } from '@invertase/react-native-apple-authentication'
 import { v4 as uuid } from 'uuid'
+import { UserContext } from '@src/stores/UserContext'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
+  const [{}, {setUserData}] = useContext(UserContext)
 
   const requestLogin = async (provider: string, token: string) => {
     try {
@@ -31,7 +33,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
         const json: {"access_token": string} = await response.json()
         const user: User = await getUserInfoFromToken(json.access_token)
 
-        await storeUserInfo(json.access_token, user.nickname, user.email, '')
+        await setUserData(user.id, user.nickname, user.email, json.access_token, '')
 
         return true
       } else if (response.status === 404) {

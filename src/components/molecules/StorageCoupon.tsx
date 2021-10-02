@@ -12,8 +12,8 @@ import {
 import { scale } from 'react-native-size-matters'
 import { defaultBox } from '@constants/images'
 import { ItemId } from '@constants/types'
-import { COLORS } from '@constants/colors'
 import DeleteButton from '@components/atoms/button/DeleteButton'
+import { COLORS } from '@constants/colors'
 
 export interface Props {
   id: number,
@@ -58,43 +58,27 @@ const StorageCoupon = (props: Props) => {
           {props.price.toLocaleString() || ''} 원
         </Text>
 
+        <Text style={styles.confirmableDays}>
+          {props.isUsed === false ? '자동 환불까지 ' + props.confirmableDays + '일 남았습니다.'
+            : props.isRefunded === false? '이미 사용한 쿠폰입니다.' : '환불된 쿠폰입니다.'}
+        </Text>
+        <View style={styles.buttonContainer}>
+          <StorageCouponConfirmButton
+            onPress={props.isUsed || props.isRefunded ? undefined : props.onPressConfirm}
+            buttonStyle={props.isUsed || props.isRefunded ? styles.inactiveButton : styles.confirmButton}
+            textStyle={props.isUsed || props.isRefunded ? styles.inactiveText : styles.confirmText}
+          >
+            확정
+          </StorageCouponConfirmButton>
 
-        {props.isUsed === false && props.isRefunded === false ?
-          <>
-            <Text style={styles.confirmableDays}>
-              자동 환불까지 {props.confirmableDays || ''}일 남았습니다.
-            </Text>
-            <View style={styles.buttonContainer}>
-              <StorageCouponConfirmButton
-                onPress={props.onPressConfirm || defaultFunction}
-                buttonStyle={styles.confirmButton}
-                textStyle={styles.confirmText}
-              >
-                확정
-              </StorageCouponConfirmButton>
-
-              <StorageCouponConfirmButton
-                onPress={props.onPressRefund || defaultFunction}
-                buttonStyle={styles.refundButton}
-                textStyle={styles.refundText}
-              >
-                환불
-              </StorageCouponConfirmButton>
-            </View>
-          </>
-          : null}
-        
-        {props.isUsed === true ? 
-          <Text style={styles.statusText}>
-            사용된 쿠폰입니다.
-          </Text> 
-        : null}
-
-        {props.isRefunded === true ? 
-          <Text style={styles.statusText}>
-            환불된 쿠폰입니다.
-          </Text> 
-        : null}
+          <StorageCouponConfirmButton
+            onPress={props.isUsed || props.isRefunded ? undefined : props.onPressRefund}
+            buttonStyle={[styles.refundButtonMargin, props.isUsed || props.isRefunded ? styles.inactiveButton : styles.refundButton]}
+            textStyle={props.isUsed || props.isRefunded ? styles.inactiveText : styles.refundText}
+          >
+            환불
+          </StorageCouponConfirmButton>
+        </View>
       </View>
 
       {props.isUsed || props.isRefunded ?
@@ -126,21 +110,30 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 14,
     width: '100%',
+    lineHeight: 20,
+    color: COLORS.bold_black,
   },
   price: {
     fontSize: 14,
     color: 'rgba(6, 6, 6, 0.5)',
-    marginTop: 5,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 20,
   },
   confirmableDays: {
     color: 'rgba(6, 6, 6, 0.5)',
     fontSize: 12,
-    marginTop: 5,
+    marginTop: 2,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.3,
+    lineHeight: 18,
   },
   buttonContainer: {
     flexDirection: 'row',
     flex: 1,
     alignItems: 'flex-end',
+  },
+  inactiveButton: {
+    backgroundColor: COLORS.grey_box,
   },
   confirmButton: {
     backgroundColor: '#29a3ff'
@@ -148,9 +141,14 @@ const styles = StyleSheet.create({
   confirmText: {
     color: 'white'
   },
+  inactiveText: {
+    color: '#BBB',
+  },
+  refundButtonMargin: {
+    marginLeft: scale(4),
+  },
   refundButton: {
     backgroundColor: '#f9f9f9',
-    marginLeft: scale(4),
   },
   refundText: {
     color: '#ec4f47'

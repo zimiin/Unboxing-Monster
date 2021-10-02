@@ -9,13 +9,14 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { scale, verticalScale } from '@constants/figure'
+import { scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
 import NoDataBox from '@components/molecules/NoDataBox'
 import { IMAGES } from '@constants/images'
 import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
+import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 
 interface Props {
   onPressSearchBar: () => void,
@@ -78,9 +79,9 @@ const HomeTemplate = (props: Props) => {
         <Scroller content={props.scorllerContent}/>
       </View>
 
-      <Bold style={[styles.listTitle, styles.popularBoxesTitle]}>
+      <NotoSansBold style={[styles.listTitle, styles.popularBoxesTitle]}>
         인기박스
-      </Bold>
+      </NotoSansBold>
 
       <FlatList
         renderItem={renderBoxItem}
@@ -89,7 +90,6 @@ const HomeTemplate = (props: Props) => {
         horizontal={true}
         ListHeaderComponent={HorizontalListBlank}
         ListFooterComponent={HorizontalListBlank}
-        style={styles.horizontalList}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -104,7 +104,7 @@ const HomeTemplate = (props: Props) => {
         ListEmptyComponent={HorizontalListEmptyComponent}
         ListHeaderComponent={HorizontalListBlank}
         ListFooterComponent={HorizontalListBlank}
-        style={[styles.horizontalList, styles.customBoxList]}
+        style={[styles.customBoxList]}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -156,26 +156,27 @@ export default HomeTemplate
 const styles = StyleSheet.create({
   horizontalListEmpty: {
     marginLeft: scale(6),
+    marginTop: 13,
   },
   verticalListEmpty: {
     marginLeft: scale(24),
   },
   boxItem: {
     marginHorizontal: scale(6),
-    marginBottom: 26,
+    marginVertical: 13,
   },
   listBlank: {
     width: scale(18),
   },
   listTitle: {
+    marginTop: 13,
     marginLeft: scale(24),
     fontSize: 18,
+    lineHeight: 26,
+    letterSpacing: -0.5,
   },
   popularBoxesTitle: {
-    marginTop: verticalScale(57),
-  },
-  horizontalList: {
-    marginTop: verticalScale(13),
+    marginTop: verticalScale(44),
   },
   customBoxList: {
     marginBottom: verticalScale(8),
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(32)
   },
   columnWrapper: {
-    marginHorizontal: scale(18),
+    marginHorizontal: scale((SCREEN_WIDTH - 324) / 2),
   },
   mainFlatList: {
     backgroundColor: 'white',

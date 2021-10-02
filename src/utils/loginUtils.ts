@@ -15,6 +15,7 @@ export const printAsyncStorage = async () => {
   console.log('@nickname', await AsyncStorage.getItem('@nickname'))
   console.log('@email', await AsyncStorage.getItem('@email'))
   console.log('@phone', await AsyncStorage.getItem('@phone'))
+  console.log('@userId', await AsyncStorage.getItem('@userId'))
 }
 
 // 이게 결국 필요없어짐. 나중에 삭제

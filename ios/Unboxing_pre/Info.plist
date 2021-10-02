@@ -111,7 +111,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/GmarketSansTTFBold.ttf</string>
@@ -122,6 +122,14 @@
 		<string>Fonts/NotoSansCJKkr-Medium.otf</string>
 		<string>Fonts/NotoSansCJKkr-Regular.otf</string>
 		<string>Fonts/Roboto-Medium.ttf</string>
+		<string>DungGeunMo.ttf</string>
+		<string>GmarketSansTTFBold.ttf</string>
+		<string>GmarketSansTTFLight.ttf</string>
+		<string>GmarketSansTTFMedium.ttf</string>
+		<string>NotoSansCJKkr-Bold.otf</string>
+		<string>NotoSansCJKkr-Medium.otf</string>
+		<string>NotoSansCJKkr-Regular.otf</string>
+		<string>Roboto-Medium.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 14,
+    lineHeight: 20,
   },
   count: {
     marginTop: 5,
@@ -96,6 +97,10 @@ const styles = StyleSheet.create({
   countValue: {
     marginLeft: 5,
     fontSize: 15,
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: 22,
+    letterSpacing: -0.37,
+    color: 'rgba(6, 6, 6, 0.5)'
   },
   openButtonContainer: {
     flexDirection: 'row',

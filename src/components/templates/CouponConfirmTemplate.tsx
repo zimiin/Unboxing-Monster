@@ -50,7 +50,7 @@ const CouponConfirmTemplate = (props: Props) => {
           <View style={styles.centerView}>
             <InfoIcon style={styles.info} />
 
-            <Bold style={styles.infoText}>{'상품을 확정하게 되면 환불이 불가능합니다.\n정말 확정하시겠습니까?'}</Bold>
+            <Text style={styles.infoText}>{'상품을 확정하게 되면 환불이 불가능합니다.\n정말 확정하시겠습니까?'}</Text>
 
             <Text style={styles.phoneInputIntro}>
               모바일쿠폰을 수신할 핸드폰번호
@@ -131,14 +131,19 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     marginTop: verticalScale(23),
-    fontSize: scale(16),
+    fontSize: 16,
     color: '#060606',
-    lineHeight: scale(24),
+    lineHeight: 24,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.68,
   },
   phoneInputIntro: {
-    color: 'black',
-    fontSize: scale(14),
+    color: COLORS.bold_black,
+    fontSize: 14,
     marginTop: verticalScale(100),
+    lineHeight: 24,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    letterSpacing: -0.68,
   },
   phoneInputRow: {
     flexDirection: 'row',
@@ -157,9 +162,11 @@ const styles = StyleSheet.create({
     marginLeft: scale(15),
   },
   useNext: {
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.3,
     marginLeft: scale(10),
     color: 'black',
-    fontSize: scale(13),
+    fontSize: 12,
   },
   error: {
     color: COLORS.error,
@@ -183,10 +190,10 @@ const styles = StyleSheet.create({
   },
   confirmText: {
     textAlign: 'center',
-    fontSize: scale(14),
-    fontWeight: '400',
-    marginTop: verticalScale(20),
-    marginBottom: verticalScale(10),
+    fontSize: 14,
+    marginTop: 20,
+    marginBottom: 10,
+    fontFamily: 'NotoSansCJKkr-Regular'
   },
   loading: {
     marginBottom: verticalScale(20),

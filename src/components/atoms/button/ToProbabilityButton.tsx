@@ -32,5 +32,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#060606',
     fontSize: 14,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 26,
   }
 })

@@ -28,9 +28,9 @@ const CouponRefundTemplate = (props: Props) => {
       <View style={styles.screen}>
         <NoticeIcon style={styles.noticeIcon}/>
 
-        <Bold style={styles.noticeText}>
+        <Text style={styles.noticeText}>
           {'상품 금액의 80%를 포인트로 전환합니다.\n상품을 환불하게 되면 취소할 수 없습니다.\n정말 환불하시겠습니까?'}
-        </Bold>
+        </Text>
 
         <View style={styles.buttonRow}>
           <HalfWidthButton
@@ -63,9 +63,10 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(120),
   },
   noticeText: {
-    fontSize: scale(16),
+    fontFamily: 'NotoSansCJKkr-Medium',
+    fontSize: 16,
     textAlign: 'center',
-    lineHeight: scale(24),
+    lineHeight: 24,
     marginTop: verticalScale(11),
     flex: 1,
   },

@@ -1,3 +1,4 @@
+import { verticalScale } from '@constants/figure'
 import React from 'react'
 import {
   View
@@ -10,7 +11,7 @@ const SwipeDot = (props: { backgroundColor: string }) => {
     borderRadius: 4,
     marginLeft: 8,
     marginRight: 8,
-    bottom: 156,
+    marginBottom: verticalScale(100),
   }
   return (
     <View style={{
