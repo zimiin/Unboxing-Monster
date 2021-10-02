@@ -177,14 +177,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 30,
     letterSpacing: -0.6,
-    marginTop: verticalScale(32),
+    marginTop: 32,
   },
   error: {
     fontSize: 13,
+    fontFamily: 'NotoSansCJKkr-Regular',
     color: '#ec4f47',
     letterSpacing: -0.32,
     marginTop: verticalScale(2),
-    height: 19,
+    lineHeight: 19,
   },
   filterContainer: {
     flexDirection: 'row',
@@ -195,10 +196,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   boldText: {
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansCJKkr-Medium',
+    fontSize: 12,
+    lineHeight: 16,
   },
   greyText: {
     color: 'rgba(6, 6, 6, 0.5)',
+    fontFamily: 'NotoSansCJKkr-Medium',
+    fontSize: 12,
+    lineHeight: 16,
   },
   renderItem: {
     paddingVertical: 16,
@@ -214,6 +220,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 16,
     marginTop: 16,
+    lineHeight: 20,
   },
   modalTitleContainer: {
     width: '100%',

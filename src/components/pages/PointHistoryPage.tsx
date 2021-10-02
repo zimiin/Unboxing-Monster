@@ -1,32 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PointHistoryTemplate from '@components/templates/PointHistoryTemplate'
 import { PointHistoryNavigationProp } from '@constants/navigationTypes'
+import { Point } from '@constants/types'
+import { URLS } from '@constants/urls'
+import { UserContext } from '@src/stores/UserContext'
 
 const PointHistoryPage = ({ navigation }: {navigation: PointHistoryNavigationProp}) => {
-  const [pointHistories, setPointHistories] = useState<{timestamp: string, title: string, remain: number, change: number}[]>([]);
+  const [{accessToken}, {}] = useContext(UserContext)
+  const [pointHistories, setPointHistories] = useState<Point[]>([])
 
   useEffect(() => {
-    const samplePointHistories = [
-      {
-        timestamp: '2021.08.12 20:30:44',
-        title: '포인트 사용',
-        remain: 12300,
-        change: -3200,
-      },
-      {
-        timestamp: '2021.08.12 20:20:28',
-        title: '결제 환불',
-        remain: 15500,
-        change: 4100,
-      },
-      {
-        timestamp: '2021.08.12 15:19:16',
-        title: '포인트 사용',
-        remain: 11400,
-        change: -5000,
+    const getPointData = async (): Promise<Point[] | undefined> => {
+      try {
+        const response = await fetch(
+          URLS.unboxing_api + 'point', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken
+          }
+        })
+
+        if (response.status !== 200) {
+          const json = await response.json()
+          throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+        }
+
+        const data: Point[] = await response.json()
+        return data
+      } catch (error) {
+        console.log('Error in getPointData', error)
+        throw error
       }
-    ]
-    setPointHistories(samplePointHistories);
+    }
+
+    getPointData()
+      .then(data => setPointHistories(data?.reverse() || []))
+      .catch(error => console.log('Error in useEffect of PointHistoryPage', error))
   }, [])
 
   return (

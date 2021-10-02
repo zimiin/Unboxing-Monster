@@ -212,7 +212,7 @@ const PaymentTemplate = (props: Props) => {
           onPress={props.onPressSavePhone}
         />
 
-        <Text>다음에도 사용하기</Text>
+        <Text style={styles.tableText}>다음에도 사용하기</Text>
       </View>
 
       {props.phoneInputError ? <Text style={styles.phoneInputError}>{props.phoneInputError}</Text> : null}
@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
     marginTop: 14,
     marginLeft: scale(24),
     marginBottom: 6,
+    lineHeight: 22,
   },
   horizontalRule: {
     marginTop: 17,
@@ -328,7 +329,10 @@ const styles = StyleSheet.create({
     marginVertical: 3,
   },
   tableText: { 
-    fontSize: 13 
+    fontSize: 13,
+    fontFamily: 'NotoSansCJKkr-Medium',
+    lineHeight: 19,
+    letterSpacing: -0.32,
   },
   pointText: {
     marginRight: 11,
@@ -388,9 +392,15 @@ const styles = StyleSheet.create({
   },
   finalPriceTitle: {
     fontSize: 14,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.35,
+    lineHeight: 20,
   },
   finalPrice: {
     fontSize: 16,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    letterSpacing: -0.4,
+    lineHeight: 24,
   },
   bottomButtonContainer: {
     backgroundColor: COLORS.main

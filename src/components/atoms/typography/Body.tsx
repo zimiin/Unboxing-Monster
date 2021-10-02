@@ -9,6 +9,8 @@ const Body = ({ content, style }: { content?: string, style?: TextStyle }) => {
       style={[{
         fontSize: 12,
         lineHeight: 20,
+        fontFamily: 'NotoSansCJKkr-Regular',
+        letterSpacing: -0.3,
       }, style]}
     >
       {content}

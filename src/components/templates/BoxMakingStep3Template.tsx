@@ -108,9 +108,15 @@ const BoxMakingStep3Template = (props: Props) => {
           color={item.color}
         />
 
-        <Text style={styles.legendText}>
-          {item.name + ' (' + prob + '%)'}
-        </Text>
+        <View>
+          <Text style={styles.legendText}>
+            {item.name}
+          </Text>
+
+          <Text style={[styles.legendText, styles.legendBold]}>
+            {prob + '%'}
+          </Text>
+        </View>
       </View>
     )
   }
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 30,
     letterSpacing: -0.6,
-    marginTop: verticalScale(32),
+    marginTop: 32,
     marginBottom: 20,
   },
   imagePriceContainer: {
@@ -205,6 +211,7 @@ const styles = StyleSheet.create({
   boxName: {
     fontSize: 17,
     marginBottom: 12,
+    lineHeight: 20,
   },
   pieChartContainer: {
     backgroundColor: COLORS.grey_box,
@@ -230,11 +237,15 @@ const styles = StyleSheet.create({
     paddingRight: scale(7),
   },
   legendText: {
-    fontSize: scale(12),
+    fontFamily: 'NotoSansCJKkr-Medium',
+    fontSize: 12,
     letterSpacing: -0.3,
     color: '#060606',
     marginLeft: 11,
-    fontWeight: '500',
+    lineHeight: 18,
+  },
+  legendBold: {
+    fontWeight: "700"
   },
   footer: {
     backgroundColor: COLORS.grey_box,

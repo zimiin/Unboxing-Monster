@@ -17,6 +17,14 @@
 		6C31631626FBC807004DC57F /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6C31631526FBC807004DC57F /* Fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B6FF8A4626F0D97000D61598 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF8A4526F0D97000D61598 /* File.swift */; };
+		0567E021CFA44C2983DEA580 /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35F66B492F024215B10188C0 /* DungGeunMo.ttf */; };
+		694CF7FA714B45AE901CA335 /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 944D8F66184147009FD6A519 /* GmarketSansTTFBold.ttf */; };
+		0B5B6139A068411FA37C36B2 /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77871CE6EA6B49CC9314BFC7 /* GmarketSansTTFLight.ttf */; };
+		88D3809374FD4E4B9A6303EB /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7A7F0F8294B432DA69FE620 /* GmarketSansTTFMedium.ttf */; };
+		C139B7AB5E124FDEADDF83D4 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F45C85BB425463B90331A7D /* NotoSansCJKkr-Bold.otf */; };
+		0E4CB81CBAC448368113916A /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F914B3463BC5409E9029F427 /* NotoSansCJKkr-Medium.otf */; };
+		B2F064D4CD5E4D8AB31F7A20 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6B0B82B575254E009DF426D7 /* NotoSansCJKkr-Regular.otf */; };
+		9E5FEFA7AE1B45E3A947F6B5 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1317C10BAA44896B3B49B70 /* Roboto-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +60,14 @@
 		D38B381B942A83C9996A0B62 /* Pods-Unboxing_pre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unboxing_pre.debug.xcconfig"; path = "Target Support Files/Pods-Unboxing_pre/Pods-Unboxing_pre.debug.xcconfig"; sourceTree = "<group>"; };
 		E4971882990B3C64C73A8D26 /* libPods-Unboxing_pre-Unboxing_preTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unboxing_pre-Unboxing_preTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		35F66B492F024215B10188C0 /* DungGeunMo.ttf */ = {isa = PBXFileReference; name = "DungGeunMo.ttf"; path = "../src/assets/fonts/DungGeunMo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		944D8F66184147009FD6A519 /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; name = "GmarketSansTTFBold.ttf"; path = "../src/assets/fonts/GmarketSansTTFBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		77871CE6EA6B49CC9314BFC7 /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; name = "GmarketSansTTFLight.ttf"; path = "../src/assets/fonts/GmarketSansTTFLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E7A7F0F8294B432DA69FE620 /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; name = "GmarketSansTTFMedium.ttf"; path = "../src/assets/fonts/GmarketSansTTFMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0F45C85BB425463B90331A7D /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; name = "NotoSansCJKkr-Bold.otf"; path = "../src/assets/fonts/NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F914B3463BC5409E9029F427 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; name = "NotoSansCJKkr-Medium.otf"; path = "../src/assets/fonts/NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6B0B82B575254E009DF426D7 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; name = "NotoSansCJKkr-Regular.otf"; path = "../src/assets/fonts/NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D1317C10BAA44896B3B49B70 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +136,14 @@
 		795999A9D79A4373AC12D5AB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				35F66B492F024215B10188C0 /* DungGeunMo.ttf */,
+				944D8F66184147009FD6A519 /* GmarketSansTTFBold.ttf */,
+				77871CE6EA6B49CC9314BFC7 /* GmarketSansTTFLight.ttf */,
+				E7A7F0F8294B432DA69FE620 /* GmarketSansTTFMedium.ttf */,
+				0F45C85BB425463B90331A7D /* NotoSansCJKkr-Bold.otf */,
+				F914B3463BC5409E9029F427 /* NotoSansCJKkr-Medium.otf */,
+				6B0B82B575254E009DF426D7 /* NotoSansCJKkr-Regular.otf */,
+				D1317C10BAA44896B3B49B70 /* Roboto-Medium.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -267,6 +291,14 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				6C31631426FBC59C004DC57F /* Fonts in Resources */,
 				6C31631626FBC807004DC57F /* Fonts in Resources */,
+				0567E021CFA44C2983DEA580 /* DungGeunMo.ttf in Resources */,
+				694CF7FA714B45AE901CA335 /* GmarketSansTTFBold.ttf in Resources */,
+				0B5B6139A068411FA37C36B2 /* GmarketSansTTFLight.ttf in Resources */,
+				88D3809374FD4E4B9A6303EB /* GmarketSansTTFMedium.ttf in Resources */,
+				C139B7AB5E124FDEADDF83D4 /* NotoSansCJKkr-Bold.otf in Resources */,
+				0E4CB81CBAC448368113916A /* NotoSansCJKkr-Medium.otf in Resources */,
+				B2F064D4CD5E4D8AB31F7A20 /* NotoSansCJKkr-Regular.otf in Resources */,
+				9E5FEFA7AE1B45E3A947F6B5 /* Roboto-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

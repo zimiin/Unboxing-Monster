@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native'
-import Bold from '@components/atoms/typography/Bold'
+import NotoSansBold from '../typography/NotoSansBold'
 
 interface Props extends TouchableOpacityProps {
   children: string,
@@ -23,12 +23,12 @@ const FullContentWidthButton = (props: Props) => {
       style={[styles.button, style]}
       {...rest}
     >
-      <Bold style={[
+      <NotoSansBold style={[
         styles.text,
         fontColor ? { color: fontColor } : styles.defaultFontColor
       ]}>
         {children}
-      </Bold>
+      </NotoSansBold>
     </TouchableOpacity>
   )
 }
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: COLORS.main,
     width: scale(312),
-    height: verticalScale(48),
+    height: 48,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',

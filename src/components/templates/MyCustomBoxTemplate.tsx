@@ -11,7 +11,6 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  TouchableOpacity,
 } from 'react-native'
 
 interface Props {
@@ -81,16 +80,17 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(6),
   },
   boxName: {
-    fontSize: scale(14),
+    fontSize: 14,
     letterSpacing: -0.35,
     color: '#060606',
-    height: scale(20),
+    lineHeight: 20,
   },
   boxPrice: {
-    fontSize: scale(13),
-    color: '#060606',
+    fontSize: 14,
+    color: 'rgba(6, 6, 6, 0.5)',
     letterSpacing: -0.35,
-    height: scale(20),
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 20,
   },
   list: { 
     alignItems: 'center' 

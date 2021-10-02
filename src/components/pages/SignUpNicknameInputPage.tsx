@@ -12,11 +12,6 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const [nicknameInput, setNicknameInput] = useState<string>('')
   const [error, setError] = useState<string>()
 
-  const isDuplicatedNickname = (json: any) => {
-    // TODO 닉네임 듀플리케이션 코드 처리
-    return true
-  }
-
   const requestJoin = async () => {
     try {
       const response = await fetch(
@@ -36,7 +31,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       if (response.status !== 201) {
         const json = await response.json()
 
-        if (isDuplicatedNickname(json)) {
+        if (response.status === 403) {
           setError('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.')
         }
 
@@ -76,6 +71,11 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
 
   const requestJoinAndLogin = async () => {
     try {
+      if (nicknameInput === '') {
+        setError('닉네임을 입력해주세요')
+        return
+      }
+      
       await requestJoin()
       const accessToken = await requestLogin()
 

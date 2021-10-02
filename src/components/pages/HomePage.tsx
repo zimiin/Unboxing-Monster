@@ -142,9 +142,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
         const user = result.user.nickname
         const item = result.item.title
 
-        console.log('user', user, 'item', item)
         resultString += '    ✨ ' + user + '님이 ' + item + '에 당첨되셨습니다. ✨'
-        console.log(resultString)
       }
 
       return resultString

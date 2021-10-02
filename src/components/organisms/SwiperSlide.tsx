@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 
 import { IMAGES } from '@constants/images'
+import { scale, verticalScale } from '@constants/figure'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -30,17 +31,20 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
       >
         <Image source={IMAGES.close_modal}/>
       </TouchableOpacity>
-      <View style={styles.imageContainer}>
-        <Image source={image} style={styles.image}/>
+
+      <View style={styles.centerAlign}>
+        <View style={styles.imageContainer}>
+          <Image source={image} style={styles.image}/>
+        </View>
+        <Text style={styles.text}>{children}</Text>
+        {useEndBtn ? 
+            <TouchableOpacity style={styles.done_btn}
+              onPress={() => onPressFn(false)}
+            >
+              <Text style={styles.done_btn_text}>{endBtnText}</Text>
+            </TouchableOpacity> :
+            null}
       </View>
-      <Text style={styles.text}>{children}</Text>
-      {useEndBtn ? 
-          <TouchableOpacity style={styles.done_btn}
-            onPress={() => onPressFn(false)}
-          >
-            <Text style={styles.done_btn_text}>{endBtnText}</Text>
-          </TouchableOpacity> :
-          null}
     </View>
   )
 }
@@ -48,39 +52,42 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  rightAlign: {
+    alignItems: 'flex-end',
+  },
+  centerAlign: {
     alignItems: 'center',
   },
   text: {
-    position: 'absolute',
     color: '#060606',
     fontFamily: 'GmarketSansTTFMedium',
     letterSpacing: -0.03,
-    lineHeight: HEIGHT * (31.5 / 740),
+    lineHeight: verticalScale(31.5),
     fontSize: 20,
-    bottom: HEIGHT * (180 / 740),
+    marginTop: verticalScale(25),
     textAlign: 'center'
   },
   imageContainer: {
-    position: 'absolute', 
-    top: HEIGHT * (144 / 740), 
-    paddingTop: 30,
+    marginTop: verticalScale(122),
   },
   image: {
-    width: WIDTH * (260 / 360), 
-    height: HEIGHT * (260 / 740),
+    width: scale(360), 
+    height: verticalScale(296),
+    resizeMode: 'contain',
   },
   close_btn_img: {
     position: 'absolute',
-    right: WIDTH * (17 / 360),
-    top: HEIGHT * (36 / 740),
+    right: scale(17),
+    top: verticalScale(17),
+    zIndex: 1,
   },
   done_btn: {
     position: 'absolute',
-    bottom: HEIGHT * (60 / 740), 
+    bottom: -verticalScale(100),
     backgroundColor: '#29a3ff', 
-    height: HEIGHT * (48 / 740), 
-    width: WIDTH * (312 / 360),
+    height: 48, 
+    width: scale(312),
     alignItems:'center',
     justifyContent:'center',
     borderRadius: 7,

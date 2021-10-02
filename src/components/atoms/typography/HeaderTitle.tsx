@@ -1,18 +1,17 @@
 import React from 'react'
-import {
-  Text,
-} from 'react-native'
+import NotoSansBold from './NotoSansBold'
 
 const HeaderTitle = ({ content }: { content: string }) => {
   return (
-    <Text
+    <NotoSansBold
       style={{
-        fontWeight: 'bold',
+        fontFamily: 'NotoSansCJKkr-Bold',
         fontSize: 17,
+        letterSpacing: -0.51
       }}
     >
       {content}
-    </Text>
+    </NotoSansBold>
   )
 }
 

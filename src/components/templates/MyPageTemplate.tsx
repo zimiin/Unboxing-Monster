@@ -44,52 +44,56 @@ const MyPageTemplate = (props: Props) => {
         :
         <>
           <View style={styles.screen}>
-            <View style={styles.greeting}>
-              <Bold style={styles.welcome}>
-                환영합니다
-              </Bold>
+            <View style={styles.padding}>
+              <View style={styles.greeting}>
+                <Bold style={styles.welcome}>
+                  환영합니다
+                </Bold>
 
-              <Bold style={styles.name}>
-                {props.nickname + ' 님'}
-              </Bold>
+                <Bold style={styles.name}>
+                  {props.nickname + ' 님'}
+                </Bold>
+              </View>
+
+              <TouchableOpacity
+                style={styles.pointBox}
+                onPress={props.onPressPointHistory}
+              >
+                <Bold style={styles.pointText}>
+                  잔여포인트
+                </Bold>
+
+                <Bold style={styles.pointNumber}>
+                  {props.point?.toLocaleString() + ' P'}
+                </Bold>
+              </TouchableOpacity>
             </View>
-
-            <TouchableOpacity 
-              style={styles.pointBox}
-              onPress={props.onPressPointHistory}
-            >
-              <Bold style={styles.pointText}>
-                잔여포인트
-              </Bold>
-
-              <Bold style={styles.pointNumber}>
-                {props.point?.toLocaleString() + ' P'}
-              </Bold>
-            </TouchableOpacity>
 
             <HorizontalRule />
 
-            <TouchableOpacity 
-              onPress={props.onPressCart}
-              style={styles.listItem}
-            >
-              <Bold style={styles.listText}>
-                장바구니
-              </Bold>
+            <View style={styles.padding}>
+              <TouchableOpacity
+                onPress={props.onPressCart}
+                style={styles.listItem}
+              >
+                <Bold style={styles.listText}>
+                  장바구니
+                </Bold>
 
-              <RightArrow />
-            </TouchableOpacity>
+                <RightArrow />
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={props.onPressPaymentHistory}
-              style={styles.listItem}
-            >
-              <Bold style={styles.listText}>
-                구매내역
-              </Bold>
+              <TouchableOpacity
+                onPress={props.onPressPaymentHistory}
+                style={styles.listItem}
+              >
+                <Bold style={styles.listText}>
+                  구매내역
+                </Bold>
 
-              <RightArrow />
-            </TouchableOpacity>
+                <RightArrow />
+              </TouchableOpacity>
+            </View>
 
             <View style={styles.logoutContainer}>
               <FullContentWidthButton
@@ -101,7 +105,6 @@ const MyPageTemplate = (props: Props) => {
               </FullContentWidthButton>
             </View>
           </View>
-
         </>
       }
     </>
@@ -114,6 +117,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  padding: {
     paddingHorizontal: scale(24),
   },
   greeting: {
@@ -122,13 +127,15 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(15),
   },
   welcome: {
-    fontSize: scale(12),
+    fontSize: 12,
     color: COLORS.bold_black,
-    marginBottom: scale(3),
-    marginRight: scale(13),
+    marginBottom: 3,
+    marginRight: 13,
+    lineHeight: 20,
   },
   name: {
-    fontSize: scale(20),
+    fontSize: 20,
+    lineHeight: 30,
     color: COLORS.bold_black,
   },
   pointBox: {
@@ -142,14 +149,16 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(28),
   },
   pointText: {
-    fontSize: scale(12),
+    fontSize: 12,
+    letterSpacing: -0.3,
     color: COLORS.bold_black,
     flex: 1,
     marginLeft: scale(29),
   },
   pointNumber: {
-    fontSize: scale(26),
-    letterSpacing: -scale(0.78),
+    fontFamily: 'Roboto-Medium',
+    fontSize: 26,
+    letterSpacing: -0.78,
     color: COLORS.main,
     marginRight: scale(33),
   },
@@ -161,10 +170,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f8f8f8',
   },
   listText: {
-    fontSize: scale(15),
-    letterSpacing: -scale(0.37),
+    fontSize: 15,
+    letterSpacing: -0.37,
     color: COLORS.bold_black,
     flex: 1,
+    lineHeight: 22,
   },
   logoutContainer: {
     flex: 1,

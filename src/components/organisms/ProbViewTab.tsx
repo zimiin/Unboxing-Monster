@@ -22,14 +22,14 @@ const ProbViewTab = ({ items, probs, boxId } : { items: Item[], probs: number[],
       <View style={styles.tab}>
         <TouchableOpacity style={styles.tabLeftButton} onPress={() => setSelected(0)}>
           <View style={selected == 0 ? styles.tabSelectedContainer: styles.tabNotSelectedContainer}>
-            <Text style={selected == 0 ? styles.tabButtonSelectedText: styles.tabButtonNotSelectedText}>
+            <Text style={[styles.tabButtonText, selected == 0 ? styles.tabButtonSelectedText: styles.tabButtonNotSelectedText]}>
               상품 제공 확률
             </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabRightButton} onPress={() => setSelected(1)}>
           <View style={selected == 1 ? styles.tabSelectedContainer: styles.tabNotSelectedContainer}>
-            <Text style={selected == 1 ? styles.tabButtonSelectedText: styles.tabButtonNotSelectedText}>
+            <Text style={[styles.tabButtonText, selected == 1 ? styles.tabButtonSelectedText: styles.tabButtonNotSelectedText]}>
               실시간 현황
             </Text>
           </View>
@@ -89,15 +89,14 @@ const styles = StyleSheet.create({
     width: WIDTH * (150 / 360),
   },
   tabButtonSelectedText: {
-    fontSize: 14,
-    fontWeight: 'bold',
     color: '#060606',
-    letterSpacing: -0.35,
   },
   tabButtonNotSelectedText: {
-    fontSize: 14,
-    fontWeight: 'bold',
     color: 'rgb(143, 143, 143)',
-    letterSpacing: -0.35,
   },
+  tabButtonText: {
+    fontFamily: 'NotoSansCJKkr-Bold',
+    fontSize: 14,
+    letterSpacing: -0.35,
+  }
 })

@@ -26,7 +26,7 @@ const BoxListItem = ({ image, title, price, onPress }: { image: string, title: s
         </View>
 
         <Text style={styles.price}>
-          정가 {price}원
+          정가 {price.toLocaleString()}원
         </Text>
       </TouchableOpacity>
     </View>
@@ -46,10 +46,14 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: 13,
+    paddingHorizontal: 7,
   },
   price: {
     fontSize: 13,
     color: 'rgba(6, 6, 6, 0.5)',
     marginTop: 1,
+    fontFamily: 'NotoSansCJKkr-Regular',
+    lineHeight: 18,
+    letterSpacing: -0.32
   }
 })
