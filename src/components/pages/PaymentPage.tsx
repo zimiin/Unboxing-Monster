@@ -141,10 +141,20 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     if (useAllPoint) {
       setUsingPoint(0)
     } else {
+      let availablePoint: number
+
       if (point > totalPrice) {
-        setUsingPoint(toHundreds(totalPrice))
+        availablePoint = toHundreds(totalPrice)
       } else {
-        setUsingPoint(toHundreds(point))
+        availablePoint = toHundreds(point)
+      }
+
+      const amount = totalPrice - availablePoint
+
+      if (0 < amount && amount < 100) {
+        setUsingPoint(availablePoint - 100)
+      } else {
+        setUsingPoint(availablePoint)
       }
     }
     setUseAllPoint(!useAllPoint)
@@ -178,12 +188,18 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       const user: User = await getUserInfoFromToken(accessToken)
       const userId = user.id
       const date = new Date()
+      let uid = ''
 
-      let uid = userId + '-'
+      if (userId[0] === 'a') {
+        uid = 'apple-'
+      } else {
+        uid = userId + '-'
+      }
+
       uid = uid + date.getFullYear() + "/" + + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + ((date.getDate() < 10) ? "0" : "") + date.getDate()
       uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds() + ":" + date.getMilliseconds()
-      
-      console.log(uid)
+
+      console.log('getMerchantUid', uid)
       return uid
     } catch (error) {
       console.log('Error in getMerchantUid', error)
@@ -217,10 +233,16 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         throw 'Invalid phone number input: ' + phoneInput
       }
 
-      // 포인트 처리 된 후에 진행
-      // if (totalPrice - usingPoint === 0) {
-      //   navigation.replace('PaymentComplete')
-      // }
+      const amount = totalPrice - usingPoint
+
+      if (totalPrice - usingPoint === 0) {
+        navigation.replace('PaymentComplete', { merchant_uid: await getMerchantUid(), imp_uid: '' })
+      }
+
+      if (amount < 100) {
+        setPointInputError('포인트 사용 후 최종 결제 금액은 100원 이상이어야 합니다.')
+        throw 'Amount is under 100'
+      }
 
       const phone = removeHyphens(phoneInput)
       if (savePhone) {
@@ -240,7 +262,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
           pay_method: selectedPaymentMethod.value,
           display: {card_quota: []},
           merchant_uid: merchantUid,
-          amount: (totalPrice - usingPoint).toString(),
+          amount: amount.toString(),
           name: merchantTitle || '',
           buyer_tel: phone,
           buyer_name: '',

@@ -11,9 +11,9 @@ import { CommonActions } from '@react-navigation/routers'
 const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
   const [{ cart, boxData }, { deleteFromCart }] = useContext(CartContext)
   const [isLoading, setIsLoaing] = useState<boolean>(true)
-  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(route.params?.success)
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>()
 
-  console.log(route.params)
+  console.log('PaymentCompletePage', route.params)
 
   useEffect(() => {
     const getPaidAmount = () => {
@@ -78,7 +78,7 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
         return true
       } catch (error) {
         console.log('Error in validatePayment', error)
-        throw error
+        return false
       }
     }
 
@@ -95,11 +95,6 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
     }
 
     try {
-      if (paymentSuccess === false) {
-        setIsLoaing(false)
-        throw 'Failed to pay, message : ' + route.params?.error_msg
-      }
-
       validatePayment().then((result) => {
         setIsLoaing(false)
 

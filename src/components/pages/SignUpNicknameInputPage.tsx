@@ -6,6 +6,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
 import { URLS } from '@constants/urls'
+import { UserContext } from '@src/stores/UserContext'
 
 const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) => {
   const [{email, provider, providerToken}, { }] = useContext(SignUpContext)
