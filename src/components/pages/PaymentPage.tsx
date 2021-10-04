@@ -178,12 +178,18 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       const user: User = await getUserInfoFromToken(accessToken)
       const userId = user.id
       const date = new Date()
+      let uid = ''
 
-      let uid = userId + '-'
+      if (userId[0] === 'a') {
+        uid = 'apple-'
+      } else {
+        uid = userId + '-'
+      }
+
       uid = uid + date.getFullYear() + "/" + + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + ((date.getDate() < 10) ? "0" : "") + date.getDate()
       uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds() + ":" + date.getMilliseconds()
       
-      console.log(uid)
+      console.log('getMerchantUid', uid)
       return uid
     } catch (error) {
       console.log('Error in getMerchantUid', error)
