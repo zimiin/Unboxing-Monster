@@ -23,10 +23,22 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleIdentifier</key>
+			<string></string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb554330805918428</string>
 				<string>unboxing</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakaoa0fae827b9d8a252f3dbf96b65fd0814</string>
 			</array>
 		</dict>
 	</array>
@@ -38,6 +50,14 @@
 	<string>80efb795c90e7a1f5c6c4e7c20fffeb5</string>
 	<key>FacebookDisplayName</key>
 	<string>unboxing</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>a0fae827b9d8a252f3dbf96b65fd0814</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -92,6 +112,20 @@
 		<string>lguthepay-xpay</string>
 		<string>liivbank</string>
 		<string>supertoss</string>
+
+		<!-- 공통 -->
+		<string>kakao0123456789</string>
+
+		<!-- 간편로그인 -->
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+
+		<!-- 카카오톡링크 -->
+		<string>kakaolink</string>         
+		<string>kakaotalk-5.9.7</string>
+
+		<!-- 카카오스토리링크 -->
+		<string>storylink</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -111,7 +145,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/GmarketSansTTFBold.ttf</string>

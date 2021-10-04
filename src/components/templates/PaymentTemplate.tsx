@@ -42,6 +42,7 @@ interface Props {
   phoneInput?: string,
   savePhone: boolean,
   phoneInputError: string,
+  pointInputError: string,
   onPressSavePhone: () => void,
   onPressBack: () => void,
   onChangeUsingPointAmount: (point: string) => void,
@@ -49,6 +50,8 @@ interface Props {
   onChangePaymentMethod: (method: PaymentMethod) => void,
   onPressMakePayment: () => void,
   onChangePhoneInput: (input: string) => void,
+  onSubmitPhoneInput: () => void,
+  onSubmitPointInput: () => void,
 }
 
 const PaymentTemplate = (props: Props) => {
@@ -111,6 +114,8 @@ const PaymentTemplate = (props: Props) => {
       <HorizontalRule style={styles.horizontalRule} />
 
       <ContentBox title='언박싱 포인트'>
+        <Text style={styles.errorText}>{props.pointInputError}</Text>
+
         <View style={styles.pointTable}>
           <PointTableRow
             style={styles.pointTableRow}
@@ -151,6 +156,7 @@ const PaymentTemplate = (props: Props) => {
                   keyboardType='numeric'
                   returnKeyType='done'
                   selectTextOnFocus={true}
+                  onSubmitEditing={props.onSubmitPointInput}
                 />
 
                 <Text
@@ -204,6 +210,7 @@ const PaymentTemplate = (props: Props) => {
           keyboardType={'numeric'}
           returnKeyType={'done'}
           style={styles.phoneInputBox}
+          onSubmitEditing={props.onSubmitPhoneInput}
         />
 
         <CheckBox
@@ -215,7 +222,7 @@ const PaymentTemplate = (props: Props) => {
         <Text style={styles.tableText}>다음에도 사용하기</Text>
       </View>
 
-      {props.phoneInputError ? <Text style={styles.phoneInputError}>{props.phoneInputError}</Text> : null}
+      {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null}
 
       <HorizontalRule style={styles.horizontalRule}/>
 
@@ -357,6 +364,8 @@ const styles = StyleSheet.create({
   },
   phoneInputError: {
     marginLeft: scale(24),
+  },
+  errorText: {
     marginTop: 5,
     fontSize: scale(11),
     color: '#ec4f47',

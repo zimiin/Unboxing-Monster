@@ -12,6 +12,7 @@ import { Platform } from 'react-native'
 import { appleAuth, appleAuthAndroid } from '@invertase/react-native-apple-authentication'
 import { v4 as uuid } from 'uuid'
 import { UserContext } from '@src/stores/UserContext'
+import { KakaoOAuthToken, login, getProfile, KakaoProfile } from '@react-native-seoul/kakao-login'
 
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
@@ -244,11 +245,37 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }
   
+  const kakaoLogin = async () => {
+    try {
+      const kakaoOAuthToken: KakaoOAuthToken = await login();
+      const kakaoToken: string = kakaoOAuthToken.accessToken
+      console.log('kakao accesstoken', kakaoToken)
+      const loginResult = await requestLogin('kakao', kakaoToken)
+
+      if (loginResult) {
+        navigation.replace('Main')
+      } else {
+        const profile: KakaoProfile = await getProfile()
+        const email = profile.email
+        storeSignUpInfoInContext('kakao', kakaoToken, email)
+
+        if (email === undefined || email === '' || email === null) {
+          navigation.push('SignUpEmailInput')
+        } else {
+          navigation.push('SignUpNicknameInput')
+        }
+      }
+    } catch (error) {
+      console.log('Error in kakaoLogin', error)
+    }
+  }
+
   return (
     <LoginTemplate
       onPressLookAround={() => navigation.replace('Main')}
       onPressFacebook={facebookLogin}
       onPressApple={appleLogin}
+      onPressKakao={kakaoLogin}
     />
   )
 }
