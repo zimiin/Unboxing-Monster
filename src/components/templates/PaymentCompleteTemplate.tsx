@@ -14,7 +14,7 @@ import { COLORS } from '@constants/colors'
 
 interface Props {
   isLoading: boolean,
-  paymentSuccess: boolean,
+  paymentSuccess?: boolean,
   onPressGoHome: () => void,
   onPressGoStorage: () => void,
 }

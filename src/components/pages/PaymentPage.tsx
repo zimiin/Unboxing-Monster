@@ -198,7 +198,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
 
       uid = uid + date.getFullYear() + "/" + + (((date.getMonth() + 1) < 10) ? "0" : "") + (date.getMonth() + 1) + "/" + ((date.getDate() < 10) ? "0" : "") + date.getDate()
       uid = uid + '-' + ((date.getHours() < 10) ? "0" : "") + date.getHours() + ":" + ((date.getMinutes() < 10) ? "0" : "") + date.getMinutes() + ":" + ((date.getSeconds() < 10) ? "0" : "") + date.getSeconds() + ":" + date.getMilliseconds()
-      
+
       console.log('getMerchantUid', uid)
       return uid
     } catch (error) {
@@ -235,10 +235,9 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
 
       const amount = totalPrice - usingPoint
 
-      // 포인트 처리 된 후에 진행
-      // if (totalPrice - usingPoint === 0) {
-      //   navigation.replace('PaymentComplete')
-      // }
+      if (totalPrice - usingPoint === 0) {
+        navigation.replace('PaymentComplete', { merchant_uid: await getMerchantUid(), imp_uid: '' })
+      }
 
       if (amount < 100) {
         setPointInputError('포인트 사용 후 최종 결제 금액은 100원 이상이어야 합니다.')
