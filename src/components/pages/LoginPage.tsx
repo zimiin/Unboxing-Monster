@@ -249,6 +249,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     try {
       const kakaoOAuthToken: KakaoOAuthToken = await login();
       const kakaoToken: string = kakaoOAuthToken.accessToken
+      console.log('kakao accesstoken', kakaoToken)
       const loginResult = await requestLogin('kakao', kakaoToken)
 
       if (loginResult) {
