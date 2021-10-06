@@ -15,7 +15,7 @@ export type RootStackParamList = {
   AddToCart: { boxData: BoxWithItems },
   Cart: undefined,
   Payment: undefined,
-  PGPayment: PaymentParams | undefined,
+  PGPayment: { data: PaymentParams, point: number } | undefined,
   PaymentComplete: any,
 }
 

@@ -23,7 +23,7 @@ function Loading() {
 }
 
 const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
-  const params = route.params?.params
+  const params = route.params?.data.params
   if (params === undefined) {
     throw `params can't be null`
   }
@@ -36,7 +36,7 @@ const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
         loading={<Loading />}
         data={params}
         callback={(response) => {
-          navigation.replace('PaymentComplete', response)
+          navigation.replace('PaymentComplete', { response: response, point: route.params?.point })
           console.log('Payment complete')
         }}
       />

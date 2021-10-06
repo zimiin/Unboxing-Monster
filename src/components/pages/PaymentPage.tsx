@@ -234,9 +234,10 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       }
 
       const amount = totalPrice - usingPoint
-
-      if (totalPrice - usingPoint === 0) {
-        navigation.replace('PaymentComplete', { merchant_uid: await getMerchantUid(), imp_uid: '' })
+      console.log('amount', amount)
+      if (amount === 0) {
+        navigation.replace('PaymentComplete', { response: { merchant_uid: await getMerchantUid(), imp_uid: 'no' }, point: usingPoint })
+        return
       }
 
       if (amount < 100) {
@@ -275,7 +276,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         tierCode: '',
       }
 
-      navigation.navigate('PGPayment', data)
+      navigation.navigate('PGPayment', { data: data, point: usingPoint })
     } catch (error) {
       console.log('Error in onPressMakePayment ', error)
     }
