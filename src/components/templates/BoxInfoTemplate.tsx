@@ -13,7 +13,7 @@ import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
 import ToIntroButton from '@components/atoms/button/ToIntroButton'
 import ToProbabilityButton from '@components/atoms/button/ToProbabilityButton'
 import IntroModal from '@components/templates/IntroModal'
-import { CONTENT_WIDTH, SCREEN_WIDTH } from '@constants/figure'
+import { CONTENT_WIDTH, scale, SCREEN_WIDTH } from '@constants/figure'
 import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 import { BoxInfoNavigationProp } from '@constants/navigationTypes'
 import Title from '@components/atoms/typography/Title'
@@ -22,6 +22,7 @@ import { COLORS } from '@constants/colors'
 import BoxInfoImage from '@components/atoms/BoxInfoImage'
 import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
 import Body from '@components/atoms/typography/Body'
+import RenderHTML, { HTMLSourceInline } from 'react-native-render-html'
 
 type BoxInfoTemplateProps = {
   boxImage?: ImageSourcePropType,
@@ -37,6 +38,10 @@ type BoxInfoTemplateProps = {
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
   const [introModalVisible, setIntroModalVisible] = useState<boolean>(false)
+  const source: HTMLSourceInline = {
+    html: props.boxDetail || ''
+  }
+
   return (
     <>
       <HeaderWithCart
@@ -73,9 +78,9 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
               content={'이 박스는요'}
             />
 
-            <Body 
-              content={props.boxDetail} 
-              style={styles.boxDetail}
+            <RenderHTML
+              contentWidth={scale(312)}
+              source={source}
             />
 
             <SubTitle
@@ -130,7 +135,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   subTitle: {
-    marginTop: 26,  
+    marginTop: 26,
+    marginBottom: 4,
   },
   boxDetail: {
     marginTop: 4,
