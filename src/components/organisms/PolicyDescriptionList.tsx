@@ -85,7 +85,7 @@ const PolicyDescriptionList = () => {
             />
 
             <Body
-              content="unboxing.qna@gmail.com"
+              content="ask.unboxing.monster@gmail.com"
             />
           </View>
         }
