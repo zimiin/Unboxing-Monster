@@ -1,5 +1,5 @@
 import 'react-native-get-random-values'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import LoginTemplate from '@components/templates/LoginTemplate'
 import { LoginProps } from '@constants/navigationTypes'
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next'
@@ -17,9 +17,12 @@ import { KakaoOAuthToken, login, getProfile, KakaoProfile } from '@react-native-
 const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
   const [{}, {setUserData}] = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const requestLogin = async (provider: string, token: string) => {
     try {
+      setIsLoading(true)
+
       const response = await fetch(
         URLS.unboxing_api + 'auth/login/' + provider, {
         method: 'GET',
@@ -47,6 +50,8 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     } catch (error) {
       console.log('Error in requestLogin', error)
       throw error
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -272,6 +277,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
 
   return (
     <LoginTemplate
+      isLoading={isLoading}
       onPressLookAround={() => navigation.replace('Main')}
       onPressFacebook={facebookLogin}
       onPressApple={appleLogin}

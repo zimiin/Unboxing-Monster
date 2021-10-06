@@ -12,9 +12,12 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const [{email, provider, providerToken}, { }] = useContext(SignUpContext)
   const [nicknameInput, setNicknameInput] = useState<string>('')
   const [error, setError] = useState<string>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const requestJoin = async () => {
     try {
+      setIsLoading(true)
+
       const response = await fetch(
         URLS.unboxing_api + 'auth/join/' + provider, {
         method: 'POST',
@@ -41,6 +44,8 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
     } catch (error) {
       console.log('Error in requestJoin', error)
       throw error
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -94,6 +99,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
 
   return (
     <SignUpInputTemplate
+      isLoading={isLoading}
       title='닉네임 입력'
       canGoBack={true}
       onPressGoBack={() => navigation.goBack()}

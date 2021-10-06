@@ -148,8 +148,6 @@ const HomeTemplate = (props: Props) => {
         modalVisible={props.modalVisible}
         setModalVisible={props.setModalVisible}
       />
-
-      <Loading />
     </>
   )
 }
