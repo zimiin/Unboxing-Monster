@@ -17,6 +17,7 @@ import NoDataBox from '@components/molecules/NoDataBox'
 import { IMAGES } from '@constants/images'
 import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
 import NotoSansBold from '@components/atoms/typography/NotoSansBold'
+import Loading from '@components/atoms/Loading'
 
 interface Props {
   onPressSearchBar: () => void,
@@ -147,6 +148,8 @@ const HomeTemplate = (props: Props) => {
         modalVisible={props.modalVisible}
         setModalVisible={props.setModalVisible}
       />
+
+      <Loading />
     </>
   )
 }
