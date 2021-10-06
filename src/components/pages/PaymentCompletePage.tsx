@@ -46,12 +46,13 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
     const validatePayment = async () => {
       try {
         const accessToken = await getAccessTokenFromAsyncStorage()
-        const merchantUid = route.params?.merchant_uid
+        const merchantUid = route.params?.response.merchant_uid
         if (merchantUid === undefined) throw 'undefined merchant_uid'
-        const impUid = route.params?.imp_uid
+        const impUid = route.params?.response.imp_uid
         if (impUid === undefined) throw 'undefined imp_uid'
         const price: number = getPaidAmount()
         const boxIdCounts: {boxId: BoxId, count: number}[] = getPaidBoxIdCounts()
+        const point = route.params?.point
 
         const response = await fetch(
           URLS.unboxing_api + 'purchase', {
@@ -65,7 +66,8 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
             merchant_uid: merchantUid,
             imp_uid: impUid,
             price: price,
-            boxes: boxIdCounts
+            boxes: boxIdCounts,
+            point: point,
           })
         })
 

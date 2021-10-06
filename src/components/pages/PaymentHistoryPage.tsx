@@ -35,8 +35,19 @@ const PaymentHistoryPage = ({ navigation }: {navigation: PaymentHistoryNavigatio
       }
     }
 
+    const comp = (a: PurchaseLog, b: PurchaseLog) => {
+      const aDate = new Date(a.purchaseAt)
+      const bDate = new Date(b.purchaseAt)
+
+      if (aDate < bDate) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+
     getPaymentLog()
-      .then(log => setPaymentHistories(log?.reverse() || []))
+      .then(log => setPaymentHistories(log?.sort(comp) || []))
       .catch(error => console.log('Error in useEffect of PaymentHistoryPage', error))
   }, [])
 

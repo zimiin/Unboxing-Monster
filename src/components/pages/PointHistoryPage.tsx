@@ -35,8 +35,19 @@ const PointHistoryPage = ({ navigation }: {navigation: PointHistoryNavigationPro
       }
     }
 
+    const comp = (a: Point, b: Point) => {
+      const aDate = new Date(a.time)
+      const bDate = new Date(b.time)
+      
+      if (aDate < bDate) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+
     getPointData()
-      .then(data => setPointHistories(data?.reverse() || []))
+      .then(data => setPointHistories(data?.sort(comp) || []))
       .catch(error => console.log('Error in useEffect of PointHistoryPage', error))
   }, [])
 
