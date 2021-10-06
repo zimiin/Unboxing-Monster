@@ -1,4 +1,5 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
+import Loading from '@components/atoms/Loading'
 import InputBox from '@components/molecules/InputBox'
 import Header from '@components/organisms/header/Header'
 import { scale } from '@constants/figure'
@@ -11,6 +12,7 @@ import {
 
 interface Props {
   title: string,
+  isLoading: boolean,
   canGoBack: boolean,
   onPressGoBack: () => void,
   label: string,
@@ -55,6 +57,8 @@ const SignUpInputTemplate = (props: Props) => {
           {props.buttonText}
         </FullContentWidthButton>
       </KeyboardAvoidingView>
+
+      {props.isLoading === true ? <Loading /> : null}
     </>
   )
 }

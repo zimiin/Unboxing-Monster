@@ -1,7 +1,8 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import IconButton24 from '@components/atoms/button/IconButton24'
+import Loading from '@components/atoms/Loading'
 import NotoSansRegular from '@components/atoms/typography/NotoSansRegular'
-import { DESIGN_HEIGHT, DESIGN_WIDTH, scale, SCREEN_HEIGHT, SCREEN_WIDTH, verticalScale } from '@constants/figure'
+import { DESIGN_WIDTH, scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
@@ -13,6 +14,7 @@ import {
 } from 'react-native'
 
 interface Props {
+  isLoading: boolean,
   onPressLookAround: () => void,
   onPressFacebook: () => void,
   onPressApple: () => void,
@@ -73,6 +75,8 @@ const LoginTemplate = (props: Props) => {
           />
         </View>
       </View>
+
+      {props.isLoading === true ? <Loading /> : null}
     </SafeAreaView>
   )
 }
