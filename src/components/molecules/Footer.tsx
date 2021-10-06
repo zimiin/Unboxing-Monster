@@ -46,6 +46,7 @@ const Footer = () => {
       <Text style={styles.text}>
         사업장소재지 : 서울특별시 서초구 강남대로107길 21, 2층{'\n'}
         E-mail : ask.unboxing.monster@gmail.com{'\n'}
+        Tel: 02-544-5559{'\n'}
         Copyright @ 꾸러기원정대  All rights reserved.
       </Text>
     </View>

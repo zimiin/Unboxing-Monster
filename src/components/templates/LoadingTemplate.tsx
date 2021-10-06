@@ -48,7 +48,7 @@ const LoadingTemplate = (props: Props) => {
         <Bold>관리자에게 연락바랍니다.</Bold>
 
         <Text style={styles.email}>
-          kkureogi.unboxing@gmail.com
+          ask.unboxing.monster@gmail.com
         </Text>
       </NoticeModal>
     </View>
