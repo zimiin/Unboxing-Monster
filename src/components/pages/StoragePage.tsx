@@ -16,6 +16,7 @@ export interface UserCoupon extends Coupon {
 
 const StoragePage = ({route, navigation}: StorageProps) => {
   const [loginState, setLoginState] = useState<boolean>(false)
+  const [fetchingLoginState, setFetchingLoginState] = useState<boolean>(true)
   const [focus, setFocus] = useState<Focus>('randomBox')
   const [boxData, setBoxData] = useState<BoxStorage[]>([])
   const [couponData, setCouponData] = useState<UserCoupon[]>([])
@@ -166,16 +167,19 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   }
 
   useEffect(() => {
-    navigation.addListener('focus', () => {
-      hasLoggedIn().then(
-        result => {
-          if (result === true) {
-            setLoginState(true)
-            getAndSetBoxData()
-            getAndSetCouponData()
-          }
+    navigation.addListener('focus', async () => {
+      try {
+        const loginState = await hasLoggedIn()
+        setFetchingLoginState(false)
+
+        if (loginState === true) {
+          setLoginState(true)
+          getAndSetBoxData()
+          getAndSetCouponData()
         }
-      )
+      } catch (error) {
+        console.log('Error in useEffect of StoragePage', error)
+      }
     })
   }, [])
 
@@ -195,11 +199,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const onPressDeleteCoupon = async (couponId: number) => {
     try {
-      if (await hasLoggedIn() === false) {
-        navigation.navigate('Auth', {screen: 'LoginRequest'})
-        return
-      }
-
       const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
         URLS.unboxing_api + 'coupon/user/' + couponId, {
@@ -216,6 +215,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
         const json = await response.json()
         throw 'Failed to DELETE ' + response.url + ' status ' + response.status + ', ' + json.message
       }
+      
+      getAndSetCouponData()
     } catch (error) {
       console.log('Error in onPressDeleteCoupon', error)
     }
@@ -224,6 +225,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   return (
     <StorageTemplate
       loginState={loginState}
+      fetchingLoginState={fetchingLoginState}
       focusOn={focus}
       onPressRandomBoxTab={() => setFocus('randomBox')}
       onPressCouponTab={() => setFocus('coupon')}

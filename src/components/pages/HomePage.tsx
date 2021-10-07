@@ -18,6 +18,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [refreshing, setRefreshing] = useState<boolean>(true)
   const [throttled, setThrottled] = useState<boolean>(false)
   const [scrollerContent, setScrollerContent] = useState<string>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const getNoticeData = async (): Promise<Notice[] | undefined> => {
     try {
@@ -201,11 +202,12 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   useEffect(() => {
     printAsyncStorage()
-    setDatas()
+    setDatas().finally(() => setIsLoading(false))
   }, [])
 
   return (
     <HomeTemplate
+      isLoading={isLoading}
       onPressSearchBar={() => navigation.push('Search')}
       onPressCart={() => navigation.push('Cart')}
       cartItemCount={cart.size > 0 ? cart.size : undefined}

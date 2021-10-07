@@ -15,10 +15,8 @@ import AddToCartPage from '@components/pages/AddToCartPage'
 import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
-import PaymentValidationPage from '@components/pages/PaymentValidationPage'
 import UserContextProvider from '@src/stores/UserContext'
-import PointHistoryPage from '@components/pages/PointHistoryPage'
-import PaymentHistoryPage from '@components/pages/PaymentHistoryPage'
+import Toast from 'react-native-toast-message'
 
 const Stack = createStackNavigator<RootStackParamList>()
 

@@ -11,9 +11,10 @@ import HalfWidthButton from '@components/atoms/button/HalfWidthButton'
 
 interface Props {
   visible: boolean,
+  children?: React.ReactNode
+  greyConfirmButton?: boolean,
   onRequestClose: () => void,
   onConfirm: () => void,
-  children?: React.ReactNode
 }
 
 const ConfirmModal = (props: Props) => {
@@ -36,14 +37,26 @@ const ConfirmModal = (props: Props) => {
               textStyle={styles.cancelText}
             />
 
-            <HalfWidthButton
-              onPress={() => {
-                props.onConfirm()
-                props.onRequestClose()
-              }}
-              buttonStyle={styles.confirmButton}
-              text={'확인'}
-            />
+            {props.greyConfirmButton ?
+              <HalfWidthButton
+                onPress={() => {
+                  props.onConfirm()
+                  props.onRequestClose()
+                }}
+                buttonStyle={[styles.confirmButton, styles.greyBackground]}
+                textStyle={{color: 'black'}}
+                text={'확인'}
+              />
+              :
+              <HalfWidthButton
+                onPress={() => {
+                  props.onConfirm()
+                  props.onRequestClose()
+                }}
+                buttonStyle={styles.confirmButton}
+                text={'확인'}
+              />
+            }
           </View>
         </View>
       </View>
@@ -82,5 +95,8 @@ const styles = StyleSheet.create({
     width: scale(140),
     marginHorizontal: scale(4),
     marginBottom: 12,
+  },
+  greyBackground: {
+    backgroundColor: COLORS.grey_box,
   }
 })
