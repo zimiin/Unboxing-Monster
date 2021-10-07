@@ -59,8 +59,8 @@ const StorageCoupon = (props: Props) => {
         </Text>
 
         <Text style={styles.confirmableDays}>
-          {props.isUsed === false ? '자동 환불까지 ' + props.confirmableDays + '일 남았습니다.'
-            : props.isRefunded === false? '이미 사용한 쿠폰입니다.' : '환불된 쿠폰입니다.'}
+          {props.isUsed === true ? '이미 사용한 쿠폰입니다.'
+            : props.isRefunded === true ? '환불된 쿠폰입니다.' : '자동 환불까지 ' + props.confirmableDays + '일 남았습니다.'}
         </Text>
         <View style={styles.buttonContainer}>
           <StorageCouponConfirmButton

@@ -199,11 +199,6 @@ const StoragePage = ({route, navigation}: StorageProps) => {
 
   const onPressDeleteCoupon = async (couponId: number) => {
     try {
-      if (await hasLoggedIn() === false) {
-        navigation.navigate('Auth', {screen: 'LoginRequest'})
-        return
-      }
-
       const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
         URLS.unboxing_api + 'coupon/user/' + couponId, {
@@ -220,6 +215,8 @@ const StoragePage = ({route, navigation}: StorageProps) => {
         const json = await response.json()
         throw 'Failed to DELETE ' + response.url + ' status ' + response.status + ', ' + json.message
       }
+      
+      getAndSetCouponData()
     } catch (error) {
       console.log('Error in onPressDeleteCoupon', error)
     }
