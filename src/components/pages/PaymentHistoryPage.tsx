@@ -8,6 +8,8 @@ import { UserContext } from '@src/stores/UserContext'
 const PaymentHistoryPage = ({ navigation }: {navigation: PaymentHistoryNavigationProp}) => {
   const [{accessToken}, {}] = useContext(UserContext)
   const [paymentHistories, setPaymentHistories] = useState<PurchaseLog[]>([])
+  const [showRefundConfirmModal, setShowRefundConfirmModal] = useState<boolean>(false)
+  const [showAfterRefundModal, setShowAfterRefundModal] = useState<boolean>(false)
 
   useEffect(() => {
     const getPaymentLog = async (): Promise<PurchaseLog[] | undefined> => {
@@ -51,10 +53,21 @@ const PaymentHistoryPage = ({ navigation }: {navigation: PaymentHistoryNavigatio
       .catch(error => console.log('Error in useEffect of PaymentHistoryPage', error))
   }, [])
 
+  const refund = async () => {
+    // 로딩 넣기
+    setShowAfterRefundModal(true)
+  }
+
   return (
     <PaymentHistoryTemplate 
-      onPressBack={() => navigation.goBack()}
       paymentHistories={paymentHistories}
+      showRefundConfirmModal={showRefundConfirmModal}
+      showAfterRefundModal={showAfterRefundModal}
+      onPressBack={() => navigation.goBack()}
+      onPressRefund={() => setShowRefundConfirmModal(true)}
+      closeRefundConfrimModal={() => setShowRefundConfirmModal(false)}
+      processRefund={refund}
+      closeAfterRefundModal={() => setShowAfterRefundModal(false)}
     />
   )
 }

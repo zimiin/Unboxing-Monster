@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 interface Props {
-  buttonStyle?: ViewStyle,
+  buttonStyle?: ViewStyle | (ViewStyle | undefined)[],
   text?: string,
   textStyle?: TextStyle,
   onPress?: () => void,

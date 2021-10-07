@@ -12,10 +12,21 @@ import Header from '@components/organisms/header/Header'
 import { defaultBox } from '@constants/images'
 import { PurchaseLog } from '@constants/types'
 import { parseDate } from '@src/utils/utils'
+import { COLORS } from '@constants/colors'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import ConfirmModal from '@components/molecules/ConfirmModal'
+import NoticeModal from '@components/molecules/NoticeModal'
+import Loading from '@components/atoms/Loading'
 
 interface Props {
+  paymentHistories: PurchaseLog[],
+  showRefundConfirmModal: boolean,
+  showAfterRefundModal: boolean,
   onPressBack: () => void,
-  paymentHistories: PurchaseLog[]
+  onPressRefund: () => void,
+  closeRefundConfrimModal: () => void,
+  processRefund: () => void,
+  closeAfterRefundModal: () => void,
 }
 
 const WIDTH = Dimensions.get('window').width
@@ -40,14 +51,22 @@ const PaymentHistoryTemplate  = (props: Props) => {
             return (
               <View key={ paymentHistory.id }>
                 <View style={{marginLeft: WIDTH * (24 / 360), marginRight: WIDTH * (24 / 360), paddingBottom: (18 / 740) * HEIGHT}}>
-                  <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: HEIGHT * (17 / 740)}}>
+                  <View style={styles.dateRow}>
                     <Text style={{fontSize: 15, lineHeight: HEIGHT * (18 / 740), fontFamily: 'Roboto-Medium', opacity: 0.7}}>
                       {parseDate(new Date(paymentHistory.purchaseAt))}
                     </Text>
                     
                     {paymentHistory.refund ?
-                      <Text style={{ fontSize: 13, lineHeight: HEIGHT * (19 / 740), fontFamily: 'NotoSansCJKkr-Regular', opacity: 0.5 }}>결제가 취소되었습니다.</Text>
-                      : undefined}
+                      <Text style={[styles.refundText, { opacity: 0.5 }]}>
+                        결제가 취소되었습니다.
+                      </Text>
+                      :
+                      <TouchableOpacity onPress={props.onPressRefund}>
+                        <Text style={[styles.refundText, { color: COLORS.error }]}>
+                          결제 취소
+                        </Text>
+                      </TouchableOpacity>
+                    }
                   </View >
 
                   <View style={{borderBottomColor: '#f9f9f9', borderBottomWidth: 2, paddingBottom: HEIGHT * (15 / 740), paddingTop: HEIGHT * (6 / 740), marginBottom: (21 / 740) * HEIGHT}}>
@@ -121,6 +140,28 @@ const PaymentHistoryTemplate  = (props: Props) => {
         }
       </ScrollView>
 
+      <ConfirmModal
+        visible={props.showRefundConfirmModal}
+        onRequestClose={props.closeRefundConfrimModal}
+        onConfirm={props.processRefund}
+        greyConfirmButton={true}
+      >
+        <Text style={styles.modalText}>
+          구매하신 모든 박스에 대해 결제 취소됩니다.{'\n'}
+          정말 취소하시겠습니까?
+        </Text>
+      </ConfirmModal>
+
+      <NoticeModal
+        visible={props.showAfterRefundModal}
+        onRequestClose={props.closeAfterRefundModal}
+      >
+        <Text style={styles.modalText}>
+          결제 취소되었습니다.{'\n'}
+          환불까지는 영업일 기준 2-3일이{'\n'}
+          소요될 수 있습니다.
+        </Text>
+      </NoticeModal>
     </>
   )
 }
@@ -130,5 +171,25 @@ export default PaymentHistoryTemplate
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff'
+  },
+  dateRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    marginTop: HEIGHT * (17 / 740),
+    alignItems: 'center',
+  },
+  refundText: { 
+    fontSize: 13, 
+    lineHeight: HEIGHT * (19 / 740), 
+    fontFamily: 'NotoSansCJKkr-Regular',
+  },
+  modalText: {
+    fontFamily: 'NotoSansCJKkr-Bold',
+    fontSize: 15,
+    letterSpacing: -0.38,
+    textAlign: 'center',
+    color: '#060606',
+    lineHeight: 22,
+    marginVertical: 36,
   }
 })
