@@ -10,8 +10,10 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 const MyPagePage = ({route, navigation}: MyPageProps) => {
   const [loginState, setLoginState] = useState<boolean>(false)
+  const [isFetchingLoginState, setIsFetchingLoginState] = useState<boolean>(true)
   const [nickname, setNickname] = useState<string>()
   const [point, setPoint] = useState<number>()
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   const getPoint = useCallback(async () => {
     try {
@@ -40,54 +42,60 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
   }, [])
 
   useEffect(() => {
-    let isSubscribed = true
-
     try {
       hasLoggedIn().then(
         result => {
-            setLoginState(result || false)
-        }
-      )
+          setLoginState(result || false)
+          setIsFetchingLoginState(false)
 
-      getNicknameFromAsyncStorage().then(
-        result => {
-            setNickname(result || '')
-        }
-      )
-
-      navigation.addListener('focus', () => {
-        getPoint().then(
-          result => {
-              setPoint(result)
+          if (result === false) {
+            return
           }
-        )
-      })
+
+          getNicknameFromAsyncStorage().then(
+            result => {
+              setNickname(result || '')
+            }
+          )
+
+          navigation.addListener('focus', () => {
+            getPoint().then(
+              result => {
+                setPoint(result)
+              }
+            )
+          })
+        }
+      )
     } catch (error) {
       console.log('Error in useEffect in MyPagePage::', error)
-    }
-
-    return () => {
-      console.log('=====MyPagePage unmounted')
-      isSubscribed = false
     }
   }, [])
 
   const logout = async () => {    
-    // @TODO Alert 창 띄우기 
+    setShowModal(false)
     await AsyncStorage.clear()
     navigation.replace('Auth', {screen: 'Login'})
   }
 
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
   return (
     <MyPageTemplate
+      isFetchingLoginState={isFetchingLoginState}
       loginState={loginState}
       nickname={nickname || ''}
       point={point || 0}
-      onPressLogout={logout}
+      modalVisible={showModal}
+      onConfirmLogout={logout}
+      onPressLogout={() => setShowModal(true)}
       onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
       onPressCart={() => navigation.navigate('Cart')}
       onPressPointHistory={() => navigation.navigate('PointHistory')}
       onPressPaymentHistory={() => navigation.navigate('PaymentHistory')}
+      onCloseModal={closeModal}
     />
   )
 }

@@ -15,16 +15,22 @@ import {
 } from 'react-native'
 import LoginNotice from "@components/organisms/LoginNotice"
 import RightArrow from "@components/atoms/icon/RightArrow"
+import Loading from "@components/atoms/Loading"
+import ConfirmModal from "@components/molecules/ConfirmModal"
 
 interface Props {
   loginState: boolean,
   nickname: string,
   point: number,
+  isFetchingLoginState: boolean,
+  modalVisible: boolean,
   onPressLogout: () => void,
   onPressLogin: () => void,
   onPressCart: () => void,
   onPressPaymentHistory: () => void,
   onPressPointHistory: () => void,
+  onConfirmLogout: () => void,
+  onCloseModal: () => void,
 }
 
 const MyPageTemplate = (props: Props) => {
@@ -107,6 +113,16 @@ const MyPageTemplate = (props: Props) => {
           </View>
         </>
       }
+      
+      {props.isFetchingLoginState ? <Loading /> : null}
+
+      <ConfirmModal 
+        visible={props.modalVisible}
+        onConfirm={props.onConfirmLogout}
+        onRequestClose={props.onCloseModal}
+      >
+        <Text style={styles.modalText}>로그아웃 하시겠습니까?</Text>
+      </ConfirmModal>
     </>
   )
 }
@@ -184,5 +200,10 @@ const styles = StyleSheet.create({
   },
   logout: {
     backgroundColor: '#eef1f2'
+  },
+  modalText: {
+    fontFamily: 'NotoSansCJKkr-Regular',
+    fontSize: 15,
+    marginVertical: 30,
   }
 })

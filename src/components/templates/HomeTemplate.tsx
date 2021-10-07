@@ -20,6 +20,7 @@ import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 import Loading from '@components/atoms/Loading'
 
 interface Props {
+  isLoading: boolean,
   onPressSearchBar: () => void,
   onPressCart: () => void,
   cartItemCount: number | undefined,
@@ -148,6 +149,8 @@ const HomeTemplate = (props: Props) => {
         modalVisible={props.modalVisible}
         setModalVisible={props.setModalVisible}
       />
+
+      {props.isLoading ? <Loading /> : null}
     </>
   )
 }

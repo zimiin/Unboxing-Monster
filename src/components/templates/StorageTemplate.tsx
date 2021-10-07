@@ -17,11 +17,13 @@ import { IMAGES } from '@constants/images'
 import { UserCoupon } from '@components/pages/StoragePage'
 import { getDaysBetweenDates } from '@src/utils/utils'
 import { verticalScale } from '@constants/figure'
+import Loading from '@components/atoms/Loading'
 
 export type Focus = 'randomBox' | 'coupon'
 
 interface Props {
   loginState: boolean,
+  fetchingLoginState: boolean,
   focusOn: Focus,
   boxData: BoxStorage[],
   couponData: UserCoupon[],
@@ -134,6 +136,8 @@ const StorageTemplate = (props: Props) => {
           onPressLogin={props.onPressLogin}
         /> 
         : storageTabContent}
+      
+      {props.fetchingLoginState ? <Loading /> : null}
     </View >
   )
 }
