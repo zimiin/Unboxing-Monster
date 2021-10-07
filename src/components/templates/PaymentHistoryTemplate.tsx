@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { ReactNode } from 'react'
 import {
   View,
   Text,
@@ -17,16 +17,22 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import ConfirmModal from '@components/molecules/ConfirmModal'
 import NoticeModal from '@components/molecules/NoticeModal'
 import Loading from '@components/atoms/Loading'
+import NoticeIcon from '@components/atoms/icon/NoticeIcon'
+import NotoSansRegular from '@components/atoms/typography/NotoSansRegular'
 
 interface Props {
   paymentHistories: PurchaseLog[],
   showRefundConfirmModal: boolean,
   showAfterRefundModal: boolean,
+  isLoading: boolean,
+  showErrorModal: boolean,
+  errorModalContent: string,
   onPressBack: () => void,
-  onPressRefund: () => void,
+  onPressRefund: (idx: number) => void,
   closeRefundConfrimModal: () => void,
   processRefund: () => void,
   closeAfterRefundModal: () => void,
+  closeErrorModal: () => void,
 }
 
 const WIDTH = Dimensions.get('window').width
@@ -47,7 +53,7 @@ const PaymentHistoryTemplate  = (props: Props) => {
 
       <ScrollView style={styles.container}>
         {
-          paymentHistories.map(paymentHistory => {
+          paymentHistories.map((paymentHistory, idx) => {
             return (
               <View key={ paymentHistory.id }>
                 <View style={{marginLeft: WIDTH * (24 / 360), marginRight: WIDTH * (24 / 360), paddingBottom: (18 / 740) * HEIGHT}}>
@@ -61,7 +67,7 @@ const PaymentHistoryTemplate  = (props: Props) => {
                         결제가 취소되었습니다.
                       </Text>
                       :
-                      <TouchableOpacity onPress={props.onPressRefund}>
+                      <TouchableOpacity onPress={() => props.onPressRefund(idx)}>
                         <Text style={[styles.refundText, { color: COLORS.error }]}>
                           결제 취소
                         </Text>
@@ -162,6 +168,23 @@ const PaymentHistoryTemplate  = (props: Props) => {
           소요될 수 있습니다.
         </Text>
       </NoticeModal>
+
+      <NoticeModal
+        visible={props.showErrorModal}
+        onRequestClose={props.closeErrorModal}
+      >
+        <NoticeIcon />
+
+        <Text style={styles.failedToRefundText}>
+          환불 실패
+        </Text>
+
+        <NotoSansRegular style={styles.errorContent}>
+          {props.errorModalContent}
+        </NotoSansRegular>
+      </NoticeModal>
+
+      {props.isLoading ? <Loading /> : null}
     </>
   )
 }
@@ -191,5 +214,16 @@ const styles = StyleSheet.create({
     color: '#060606',
     lineHeight: 22,
     marginVertical: 36,
+  },
+  failedToRefundText: {
+    fontFamily: 'NotoSansCJKkr-Bold',
+    fontSize: 15,
+    letterSpacing: -0.38,
+    lineHeight: 22,
+  },
+  errorContent: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+    fontSize: 14,
   }
 })
