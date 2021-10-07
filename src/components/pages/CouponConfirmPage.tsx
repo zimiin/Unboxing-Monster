@@ -2,7 +2,7 @@ import CouponConfirmTemplate from '@components/templates/CouponConfirmTemplate'
 import { CouponConfirmProps } from '@constants/navigationTypes'
 import { Coupon } from '@constants/types'
 import { URLS } from '@constants/urls'
-import { getAccessTokenFromAsyncStorage, setPhoneToAsyncStorage } from '@src/utils/asyncStorageUtils'
+import { getAccessTokenFromAsyncStorage, getPhoneFromAsyncStorage, setPhoneToAsyncStorage } from '@src/utils/asyncStorageUtils'
 import { hasLoggedIn } from '@src/utils/loginUtils'
 import { removeHyphens, validatePhone } from '@src/utils/utils'
 import React, { useState, useEffect } from 'react'
@@ -13,6 +13,12 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoaing] = useState<boolean>(false)
   const [showModal, setShowModal] = useState<boolean>(false)
+
+  useEffect(() => {
+    getPhoneFromAsyncStorage().then(
+      phone => setPhoneInput(phone || '')
+    )
+  }, [])
 
   const onPressConfirmButton = async () => {
     try {
