@@ -28,6 +28,7 @@ import { Cart, CartContext } from '@src/stores/CartContext'
 import {BoxId, Box} from '@constants/types'
 import { IMAGES } from '@constants/images'
 import GreyInputBox from '@components/atoms/GreyInputBox'
+import Footer from '@components/molecules/Footer'
 
 interface Props {
   screenTitle: string,
@@ -271,6 +272,8 @@ const PaymentTemplate = (props: Props) => {
           />
         </View>
       </ContentBox>
+
+      <Footer />
     </>
   )
 
