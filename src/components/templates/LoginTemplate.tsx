@@ -1,7 +1,7 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import IconButton24 from '@components/atoms/button/IconButton24'
 import Loading from '@components/atoms/Loading'
-import NotoSansRegular from '@components/atoms/typography/NotoSansRegular'
+import RegularText from '@components/atoms/typography/RegularText'
 import { DESIGN_WIDTH, scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import { IMAGES } from '@constants/images'
 import React from 'react'
@@ -51,9 +51,9 @@ const LoginTemplate = (props: Props) => {
           구경먼저하기
         </FullContentWidthButton>
 
-        <NotoSansRegular style={styles.SNSText}>
+        <RegularText style={styles.SNSText}>
           SNS로 계속하기
-        </NotoSansRegular>
+        </RegularText>
 
         <View style={styles.SNSIconView}>
           <IconButton24

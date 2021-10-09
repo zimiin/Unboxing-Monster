@@ -18,7 +18,7 @@ import ConfirmModal from '@components/molecules/ConfirmModal'
 import NoticeModal from '@components/molecules/NoticeModal'
 import Loading from '@components/atoms/Loading'
 import NoticeIcon from '@components/atoms/icon/NoticeIcon'
-import NotoSansRegular from '@components/atoms/typography/NotoSansRegular'
+import RegularText from '@components/atoms/typography/RegularText'
 
 interface Props {
   paymentHistories: PurchaseLog[],
@@ -179,9 +179,9 @@ const PaymentHistoryTemplate  = (props: Props) => {
           환불 실패
         </Text>
 
-        <NotoSansRegular style={styles.errorContent}>
+        <RegularText style={styles.errorContent}>
           {props.errorModalContent}
-        </NotoSansRegular>
+        </RegularText>
       </NoticeModal>
 
       {props.isLoading ? <Loading /> : null}

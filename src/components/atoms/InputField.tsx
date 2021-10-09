@@ -9,7 +9,7 @@ import {
   View,
   Platform,
 } from 'react-native'
-import NotoSansMedium from '@components/atoms/typography/NotoSansMedium'
+import MediumText from '@components/atoms/typography/MediumText'
 
 interface Props extends TextInputProps {
   style?: TextStyle,
@@ -52,9 +52,9 @@ const InputField = (props: Props) => {
         />
       </View>
 
-      <NotoSansMedium style={styles.error}>
+      <MediumText style={styles.error}>
         {error}
-      </NotoSansMedium>
+      </MediumText>
     </>
   )
 }

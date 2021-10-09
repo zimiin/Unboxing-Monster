@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Payment: undefined,
   PGPayment: { data: PaymentParams, point: number } | undefined,
   PaymentComplete: any,
+  PGPersonalInfoAgreement: undefined,
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -93,6 +94,13 @@ export type PaymentCompleteRouteProp = RouteProp<RootStackParamList, 'PaymentCom
 export type PaymentCompleteProps = {
   route: PaymentCompleteRouteProp
   navigation: PaymentCompleteNavigationProp
+}
+
+export type PGPersonalInfoAgreementNavigationProp = StackNavigationProp<RootStackParamList, 'PGPersonalInfoAgreement'>
+export type PGPersonalInfoAgreementRouteProp = RouteProp<RootStackParamList, 'PGPersonalInfoAgreement'>
+export type PGPersonalInfoAgreementProps = {
+  route: PGPersonalInfoAgreementRouteProp
+  navigation: PGPersonalInfoAgreementNavigationProp
 }
 
 // Auth Stack
