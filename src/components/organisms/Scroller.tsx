@@ -2,25 +2,23 @@ import { DESIGN_HEIGHT, scale, SCREEN_HEIGHT } from '@constants/figure'
 import React from 'react'
 import {
   View,
-  Dimensions,
   StyleSheet,
-  Text,
 } from 'react-native'
 import TextTicker from 'react-native-text-ticker'
 
 const Scroller = ({content}: {content: string}) => {
+  const defaultContent = '✨ 어서오세요 언박싱 몬스터입니다 ✨       ✨ 어서오세요 언박싱 몬스터입니다 ✨'
+  const contentLength = content ? content.length : defaultContent.length
+
   return (
     <View style={styles.container}>
       <TextTicker
         style={styles.text}
-        loop
-        duration={10000}
-        scrollSpeed={0}
-        bounceSpeed={0}
+        loop={true}
+        duration={150 * contentLength}
         repeatSpacer={50}
-        bounce={false}
       >
-        {content || '✨ 어서오세요 언박싱 몬스터입니다 ✨       ✨ 어서오세요 언박싱 몬스터입니다 ✨'}
+        {content || defaultContent}
       </TextTicker>
     </View>
   )
