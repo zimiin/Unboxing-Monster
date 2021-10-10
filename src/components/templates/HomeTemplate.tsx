@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(32)
   },
   columnWrapper: {
-    marginHorizontal: scale((SCREEN_WIDTH - 324) / 2),
+    marginHorizontal: scale(18),
   },
   mainFlatList: {
     backgroundColor: 'white',
