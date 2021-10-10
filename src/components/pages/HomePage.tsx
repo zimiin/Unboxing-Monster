@@ -95,46 +95,6 @@ const HomePage = ({route, navigation}: HomeProps) => {
     }
   }
 
-  const getOpenResultOf = async (boxId: BoxId, itemIds: ItemId[], skip: number = 0, take?: number): Promise<OpenResult[]> => {
-    try {
-      const url = new URL(URLS.unboxing_api + 'open-result/' + boxId)
-      url.searchParams.append('skip', skip.toString())
-      if (take) {
-        url.searchParams.append('take', take.toString())
-      }
-
-      const response = await fetch(
-        url.toString(), {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-
-      if (response.status !== 200) {
-        const json = await response.json()
-        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
-      }
-
-      const result: OpenResult[] = await response.json()
-      const returnResult: OpenResult[] = []
-
-      for (let resultValue of result) {
-        const item = resultValue.itemId
-
-        if (itemIds.find(itemId => itemId === item)) {
-          returnResult.push(resultValue)
-        }
-      }
-
-      return returnResult
-    } catch (error) {
-      console.log('Error in getOpenResultOf', error)
-      throw error 
-    }
-  }
-
   const makeResultString = async (results: OpenResult[]): Promise<string> => {
     try {
       let resultString: string = ''
@@ -155,25 +115,24 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   const getScrollerContent = async (): Promise<string> => {
     try {
-      const boxItems: {boxId: BoxId, itemIds: ItemId[]}[] = [
-        { boxId: 1, itemIds: [1] },
-        { boxId: 2, itemIds: [6] },
-        { boxId: 3, itemIds: [10] },
-        { boxId: 4, itemIds: [15] },
-        { boxId: 5, itemIds: [18] },
-        { boxId: 6, itemIds: [24] }
-      ]
-      const openResult: OpenResult[] = []
-      const resultCountPerBox = 1
+      const url = new URL(URLS.unboxing_api + 'open-result/')
+      url.searchParams.append('take', '5')
 
-      for (let boxItem of boxItems) {
-        const result: OpenResult[] = await getOpenResultOf(boxItem.boxId, boxItem.itemIds)
-        
-        for (let i = 0; i < result.length && i < resultCountPerBox; i++) {
-          openResult.push(result[i])
+      const response = await fetch(
+        url.toString() , {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         }
-      }
+      })
 
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+      
+      const openResult: OpenResult[] = await response.json()
       const resultString = makeResultString(openResult)
       return resultString
     } catch (error) {
