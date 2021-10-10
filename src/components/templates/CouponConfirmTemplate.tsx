@@ -3,6 +3,7 @@ import HalfWidthButton from '@components/atoms/button/HalfWidthButton'
 import GreyInputBox from '@components/atoms/GreyInputBox'
 import InfoIcon from '@components/atoms/icon/InfoIcon'
 import Bold from '@components/atoms/typography/Bold'
+import RegularText from '@components/atoms/typography/RegularText'
 import ConfirmModal from '@components/molecules/ConfirmModal'
 import Header from '@components/organisms/header/Header'
 import { COLORS } from '@constants/colors'
@@ -16,6 +17,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native'
 
 interface Props {
@@ -24,6 +26,7 @@ interface Props {
   error: string,
   showModal: boolean,
   isLoading: boolean,
+  personalInfoChecked: boolean,
   goBackToPreviousScreen: () => void,
   onChangePhoneInput: (input: string) => void,
   onPressCheckBox: () => void,
@@ -31,6 +34,8 @@ interface Props {
   onPressConfirm: () => void,
   onRequestCloseModal: () => void,
   onConfirmPhone: () => void,
+  onPressPersonalInfoUsage: () => void,
+  onPressPersonalInfoCheckBox: () => void,
 }
 
 const CouponConfirmTemplate = (props: Props) => {
@@ -75,22 +80,42 @@ const CouponConfirmTemplate = (props: Props) => {
 
               <Text style={styles.useNext}>다음에도 사용하기</Text>
             </View>
+          </View>
 
-            <Text style={styles.error}>{props.error}</Text>
+          <View
+            style={styles.personalInfoRow}
+          >
+            <TouchableOpacity
+              onPress={props.onPressPersonalInfoUsage}
+            >
+              <RegularText
+                style={styles.personalInfoText}
+              >
+                제3자 개인정보제공 동의
+              </RegularText>
+            </TouchableOpacity>
 
-            <View style={styles.buttonRow}>
-              <HalfWidthButton
-                text={'취소'}
-                buttonStyle={styles.cancelButton}
-                textStyle={styles.cancelText}
-                onPress={props.onPressCancel}
-              />
+            <CheckBox
+              style={styles.personalInfoCheckBox}
+              checked={props.personalInfoChecked}
+              onPress={props.onPressPersonalInfoCheckBox}
+            />
+          </View>
 
-              <HalfWidthButton
-                text={'확정하기'}
-                onPress={props.onPressConfirm}
-              />
-            </View>
+          <Text style={styles.error}>{props.error}</Text>
+
+          <View style={styles.buttonRow}>
+            <HalfWidthButton
+              text={'취소'}
+              buttonStyle={styles.cancelButton}
+              textStyle={styles.cancelText}
+              onPress={props.onPressCancel}
+            />
+
+            <HalfWidthButton
+              text={'확정하기'}
+              onPress={props.onPressConfirm}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -168,6 +193,20 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 12,
   },
+  personalInfoRow: {
+    flexDirection: 'row',
+    marginLeft: scale(24),
+    marginTop: 20,
+  },
+  personalInfoText: {
+    fontSize: 13,
+    lineHeight: 19,
+    letterSpacing: -0.32,
+    textDecorationLine: 'underline'
+  },
+  personalInfoCheckBox: {
+    marginLeft: 5,
+  },
   error: {
     color: COLORS.error,
     fontSize: scale(13),
@@ -178,8 +217,9 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    marginTop: verticalScale(25),
+    marginTop: verticalScale(10),
     marginBottom: verticalScale(60),
+    marginLeft: scale(24),
   },
   cancelButton: {
     backgroundColor: COLORS.grey_box,

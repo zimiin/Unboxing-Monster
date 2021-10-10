@@ -297,7 +297,8 @@ export type MyCustomBoxProps = {
 export type StorageStackParamList = {
   Storage: undefined,
   CouponConfirm: {coupon: Coupon},
-  CouponRefund: {coupon: Coupon}
+  CouponRefund: {coupon: Coupon},
+  CouponPersonalInfoAgreement: undefined,
 }
 
 export type StorageNavigationProp = CompositeNavigationProp<
@@ -337,6 +338,13 @@ export type CouponRefundRouteProp = RouteProp<StorageStackParamList, 'CouponRefu
 export type CouponRefundProps = {
   route: CouponRefundRouteProp,
   navigation: CouponRefundNavigationProp
+}
+
+export type CouponPersonalInfoAgreementNavigationProp = StackNavigationProp<StorageStackParamList, 'CouponPersonalInfoAgreement'>
+export type CouponPersonalInfoAgreementRouteProp = RouteProp<StorageStackParamList, 'CouponPersonalInfoAgreement'>
+export type CouponPersonalInfoAgreementProps = {
+  route: CouponPersonalInfoAgreementRouteProp,
+  navigation: CouponPersonalInfoAgreementNavigationProp
 }
 
 // MyPage Stack

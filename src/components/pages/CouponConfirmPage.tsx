@@ -13,6 +13,7 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoaing] = useState<boolean>(false)
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [agreeToPersonalInfoUsage, setAgreeToPersonalInfoUsage] = useState<boolean>(false)
 
   useEffect(() => {
     getPhoneFromAsyncStorage().then(
@@ -24,6 +25,11 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
     try {
       if (validatePhone(phoneInput) === false) {
         setError('올바른 핸드폰 번호를 입력해주세요.')
+        return
+      }
+
+      if (agreeToPersonalInfoUsage === false) {
+        setError('제3자 정보 제공에 동의하지 않으시면 쿠폰 확정이 불가능합니다.')
         return
       }
 
@@ -86,6 +92,11 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
     setPhoneInput(input)
   }
 
+  const onPressPersonalInfoCheckBox = () => {
+    setError('')
+    setAgreeToPersonalInfoUsage(!agreeToPersonalInfoUsage)
+  }
+
   return (
     <CouponConfirmTemplate
       phoneInput={phoneInput}
@@ -93,6 +104,7 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
       error={error}
       showModal={showModal}
       isLoading={isLoading}
+      personalInfoChecked={agreeToPersonalInfoUsage}
       goBackToPreviousScreen={() => navigation.goBack()}
       onChangePhoneInput={onChangePhoneInput}
       onPressCheckBox={() => setSavePhone(!savePhone)}
@@ -100,6 +112,8 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
       onPressConfirm={onPressConfirmButton}
       onRequestCloseModal={() => setShowModal(false)}
       onConfirmPhone={onCheckPhoneNumber}
+      onPressPersonalInfoCheckBox={onPressPersonalInfoCheckBox}
+      onPressPersonalInfoUsage={() => navigation.push('CouponPersonalInfoAgreement')}
     />
   )
 }

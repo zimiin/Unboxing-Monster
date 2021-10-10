@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   personalInfoRow: {
-    marginTop: 5,
+    marginTop: 15,
   },
   personalInfoCheckBox: {
     marginLeft: 5,
@@ -460,6 +460,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 19,
     letterSpacing: -0.32,
+    textDecorationLine: 'underline'
   },
   phoneInputBox: {
     flex: 1,
