@@ -12,7 +12,6 @@ import { Item } from '@constants/types'
 import { PieChart } from "react-native-chart-kit";
 import HorizontalRule from "@components/atoms/HorizontalRule";
 import { URLS } from "@constants/urls";
-import { parseDate } from "@src/utils/utils";
 
 const WIDTH = Dimensions.get('window').width;
 const COLORS = [
