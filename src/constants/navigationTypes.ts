@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Payment: undefined,
   PGPayment: { data: PaymentParams, point: number } | undefined,
   PaymentComplete: any,
+  PGPersonalInfoAgreement: undefined,
 }
 
 export type AuthNavigationProp = StackNavigationProp<RootStackParamList, 'Auth'>
@@ -93,6 +94,13 @@ export type PaymentCompleteRouteProp = RouteProp<RootStackParamList, 'PaymentCom
 export type PaymentCompleteProps = {
   route: PaymentCompleteRouteProp
   navigation: PaymentCompleteNavigationProp
+}
+
+export type PGPersonalInfoAgreementNavigationProp = StackNavigationProp<RootStackParamList, 'PGPersonalInfoAgreement'>
+export type PGPersonalInfoAgreementRouteProp = RouteProp<RootStackParamList, 'PGPersonalInfoAgreement'>
+export type PGPersonalInfoAgreementProps = {
+  route: PGPersonalInfoAgreementRouteProp
+  navigation: PGPersonalInfoAgreementNavigationProp
 }
 
 // Auth Stack
@@ -289,7 +297,8 @@ export type MyCustomBoxProps = {
 export type StorageStackParamList = {
   Storage: undefined,
   CouponConfirm: {coupon: Coupon},
-  CouponRefund: {coupon: Coupon}
+  CouponRefund: {coupon: Coupon},
+  CouponPersonalInfoAgreement: undefined,
 }
 
 export type StorageNavigationProp = CompositeNavigationProp<
@@ -329,6 +338,13 @@ export type CouponRefundRouteProp = RouteProp<StorageStackParamList, 'CouponRefu
 export type CouponRefundProps = {
   route: CouponRefundRouteProp,
   navigation: CouponRefundNavigationProp
+}
+
+export type CouponPersonalInfoAgreementNavigationProp = StackNavigationProp<StorageStackParamList, 'CouponPersonalInfoAgreement'>
+export type CouponPersonalInfoAgreementRouteProp = RouteProp<StorageStackParamList, 'CouponPersonalInfoAgreement'>
+export type CouponPersonalInfoAgreementProps = {
+  route: CouponPersonalInfoAgreementRouteProp,
+  navigation: CouponPersonalInfoAgreementNavigationProp
 }
 
 // MyPage Stack

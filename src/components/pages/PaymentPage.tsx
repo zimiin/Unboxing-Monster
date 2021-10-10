@@ -50,6 +50,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [phoneInput, setPhoneInput] = useState<string>('')
   const [phoneInputError, setPhoneInputError] = useState<string>('')
   const [savePhone, setSavePhone] = useState<boolean>(true)
+  const [personalInfoUsageAgree, setPersonalInfoUsageAgree] = useState<boolean>(false)
+  const [personalInfoError, setPersonalInfoError] = useState<string>('')
 
   const totalPrice = useMemo(() => {
     let sum = 0
@@ -229,10 +231,6 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         throw 'Invalid point input: ' + usingPoint
       }
 
-      if (validatePhoneInput() === false) {
-        throw 'Invalid phone number input: ' + phoneInput
-      }
-
       const amount = totalPrice - usingPoint
       console.log('amount', amount)
       if (amount === 0) {
@@ -243,6 +241,15 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       if (amount < 100) {
         setPointInputError('포인트 사용 후 최종 결제 금액은 100원 이상이어야 합니다.')
         throw 'Amount is under 100'
+      }
+
+      if (validatePhoneInput() === false) {
+        throw 'Invalid phone number input: ' + phoneInput
+      }
+
+      if (personalInfoUsageAgree === false) {
+        setPhoneInputError('제3자 정보 제공에 동의하지 않으시면 결제 진행이 불가능합니다.')
+        throw `Not agree privacy usage agreement.`
       }
 
       const phone = removeHyphens(phoneInput)
@@ -282,6 +289,11 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     }
   }
 
+  const onPressPersonalInfoCheckBox = () => {
+    setPhoneInputError('')
+    setPersonalInfoUsageAgree(!personalInfoUsageAgree)
+  }
+
   return (
     <PaymentTemplate
       screenTitle={'결제'}
@@ -297,6 +309,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       savePhone={savePhone}
       phoneInputError={phoneInputError}
       pointInputError={pointInputError}
+      personalInfoChecked={personalInfoUsageAgree}
       onSubmitPhoneInput={validatePhoneInput}
       onPressSavePhone={() => setSavePhone(!savePhone)}
       onChangePhoneInput={onChangePhoneInput}
@@ -306,6 +319,8 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onChangePaymentMethod={setSelectedPaymentMethod}
       onPressMakePayment={onPressMakePayment}
       onSubmitPointInput={validatePointInput}
+      onPressPersonalInfoUsage={() => navigation.push('PGPersonalInfoAgreement')}
+      onPressPersonalInfoCheckBox={onPressPersonalInfoCheckBox}
     />
   )
 }

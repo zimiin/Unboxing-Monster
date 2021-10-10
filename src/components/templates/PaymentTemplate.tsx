@@ -28,6 +28,9 @@ import { Cart, CartContext } from '@src/stores/CartContext'
 import {BoxId, Box} from '@constants/types'
 import { IMAGES } from '@constants/images'
 import GreyInputBox from '@components/atoms/GreyInputBox'
+import Footer from '@components/molecules/Footer'
+import RegularText from '@components/atoms/typography/RegularText'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface Props {
   screenTitle: string,
@@ -43,6 +46,7 @@ interface Props {
   savePhone: boolean,
   phoneInputError: string,
   pointInputError: string,
+  personalInfoChecked: boolean,
   onPressSavePhone: () => void,
   onPressBack: () => void,
   onChangeUsingPointAmount: (point: string) => void,
@@ -52,6 +56,8 @@ interface Props {
   onChangePhoneInput: (input: string) => void,
   onSubmitPhoneInput: () => void,
   onSubmitPointInput: () => void,
+  onPressPersonalInfoUsage: () => void,
+  onPressPersonalInfoCheckBox: () => void,
 }
 
 const PaymentTemplate = (props: Props) => {
@@ -222,6 +228,29 @@ const PaymentTemplate = (props: Props) => {
         <Text style={styles.tableText}>다음에도 사용하기</Text>
       </View>
 
+      <View
+        style={[
+          styles.phoneInputRow,
+          styles.personalInfoRow
+        ]}
+      >
+        <TouchableOpacity
+          onPress={props.onPressPersonalInfoUsage}
+        >
+          <RegularText 
+            style={styles.personalInfoText}
+          >
+            제3자 개인정보제공 동의
+          </RegularText>
+        </TouchableOpacity>
+
+        <CheckBox
+          style={styles.personalInfoCheckBox}
+          checked={props.personalInfoChecked}
+          onPress={props.onPressPersonalInfoCheckBox}
+        />
+      </View>
+
       {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null}
 
       <HorizontalRule style={styles.horizontalRule}/>
@@ -271,6 +300,8 @@ const PaymentTemplate = (props: Props) => {
           />
         </View>
       </ContentBox>
+
+      <Footer />
     </>
   )
 
@@ -418,6 +449,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: scale(24),
     alignItems: 'center',
+  },
+  personalInfoRow: {
+    marginTop: 15,
+  },
+  personalInfoCheckBox: {
+    marginLeft: 5,
+  },
+  personalInfoText: {
+    fontSize: 13,
+    lineHeight: 19,
+    letterSpacing: -0.32,
+    textDecorationLine: 'underline'
   },
   phoneInputBox: {
     flex: 1,

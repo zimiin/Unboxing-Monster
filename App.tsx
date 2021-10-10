@@ -17,6 +17,7 @@ import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
 import UserContextProvider from '@src/stores/UserContext'
 import Toast from 'react-native-toast-message'
+import PGPersonalInfoAgreement from '@components/pages/PGPersonalInfoAgreement'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -87,6 +88,11 @@ const App = () => {
             <Stack.Screen
               name="PGPayment"
               component={PGPaymentPage}
+            />
+
+            <Stack.Screen
+              name="PGPersonalInfoAgreement"
+              component={PGPersonalInfoAgreement}
             />
           </Stack.Navigator>
         </NavigationContainer>

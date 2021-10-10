@@ -38,11 +38,12 @@ const BoxItem = (props: Props) => {
         style={styles.image}
       />
 
-      {/* <View style={styles.nameContainer}> */}
-        <NotoSansBold style={styles.name || ''}>
-          {props.name}
-        </NotoSansBold>
-      {/* </View> */}
+      <NotoSansBold 
+        style={styles.name || ''}
+        numberOfLines={1}
+      >
+        {props.name}
+      </NotoSansBold>
 
       <Text style={styles.price}>
         {props.price?.toLocaleString() || ''}원
@@ -68,15 +69,15 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: 10,
-    width: 150,
-    height: 200,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    width: scale(150),
+    height: scale(150) + 45,
+    paddingHorizontal: scale(10),
+    paddingVertical: scale(10),
     backgroundColor: 'white',
   },
   image: {
-    width: 130,
-    height: 130,
+    width: scale(130),
+    height: scale(130),
     borderRadius: 10,
     resizeMode: 'contain'
   },

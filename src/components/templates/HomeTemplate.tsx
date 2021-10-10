@@ -18,6 +18,8 @@ import { IMAGES } from '@constants/images'
 import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
 import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 import Loading from '@components/atoms/Loading'
+import Footer from '@components/molecules/Footer'
+import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
 
 interface Props {
   isLoading: boolean,
@@ -115,7 +117,10 @@ const HomeTemplate = (props: Props) => {
   )
 
   const footer = (
-    <View style={styles.footer}/>
+    <>
+      <View style={styles.footer}/>
+      <Footer />
+    </>
   )
 
   return (
@@ -189,7 +194,7 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(32)
   },
   columnWrapper: {
-    marginHorizontal: scale((SCREEN_WIDTH - 324) / 2),
+    marginHorizontal: scale(18),
   },
   mainFlatList: {
     backgroundColor: 'white',

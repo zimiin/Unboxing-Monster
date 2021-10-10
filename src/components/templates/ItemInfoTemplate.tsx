@@ -9,6 +9,8 @@ import { ItemInfoNavigationProp } from '@constants/navigationTypes'
 import ItemInfoImage from '@components/molecules/ItemInfoImage'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import ItemInfoDetail from '@components/molecules/ItemInfoDetail'
+import Footer from '@components/molecules/Footer'
+import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
 
 type ItemInfoTemplateProps = {
   navigation: ItemInfoNavigationProp,
@@ -29,6 +31,8 @@ const ItemInfoTemplate = (props: ItemInfoTemplateProps) => {
           <ItemInfoImage image={props.image} title={props.title} price={props.price} />
           <HorizontalRule />
           <ItemInfoDetail detail={props.detail} />
+          <PolicyDescriptionList />
+          <Footer />
         </ScrollView>
       </SafeAreaView>
     </>
