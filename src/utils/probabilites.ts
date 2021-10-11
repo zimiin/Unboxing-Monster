@@ -8,7 +8,10 @@ export const generateProbability = (
 
   for (let i = 0; i < itemPrices.length; i++) {
     let prob;
-    if (i === itemPrices.length - 1) prob = baseProb;
+    if (itemPrices[i] === itemPrices[itemPrices.length - 1]) {
+      prob = baseProb;
+      baseProb -= prob
+    }
     else {
       const remain = itemPrices.slice(i + 1);
       const nextBoxPrice =
