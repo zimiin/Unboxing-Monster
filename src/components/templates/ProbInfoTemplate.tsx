@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  SafeAreaView,
 } from 'react-native'
 import HeaderWithCart from '@components/organisms/header/HeaderWithCart'
 
@@ -24,17 +25,23 @@ const ProbInfoTemplate = (props: ProbInfoTemplateProps) => {
   const [{ cart }, { modifyBoxCount, deleteFromCart, setChecked, setCheckedToAll }] = useContext(CartContext)
   return (
     <>
+      <HeaderWithCart
+        title={"확률정보"}
+        canGoBack={true} 
+        goBackAction={props.navigation.goBack}
+        onPressCart={() => props.navigation.push('Cart')}
+        cartItemCount={cart.size > 0 ? cart.size : undefined}
+      />
+
+      <HorizontalRule/>
+
       <View style={styles.screen}>
-        <HeaderWithCart
-          title={"확률정보"}
-          canGoBack={true} 
-          goBackAction={props.navigation.goBack}
-          onPressCart={() => props.navigation.push('Cart')}
-          cartItemCount={cart.size > 0 ? cart.size : undefined}
-        />
-        <HorizontalRule/>
         <ProbViewTab probs={props.probs} items={props.items} boxId={props.boxId}/>
       </View>
+
+      <SafeAreaView 
+        style={styles.safeArea}
+      />
     </>
 
   )
@@ -46,5 +53,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: 'white'
+  },
+  safeArea: {
+    backgroundColor: 'white',
   }
 })
