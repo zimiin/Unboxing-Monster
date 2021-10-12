@@ -87,7 +87,7 @@ const PolicyDescriptionList = () => {
             <RegularText style={styles.text}>
               - 쿠폰 확정 시 작성하신 휴대폰번호로 모바일 쿠폰을 전송합니다.{'\n'}
               - 모바일 쿠폰은 문자 메시지로 전송합니다. {'\n'}
-              - 문자메시지 전송 비용은 언박싱 몬스터가 부답합니다.
+              - 문자메시지 전송 비용은 언박싱 몬스터가 부담합니다.
             </RegularText>
         }
       />
