@@ -34,6 +34,10 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     value: 'trans',
     label: '실시간 계좌이체',
   },
+  {
+    value: 'kakaopay',
+    label: '카카오페이',
+  },
 ]
 
 const toHundreds = (num: number) => {
@@ -266,7 +270,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
 
       const data: PaymentParams = {
         params: {
-          pg: 'danal_tpay',
+          pg: selectedPaymentMethod.label === '카카오페이' ? 'kakaopay' : 'danal_tpay',
           pay_method: selectedPaymentMethod.value,
           display: {card_quota: []},
           merchant_uid: merchantUid,

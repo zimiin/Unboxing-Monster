@@ -14,6 +14,7 @@ export const generateProbability = (
       const nextBoxPrice =
         alpha * Math.min(remain[0], boxPrice) +
         (1 - alpha) * remain[remain.length - 1];
+      console.log('generateProbability boxPrice', boxPrice, 'itemPrices[', i, ']', itemPrices[i], 'nextBoxPrice', nextBoxPrice)
       const p = (boxPrice - nextBoxPrice) / (itemPrices[i] - nextBoxPrice);
       prob = baseProb * p;
       baseProb -= prob;
@@ -21,6 +22,7 @@ export const generateProbability = (
     }
     semiProbabilities.push(prob);
   }
+  console.log('generateProbability semiProbabilities', semiProbabilities)
 
   const counter: { [keys: number]: number } = {};
   const prob: { [keys: number]: number } = {};
@@ -37,6 +39,8 @@ export const generateProbability = (
       prob[price] = sProb;
     }
   }
+
+  console.log('generateProbability prob', prob)
 
   return itemPrices.map((price) => {
     return prob[price] / counter[price];

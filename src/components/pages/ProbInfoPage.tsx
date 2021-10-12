@@ -8,15 +8,14 @@ const ProbInfoPage = ({route, navigation}: ProbInfoProps) => {
   const reverseSortedPrice = items.map((item) => item.price)
   const probabilities : number[] = generateProbability(reverseSortedPrice, route.params.boxPrice) 
 
+  console.log('ProbInfoPage probabilities', probabilities)
   return (
-    <>
-      <ProbInfoTemplate
-        boxId={route.params.boxId}
-        navigation={navigation}
-        items={items}
-        probs={probabilities}
-      />
-    </>
+    <ProbInfoTemplate
+      boxId={route.params.boxId}
+      navigation={navigation}
+      items={items}
+      probs={probabilities}
+    />
   )
 }
 
