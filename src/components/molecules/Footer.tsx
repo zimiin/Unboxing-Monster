@@ -12,9 +12,9 @@ import { scale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import { openUrl } from '@src/utils/utils'
 
-const openBizNumConfirmPage = () => {
-  openUrl('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2460302264')
-}
+const openBizNumConfirmWeb = () => openUrl('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2460302264')
+const openPersonalInfoWeb = () => openUrl('https://unboxing.monster/privacy-policy.html')
+const openTermsOfServiceWeb = () => openUrl('https://unboxing.monster/terms_of_use.html')
 
 const Footer = () => {
   return (
@@ -35,7 +35,7 @@ const Footer = () => {
         </Text>
 
         <TouchableOpacity
-          onPress={openBizNumConfirmPage}
+          onPress={openBizNumConfirmWeb}
         >
           <Bold style={styles.text}>
             {' [사업자정보확인]'}
@@ -43,10 +43,47 @@ const Footer = () => {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.text}>
+      <Text 
+        style={styles.text}
+      >
         사업장소재지 : 서울특별시 서초구 강남대로107길 21, 2층{'\n'}
         E-mail : ask.unboxing.monster@gmail.com{'\n'}
-        Tel: 02-544-5559{'\n'}
+        Tel: 02-544-5559
+      </Text>
+
+      <View
+        style={styles.flexRow}
+      >
+        <TouchableOpacity
+          onPress={openPersonalInfoWeb}
+        >
+          <Text
+            style={styles.text}
+          >
+          개인정보처리방침
+          </Text>
+        </TouchableOpacity>
+
+        <Text
+          style={styles.text}
+        >
+          {' | '}
+        </Text>
+
+        <TouchableOpacity
+          onPress={openTermsOfServiceWeb}
+        >
+          <Text
+            style={styles.text}
+          >
+            서비스이용약관
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text
+        style={styles.text}
+      >
         Copyright @ 꾸러기원정대  All rights reserved.
       </Text>
     </View>
@@ -68,6 +105,9 @@ const styles = StyleSheet.create({
   },
   textMargin: {
     marginTop: 16,
+  },
+  flexRow: {
+    flexDirection: 'row',
   },
   text: {
     fontSize: 12,
