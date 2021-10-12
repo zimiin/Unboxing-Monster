@@ -90,5 +90,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 11,
     letterSpacing: -0.28,
+    lineHeight: 20,
   }
 })

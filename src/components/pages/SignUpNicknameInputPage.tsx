@@ -13,6 +13,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const [nicknameInput, setNicknameInput] = useState<string>('')
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [agreeToPolicy, setAgreeToPolicy] = useState<boolean>(false)
 
   const requestJoin = async () => {
     try {
@@ -79,7 +80,12 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
     try {
       if (nicknameInput === '') {
         setError('닉네임을 입력해주세요')
-        return
+        throw 'No nickname input'
+      }
+
+      if (agreeToPolicy === false) {
+        setError('서비스 이용 약관에 동의해주세요')
+        throw 'Not agree to policy'
       }
       
       await requestJoin()
@@ -101,17 +107,21 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
     <SignUpInputTemplate
       isLoading={isLoading}
       title='닉네임 입력'
-      canGoBack={true}
-      onPressGoBack={() => navigation.goBack()}
       label='닉네임을 입력해주세요'
       keyboardType='default'
+      canGoBack={true}
       input={nicknameInput}
-      onChangeText={onChangeText}
       canGoNext={nicknameInput !== '' ? true : false}
-      onPressNext={requestJoinAndLogin}
-      onSubmitEditing={requestJoinAndLogin}
       error={error}
       buttonText='완료'
+      agreeToPolicy={agreeToPolicy}
+      showPolicyAgreement={true}
+      onPressGoBack={() => navigation.goBack()}
+      onChangeText={onChangeText}
+      onPressNext={requestJoinAndLogin}
+      onSubmitEditing={requestJoinAndLogin}
+      onPressAgreeToPolicyCheckBox={() => setAgreeToPolicy(!agreeToPolicy)}
+      onPressAgreeToPolicy={() => navigation.push('TermsOfService')}
     />
   )
 }

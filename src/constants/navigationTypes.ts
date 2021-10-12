@@ -112,6 +112,7 @@ export type AuthStackParamList = {
   SignUpPhoneConfirmInput: undefined,
   SignUpNicknameInput: undefined,
   LoginRequest: undefined,
+  TermsOfService: undefined,
 }
 
 export type SplashNavigationProp = CompositeNavigationProp<
@@ -170,6 +171,13 @@ export type LoginRequestNavigationProp = StackNavigationProp<AuthStackParamList,
 export type LoginRequestProps = {
   route: LoginRequestRouteProp,
   navigation: LoginRequestNavigationProp
+}
+
+export type TermsOfServiceRouteProp = RouteProp<AuthStackParamList, 'TermsOfService'>
+export type TermsOfServiceNavigationProp = StackNavigationProp<AuthStackParamList, 'TermsOfService'>
+export type TermsOfServiceProps = {
+  route: TermsOfServiceRouteProp,
+  navigation: TermsOfServiceNavigationProp
 }
 
 // Bottom Tab
