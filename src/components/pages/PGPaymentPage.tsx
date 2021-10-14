@@ -32,14 +32,13 @@ const PGPaymentPage = ({ route, navigation }: PGPaymentProps) => {
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <IMP.Payment
-        // userCode={'imp44809950'} // O's
         userCode={'imp44377197'} // kkureogi
         loading={<Loading />}
         data={params}
         callback={(response) => {
           console.log('PGPaymentPage response', response)
-          
-          if (response.success === false || response.imp_success === false) {
+
+          if (response.success === false || response.imp_success === 'false' || response.imp_success === false) {
             navigation.navigate('Payment')
           } else {
             console.log('Payment complete')
