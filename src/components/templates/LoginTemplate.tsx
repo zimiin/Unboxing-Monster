@@ -56,7 +56,7 @@ const LoginTemplate = (props: Props) => {
         </RegularText>
 
         <View style={styles.SNSIconView}>
-          <IconButton24
+          {/* <IconButton24
             image={IMAGES.kakao_talk}
             onPress={props.onPressKakao}
             style={styles.SNSIcon}
@@ -72,7 +72,29 @@ const LoginTemplate = (props: Props) => {
             image={IMAGES.apple}
             onPress={props.onPressApple}
             style={styles.SNSIcon}
+          /> */}
+
+          <Image
+            source={IMAGES.kakao_square}
+            style={styles.SNSIcon}
           />
+
+          <Image
+            source={IMAGES.facebook_square}
+            style={styles.SNSIcon}
+          />
+
+          <View
+            style={[
+              styles.SNSIcon,
+              styles.appleContainer
+            ]}
+          >
+            <Image
+              source={IMAGES.apple_white}
+              style={styles.appleLogo}
+            />
+          </View>
         </View>
       </View>
 
@@ -127,6 +149,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   SNSIcon: {
-    marginHorizontal: 14.5 / DESIGN_WIDTH * SCREEN_WIDTH
+    width: 48,
+    height: 48,
+    borderRadius: 9,
+    marginHorizontal: 10,
+  },
+  appleContainer: {
+     backgroundColor: 'black',
+     alignItems: 'center',
+     justifyContent: 'center',
+  },
+  appleLogo: {
+    width: 22,
+    height: 22,
+    resizeMode: 'contain',
   }
 })
