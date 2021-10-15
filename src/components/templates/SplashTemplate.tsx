@@ -4,10 +4,12 @@ import {
   StyleSheet,
   ActivityIndicator,
   View,
+  Image,
 } from 'react-native'
 import Logo from "@components/atoms/Logo"
 import { scale, verticalScale } from "react-native-size-matters"
 import { SCREEN_HEIGHT } from "@constants/figure"
+import { IMAGES } from "@constants/images"
 
 interface Props {
   animating: boolean,
@@ -16,9 +18,10 @@ interface Props {
 const SplashTemplate = (props: Props) => {
   return (
     <SafeAreaView style={styles.background}>
-      <View style={styles.logo}>
-        <Logo />
-      </View>
+      <Image
+        source={IMAGES.unboxing_logo}
+        style={styles.logo}
+      />
 
       <ActivityIndicator
         animating={props.animating}
@@ -31,8 +34,6 @@ const SplashTemplate = (props: Props) => {
 }
 
 export default SplashTemplate
-
-const logoPosition = SCREEN_HEIGHT * 261 / 716
 
 const styles = StyleSheet.create({
   background: {
@@ -47,9 +48,10 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: scale(120),
-    height: scale(100),
+    height: scale(167),
+    resizeMode: 'contain',
     alignSelf: 'center',
     position: 'absolute',
-    top: logoPosition,
+    top: verticalScale(228),
   }
 })

@@ -1,8 +1,7 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
-import IconButton24 from '@components/atoms/button/IconButton24'
 import Loading from '@components/atoms/Loading'
 import RegularText from '@components/atoms/typography/RegularText'
-import { DESIGN_WIDTH, scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
+import { DESIGN_HEIGHT, scale, SCREEN_HEIGHT } from '@constants/figure'
 import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
@@ -21,13 +20,21 @@ interface Props {
   onPressKakao: () => void,
 }
 
+const calHeight = (height: number) => {
+  const totalContentHeight = 63 + 48 + 82
+  const designMargin = DESIGN_HEIGHT - totalContentHeight
+  const screenMargin = SCREEN_HEIGHT - totalContentHeight
+
+  return height * screenMargin / designMargin
+}
+
 const LoginTemplate = (props: Props) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.contentView}>
         <View style={styles.unboxingTextView}>
           <Text style={styles.unboxingText}>
-            Unboxing
+            언박싱 몬스터
           </Text>
 
           <Text style={styles.welcomText}>
@@ -39,10 +46,12 @@ const LoginTemplate = (props: Props) => {
           오신 것을 환영합니다!
         </Text>
 
-        <Image
-          source={IMAGES.img_splash}
-          style={styles.image}
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            source={IMAGES.unboxingMonster}
+            style={styles.logo}
+          />
+        </View>
 
         <FullContentWidthButton
           style={styles.lookAroundButton}
@@ -56,23 +65,6 @@ const LoginTemplate = (props: Props) => {
         </RegularText>
 
         <View style={styles.SNSIconView}>
-          {/* <IconButton24
-            image={IMAGES.kakao_talk}
-            onPress={props.onPressKakao}
-            style={styles.SNSIcon}
-          />
-
-          <IconButton24
-            image={IMAGES.facebook}
-            onPress={props.onPressFacebook}
-            style={styles.SNSIcon}
-          />
-
-          <IconButton24
-            image={IMAGES.apple}
-            onPress={props.onPressApple}
-            style={styles.SNSIcon}
-          /> */}
 
           <Image
             source={IMAGES.kakao_square}
@@ -111,11 +103,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentView: {
-    paddingHorizontal: SCREEN_WIDTH * 24 / DESIGN_WIDTH
+    paddingHorizontal: scale(24),
   },
   unboxingTextView: {
     flexDirection: 'row',
-    marginTop: verticalScale(71),
+    marginTop: calHeight(78),
   },
   unboxingText: {
     fontFamily: 'GmarketSansTTFBold',
@@ -127,25 +119,32 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 31.5,
   },
-  image: {
+  imageContainer: {
+    marginTop: calHeight(44),
     width: scale(312),
-    height: verticalScale(240),
+    height: calHeight(240),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: scale(200),
+    height: scale(250),
     resizeMode: 'contain',
-    marginTop: verticalScale(46)
   },
   lookAroundButton: {
-    marginTop: verticalScale(70),
+    marginTop: calHeight(58),
     justifyContent: 'center',
   },
   SNSText: {
-    fontSize: scale(13),
-    marginTop: verticalScale(33),
+    marginTop: calHeight(33),
+    fontSize: 13,
     alignSelf: 'center',
     letterSpacing: -0.32,
+    lineHeight: 19,
   },
   SNSIconView: {
     flexDirection: 'row',
-    marginTop: verticalScale(12),
+    marginTop: 15,
     alignSelf: 'center',
   },
   SNSIcon: {
