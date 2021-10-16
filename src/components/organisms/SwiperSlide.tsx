@@ -13,12 +13,26 @@ import {
 import { IMAGES } from '@constants/images'
 import { scale, verticalScale } from '@constants/figure'
 
-const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
+const SwiperSlide = ({ 
+  image, 
+  children, 
+  onPressFn, 
+  useEndBtn, 
+  isFirstSlide, 
+  isLastSlide, 
+  endBtnText,
+  index,
+  onPressArrow,
+}: {
   image: ImageSourcePropType, 
   children: ReactNode,
-  onPressFn: Dispatch<SetStateAction<boolean>>,
+  isFirstSlide?: boolean,
+  isLastSlide?: boolean,
   useEndBtn?: boolean,
   endBtnText?: string
+  onPressFn: Dispatch<SetStateAction<boolean>>,
+  index: number,
+  onPressArrow: (nextSlide: number) => void,
 }) => {
   return (
     <View 
@@ -57,6 +71,39 @@ const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
         </TouchableOpacity>
         : 
         null}
+      
+      {isFirstSlide ?
+        undefined
+        :
+        <TouchableOpacity
+          style={styles.moveButton}
+          onPress={() => {
+            onPressArrow(index - 1)
+          }}
+        >
+          <Image
+            source={IMAGES.btn_prev}
+          />
+        </TouchableOpacity>
+      }
+
+      {isLastSlide ?
+        undefined
+        :
+        <TouchableOpacity
+          style={[
+            styles.moveButton,
+            styles.rightButton
+          ]}
+          onPress={() => {
+            onPressArrow(index + 1)
+          }}
+        >
+          <Image
+            source={IMAGES.btn_next}
+          />
+        </TouchableOpacity>
+      }
     </View>
   )
 }
@@ -69,15 +116,18 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: scale(17),
     marginTop: verticalScale(12),
+    width: verticalScale(32),
+    height: verticalScale(32),
   },
   image: {
-    marginTop: verticalScale(88),
+    marginTop: verticalScale(64),
     width: scale(360), 
     height: verticalScale(296),
     resizeMode: 'contain',
   },
   textContainer: {
     marginTop: verticalScale(13),
+    alignItems: 'center',
   },
   done_btn: {
     position: 'absolute',
@@ -95,6 +145,16 @@ const styles = StyleSheet.create({
     color: '#fff', 
     fontFamily: 'NotoSansCJKkr-Bold',
     lineHeight: verticalScale(26),
+  },
+  moveButton: {
+    width: scale(24),
+    height: scale(24),
+    position: 'absolute',
+    top: verticalScale(268),
+    marginHorizontal: scale(12),
+  },
+  rightButton: {
+    right: scale(12),
   }
 })
 
