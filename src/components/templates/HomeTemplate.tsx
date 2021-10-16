@@ -22,8 +22,6 @@ import Footer from '@components/molecules/Footer'
 
 interface Props {
   isLoading: boolean,
-  onPressSearchBar: () => void,
-  onPressCart: () => void,
   cartItemCount: number | undefined,
   noticeData?: Notice[],
   popularBoxData?: Box[],
@@ -32,7 +30,9 @@ interface Props {
   modalVisible: boolean,
   refreshing: boolean,
   scorllerContent: string,
-  setModalVisible: Dispatch<SetStateAction<boolean>>,
+  onPressSearchBar: () => void,
+  onPressCart: () => void,
+  closeTutorialModal: () => void,
   onRefresh: () => void,
   openIntroModal?: () => void,
   onPressBoxItem?: (boxId: BoxId) => void,
@@ -151,7 +151,7 @@ const HomeTemplate = (props: Props) => {
 
       <TutorialModal
         modalVisible={props.modalVisible}
-        setModalVisible={props.setModalVisible}
+        onRequestClose={props.closeTutorialModal}
       />
 
       {props.isLoading ? <Loading /> : null}

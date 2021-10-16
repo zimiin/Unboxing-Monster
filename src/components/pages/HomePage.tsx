@@ -7,6 +7,7 @@ import HomeTemplate from '@components/templates/HomeTemplate'
 import { Box, BoxId, ItemId, Notice, OpenResult } from '@constants/types'
 import { URLS } from '@constants/urls'
 import { printAsyncStorage } from '@src/utils/loginUtils'
+import { getIsFirstUseFromStorage, setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -19,6 +20,15 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [throttled, setThrottled] = useState<boolean>(false)
   const [scrollerContent, setScrollerContent] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    getIsFirstUseFromStorage()
+      .then(value => {
+        if (value !== 'false') {
+          setModalVisible(true)
+        }
+      })
+  }, [])
 
   const getNoticeData = async (): Promise<Notice[] | undefined> => {
     try {
@@ -161,8 +171,14 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   useEffect(() => {
     printAsyncStorage()
-    setDatas().finally(() => setIsLoading(false))
+    setDatas()
+    .finally(() => setIsLoading(false))
   }, [])
+
+  const closeTutorialModal = () => {
+    setModalVisible(false)
+    setIsFirstUseFromStorage(false)
+  }
 
   return (
     <HomeTemplate
@@ -176,7 +192,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
       allBoxData={allBoxData}
       modalVisible={modalVisible}
       scorllerContent={scrollerContent || ''}
-      setModalVisible={setModalVisible}
+      closeTutorialModal={closeTutorialModal}
       onRefresh={setDatas}
       refreshing={refreshing}
       openIntroModal={() => setModalVisible(true)}

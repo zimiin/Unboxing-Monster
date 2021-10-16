@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Dispatch, SetStateAction } from 'react'
 import {
   View,
@@ -13,38 +13,50 @@ import {
 import { IMAGES } from '@constants/images'
 import { scale, verticalScale } from '@constants/figure'
 
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = Dimensions.get('window').height
-
 const SwiperSlide = ({image, children, onPressFn, useEndBtn, endBtnText}: {
   image: ImageSourcePropType, 
-  children: any, 
+  children: ReactNode,
   onPressFn: Dispatch<SetStateAction<boolean>>,
   useEndBtn?: boolean,
   endBtnText?: string
 }) => {
   return (
-    <View style={styles.slide}>
+    <View 
+      style={styles.slide}
+    >
       <TouchableOpacity 
         style={styles.close_btn_img} 
         onPress={() => onPressFn(false)}
       >
-        <Image source={IMAGES.close_modal}/>
+        <Image 
+          source={IMAGES.close_modal}
+        />
       </TouchableOpacity>
 
-      <View style={styles.centerAlign}>
-        <View style={styles.imageContainer}>
-          <Image source={image} style={styles.image}/>
-        </View>
-        <Text style={styles.text}>{children}</Text>
-        {useEndBtn ? 
-            <TouchableOpacity style={styles.done_btn}
-              onPress={() => onPressFn(false)}
-            >
-              <Text style={styles.done_btn_text}>{endBtnText}</Text>
-            </TouchableOpacity> :
-            null}
+      <Image 
+        source={image} 
+        style={styles.image}
+      />
+        
+      <View
+        style={styles.textContainer}
+      >
+        {children}
       </View>
+
+      {useEndBtn ?
+        <TouchableOpacity 
+          style={styles.done_btn}
+          onPress={() => onPressFn(false)}
+        >
+          <Text 
+            style={styles.done_btn_text}
+          >
+            {endBtnText}
+          </Text>
+        </TouchableOpacity>
+        : 
+        null}
     </View>
   )
 }
@@ -53,49 +65,36 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
   },
-  rightAlign: {
-    alignItems: 'flex-end',
-  },
-  centerAlign: {
-    alignItems: 'center',
-  },
-  text: {
-    color: '#060606',
-    fontFamily: 'GmarketSansTTFMedium',
-    letterSpacing: -0.03,
-    lineHeight: verticalScale(31.5),
-    fontSize: 20,
-    marginTop: verticalScale(25),
-    textAlign: 'center'
-  },
-  imageContainer: {
-    marginTop: verticalScale(122),
+  close_btn_img: {
+    alignSelf: 'flex-end',
+    marginRight: scale(17),
+    marginTop: verticalScale(12),
   },
   image: {
+    marginTop: verticalScale(88),
     width: scale(360), 
     height: verticalScale(296),
     resizeMode: 'contain',
   },
-  close_btn_img: {
-    position: 'absolute',
-    right: scale(17),
-    top: verticalScale(17),
-    zIndex: 1,
+  textContainer: {
+    marginTop: verticalScale(13),
   },
   done_btn: {
     position: 'absolute',
-    bottom: -verticalScale(100),
-    backgroundColor: '#29a3ff', 
-    height: 48, 
+    bottom: verticalScale(60),
+    height: verticalScale(48), 
     width: scale(312),
+    borderRadius: verticalScale(6),
+    alignSelf: 'center',
+    backgroundColor: '#29a3ff', 
     alignItems:'center',
     justifyContent:'center',
-    borderRadius: 7,
   },
   done_btn_text: {
-    fontSize: 14, 
+    fontSize: verticalScale(14), 
     color: '#fff', 
-    fontWeight: 'bold'
+    fontFamily: 'NotoSansCJKkr-Bold',
+    lineHeight: verticalScale(26),
   }
 })
 

@@ -128,3 +128,19 @@ export const addRecentlySearchedBoxes = async (box: Box): Promise<Box[]> => {
     throw error
   }
 }
+
+export const getIsFirstUseFromStorage = async () => {
+  try {
+    return AsyncStorage.getItem('@is_first_use')
+  } catch (error) {
+    console.log('Error in getFirstUseFromStorage', error)
+  }
+}
+
+export const setIsFirstUseFromStorage = async (value: boolean) => {
+  try {
+    await AsyncStorage.setItem('@is_first_use', value.toString())
+  } catch (error) {
+    console.log('Error in setIsFirstUseFromStorage', error)
+  }
+}
