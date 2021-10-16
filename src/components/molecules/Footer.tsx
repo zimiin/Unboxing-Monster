@@ -25,8 +25,8 @@ const Footer = () => {
       />
 
       <Text style={[styles.text, styles.textMargin]}>
-        상호명 : 꾸러기원정대   대표 : 신지민{'\n'}
-        통신판매업신고 : 2000-서울어디-0000호
+        상호명 : 꾸러기원정대   대표 : 신지민
+        {/* {'\n'}통신판매업신고 : 2000-서울어디-0000호 */}
       </Text>
 
       <View style={styles.buisnessNumberRow}>

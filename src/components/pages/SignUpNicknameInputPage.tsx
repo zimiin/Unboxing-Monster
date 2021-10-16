@@ -107,7 +107,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
     <SignUpInputTemplate
       isLoading={isLoading}
       title='닉네임 입력'
-      label='닉네임을 입력해주세요'
+      label='언박싱 몬스터에서 사용할 닉네임을 입력해주세요'
       keyboardType='default'
       canGoBack={true}
       input={nicknameInput}

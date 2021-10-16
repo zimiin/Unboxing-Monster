@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native'
 
 interface Props {
@@ -65,28 +66,33 @@ const LoginTemplate = (props: Props) => {
         </RegularText>
 
         <View style={styles.SNSIconView}>
-
-          <Image
-            source={IMAGES.kakao_square}
-            style={styles.SNSIcon}
-          />
-
-          <Image
-            source={IMAGES.facebook_square}
-            style={styles.SNSIcon}
-          />
-
-          <View
-            style={[
-              styles.SNSIcon,
-              styles.appleContainer
-            ]}
-          >
+          <TouchableOpacity onPress={props.onPressKakao}>
             <Image
-              source={IMAGES.apple_white}
-              style={styles.appleLogo}
+              source={IMAGES.kakao_square}
+              style={styles.SNSIcon}
             />
-          </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={props.onPressFacebook}>
+            <Image
+              source={IMAGES.facebook_square}
+              style={styles.SNSIcon}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={props.onPressApple}>
+            <View
+              style={[
+                styles.SNSIcon,
+                styles.appleContainer
+              ]}
+            >
+              <Image
+                source={IMAGES.apple_white}
+                style={styles.appleLogo}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
 

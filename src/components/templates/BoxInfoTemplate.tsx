@@ -5,6 +5,9 @@ import {
   StyleSheet,
   SafeAreaView,
   ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  TextInput,
 } from 'react-native'
 import SubTitle from '@components/atoms/typography/SubTitle'
 import FullWidthButton from '@components/atoms/button/FullWidthButton'
@@ -23,6 +26,8 @@ import BoxInfoImage from '@components/atoms/BoxInfoImage'
 import BoxPriceInfo from '@components/atoms/BoxPriceInfo'
 import Body from '@components/atoms/typography/Body'
 import RenderHTML, { HTMLSourceInline } from 'react-native-render-html'
+import InfoIcon from '@components/atoms/icon/InfoIcon'
+import NoticeModal from '@components/molecules/NoticeModal'
 
 type BoxInfoTemplateProps = {
   boxImage?: ImageSourcePropType,
@@ -30,10 +35,14 @@ type BoxInfoTemplateProps = {
   boxPrice?: number,
   boxDetail?: string,
   boxItems: object,
-  onPressAddToCart: () => void,
-  onPressProbInfo: () => void,
   navigation: BoxInfoNavigationProp,
   cartItemCount?: number,
+  isManagerBox?: boolean,
+  showReportModal: boolean,
+  onPressAddToCart: () => void,
+  onPressProbInfo: () => void,
+  onPressReport: () => void,
+  closeReportModal: () => void,
 }
 
 const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
@@ -83,6 +92,28 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
               source={source}
             />
 
+            {props.isManagerBox === false ?
+              <View
+                style={styles.reportContainer}
+              >
+                <TouchableOpacity
+                  onPress={props.onPressReport}
+                  style={styles.reportButton}
+                >
+                  <Text
+                    style={styles.reportText}
+                  >
+                    부적절한 이름 신고하기
+                  </Text>
+
+                  <InfoIcon
+                    style={styles.reportIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+              : null
+            }
+
             <SubTitle
               content={'구성상품'}
               style={styles.subTitle}
@@ -113,6 +144,28 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
           content='장바구니에 담기'
         />
       </SafeAreaView>
+
+      <NoticeModal
+        visible={props.showReportModal}
+        onRequestClose={props.closeReportModal}
+      >
+        <View
+          style={styles.noticeContainer}
+        >
+          <Text
+            style={styles.noticeText}
+          >
+            부적절한 이름이 있는 화면을 캡쳐하여{'\n'}아래의 메일로 보내주세요.
+          </Text>
+
+          <Text
+            style={styles.noticeText}
+            selectable={true}
+          >
+            ask.unboxing.monster@gmail.com
+          </Text>
+        </View>
+      </NoticeModal>
     </>
   )
 }
@@ -138,6 +191,26 @@ const styles = StyleSheet.create({
     marginTop: 26,
     marginBottom: 4,
   },
+  reportContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    marginTop: 15,
+  },
+  reportButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  reportText: {
+    fontSize: 13,
+    lineHeight: 19,
+    color: COLORS.main,
+  },
+  reportIcon: {
+    width: 13,
+    height: 13,
+    resizeMode: 'contain',
+    marginLeft: 3,
+  },
   boxDetail: {
     marginTop: 4,
   },
@@ -154,5 +227,11 @@ const styles = StyleSheet.create({
   },
   bottomButtonContainer: {
     backgroundColor: COLORS.main
+  },
+  noticeContainer: {
+    marginVertical: 20,
+  },
+  noticeText: {
+    textAlign: 'center',
   }
 })

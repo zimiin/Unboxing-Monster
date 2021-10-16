@@ -14,6 +14,7 @@ import { URLS } from '@constants/urls'
 const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
   const [{ cart }, { }] = useContext(CartContext)
   const [data, setData] = useState<BoxWithItems>()
+  const [showReportModal, setShowReportModal] = useState<boolean>(false)
 
   useEffect(() => {
     const getBoxInfo = async (boxId: number): Promise<BoxWithItems | undefined> => {
@@ -75,10 +76,14 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
       boxPrice={data?.price}
       boxDetail={data?.detail}
       boxItems={items || []}
+      isManagerBox={data?.isManager}
       navigation={navigation}
       onPressAddToCart={data ? () => navigation.push('AddToCart', {boxData: data}) : () => console.log('No data')}
       onPressProbInfo={data ? () => navigation.push('ProbInfo', {boxId: data.id, boxPrice: data.price, items: data.items}) : () => console.log('No data')}
       cartItemCount={cart.size > 0 ? cart.size : undefined}
+      showReportModal={showReportModal}
+      onPressReport={() => setShowReportModal(true)}
+      closeReportModal={() => setShowReportModal(false)}
     />
   )
 }

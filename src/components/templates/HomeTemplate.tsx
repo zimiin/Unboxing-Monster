@@ -9,7 +9,7 @@ import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { scale, SCREEN_WIDTH, verticalScale } from '@constants/figure'
+import { scale, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
@@ -19,7 +19,6 @@ import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
 import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 import Loading from '@components/atoms/Loading'
 import Footer from '@components/molecules/Footer'
-import PolicyDescriptionList from '@components/organisms/PolicyDescriptionList'
 
 interface Props {
   isLoading: boolean,
