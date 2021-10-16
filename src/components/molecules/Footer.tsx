@@ -46,10 +46,44 @@ const Footer = () => {
       <Text 
         style={styles.text}
       >
-        사업장소재지 : 서울특별시 서초구 강남대로107길 21, 2층{'\n'}
-        E-mail : ask.unboxing.monster@gmail.com{'\n'}
-        Tel: 02-544-5559
+        사업장소재지 : 서울특별시 서초구 강남대로107길 21, 2층
       </Text>
+        
+      <View
+        style={styles.flexRow}
+      >
+        <Text
+          style={styles.text}
+          selectable={false}
+        >
+          {'E-mail : '}
+        </Text>
+
+        <Text
+          style={styles.text}
+          selectable={true}
+        >
+          ask.unboxing.monster@gmail.com
+        </Text>
+      </View>
+
+      <View
+        style={styles.flexRow}
+      >
+        <Text 
+          style={styles.text}
+          selectable={false}
+        >
+          {'Tel : '}
+        </Text>
+
+        <Text
+          style={styles.text}
+          selectable={true}
+        >
+          02-544-5559
+        </Text>
+      </View>
 
       <View
         style={styles.flexRow}
