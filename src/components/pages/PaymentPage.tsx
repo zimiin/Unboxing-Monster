@@ -30,10 +30,10 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     value: 'card',
     label: '신용카드',
   },
-  {
-    value: 'trans',
-    label: '실시간 계좌이체',
-  },
+  // {
+  //   value: 'trans',
+  //   label: '실시간 계좌이체',
+  // },
   {
     value: 'kakaopay',
     label: '카카오페이',

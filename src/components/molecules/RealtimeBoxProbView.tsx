@@ -78,8 +78,8 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
             >
               <View
                 style={{
-                  height: WIDTH * (7 / 360),
-                  width: WIDTH * (7 / 360),
+                  height: scale(7),
+                  width: scale(7),
                   backgroundColor: item.color
                 }}
               >
@@ -88,7 +88,7 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
 
             <Text
               style={styles.legendText}
-              numberOfLines={1}
+              numberOfLines={2}
             >
               {item.title}
             </Text>
@@ -106,49 +106,53 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
 
   const upperContent = useMemo(
     () => (
-      <View style={{
-        marginLeft: WIDTH * (24 / 360),
-        marginRight: WIDTH * (24 / 360),
-      }}>
-        <Text
-          style={styles.title}
-        >
-          실시간 현황
-        </Text>
-
+      <>
         <View style={{
-          backgroundColor: "#f9f9f9",
-          paddingTop: 16,
-          marginTop: 13,
-          paddingBottom: 14,
-          marginBottom: 28
+          marginHorizontal: scale(24),
         }}>
-          <PieChart
-            backgroundColor="#f9f9f9"
-            data={template}
-            width={Dimensions.get('window').width * (312 / 360)}
-            height={Dimensions.get('window').width * (150 / 360)}
-            chartConfig={{
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            }}
-            paddingLeft={"241"}
-            accessor={"count"}
-            center={[-150, 0]}
-            hasLegend={false}
-            absolute
-          />
-
-          <View
-            style={styles.legend}
+          <Text
+            style={styles.title}
           >
-            {legendItems}
+            실시간 현황
+          </Text>
+
+          <View style={{
+            backgroundColor: "#f9f9f9",
+            paddingTop: 16,
+            marginTop: 13,
+            paddingBottom: 14,
+            marginBottom: 28
+          }}>
+            <PieChart
+              backgroundColor="#f9f9f9"
+              data={template}
+              width={Dimensions.get('window').width * (312 / 360)}
+              height={Dimensions.get('window').width * (150 / 360)}
+              chartConfig={{
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              }}
+              paddingLeft={"241"}
+              accessor={"count"}
+              center={[-150, 0]}
+              hasLegend={false}
+              absolute
+            />
+
+            <View
+              style={styles.legend}
+            >
+              {legendItems}
+            </View>
           </View>
         </View>
 
         <HorizontalRule />
 
-        <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 22, marginBottom: 7 }}>최근 당첨자 현황</Text>
-      </View>
+        <Text
+          style={styles.recentResultTitle}>
+          최근 당첨자 현황
+        </Text>
+      </>
     ), [template, legendItems]
   )
 
@@ -181,10 +185,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  legendItem: { 
-    height: 32, 
-    width: WIDTH * (156 / 360),
-    paddingHorizontal: WIDTH * (12.5 / 360),
+  recentResultTitle: {
+    fontSize: 14,
+    fontFamily: 'NotoSansCJKkr-Bold',
+    letterSpacing: -0.35,
+    lineHeight: 20,
+    marginTop: 22,
+    marginBottom: 7,
+    marginLeft: scale(24),
+  },
+  legendItem: {
+    width: scale(135),
+    marginHorizontal: scale(10),
+    marginVertical: 3,
   },
   legendFirstRow: { 
     alignContent: 'flex-start', 
@@ -196,13 +209,11 @@ const styles = StyleSheet.create({
   },
   legendText: { 
     fontSize: 11, 
-    marginLeft: WIDTH * (5 / 360) 
+    marginLeft: scale(5),
   },
   legendPercent: { 
     fontSize: 11, 
     marginLeft: WIDTH * (12 / 360), 
-    position: 'relative', 
-    top: -5, 
-    fontWeight: 'bold' 
+    fontWeight: 'bold'
   }
 })

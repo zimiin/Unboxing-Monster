@@ -37,6 +37,7 @@ const ProbViewTab = ({ items, probs, boxId } : { items: Item[], probs: number[],
       </View>
 
       <View style={styles.horizontalRule}/>
+      
       {selected == 0 ? 
       (
         <BoxProbView probs={probs} items={items}/>

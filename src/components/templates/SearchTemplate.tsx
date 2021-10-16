@@ -73,7 +73,7 @@ const SearchTemplate = (props: Props) => {
           showsHorizontalScrollIndicator={false}
           ListHeaderComponent={boxListEdgeSpace}
           ListFooterComponent={boxListEdgeSpace}
-          ListEmptyComponent={<MonsterNotice style={styles.notice} notice='검색 결과가 없어요'/>}
+          ListEmptyComponent={<MonsterNotice style={styles.notice} notice='최근 검색 내역이 없어요'/>}
         />
       </View>
     </>
