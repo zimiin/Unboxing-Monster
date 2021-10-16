@@ -36,7 +36,11 @@ const ProbInfoTemplate = (props: ProbInfoTemplateProps) => {
       <HorizontalRule/>
 
       <View style={styles.screen}>
-        <ProbViewTab probs={props.probs} items={props.items} boxId={props.boxId}/>
+        <ProbViewTab 
+          probs={props.probs} 
+          items={props.items} 
+          boxId={props.boxId}
+        />
       </View>
 
       <SafeAreaView 

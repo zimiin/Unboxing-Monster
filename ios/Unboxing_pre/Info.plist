@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Unboxing Monster</string>
+	<string>언박싱 몬스터</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -52,12 +52,6 @@
 	<string>unboxing</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>a0fae827b9d8a252f3dbf96b65fd0814</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>storykompassauth</string>
-		<string>kakaolink</string>
-	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -112,19 +106,11 @@
 		<string>lguthepay-xpay</string>
 		<string>liivbank</string>
 		<string>supertoss</string>
-
-		<!-- 공통 -->
 		<string>kakao0123456789</string>
-
-		<!-- 간편로그인 -->
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
-
-		<!-- 카카오톡링크 -->
-		<string>kakaolink</string>         
+		<string>kakaolink</string>
 		<string>kakaotalk-5.9.7</string>
-
-		<!-- 카카오스토리링크 -->
 		<string>storylink</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
