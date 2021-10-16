@@ -18,6 +18,7 @@ import PGPaymentPage from '@components/pages/PGPaymentPage'
 import UserContextProvider from '@src/stores/UserContext'
 import Toast from 'react-native-toast-message'
 import PGPersonalInfoAgreement from '@components/pages/PGPersonalInfoAgreement'
+import TermsOfServicePage from '@components/pages/TermsOfServicePage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -68,6 +69,11 @@ const App = () => {
             <Stack.Screen
               name="Cart"
               component={CartPage}
+            />
+
+            <Stack.Screen
+              name="TermsOfService"
+              component={TermsOfServicePage}
             />
 
             <Stack.Screen

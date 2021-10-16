@@ -12,11 +12,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  ScrollView,
 } from 'react-native'
 import LoginNotice from "@components/organisms/LoginNotice"
 import RightArrow from "@components/atoms/icon/RightArrow"
 import Loading from "@components/atoms/Loading"
 import ConfirmModal from "@components/molecules/ConfirmModal"
+import NoticeModal from "@components/molecules/NoticeModal"
 
 interface Props {
   loginState: boolean,
@@ -24,6 +26,7 @@ interface Props {
   point: number,
   isFetchingLoginState: boolean,
   modalVisible: boolean,
+  showReportModal: boolean,
   onPressLogout: () => void,
   onPressLogin: () => void,
   onPressCart: () => void,
@@ -31,6 +34,9 @@ interface Props {
   onPressPointHistory: () => void,
   onConfirmLogout: () => void,
   onCloseModal: () => void,
+  closeReportModal: () => void,
+  openReportModal: () => void,
+  onPressTermsOfService: () => void,
 }
 
 const MyPageTemplate = (props: Props) => {
@@ -49,7 +55,7 @@ const MyPageTemplate = (props: Props) => {
         />
         :
         <>
-          <View style={styles.screen}>
+          <ScrollView style={styles.screen}>
             <View style={styles.padding}>
               <View style={styles.greeting}>
                 <Bold style={styles.welcome}>
@@ -99,18 +105,49 @@ const MyPageTemplate = (props: Props) => {
 
                 <RightArrow />
               </TouchableOpacity>
-            </View>
 
-            <View style={styles.logoutContainer}>
-              <FullContentWidthButton
-                onPress={props.onPressLogout}
-                style={styles.logout}
-                fontColor='black'
+              <TouchableOpacity
+                onPress={props.openReportModal}
+                style={styles.listItem}
               >
-                로그아웃
-              </FullContentWidthButton>
+                <Bold style={styles.listText}>
+                  부적절한 이름 신고
+                </Bold>
+
+                <RightArrow />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={props.onPressTermsOfService}
+                style={styles.listItem}
+              >
+                <Bold style={styles.listText}>
+                  서비스이용약관
+                </Bold>
+
+                <RightArrow />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={props.onPressPaymentHistory}
+                style={[styles.listItem, {marginBottom: scale(98)}]}
+              >
+                <Bold style={styles.listText}>
+                  개인정보처리방침
+                </Bold>
+
+                <RightArrow />
+              </TouchableOpacity>
             </View>
-          </View>
+          </ScrollView>
+          
+          <FullContentWidthButton
+            onPress={props.onPressLogout}
+            style={styles.logout}
+            fontColor='black'
+          >
+            로그아웃
+          </FullContentWidthButton>
         </>
       }
       
@@ -123,6 +160,28 @@ const MyPageTemplate = (props: Props) => {
       >
         <Text style={styles.modalText}>로그아웃 하시겠습니까?</Text>
       </ConfirmModal>
+
+      <NoticeModal
+        visible={props.showReportModal}
+        onRequestClose={props.closeReportModal}
+      >
+        <View
+          style={styles.noticeContainer}
+        >
+          <Text
+            style={styles.noticeText}
+          >
+            부적절한 이름이 있는 화면을 캡쳐하여{'\n'}아래의 메일로 보내주세요.
+          </Text>
+
+          <Text
+            style={styles.noticeText}
+            selectable={true}
+          >
+            ask.unboxing.monster@gmail.com
+          </Text>
+        </View>
+      </NoticeModal>
     </>
   )
 }
@@ -133,6 +192,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: 'white',
+    paddingBottom: verticalScale(98)
   },
   padding: {
     paddingHorizontal: scale(24),
@@ -192,18 +252,21 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: 22,
   },
-  logoutContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginBottom: verticalScale(50),
-  },
   logout: {
-    backgroundColor: '#eef1f2'
+    backgroundColor: '#eef1f2',
+    position: 'absolute',
+    bottom: verticalScale(25),
+    marginLeft: scale(24),
   },
   modalText: {
     fontFamily: 'NotoSansCJKkr-Regular',
     fontSize: 15,
     marginVertical: 30,
+  },
+  noticeContainer: {
+    marginVertical: 20,
+  },
+  noticeText: {
+    textAlign: 'center',
   }
 })

@@ -14,6 +14,7 @@ export type RootStackParamList = {
   ProbInfo: { boxId: number, boxPrice: number, items: Item[] },
   AddToCart: { boxData: BoxWithItems },
   Cart: undefined,
+  TermsOfService: undefined,
   Payment: undefined,
   PGPayment: { data: PaymentParams, point: number } | undefined,
   PaymentComplete: any,
@@ -69,6 +70,13 @@ export type CartProps = {
   navigation: CartNavigationProp
 }
 
+export type TermsOfServiceRouteProp = RouteProp<RootStackParamList, 'TermsOfService'>
+export type TermsOfServiceNavigationProp = StackNavigationProp<RootStackParamList, 'TermsOfService'>
+export type TermsOfServiceProps = {
+  route: TermsOfServiceRouteProp,
+  navigation: TermsOfServiceNavigationProp
+}
+
 // Payment
 export interface PaymentParams {
   params: IMPData.PaymentData;
@@ -112,7 +120,6 @@ export type AuthStackParamList = {
   SignUpPhoneConfirmInput: undefined,
   SignUpNicknameInput: undefined,
   LoginRequest: undefined,
-  TermsOfService: undefined,
 }
 
 export type SplashNavigationProp = CompositeNavigationProp<
@@ -171,13 +178,6 @@ export type LoginRequestNavigationProp = StackNavigationProp<AuthStackParamList,
 export type LoginRequestProps = {
   route: LoginRequestRouteProp,
   navigation: LoginRequestNavigationProp
-}
-
-export type TermsOfServiceRouteProp = RouteProp<AuthStackParamList, 'TermsOfService'>
-export type TermsOfServiceNavigationProp = StackNavigationProp<AuthStackParamList, 'TermsOfService'>
-export type TermsOfServiceProps = {
-  route: TermsOfServiceRouteProp,
-  navigation: TermsOfServiceNavigationProp
 }
 
 // Bottom Tab

@@ -1,5 +1,6 @@
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
+import { scale } from '@constants/figure'
 import { TermsOfServiceProps } from '@constants/navigationTypes'
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Text, StyleSheet } from 'react-native'
@@ -10,6 +11,7 @@ const TermsOfServicePage = ({ route, navigation }: TermsOfServiceProps) => {
       <Header
         canGoBack={true}
         goBackAction={() => navigation.goBack()}
+        title={'서비스이용약관'}
       />
 
       <ScrollView style={styles.screen}>
@@ -257,5 +259,6 @@ const styles =StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: 'white',
+    paddingHorizontal: scale(24),
   }
 })

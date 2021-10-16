@@ -14,6 +14,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
   const [nickname, setNickname] = useState<string>()
   const [point, setPoint] = useState<number>()
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [showReportModal, setShowReportModal] = useState<boolean>(false)
 
   const getPoint = useCallback(async () => {
     try {
@@ -89,6 +90,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
       nickname={nickname || ''}
       point={point || 0}
       modalVisible={showModal}
+      showReportModal={showReportModal}
       onConfirmLogout={logout}
       onPressLogout={() => setShowModal(true)}
       onPressLogin={() => navigation.replace('Auth', {screen: 'Login'})}
@@ -96,6 +98,9 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
       onPressPointHistory={() => navigation.navigate('PointHistory')}
       onPressPaymentHistory={() => navigation.navigate('PaymentHistory')}
       onCloseModal={closeModal}
+      closeReportModal={() => setShowReportModal(false)}
+      openReportModal={() => setShowReportModal(true)}
+      onPressTermsOfService={() => navigation.navigate('TermsOfService')}
     />
   )
 }

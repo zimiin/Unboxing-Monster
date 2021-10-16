@@ -56,11 +56,6 @@ const AuthStack = () => {
           name="LoginRequest"
           component={LoginRequestPage}
         />
-
-        <Stack.Screen
-          name="TermsOfService"
-          component={TermsOfServicePage}
-        />
       </Stack.Navigator>
     </SignUpContextProvider>
   )
