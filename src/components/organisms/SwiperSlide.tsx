@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import { Dispatch, SetStateAction } from 'react'
 import {
   View,
   Image,
@@ -7,9 +6,7 @@ import {
   TouchableOpacity,
   Text,
   ImageSourcePropType,
-  Dimensions
 } from 'react-native'
-
 import { IMAGES } from '@constants/images'
 import { scale, verticalScale } from '@constants/figure'
 
@@ -30,7 +27,7 @@ const SwiperSlide = ({
   isLastSlide?: boolean,
   useEndBtn?: boolean,
   endBtnText?: string
-  onPressFn: Dispatch<SetStateAction<boolean>>,
+  onPressFn: () => void,
   index: number,
   onPressArrow: (nextSlide: number) => void,
 }) => {
@@ -40,7 +37,7 @@ const SwiperSlide = ({
     >
       <TouchableOpacity 
         style={styles.close_btn_img} 
-        onPress={() => onPressFn(false)}
+        onPress={onPressFn}
       >
         <Image 
           source={IMAGES.close_modal}
@@ -61,7 +58,7 @@ const SwiperSlide = ({
       {useEndBtn ?
         <TouchableOpacity 
           style={styles.done_btn}
-          onPress={() => onPressFn(false)}
+          onPress={onPressFn}
         >
           <Text 
             style={styles.done_btn_text}

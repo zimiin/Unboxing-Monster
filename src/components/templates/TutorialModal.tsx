@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useRef, LegacyRef } from "react"
+import React, { ReactNode, useState, useRef } from "react"
 import {
   ImageSourcePropType,
   Modal,
@@ -146,7 +146,10 @@ const TutorialModal = (props: TutorialModalProps)  => {
     return (
       <SwiperSlide
         image={item.item.image}
-        onPressFn={props.onRequestClose}
+        onPressFn={() => {
+          props.onRequestClose()
+          setActiveSlide(0)
+        }}
         isFirstSlide={isFirstItem}
         isLastSlide={isLastItem}
         useEndBtn={isLastItem ? true : undefined}
@@ -169,7 +172,10 @@ const TutorialModal = (props: TutorialModalProps)  => {
       transparent={false}
       presentationStyle="formSheet"
       visible={props.modalVisible}
-      onRequestClose={props.onRequestClose}
+      onRequestClose={() => {
+        props.onRequestClose()
+        setActiveSlide(0)
+      }}
     >
       <Carousel
         data={slideData}

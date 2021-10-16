@@ -64,8 +64,6 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
       <HorizontalRule />
 
       <View style={styles.screen}>
-        <IntroModal modalVisible={introModalVisible} setModalVisible={setIntroModalVisible}></IntroModal>
-
         <ScrollView>
           <BoxInfoImage
             image={props.boxImage} 
@@ -166,6 +164,12 @@ const BoxInfoTemplate = (props: BoxInfoTemplateProps) => {
           </Text>
         </View>
       </NoticeModal>
+
+      <IntroModal
+        modalVisible={introModalVisible}
+        setModalVisible={setIntroModalVisible}
+        onRequestClose={() => setIntroModalVisible(false)}
+      />
     </>
   )
 }
