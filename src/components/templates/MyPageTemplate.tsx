@@ -40,6 +40,7 @@ interface Props {
   onPressTermsOfService: () => void,
   onPressPrivacyPolicy: () => void,
   closeWithdrawalModal: () => void,
+  onPressWithdrawal: () => void,
 }
 
 const MyPageTemplate = (props: Props) => {
@@ -121,7 +122,7 @@ const MyPageTemplate = (props: Props) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={props.onPressPrivacyPolicy}
+                onPress={props.onPressWithdrawal}
                 style={[styles.listItem]}
               >
                 <Bold style={styles.listText}>
