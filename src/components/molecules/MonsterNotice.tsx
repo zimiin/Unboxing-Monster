@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 10,
     fontFamily: 'NotoSansCJKkr-Medium',
-    // color: COLORS.bold_black,
     color: '#4F4F4F',
     lineHeight: 20,
   }

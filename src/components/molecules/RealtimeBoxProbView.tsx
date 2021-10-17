@@ -10,8 +10,9 @@ import { Item } from '@constants/types'
 import { PieChart } from "react-native-chart-kit";
 import HorizontalRule from "@components/atoms/HorizontalRule";
 import { URLS } from "@constants/urls";
-import { scale } from "@constants/figure";
+import { scale, verticalScale } from "@constants/figure";
 import Loading from "@components/atoms/Loading";
+import MonsterNotice from "./MonsterNotice";
 
 const WIDTH = Dimensions.get('window').width;
 const COLORS = [
@@ -39,6 +40,8 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
       color: COLORS[idx]
     }
   }))
+  const [fetchingDistribution, setFetchingDistribution] = useState<boolean>(false)
+  const [fetchingOpenResult, setFetchingOpenResult] = useState<boolean>(true)
 
   useEffect(() => {
     fetch(URLS.unboxing_api + `open-result/distribution/${boxId}`)
@@ -56,11 +59,14 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
 
       setTemplate(newTemplate)
     })
+    .then(result => setFetchingDistribution(false))
+
     fetch(URLS.unboxing_api + `open-result/${boxId}`)
     .then(res => res.json())
     .then(json => {
       setOpenResult(json)
     })
+    .then(result => setFetchingOpenResult(false))
   }, [])
 
   let total_count = template.reduce((prev, curr) => {return {count: prev.count + curr.count, id: 0, title:'', color: ''}}).count
@@ -160,21 +166,31 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
 
   return (
     <>
-      <FlatList
-        ListHeaderComponent={upperContent}
-        renderItem={
-          ({item}) => (
-            <View style={{marginTop: 15, paddingBottom: 22, borderBottomColor: '#f9f9f9', borderBottomWidth: 2, marginHorizontal: scale(24)}}>
-              <Text style={{fontSize: 13, fontWeight: 'bold'}}>{`${item.user.nickname} 님이 ${item.item.title}에 당첨되었습니다!`}</Text>
-              <View style={{flex: 1, alignItems: 'flex-end', marginTop: 9}}>
-                <Text style={{fontSize: 11, opacity: 0.5}}>{`${date_to_string(new Date(item.openAt))}`}</Text>
+      {openResult.length === 0 ?
+        <MonsterNotice
+          notice={'아직 당첨자 데이터가 없어요'}
+          style={styles.monsterNotice}
+        />
+        :
+        <FlatList
+          ListHeaderComponent={upperContent}
+          renderItem={
+            ({ item }) => (
+              <View style={{ marginTop: 15, paddingBottom: 22, borderBottomColor: '#f9f9f9', borderBottomWidth: 2, marginHorizontal: scale(24) }}>
+                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{`${item.user.nickname} 님이 ${item.item.title}에 당첨되었습니다!`}</Text>
+                <View style={{ flex: 1, alignItems: 'flex-end', marginTop: 9 }}>
+                  <Text style={{ fontSize: 11, opacity: 0.5 }}>{`${date_to_string(new Date(item.openAt))}`}</Text>
+                </View>
               </View>
-            </View>
-          )}
-        data={openResult.slice(0, 20)}
-      />
+            )}
+          data={openResult.slice(0, 20)}
+        />
+      }      
 
-      {/* <Loading /> */}
+      {fetchingDistribution || fetchingOpenResult ?
+        <Loading />
+        : undefined
+      }
     </>
   )
 }
@@ -199,6 +215,9 @@ const styles = StyleSheet.create({
     marginTop: 22,
     marginBottom: 7,
     marginLeft: scale(24),
+  },
+  monsterNotice: {
+    marginTop: verticalScale(60)
   },
   legendItem: {
     width: scale(135),
