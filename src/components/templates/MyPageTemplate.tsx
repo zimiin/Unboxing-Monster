@@ -27,6 +27,7 @@ interface Props {
   isFetchingLoginState: boolean,
   modalVisible: boolean,
   showReportModal: boolean,
+  showWithdrawalModal: boolean,
   onPressLogout: () => void,
   onPressLogin: () => void,
   onPressCart: () => void,
@@ -38,6 +39,7 @@ interface Props {
   openReportModal: () => void,
   onPressTermsOfService: () => void,
   onPressPrivacyPolicy: () => void,
+  closeWithdrawalModal: () => void,
 }
 
 const MyPageTemplate = (props: Props) => {
@@ -119,6 +121,17 @@ const MyPageTemplate = (props: Props) => {
               </TouchableOpacity>
 
               <TouchableOpacity
+                onPress={props.onPressPrivacyPolicy}
+                style={[styles.listItem]}
+              >
+                <Bold style={styles.listText}>
+                  회원 탈퇴
+                </Bold>
+
+                <RightArrow />
+              </TouchableOpacity>
+
+              <TouchableOpacity
                 onPress={props.onPressTermsOfService}
                 style={styles.listItem}
               >
@@ -131,7 +144,7 @@ const MyPageTemplate = (props: Props) => {
 
               <TouchableOpacity
                 onPress={props.onPressPrivacyPolicy}
-                style={[styles.listItem, {marginBottom: scale(98)}]}
+                style={[styles.listItem, { marginBottom: scale(98) }]}
               >
                 <Bold style={styles.listText}>
                   개인정보 처리방침
@@ -173,6 +186,28 @@ const MyPageTemplate = (props: Props) => {
             style={styles.noticeText}
           >
             부적절한 이름이 있는 화면을 캡쳐하여{'\n'}아래의 메일로 보내주세요.
+          </Text>
+
+          <Text
+            style={styles.noticeText}
+            selectable={true}
+          >
+            ask.unboxing.monster@gmail.com
+          </Text>
+        </View>
+      </NoticeModal>
+
+      <NoticeModal
+        visible={props.showWithdrawalModal}
+        onRequestClose={props.closeWithdrawalModal}
+      >
+        <View
+          style={styles.noticeContainer}
+        >
+          <Text
+            style={styles.noticeText}
+          >
+            닉네임과 함께 탈퇴 요청을{'\n'}아래의 메일로 보내주세요.
           </Text>
 
           <Text
