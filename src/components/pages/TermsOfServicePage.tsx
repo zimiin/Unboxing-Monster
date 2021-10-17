@@ -11,7 +11,7 @@ const TermsOfServicePage = ({ route, navigation }: TermsOfServiceProps) => {
       <Header
         canGoBack={true}
         goBackAction={() => navigation.goBack()}
-        title={'서비스이용약관'}
+        title={'서비스 이용약관'}
       />
 
       <ScrollView style={styles.screen}>

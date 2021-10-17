@@ -19,6 +19,7 @@ import UserContextProvider from '@src/stores/UserContext'
 import Toast from 'react-native-toast-message'
 import PGPersonalInfoAgreement from '@components/pages/PGPersonalInfoAgreement'
 import TermsOfServicePage from '@components/pages/TermsOfServicePage'
+import PrivacyPolicyPage from '@components/pages/PrivacyPolicyPage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -74,6 +75,11 @@ const App = () => {
             <Stack.Screen
               name="TermsOfService"
               component={TermsOfServicePage}
+            />
+
+            <Stack.Screen
+              name="PrivacyPolicy"
+              component={PrivacyPolicyPage}
             />
 
             <Stack.Screen

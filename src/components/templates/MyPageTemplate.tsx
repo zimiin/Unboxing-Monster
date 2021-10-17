@@ -37,6 +37,7 @@ interface Props {
   closeReportModal: () => void,
   openReportModal: () => void,
   onPressTermsOfService: () => void,
+  onPressPrivacyPolicy: () => void,
 }
 
 const MyPageTemplate = (props: Props) => {
@@ -122,18 +123,18 @@ const MyPageTemplate = (props: Props) => {
                 style={styles.listItem}
               >
                 <Bold style={styles.listText}>
-                  서비스이용약관
+                  서비스 이용약관
                 </Bold>
 
                 <RightArrow />
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={props.onPressPaymentHistory}
+                onPress={props.onPressPrivacyPolicy}
                 style={[styles.listItem, {marginBottom: scale(98)}]}
               >
                 <Bold style={styles.listText}>
-                  개인정보처리방침
+                  개인정보 처리방침
                 </Bold>
 
                 <RightArrow />

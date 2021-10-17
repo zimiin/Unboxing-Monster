@@ -101,6 +101,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
       closeReportModal={() => setShowReportModal(false)}
       openReportModal={() => setShowReportModal(true)}
       onPressTermsOfService={() => navigation.navigate('TermsOfService')}
+      onPressPrivacyPolicy={() => navigation.navigate('PrivacyPolicy')}
     />
   )
 }
