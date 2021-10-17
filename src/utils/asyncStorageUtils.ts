@@ -144,3 +144,16 @@ export const setIsFirstUseFromStorage = async (value: boolean) => {
     console.log('Error in setIsFirstUseFromStorage', error)
   }
 }
+
+export const clearUserData = async () => {
+  try {
+    await AsyncStorage.removeItem('@recently_searched_boxes')
+    await AsyncStorage.removeItem('@access_token')
+    await AsyncStorage.removeItem('@email')
+    await AsyncStorage.removeItem('@nickname')
+    await AsyncStorage.removeItem('@userId')
+    await AsyncStorage.removeItem('@phone')
+  } catch (error) {
+    console.log('Error in clearUserData', error)
+  }
+}
