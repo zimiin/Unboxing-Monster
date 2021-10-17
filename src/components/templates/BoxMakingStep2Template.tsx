@@ -128,7 +128,7 @@ const BoxMakingStep2Template = (props: Props) => {
             value={props.boxPrice}
             onValueChange={props.onChangeNumBoxPriceInput}
             minimumValue={props.minPrice}
-            maximumValue={props.maxPrice}
+            maximumValue={props.minPrice === props.maxPrice ? props.maxPrice + 1 : props.maxPrice}
             step={100}
             style={styles.slider}
             maximumTrackTintColor={'#CCCCCC'}
