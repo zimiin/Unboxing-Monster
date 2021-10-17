@@ -5,14 +5,13 @@ import {
   Text,
   Dimensions,
   FlatList,
-  ScrollView,
-  SafeAreaView,
 } from 'react-native'
 import { Item } from '@constants/types'
 import { PieChart } from "react-native-chart-kit";
 import HorizontalRule from "@components/atoms/HorizontalRule";
 import { URLS } from "@constants/urls";
 import { scale } from "@constants/figure";
+import Loading from "@components/atoms/Loading";
 
 const WIDTH = Dimensions.get('window').width;
 const COLORS = [
@@ -45,14 +44,17 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
     fetch(URLS.unboxing_api + `open-result/distribution/${boxId}`)
     .then(res => res.json())
     .then(json => {
+      let newTemplate = template.slice()
+
       json.forEach((element: { itemId: number; _count: number; }) => {
-        template.forEach((temp) => {
+        newTemplate.forEach((temp) => {
           if (temp.id == element.itemId) {
             temp.count = element._count
           }
         })
-      });
-      setTemplate(template)
+      })
+
+      setTemplate(newTemplate)
     })
     fetch(URLS.unboxing_api + `open-result/${boxId}`)
     .then(res => res.json())
@@ -157,19 +159,23 @@ const RealtimeProbView = ({items, boxId}: { items: Item[], boxId: number }) => {
   )
 
   return (
-    <FlatList
-      ListHeaderComponent={upperContent}
-      renderItem={
-        ({item}) => (
-          <View style={{marginTop: 15, paddingBottom: 22, borderBottomColor: '#f9f9f9', borderBottomWidth: 2, marginHorizontal: scale(24)}}>
-            <Text style={{fontSize: 13, fontWeight: 'bold'}}>{`${item.user.nickname} 님이 ${item.item.title}에 당첨되었습니다!`}</Text>
-            <View style={{flex: 1, alignItems: 'flex-end', marginTop: 9}}>
-              <Text style={{fontSize: 11, opacity: 0.5}}>{`${date_to_string(new Date(item.openAt))}`}</Text>
+    <>
+      <FlatList
+        ListHeaderComponent={upperContent}
+        renderItem={
+          ({item}) => (
+            <View style={{marginTop: 15, paddingBottom: 22, borderBottomColor: '#f9f9f9', borderBottomWidth: 2, marginHorizontal: scale(24)}}>
+              <Text style={{fontSize: 13, fontWeight: 'bold'}}>{`${item.user.nickname} 님이 ${item.item.title}에 당첨되었습니다!`}</Text>
+              <View style={{flex: 1, alignItems: 'flex-end', marginTop: 9}}>
+                <Text style={{fontSize: 11, opacity: 0.5}}>{`${date_to_string(new Date(item.openAt))}`}</Text>
+              </View>
             </View>
-          </View>
-        )}
-      data={openResult.slice(0, 20)}
-    />
+          )}
+        data={openResult.slice(0, 20)}
+      />
+
+      {/* <Loading /> */}
+    </>
   )
 }
 
