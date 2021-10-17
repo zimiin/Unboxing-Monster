@@ -125,7 +125,7 @@ const CouponConfirmTemplate = (props: Props) => {
         onRequestClose={props.onRequestCloseModal}
         onConfirm={props.onConfirmPhone}
       >
-        <Text style={styles.confirmText}>{props.phoneInput + '로\n모바일쿠폰을 전송합니다.'}</Text>
+        <Text style={styles.confirmText}>{props.phoneInput + '로\n24시간 내에 모바일쿠폰이 전송됩니다.'}</Text>
         
         {props.isLoading ?
           <ActivityIndicator
