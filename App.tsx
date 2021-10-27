@@ -16,11 +16,11 @@ import PaymentPage from '@components/pages/PaymentPage'
 import PaymentCompletePage from '@components/pages/PaymentCompletePage'
 import PGPaymentPage from '@components/pages/PGPaymentPage'
 import UserContextProvider from '@src/stores/UserContext'
-import Toast from 'react-native-toast-message'
 import PGPersonalInfoAgreement from '@components/pages/PGPersonalInfoAgreement'
 import TermsOfServicePage from '@components/pages/TermsOfServicePage'
 import PrivacyPolicyPage from '@components/pages/PrivacyPolicyPage'
 import { setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
+import PollPage from '@components/pages/PollPage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -107,6 +107,11 @@ const App = () => {
             <Stack.Screen
               name="PGPersonalInfoAgreement"
               component={PGPersonalInfoAgreement}
+            />
+
+            <Stack.Screen
+              name="Poll"
+              component={PollPage}
             />
           </Stack.Navigator>
         </NavigationContainer>
