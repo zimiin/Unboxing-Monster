@@ -20,6 +20,7 @@ const SwiperSlide = ({
   endBtnText,
   index,
   onPressArrow,
+  useCloseBtn,
 }: {
   image: ImageSourcePropType, 
   children: ReactNode,
@@ -30,19 +31,26 @@ const SwiperSlide = ({
   onPressFn: () => void,
   index: number,
   onPressArrow: (nextSlide: number) => void,
+  useCloseBtn?: boolean,
 }) => {
   return (
     <View 
       style={styles.slide}
     >
-      <TouchableOpacity 
-        style={styles.close_btn_img} 
-        onPress={onPressFn}
-      >
-        <Image 
-          source={IMAGES.close_modal}
+      {useCloseBtn === false ?
+        <View
+          style={styles.closeBtnSpace}
         />
-      </TouchableOpacity>
+        :
+        <TouchableOpacity
+          style={styles.close_btn_img}
+          onPress={onPressFn}
+        >
+          <Image
+            source={IMAGES.close_modal}
+          />
+        </TouchableOpacity>
+      }
 
       <Image 
         source={image} 
@@ -108,6 +116,9 @@ const SwiperSlide = ({
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
+  },
+  closeBtnSpace: {
+    height: verticalScale(12 + 32)
   },
   close_btn_img: {
     alignSelf: 'flex-end',

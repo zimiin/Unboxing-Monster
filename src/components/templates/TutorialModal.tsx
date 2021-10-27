@@ -160,6 +160,7 @@ const TutorialModal = (props: TutorialModalProps)  => {
             carousel.current.snapToItem(nextSlide)
           }
         }}
+        useCloseBtn={false}
       >
         {item.item.content}
       </SwiperSlide>

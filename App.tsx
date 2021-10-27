@@ -20,12 +20,14 @@ import Toast from 'react-native-toast-message'
 import PGPersonalInfoAgreement from '@components/pages/PGPersonalInfoAgreement'
 import TermsOfServicePage from '@components/pages/TermsOfServicePage'
 import PrivacyPolicyPage from '@components/pages/PrivacyPolicyPage'
+import { setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
   // AsyncStorage.clear()
   printAsyncStorage()
+  setIsFirstUseFromStorage(true)
 
   return (
     <UserContextProvider>
