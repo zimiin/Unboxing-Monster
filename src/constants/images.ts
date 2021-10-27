@@ -8,6 +8,8 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   btn_next: require('assets/images/btn_next.png'),
   btn_prev: require('assets/images/btn_prev.png'),
   close_modal: require('assets/images/btn_close.png'),
+  tutorial_welcome: require('assets/images/Welcome.png'),
+  tutorial_bow: require('assets/images/bow.png'),
   tutorial_01: require('assets/images/img_tutorial_01.png'),
   tutorial_02: require('assets/images/img_tutorial_02.png'),
   tutorial_03: require('assets/images/img_tutorial_03.png'),

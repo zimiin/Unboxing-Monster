@@ -28,6 +28,60 @@ const TutorialModal = (props: TutorialModalProps)  => {
   
   const slideData: SlideItem[] = [
     {
+      image: IMAGES.tutorial_welcome,
+      content: (
+        <>
+          <Text
+            style={styles.text}
+          >
+            {'반갑습니다!'}
+          </Text>
+
+          <Text
+            style={styles.text}
+          >
+            {'저희는 SW 마에스트로 12기'}
+          </Text>
+
+          <Text
+            style={styles.text}
+          >
+            {'꾸러기원정대 팀입니다.'}
+          </Text>
+        </>
+      )
+    },
+    {
+      image: IMAGES.tutorial_bow,
+      content: (
+        <>
+          <Text
+            style={styles.smallText}
+          >
+            {'이 앱은 저희 주제에 대한'}
+          </Text>
+
+          <Text
+            style={styles.smallText}
+          >
+            {'사용자반응을 조사하기 위한 앱입니다.'}
+          </Text>
+
+          <Text
+            style={styles.smallText}
+          >
+            {'아직 베타서비스라 부족한 점이 많지만'}
+          </Text>
+
+          <Text
+            style={styles.smallText}
+          >
+            {'예쁘게 봐주세요 :)'}
+          </Text>
+        </>
+      )
+    },
+    {
       image: IMAGES.tutorial_01,
       content: (
         <>
@@ -209,6 +263,13 @@ const styles = StyleSheet.create({
     fontFamily: 'GmarketSansTTFMedium',
     fontSize: verticalScale(20),
     lineHeight: verticalScale(31.5),
+    letterSpacing: verticalScale(-0.6),
+    textAlign: 'center',
+  },
+  smallText: {
+    fontFamily: 'GmarketSansTTFMedium',
+    fontSize: verticalScale(17),
+    lineHeight: verticalScale(27),
     letterSpacing: verticalScale(-0.6),
     textAlign: 'center',
   },

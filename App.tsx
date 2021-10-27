@@ -27,7 +27,7 @@ const Stack = createStackNavigator<RootStackParamList>()
 const App = () => {
   // AsyncStorage.clear()
   printAsyncStorage()
-  setIsFirstUseFromStorage(true)
+  // setIsFirstUseFromStorage(true)
 
   return (
     <UserContextProvider>
