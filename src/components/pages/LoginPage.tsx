@@ -18,6 +18,8 @@ const LoginPage = ({route, navigation}: LoginProps) => {
   const [{}, {setEmail, setProvider, setProviderToken}] = useContext(SignUpContext)
   const [{}, {setUserData}] = useContext(UserContext)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [selectedProvider, setSelectedProvider] = useState<string>('')
+  const [showUnableEventModal, setShowUnableEventModal] = useState<boolean>(false)
 
   const requestLogin = async (provider: string, token: string) => {
     try {
@@ -275,13 +277,71 @@ const LoginPage = ({route, navigation}: LoginProps) => {
     }
   }
 
+  const ableToEnrollEvent = async (): Promise<boolean> => {
+    try {
+      const response = await fetch(URLS.unboxing_api + 'event/join/check')
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+
+      const numOfEnrollments = parseInt(await response.text())
+
+      if (numOfEnrollments < 200) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log('Error in ableToEnrollEvent', error)
+      throw error
+    }
+  }
+
+  const loginWith = (provider: string) => {
+    setIsLoading(false)
+
+    if (provider === 'kakao') {
+      kakaoLogin()
+    } else if (provider === 'facebook') {
+      facebookLogin()
+    } else if (provider === 'apple') {
+      appleLogin()
+    }
+  }
+
+  const openModal = () => {
+    setIsLoading(false)
+    setShowUnableEventModal(true)
+  }
+
+  const checkEventAndLogin = async (provider: string) => {
+    try {
+      setIsLoading(true)
+      const eventStatus = await ableToEnrollEvent()
+
+      if (eventStatus === true) {
+        loginWith(provider)
+      } else if (eventStatus === false) {
+        setSelectedProvider(provider)
+        openModal()
+      }
+    } catch (error) {
+      console.log('Error in checkEventAndLogin', error)
+    }
+  }
+
   return (
     <LoginTemplate
       isLoading={isLoading}
+      showUnableEventModal={showUnableEventModal}
       onPressLookAround={() => navigation.replace('Main')}
-      onPressFacebook={facebookLogin}
-      onPressApple={appleLogin}
-      onPressKakao={kakaoLogin}
+      onPressFacebook={() => checkEventAndLogin('facebook')}
+      onPressApple={() => checkEventAndLogin('apple')}
+      onPressKakao={() => checkEventAndLogin('kakao')}
+      closeUnableEventModal={() => setShowUnableEventModal(false)}
+      onConfirmEventStatus={() => { loginWith(selectedProvider); setShowUnableEventModal(false) }}
     />
   )
 }

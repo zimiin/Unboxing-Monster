@@ -1,7 +1,8 @@
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import Loading from '@components/atoms/Loading'
 import RegularText from '@components/atoms/typography/RegularText'
-import { DESIGN_HEIGHT, scale, SCREEN_HEIGHT } from '@constants/figure'
+import ConfirmModal from '@components/molecules/ConfirmModal'
+import { DESIGN_HEIGHT, scale, SCREEN_HEIGHT, verticalScale } from '@constants/figure'
 import { IMAGES } from '@constants/images'
 import React from 'react'
 import {
@@ -15,10 +16,13 @@ import {
 
 interface Props {
   isLoading: boolean,
+  showUnableEventModal: boolean,
   onPressLookAround: () => void,
   onPressFacebook: () => void,
   onPressApple: () => void,
   onPressKakao: () => void,
+  closeUnableEventModal: () => void,
+  onConfirmEventStatus: () => void,
 }
 
 const calHeight = (height: number) => {
@@ -31,73 +35,97 @@ const calHeight = (height: number) => {
 
 const LoginTemplate = (props: Props) => {
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.contentView}>
-        <View style={styles.unboxingTextView}>
-          <Text style={styles.unboxingText}>
-            언박싱 몬스터
-          </Text>
+    <>
+      <SafeAreaView style={styles.safeAreaView}>
+        <View style={styles.contentView}>
+          <View style={styles.unboxingTextView}>
+            <Text style={styles.unboxingText}>
+              언박싱 몬스터
+            </Text>
+
+            <Text style={styles.welcomText}>
+              에
+            </Text>
+          </View>
 
           <Text style={styles.welcomText}>
-            에
+            오신 것을 환영합니다!
+          </Text>
+
+          <View style={styles.imageContainer}>
+            <Image
+              source={IMAGES.unboxingMonster}
+              style={styles.logo}
+            />
+          </View>
+
+          <FullContentWidthButton
+            style={styles.lookAroundButton}
+            onPress={props.onPressLookAround}
+          >
+            구경먼저하기
+          </FullContentWidthButton>
+
+          <RegularText style={styles.SNSText}>
+            SNS로 계속하기
+          </RegularText>
+
+          <View style={styles.SNSIconView}>
+            <TouchableOpacity onPress={props.onPressKakao}>
+              <Image
+                source={IMAGES.kakao_square}
+                style={styles.SNSIcon}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={props.onPressFacebook}>
+              <Image
+                source={IMAGES.facebook_square}
+                style={styles.SNSIcon}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={props.onPressApple}>
+              <View
+                style={[
+                  styles.SNSIcon,
+                  styles.appleContainer
+                ]}
+              >
+                <Image
+                  source={IMAGES.apple_white}
+                  style={styles.appleLogo}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {props.isLoading === true ? <Loading /> : null}
+      </SafeAreaView>
+
+      <ConfirmModal
+        visible={props.showUnableEventModal}
+        onRequestClose={props.closeUnableEventModal}
+        onConfirm={props.onConfirmEventStatus}
+      >
+        <View
+          style={styles.modalContent}
+        >
+          <Text
+            style={styles.modalText}
+          >
+            {'이미 회원가입 이벤트가 마감되었습니다.'}
+          </Text>
+          
+          <Text
+            style={styles.modalText}
+          >
+            {'그래도 계속하시겠습니까?'}
           </Text>
         </View>
-
-        <Text style={styles.welcomText}>
-          오신 것을 환영합니다!
-        </Text>
-
-        <View style={styles.imageContainer}>
-          <Image
-            source={IMAGES.unboxingMonster}
-            style={styles.logo}
-          />
-        </View>
-
-        <FullContentWidthButton
-          style={styles.lookAroundButton}
-          onPress={props.onPressLookAround}
-        >
-          구경먼저하기
-        </FullContentWidthButton>
-
-        <RegularText style={styles.SNSText}>
-          SNS로 계속하기
-        </RegularText>
-
-        <View style={styles.SNSIconView}>
-          <TouchableOpacity onPress={props.onPressKakao}>
-            <Image
-              source={IMAGES.kakao_square}
-              style={styles.SNSIcon}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={props.onPressFacebook}>
-            <Image
-              source={IMAGES.facebook_square}
-              style={styles.SNSIcon}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={props.onPressApple}>
-            <View
-              style={[
-                styles.SNSIcon,
-                styles.appleContainer
-              ]}
-            >
-              <Image
-                source={IMAGES.apple_white}
-                style={styles.appleLogo}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {props.isLoading === true ? <Loading /> : null}
-    </SafeAreaView>
+      </ConfirmModal>
+    </>
   )
 }
 
@@ -168,5 +196,15 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     resizeMode: 'contain',
+  },
+  modalContent: {
+    alignItems: 'center',
+    marginVertical: verticalScale(30)
+  },
+  modalText: {
+    fontFamily: 'NotoSansCJKkr-Regular',
+    fontSize: scale(14),
+    letterSpacing: scale(-0.35),
+    lineHeight: scale(20),
   }
 })
