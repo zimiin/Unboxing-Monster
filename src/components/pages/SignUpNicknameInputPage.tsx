@@ -113,7 +113,7 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       input={nicknameInput}
       canGoNext={nicknameInput !== '' ? true : false}
       error={error}
-      buttonText='완료'
+      buttonText='회원가입 및 포인트 받기'
       agreeToPolicy={agreeToPolicy}
       showPolicyAgreement={true}
       onPressGoBack={() => navigation.goBack()}

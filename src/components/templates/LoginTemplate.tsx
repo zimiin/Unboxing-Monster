@@ -115,7 +115,7 @@ const LoginTemplate = (props: Props) => {
           <Text
             style={styles.modalText}
           >
-            {'이미 회원가입 이벤트가 마감되었습니다.'}
+            {'회원가입 이벤트가 마감되었습니다.'}
           </Text>
           
           <Text

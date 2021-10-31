@@ -287,7 +287,7 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       }
 
       const numOfEnrollments = parseInt(await response.text())
-
+      
       if (numOfEnrollments < 200) {
         return true
       } else {
