@@ -43,17 +43,17 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
     setOpenResultDataState()
   }, [])
 
-  const firstOpen = async (): Promise<boolean> => {
+  const isFirstOpen = async (): Promise<boolean> => {
     // 모든 오픈 결과 가져와서 오픈 기록 찾기 (만약 응답 안하면 오픈할때마다 물어볼수있도록)
     // ---> 설문조사 여부로 확인하기!!!!
     return true
   }
 
   const goToStorage = async () => {
-    if (await firstOpen()) {
-      navigation.navigate('PollInit')
+    if (await isFirstOpen()) {
+      navigation.replace('PollInit')
     } else {
-      navigation.navigate('Main')
+      navigation.replace('Main', {screen: 'Storage'})
     }
   }
 
