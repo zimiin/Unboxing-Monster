@@ -7,6 +7,23 @@ import { useState } from 'react'
 import { useContext } from 'react'
 import { URLS } from '@constants/urls'
 import { UserContext } from '@src/stores/UserContext'
+import { getAccessTokenFromAsyncStorage } from '@src/utils/asyncStorageUtils'
+
+export type ResultCode = number
+
+type EventResult = {
+  SUCCESS: ResultCode,
+  EVENT_END: ResultCode,
+  DUPLICATED: ResultCode,
+  NONE: ResultCode,
+}
+
+export const EVENT_RESULT: EventResult = {
+  SUCCESS: 0,
+  EVENT_END: 1,
+  DUPLICATED: 2,
+  NONE: 3,
+}
 
 const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) => {
   const [{email, provider, providerToken}, { }] = useContext(SignUpContext)
@@ -14,6 +31,8 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [agreeToPolicy, setAgreeToPolicy] = useState<boolean>(false)
+  const [showPointEventModal, setShowPointEventModal] = useState<boolean>(false)
+  const [pointEventResult, setPointEventResult] = useState<ResultCode>(EVENT_RESULT.SUCCESS)
 
   const requestJoin = async () => {
     try {
@@ -78,6 +97,44 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
 
   const requestJoinAndLogin = async () => {
     try {
+      await requestJoin()
+      const accessToken = await requestLogin()
+      await storeUserInfo(accessToken, nicknameInput, email, '')
+    } catch (error) {
+      console.log("Error in requestJoinAndLogin", error)
+      throw error
+    }
+  }
+
+  const enrollPointEvent = async () => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'event/join', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+        }
+      })
+
+      if (response.status === 200) {
+        setPointEventResult(EVENT_RESULT.SUCCESS)
+      } else if (response.status === 406) {
+        setPointEventResult(EVENT_RESULT.EVENT_END)
+      } else if (response.status === 409) {
+        setPointEventResult(EVENT_RESULT.DUPLICATED)
+      } else {
+        setPointEventResult(EVENT_RESULT.NONE)
+      }
+    } catch (error) {
+      console.log('Error in enrollPointEvent', error)
+      throw error
+    }
+  }
+
+  const onSubmitEditing = async () => {
+    try {
       if (nicknameInput === '') {
         setError('닉네임을 입력해주세요')
         throw 'No nickname input'
@@ -87,15 +144,19 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
         setError('서비스 이용 약관에 동의해주세요')
         throw 'Not agree to policy'
       }
-      
-      await requestJoin()
-      const accessToken = await requestLogin()
 
-      await storeUserInfo(accessToken, nicknameInput, email, '')
-      navigation.replace('Main')
+      await requestJoinAndLogin()
+      await enrollPointEvent()
+      
+      setShowPointEventModal(true)
     } catch (error) {
-      console.log("Error in onPressComplete", error)
+      console.log('Error in onSubmitEditing', error)
     }
+  }
+
+  const moveToHomeScreen = () => {
+    setShowPointEventModal(false)
+    navigation.replace('Main')
   }
 
   const onChangeText = (input: string) => {
@@ -118,10 +179,13 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       showPolicyAgreement={true}
       onPressGoBack={() => navigation.goBack()}
       onChangeText={onChangeText}
-      onPressNext={requestJoinAndLogin}
-      onSubmitEditing={requestJoinAndLogin}
+      onPressNext={onSubmitEditing}
+      onSubmitEditing={onSubmitEditing}
       onPressAgreeToPolicyCheckBox={() => setAgreeToPolicy(!agreeToPolicy)}
       onPressAgreeToPolicy={() => navigation.push('TermsOfService')}
+      showPointEventModal={showPointEventModal}
+      pointEventResult={pointEventResult}
+      onClosePointEventModal={moveToHomeScreen}
     />
   )
 }

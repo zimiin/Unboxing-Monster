@@ -2,8 +2,11 @@ import CheckBox from '@components/atoms/button/CheckBox'
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import Loading from '@components/atoms/Loading'
 import RegularText from '@components/atoms/typography/RegularText'
+import ConfirmModal from '@components/molecules/ConfirmModal'
 import InputBox from '@components/molecules/InputBox'
+import NoticeModal from '@components/molecules/NoticeModal'
 import Header from '@components/organisms/header/Header'
+import { EVENT_RESULT, ResultCode } from '@components/pages/SignUpNicknameInputPage'
 import { scale } from '@constants/figure'
 import React from 'react'
 import { KeyboardType, Text, TouchableOpacity, View } from 'react-native'
@@ -24,12 +27,15 @@ interface Props {
   buttonText: string,
   agreeToPolicy: boolean,
   showPolicyAgreement?: boolean,
+  showPointEventModal: boolean,
+  pointEventResult: ResultCode,
   onPressGoBack: () => void,
   onChangeText: (input: string) => void,
   onPressNext: () => void,
   onSubmitEditing?: () => void,
   onPressAgreeToPolicy: () => void,
   onPressAgreeToPolicyCheckBox: () => void,
+  onClosePointEventModal: () => void,
 }
 
 const SignUpInputTemplate = (props: Props) => {
@@ -90,6 +96,79 @@ const SignUpInputTemplate = (props: Props) => {
       </KeyboardAvoidingView>
 
       {props.isLoading === true ? <Loading /> : null}
+
+      <NoticeModal
+        visible={props.showPointEventModal}
+        onRequestClose={props.onClosePointEventModal}
+      >
+        <View
+          style={styles.modalContent}
+        >
+          {props.pointEventResult === EVENT_RESULT.SUCCESS ?
+            <>
+              <RegularText
+                style={styles.modalText}
+              >
+                회원가입 완료!
+              </RegularText>
+              
+              <RegularText
+                style={styles.modalText}
+              >
+                3000포인트가 적립되었어요.
+              </RegularText>
+            </>
+            :
+            props.pointEventResult === EVENT_RESULT.EVENT_END ?
+            <>
+              <RegularText
+                style={styles.modalText}
+              >
+                회원가입은 완료했지만,
+              </RegularText>
+
+              <RegularText
+                style={styles.modalText}
+              >
+                이미 이벤트가 마감되었어요.
+              </RegularText>
+
+              <RegularText
+                style={styles.modalText}
+              >
+                더 믾은 분께 제공드리지 못해 죄송해요.
+              </RegularText>
+            </>
+            :
+            props.pointEventResult === EVENT_RESULT.DUPLICATED ?
+              <>
+                <RegularText
+                  style={styles.modalText}
+                >
+                  회원가입은 완료했지만,
+                </RegularText>
+
+                <RegularText
+                  style={styles.modalText}
+                >
+                  이미 이벤트에 참여하셔서
+                </RegularText>
+
+                <RegularText
+                  style={styles.modalText}
+                >
+                  포인트가 지급되지 않았어요.
+                </RegularText>
+              </>
+            : 
+              <RegularText
+                style={styles.modalText}
+              >
+                회원가입 완료!
+              </RegularText>
+          }
+        </View>
+      </NoticeModal>
     </>
   )
 }
@@ -126,5 +205,13 @@ const styles = StyleSheet.create({
   },
   checkBox: {
     marginLeft: 20,
+  },
+  modalContent: {
+    marginVertical: 20,
+    alignItems: 'center'
+  },
+  modalText: {
+    fontSize: 14,
+    lineHeight: 20,
   }
 })
