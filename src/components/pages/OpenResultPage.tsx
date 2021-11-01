@@ -51,7 +51,7 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
 
   const goToStorage = async () => {
     if (await firstOpen()) {
-      navigation.navigate('Poll')
+      navigation.navigate('PollInit')
     } else {
       navigation.navigate('Main')
     }

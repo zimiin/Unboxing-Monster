@@ -20,6 +20,7 @@ export type RootStackParamList = {
   PaymentComplete: any,
   PGPersonalInfoAgreement: undefined,
   PrivacyPolicy: undefined,
+  PollInit: undefined,
   Poll: undefined,
 }
 
@@ -84,6 +85,13 @@ export type PrivacyPolicyNavigationProp = StackNavigationProp<RootStackParamList
 export type PrivacyPolicyProps = {
   route: PrivacyPolicyRouteProp,
   navigation: PrivacyPolicyNavigationProp
+}
+
+export type PollInitRouteProp = RouteProp<RootStackParamList, 'PollInit'>
+export type PollInitNavigationProp = StackNavigationProp<RootStackParamList, 'PollInit'>
+export type PollInitProps = {
+  route: PollInitRouteProp,
+  navigation: PollInitNavigationProp
 }
 
 export type PollRouteProp = RouteProp<RootStackParamList, 'Poll'>

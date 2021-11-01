@@ -21,6 +21,7 @@ import TermsOfServicePage from '@components/pages/TermsOfServicePage'
 import PrivacyPolicyPage from '@components/pages/PrivacyPolicyPage'
 import { setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
 import PollPage from '@components/pages/PollPage'
+import PollInitPage from '@components/pages/PollInitPage'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -112,6 +113,11 @@ const App = () => {
             <Stack.Screen
               name="Poll"
               component={PollPage}
+            />
+
+            <Stack.Screen
+              name="PollInit"
+              component={PollInitPage}
             />
           </Stack.Navigator>
         </NavigationContainer>
