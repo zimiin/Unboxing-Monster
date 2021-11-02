@@ -1,5 +1,6 @@
 import Header from '@components/organisms/header/Header';
 import PollQuestion, { AnswerTypeValue, ANSWER_TYPE } from '@components/organisms/PollQuestion';
+import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
 import { scale } from '@constants/figure';
 import React, { useState, useMemo } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
@@ -17,7 +18,7 @@ interface Props {
 
 function PollTemplate(props: Props) {
   const [prevQuestion, setPrevQuestion] = useState(0)
-  const [curQuestion, setCurQuestion] = useState(9)
+  const [curQuestion, setCurQuestion] = useState(5)
 
   return (
     <View
@@ -31,8 +32,14 @@ function PollTemplate(props: Props) {
         title={'설문응답'}
       />
 
+      <CustomBoxProgressBar
+        progress={(curQuestion + 1) / props.pollData.length}
+        style={{alignSelf: 'center'}}
+      />
+
       <View
         style={{
+          marginTop: 20,
           marginHorizontal: scale(24),
         }}
       >
