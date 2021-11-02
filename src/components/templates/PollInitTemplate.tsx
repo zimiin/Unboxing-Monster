@@ -25,7 +25,7 @@ function PollInitTemplate(props: Props) {
           width: scale(264),
           height: scale(200),
           resizeMode: 'contain',
-          marginTop: verticalScale(100)
+          marginTop: verticalScale(130)
         }}
       />
 

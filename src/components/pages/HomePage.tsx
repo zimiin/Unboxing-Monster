@@ -8,6 +8,7 @@ import { Box, BoxId, ItemId, Notice, OpenResult } from '@constants/types'
 import { URLS } from '@constants/urls'
 import { printAsyncStorage } from '@src/utils/loginUtils'
 import { getIsFirstUseFromStorage, setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
+import { Text, TouchableOpacity } from 'react-native'
 
 const HomePage = ({route, navigation}: HomeProps) => {
   const [{ cart }, { }] = useContext(CartContext)
@@ -181,6 +182,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   }
 
   return (
+    <>
     <HomeTemplate
       isLoading={isLoading}
       onPressSearchBar={() => navigation.push('Search')}
@@ -198,6 +200,11 @@ const HomePage = ({route, navigation}: HomeProps) => {
       openIntroModal={() => setModalVisible(true)}
       onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
     />
+
+      <TouchableOpacity onPress={() => navigation.navigate('PollInit')}>
+        <Text>POLL</Text>
+      </TouchableOpacity>
+    </>
   )
 }
 
