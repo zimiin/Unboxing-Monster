@@ -1,28 +1,50 @@
-import PollQuestion, { ANSWER_TYPE } from '@components/organisms/PollQuestion';
+import Header from '@components/organisms/header/Header';
+import PollQuestion, { AnswerTypeValue, ANSWER_TYPE } from '@components/organisms/PollQuestion';
+import { scale } from '@constants/figure';
 import React, { useState, useMemo } from 'react'
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native'
-import * as Animatable from 'react-native-animatable';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+
+export type PollData = {
+  question: string,
+  answerType: AnswerTypeValue,
+  options?: string[],
+  nextQuestion: number | number[],
+}
 
 interface Props {
-  hahah: () => void,
+  pollData: PollData[],
 }
 
 function PollTemplate(props: Props) {
-  const [focus, setFocus] = useState<number>(0)
-  
+  const [prevQuestion, setPrevQuestion] = useState(0)
+  const [curQuestion, setCurQuestion] = useState(9)
+
   return (
-    <SafeAreaView
+    <View
       style={{
         backgroundColor: 'white',
         flex: 1,
       }}
     >
-      <PollQuestion
-        question={'대답해 보세요'}
-        answerType={ANSWER_TYPE.SINGLE_SELECT}
-        options={['초콜릿', '초콜릿', '초콜릿']}
+      <Header
+        canGoBack={false}
+        title={'설문응답'}
       />
-    </SafeAreaView>
+
+      <View
+        style={{
+          marginHorizontal: scale(24),
+        }}
+      >
+        <PollQuestion
+          question={props.pollData[curQuestion].question}
+          answerType={props.pollData[curQuestion].answerType}
+          options={props.pollData[curQuestion].options}
+        />
+      </View>
+
+      <SafeAreaView />
+    </View>
   )
 }
 

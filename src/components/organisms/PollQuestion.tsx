@@ -42,7 +42,11 @@ const PollQuestion = (props: Props) => {
         </Text>
       </View>
 
-      <View style={{ marginHorizontal: 25, }}>
+      <View 
+        style={{ 
+          // marginHorizontal: 25,
+        }}
+      >
         {props.answerType === ANSWER_TYPE.SHORT_ANSWER ?
           <View
             style={{
@@ -68,7 +72,7 @@ const PollQuestion = (props: Props) => {
                   key={index}
                   checked={true}
                   style={{
-                    marginVertical: 3,
+                    marginVertical: 6,
                   }}
                 >
                   <Text
@@ -86,7 +90,7 @@ const PollQuestion = (props: Props) => {
                   key={index}
                   checked={true}
                   style={{
-                    marginVertical: 3,
+                    marginVertical: 6,
                   }}
                 >
                   <Text
@@ -108,7 +112,6 @@ export default PollQuestion
 const styles = StyleSheet.create({
   questionContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
   },
   Q: {
@@ -121,5 +124,6 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSansCJKkr-Regular',
     fontSize: 16,
     lineHeight: 20,
+    flexShrink: 1,
   }
 })
