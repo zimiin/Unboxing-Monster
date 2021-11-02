@@ -1,6 +1,8 @@
+import ShortAnswerField from '@components/atoms/ShortAnswerField'
+import CheckBoxOptions from '@components/molecules/CheckBoxOptions'
 import SelectItemCheckBox from '@components/molecules/SelectItemCheckBox'
 import SelectItemRadio from '@components/molecules/SelectItemRadio'
-import React from 'react'
+import React, { useState } from 'react'
 import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 export type AnswerTypeValue = number
@@ -18,12 +20,21 @@ export const ANSWER_TYPE: AnswerType = {
 }
 
 interface Props {
+  questionIndex: number,
   question: string,
   answerType: AnswerTypeValue,
   options?: string[],
 }
 
 const PollQuestion = (props: Props) => {
+  const [answers, setAnswers] = useState<(number[] | string)[]>([])
+
+  const storeAnswer = (answer: string | number[]) => {
+    let newAnswers = answers.slice()
+    newAnswers[props.questionIndex] = answer
+    setAnswers(newAnswers)
+  }
+
   return (
     <View>
       <View
@@ -42,68 +53,38 @@ const PollQuestion = (props: Props) => {
         </Text>
       </View>
 
-      <View 
-        style={{ 
-          // marginHorizontal: 25,
-        }}
-      >
-        {props.answerType === ANSWER_TYPE.SHORT_ANSWER ?
-          <View
-            style={{
-              borderBottomColor: '#b5b5b5',
-              borderBottomWidth: 1,
-              height: 40,
-              width: '100%',
-            }}
-          >
-            <TextInput
-              placeholder='답변을 입력해주세요.'
-              style={{
-                position: 'absolute',
-                bottom: Platform.OS === 'ios' ? 10 : -5
-              }}
-            />
-          </View>
+      {props.answerType === ANSWER_TYPE.SHORT_ANSWER ?
+        <ShortAnswerField
+          value={answers[props.questionIndex] as string || ''}
+          onChangeText={storeAnswer}
+        />
+        :
+        props.answerType === ANSWER_TYPE.MULTIPLE_SELECT ?
+          <CheckBoxOptions
+            optionList={props.options || []}
+            selectedOptions={answers[props.questionIndex] as number[] || []}
+            storeSelectOptions={storeAnswer}
+          />
           :
-          props.answerType === ANSWER_TYPE.MULTIPLE_SELECT ?
-            props.options?.map(
-              (option, index) => (
-                <SelectItemCheckBox
-                  key={index}
-                  checked={true}
-                  style={{
-                    marginVertical: 6,
-                  }}
+          props.options?.map(
+            (option, index) => (
+              <SelectItemRadio
+                key={index}
+                checked={true}
+                style={{
+                  marginVertical: 6,
+                }}
+              >
+                <Text
+                  style={styles.text}
                 >
-                  <Text
-                    style={styles.text}
-                  >
-                    {option}
-                  </Text>
-                </SelectItemCheckBox>
-              )
+                  {option}
+                </Text>
+              </SelectItemRadio>
             )
-            :
-            props.options?.map(
-              (option, index) => (
-                <SelectItemRadio
-                  key={index}
-                  checked={true}
-                  style={{
-                    marginVertical: 6,
-                  }}
-                >
-                  <Text
-                    style={styles.text}
-                  >
-                    {option}
-                  </Text>
-                </SelectItemRadio>
-              )
-            )
-        }
+          )
+      }
       </View>
-    </View>
   )
 }
 

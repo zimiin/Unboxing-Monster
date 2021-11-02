@@ -6,6 +6,7 @@ interface Props {
   checked?: boolean,
   children?: ReactNode
   style?: ViewStyle,
+  onPress?: () => void,
 }
 
 const SelectItemCheckBox = (props: Props) => {
@@ -13,10 +14,10 @@ const SelectItemCheckBox = (props: Props) => {
     <TouchableOpacity
       style={[{
         flexDirection: 'row',
-        alignItems: 'center',
       },
       props.style
       ]}
+      onPress={props.onPress}
     >
       <Image
         source={props.checked === true ? IMAGES.checkBox_checked : IMAGES.checkBox_unchecked}

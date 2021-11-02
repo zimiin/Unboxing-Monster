@@ -12,7 +12,7 @@ const pollData: PollData[] = [
   },
   {
     question: '만족도가 어땠나요?',
-    options: ['매우 만족했어요', '만족했어요', '그저 그래요', '불만족해요', '매우 불만족해요'],
+    options: ['매우 만족했어요', '만족했어요', '그저 그랬어요', '불만족했어요', '매우 불만족했어요'],
     answerType: ANSWER_TYPE.SINGLE_SELECT,
     nextQuestion: 2
   },
@@ -51,7 +51,7 @@ const pollData: PollData[] = [
   },
   {
     question: '블록체인 기술의 활용 유무가 랜덤박스 구입에 얼마나 영향을 주나요?',
-    options: ['영향이 전혀 없어요', '영향이 거의 없어요', '그저그래요', '영향이 조금 있어요', '매우 영향있어요'],
+    options: ['전혀 영향없어요', '거의 영향없어요', '그저그래요', '조금 영향있어요', '매우 영향있어요'],
     answerType: ANSWER_TYPE.SINGLE_SELECT,
     nextQuestion: 9,
   },
@@ -62,10 +62,15 @@ const pollData: PollData[] = [
   },
 ]
 
+const submitAnswer = () => {
+
+}
+
 const PollPage = ({route, navigation}: PollProps) => {
   return (
     <PollTemplate
       pollData={pollData}
+      endPoll={submitAnswer}
     />
   )
 }

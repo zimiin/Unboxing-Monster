@@ -13,7 +13,6 @@ const SelectItemRadio = (props: Props) => {
     <TouchableOpacity
       style={[{
         flexDirection: 'row',
-        alignItems: 'center',
       }, props.style]}
     >
       <Image
