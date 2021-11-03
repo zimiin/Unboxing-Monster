@@ -132,43 +132,46 @@ function PollTemplate(props: Props) {
             : undefined}
 
           <View style={{ flexDirection: 'row' }}>
-            {curQuestion + 1 < props.pollData.length ?
-              <>
-                {curQuestion === 0 ?
-                  undefined
-                  :
-                  <HalfWidthButton
-                    buttonStyle={{
-                      backgroundColor: COLORS.grey_box,
-                      marginRight: scale(12),
-                    }}
-                    textStyle={{
-                      color: 'black',
-                    }}
-                    onPress={moveToPrevQuestion}
-                    text='이전으로'
-                  />
-                }
-
-                <HalfWidthButton
-                  buttonStyle={{
-                    position: 'absolute',
-                    right: 0,
-                  }}
-                  text='다음으로'
-                  onPress={moveToNextQuestion}
-                />
-              </>
+            {curQuestion === 0 ?
+              undefined
               :
-              <FullContentWidthButton
-                onPress={props.endPoll}
-              >
-                응답완료하고 포인트받기
-              </FullContentWidthButton>
+              <HalfWidthButton
+                buttonStyle={{
+                  backgroundColor: COLORS.grey_box,
+                  marginRight: scale(12),
+                }}
+                textStyle={{
+                  color: 'black',
+                }}
+                onPress={moveToPrevQuestion}
+                text='이전으로'
+              />
+            }
+
+            {curQuestion + 1 === props.pollData.length ?
+              undefined :
+              <HalfWidthButton
+                buttonStyle={{
+                  position: 'absolute',
+                  right: 0,
+                }}
+                text='다음으로'
+                onPress={moveToNextQuestion}
+              />
             }
           </View>
         </View>
       </View>
+
+      {curQuestion + 1 === props.pollData.length ?
+        <FullContentWidthButton
+          onPress={props.endPoll}
+          style={{ position: 'absolute', bottom: 30, alignSelf: 'center' }}
+        >
+          응답완료하고 포인트받기
+        </FullContentWidthButton>
+        : undefined
+      }
 
       <SafeAreaView />
     </View>
