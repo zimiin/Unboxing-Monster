@@ -1,5 +1,6 @@
 import ShortAnswerField from '@components/atoms/ShortAnswerField'
 import CheckBoxOptions from '@components/molecules/CheckBoxOptions'
+import NumberingOptions from '@components/molecules/NumberingOptions'
 import RadioOptions from '@components/molecules/RadioOptions'
 import SelectItemRadio from '@components/molecules/SelectItemRadio'
 import React, { useState } from 'react'
@@ -11,15 +12,19 @@ type AnswerType = {
   SINGLE_SELECT: number,
   MULTIPLE_SELECT: number,
   SHORT_ANSWER: number,
+  NUMBERING: number,
 }
 
 export const ANSWER_TYPE: AnswerType = {
   SINGLE_SELECT: 0,
   MULTIPLE_SELECT: 1,
   SHORT_ANSWER: 2,
+  NUMBERING: 3,
 }
 
 interface Props {
+  answers: (number[] | string)[],
+  storeAnswer: (questionIndex: number, answer: number[] | string) => void,
   questionIndex: number,
   question: string,
   answerType: AnswerTypeValue,
@@ -27,14 +32,6 @@ interface Props {
 }
 
 const PollQuestion = (props: Props) => {
-  const [answers, setAnswers] = useState<(number[] | string)[]>([])
-
-  const storeAnswer = (answer: string | number[]) => {
-    let newAnswers = answers.slice()
-    newAnswers[props.questionIndex] = answer
-    setAnswers(newAnswers)
-  }
-
   return (
     <View>
       <View
@@ -55,22 +52,29 @@ const PollQuestion = (props: Props) => {
 
       {props.answerType === ANSWER_TYPE.SHORT_ANSWER ?
         <ShortAnswerField
-          value={answers[props.questionIndex] as string || ''}
-          onChangeText={storeAnswer}
+          value={props.answers[props.questionIndex] as string || ''}
+          onChangeText={(input: string) => props.storeAnswer(props.questionIndex, input)}
         />
         :
         props.answerType === ANSWER_TYPE.MULTIPLE_SELECT ?
           <CheckBoxOptions
             optionList={props.options || []}
-            selectedOptions={answers[props.questionIndex] as number[] || []}
-            storeSelectOptions={storeAnswer}
+            selectedOptions={props.answers[props.questionIndex] as number[] || []}
+            storeSelectOptions={(selected: number[]) => props.storeAnswer(props.questionIndex, selected)}
           />
           :
-          <RadioOptions
-            optionList={props.options || []}
-            selectedOption={answers[props.questionIndex] as number[] || []}
-            storeSelectOption={storeAnswer}
-          />
+          props.answerType === ANSWER_TYPE.SINGLE_SELECT ?
+            <RadioOptions
+              optionList={props.options || []}
+              selectedOption={props.answers[props.questionIndex] as number[] || []}
+              storeSelectOption={(selected: number[]) => props.storeAnswer(props.questionIndex, selected)}
+            />
+            :
+            <NumberingOptions
+              optionList={props.options || []}
+              selectedOptions={props.answers[props.questionIndex] as number[] || []}
+              storeSelectOptions={(selected: number[]) => props.storeAnswer(props.questionIndex, selected)}
+            />
       }
       </View>
   )

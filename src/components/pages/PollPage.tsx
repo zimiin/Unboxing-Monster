@@ -1,7 +1,7 @@
 import { ANSWER_TYPE } from '@components/organisms/PollQuestion'
 import PollTemplate, { PollData } from '@components/templates/PollTemplate'
 import { PollProps } from '@constants/navigationTypes'
-import React from 'react'
+import React, { useState } from 'react'
 
 const pollData: PollData[] = [
   {
@@ -34,7 +34,7 @@ const pollData: PollData[] = [
   {
     question: '다음 중 구매하고 싶은 5000원 랜덤박스 구성을 순서대로 골라주세요. (각 상품의 확률은 기댓값이 5000원이 되도록 설정됩니다.)',
     options: ['4900원 ~ 1만원 사이의 상품들로 구성된 박스', '4000원 ~ 2만원 사이의 상품들로 구성된 박스', '1000원 ~ 5만원 사이의 상품들로 구성된 박스', '100만원 가치의 상품 + 4500원 내외의 상품으로 구성된 박스', '100만원 가치의 상품 + 2000원 미만의 상품으로 구성된 박스'],
-    answerType: ANSWER_TYPE.MULTIPLE_SELECT,
+    answerType: ANSWER_TYPE.NUMBERING,
     nextQuestion: 6,
   },
   {
@@ -67,8 +67,18 @@ const submitAnswer = () => {
 }
 
 const PollPage = ({route, navigation}: PollProps) => {
+  const [answers, setAnswers] = useState<(number[] | string)[]>([])
+
+  const storeAnswer = (questionIndex: number, answer: string | number[]) => {
+    let newAnswers = answers.slice()
+    newAnswers[questionIndex] = answer
+    setAnswers(newAnswers)
+  }
+
   return (
     <PollTemplate
+      answers={answers}
+      storeAnswer={storeAnswer}
       pollData={pollData}
       endPoll={submitAnswer}
     />

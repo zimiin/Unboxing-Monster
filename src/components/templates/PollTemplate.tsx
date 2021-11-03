@@ -19,6 +19,8 @@ export type PollData = {
 interface Props {
   pollData: PollData[],
   endPoll: () => void,
+  answers: (number[] | string)[],
+  storeAnswer: (questionIndex: number, answer: number[] | string) => void,
 }
 
 function PollTemplate(props: Props) {
@@ -28,8 +30,8 @@ function PollTemplate(props: Props) {
   const moveToNextQuestion = () => {
     let newPrevQuestions = prevQuestions.slice()
     newPrevQuestions.push(curQuestion)
-
     setPrevQuestions(newPrevQuestions)
+
     setCurQuestion(curQuestion + 1)
   }
 
@@ -70,6 +72,8 @@ function PollTemplate(props: Props) {
         }}
       >
         <PollQuestion
+          answers={props.answers}
+          storeAnswer={props.storeAnswer}
           questionIndex={curQuestion}
           question={props.pollData[curQuestion].question}
           answerType={props.pollData[curQuestion].answerType}
