@@ -5,7 +5,8 @@ import { Image, TouchableOpacity, View, ViewStyle } from 'react-native'
 interface Props {
   checked?: boolean,
   children?: ReactNode,
-  style?: ViewStyle
+  style?: ViewStyle,
+  onPress?: () => void,
 }
 
 const SelectItemRadio = (props: Props) => {
@@ -14,6 +15,7 @@ const SelectItemRadio = (props: Props) => {
       style={[{
         flexDirection: 'row',
       }, props.style]}
+      onPress={props.onPress}
     >
       <Image
         source={props.checked === true ? IMAGES.radio_box_chkd : IMAGES.radio_box_unchkd}

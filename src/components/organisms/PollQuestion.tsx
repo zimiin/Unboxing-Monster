@@ -1,6 +1,6 @@
 import ShortAnswerField from '@components/atoms/ShortAnswerField'
 import CheckBoxOptions from '@components/molecules/CheckBoxOptions'
-import SelectItemCheckBox from '@components/molecules/SelectItemCheckBox'
+import RadioOptions from '@components/molecules/RadioOptions'
 import SelectItemRadio from '@components/molecules/SelectItemRadio'
 import React, { useState } from 'react'
 import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -66,23 +66,11 @@ const PollQuestion = (props: Props) => {
             storeSelectOptions={storeAnswer}
           />
           :
-          props.options?.map(
-            (option, index) => (
-              <SelectItemRadio
-                key={index}
-                checked={true}
-                style={{
-                  marginVertical: 6,
-                }}
-              >
-                <Text
-                  style={styles.text}
-                >
-                  {option}
-                </Text>
-              </SelectItemRadio>
-            )
-          )
+          <RadioOptions
+            optionList={props.options || []}
+            selectedOption={answers[props.questionIndex] as number[] || []}
+            storeSelectOption={storeAnswer}
+          />
       }
       </View>
   )
