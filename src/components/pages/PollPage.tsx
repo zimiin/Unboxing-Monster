@@ -59,6 +59,7 @@ const pollData: PollData[] = [
     question: '언박싱 몬스터가 정식으로 서비스되면 알림을 받고 싶으신가요? 관심있으시면 이메일을 입력해주세요!',
     answerType: ANSWER_TYPE.SHORT_ANSWER,
     nextQuestion: 9,
+    mandatory: false,
   },
 ]
 

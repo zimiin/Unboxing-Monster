@@ -14,6 +14,7 @@ export type PollData = {
   answerType: AnswerTypeValue,
   options?: string[],
   nextQuestion: number | number[],
+  mandatory?: boolean,
 }
 
 interface Props {
@@ -26,8 +27,30 @@ interface Props {
 function PollTemplate(props: Props) {
   const [prevQuestions, setPrevQuestions] = useState<Array<number>>([])
   const [curQuestion, setCurQuestion] = useState(0)
+  const [error, setError] = useState<string>('')
+
+  const isAnswered = () => {
+    const answer = props.answers[curQuestion]
+
+    if (props.pollData[curQuestion].answerType === ANSWER_TYPE.NUMBERING && answer?.length !== props.pollData[curQuestion].options?.length) {
+      return false
+    }
+
+    if (answer === undefined || (typeof answer === 'string' && answer === '') || (Array.isArray(answer) && answer === [])) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   const moveToNextQuestion = () => {
+    if (props.pollData[curQuestion].mandatory !== false && isAnswered() === false) {
+      setError('답변을 입력해주세요.')
+      return
+    }
+
+    setError('')
+
     let newPrevQuestions = prevQuestions.slice()
     newPrevQuestions.push(curQuestion)
     setPrevQuestions(newPrevQuestions)
@@ -36,6 +59,8 @@ function PollTemplate(props: Props) {
   }
 
   const moveToPrevQuestion = () => {
+    setError('')
+
     let newPrevQuestions = prevQuestions.slice()
     
     if (newPrevQuestions.length > 0) {
@@ -82,44 +107,60 @@ function PollTemplate(props: Props) {
 
         <View
           style={{
-            flexDirection: 'row',
             marginTop: 35,
           }}
         >
-          {curQuestion + 1 < props.pollData.length ?
-            <>
-              {curQuestion === 0 ?
-                undefined
-                :
+          {error ?
+            <Text
+              style={{
+                color: COLORS.error,
+                fontSize: 12,
+                fontFamily: 'NotoSansCJKkr-Regular',
+                lineHeight: 15,
+                alignSelf: 'center',
+                marginBottom: 10,
+              }}
+            >
+              {error}
+            </Text>
+            : undefined}
+
+          <View style={{ flexDirection: 'row' }}>
+            {curQuestion + 1 < props.pollData.length ?
+              <>
+                {curQuestion === 0 ?
+                  undefined
+                  :
+                  <HalfWidthButton
+                    buttonStyle={{
+                      backgroundColor: COLORS.grey_box,
+                      marginRight: scale(12),
+                    }}
+                    textStyle={{
+                      color: 'black',
+                    }}
+                    onPress={moveToPrevQuestion}
+                    text='이전으로'
+                  />
+                }
+
                 <HalfWidthButton
                   buttonStyle={{
-                    backgroundColor: COLORS.grey_box,
-                    marginRight: scale(12),
+                    position: 'absolute',
+                    right: 0,
                   }}
-                  textStyle={{
-                    color: 'black',
-                  }}
-                  onPress={moveToPrevQuestion}
-                  text='이전으로'
+                  text='다음으로'
+                  onPress={moveToNextQuestion}
                 />
-              }
-
-              <HalfWidthButton
-                buttonStyle={{
-                  position: 'absolute',
-                  right: 0,
-                }}
-                text='다음으로'
-                onPress={moveToNextQuestion}
-              />
-            </>
-            :
-            <FullContentWidthButton
-              onPress={props.endPoll}
-            >
-              응답완료하고 포인트받기
-            </FullContentWidthButton>
-          }
+              </>
+              :
+              <FullContentWidthButton
+                onPress={props.endPoll}
+              >
+                응답완료하고 포인트받기
+              </FullContentWidthButton>
+            }
+          </View>
         </View>
       </View>
 
