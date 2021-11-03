@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   barcharLegendText: {
-    fontFamily: 'NotoSansCJKkr-Medium',
+    // fontFamily: 'NotoSansCJKkr-Medium',
     letterSpacing: -0.3,
-    lineHeight: 18,
+    // lineHeight: 18,
     fontSize: 12, 
     color: 'rgb(143, 143, 143)', 
     textAlign: 'right'
