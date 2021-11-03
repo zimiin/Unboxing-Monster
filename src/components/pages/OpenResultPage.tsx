@@ -4,9 +4,11 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { URLS } from '@constants/urls'
 import { Item } from '@constants/types'
+import { getAccessTokenFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 
 const OpenResultPage = ({route, navigation}: OpenResultProps) => {
   const [openResultData, setOpenResultData] = useState<Item[]>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   
   useEffect(() => {
     const setOpenResultDataState = async () => {
@@ -43,24 +45,78 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
     setOpenResultDataState()
   }, [])
 
-  const isFirstOpen = async (): Promise<boolean> => {
-    // 모든 오픈 결과 가져와서 오픈 기록 찾기 (만약 응답 안하면 오픈할때마다 물어볼수있도록)
-    // ---> 설문조사 여부로 확인하기!!!!
-    return true
+  const activatedPollEvent = async (): Promise<boolean> => {
+    try {
+      const response = await fetch(URLS.unboxing_api + 'event/survey/check')
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        console.log('activatedPollEvent ' + 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message)
+      }
+
+      const numOfEnrollments = parseInt(await response.text())
+      console.log('activatedPollEvent numOfEnrollments', numOfEnrollments)
+
+      if (numOfEnrollments < 200) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log('Error in activatedPollEvent', error)
+      return false
+    }
+  }
+
+  const didNotAnswerPoll = async (): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'event/survey/check/user', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+        }
+      })
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+
+      const answeredPoll = await response.text()
+      console.log('didNotAnswerPoll answeredPoll', answeredPoll)
+
+      if (answeredPoll === 'true') {
+        return false
+      } else {
+        return true
+      }
+    } catch (error) {
+      console.log('Error in didNotAnswerPoll', error)
+      return false
+    }
   }
 
   const goToStorage = async () => {
-    if (await isFirstOpen()) {
+    if (await activatedPollEvent() && await didNotAnswerPoll()) {
+      setIsLoading(false)
       navigation.replace('PollInit')
     } else {
+      setIsLoading(false)
       navigation.replace('Main', {screen: 'Storage'})
     }
   }
 
   return (
     <OpenResultTemplate 
-      onPressGoToStorage={goToStorage}
+      onPressGoToStorage={() => {
+        setIsLoading(true)
+        goToStorage()
+      }}
       openResultData={openResultData || []}
+      isLoading={isLoading}
     />
   )
 }

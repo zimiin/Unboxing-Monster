@@ -13,11 +13,13 @@ import {
 } from 'react-native'
 import {COLORS} from '@constants/colors'
 import { Item } from '@constants/types'
+import Loading from '@components/atoms/Loading'
 
 
 interface Props {
   onPressGoToStorage: () => void,
   openResultData: Item[],
+  isLoading: boolean,
 }
 
 const OpenResultTemplate = (props: Props) => {
@@ -79,6 +81,8 @@ const OpenResultTemplate = (props: Props) => {
           onPress={props.onPressGoToStorage}
         />
       </SafeAreaView>
+
+      {props.isLoading === true ? <Loading /> : undefined}
     </>
   )
 }
