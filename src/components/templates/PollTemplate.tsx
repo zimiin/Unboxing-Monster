@@ -55,7 +55,13 @@ function PollTemplate(props: Props) {
     newPrevQuestions.push(curQuestion)
     setPrevQuestions(newPrevQuestions)
 
-    setCurQuestion(curQuestion + 1)
+    const nextQuestionIdx = props.pollData[curQuestion].nextQuestion
+    if (Array.isArray(nextQuestionIdx)) {
+      const selectedOption = props.answers[curQuestion] as number[]
+      setCurQuestion(nextQuestionIdx[selectedOption[0]])
+    } else {
+      setCurQuestion(nextQuestionIdx)
+    }
   }
 
   const moveToPrevQuestion = () => {
