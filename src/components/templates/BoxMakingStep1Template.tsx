@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSansCJKkr-Medium',
     fontSize: 12,
     lineHeight: 16,
+    color: 'black'
   },
   greyText: {
     color: 'rgba(6, 6, 6, 0.5)',
