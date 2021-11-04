@@ -26,6 +26,7 @@ export const EVENT_RESULT: EventResult = {
 }
 
 const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) => {
+  const [{ }, { setUserData }] = useContext(UserContext)
   const [{email, provider, providerToken}, { }] = useContext(SignUpContext)
   const [nicknameInput, setNicknameInput] = useState<string>('')
   const [error, setError] = useState<string>()
@@ -87,10 +88,35 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       if (response.status !== 200) {
         throw 'status:' + response.status + ', message:' + json.message + ', url:' + response.url
       }
-
+      
       return json.access_token
     } catch (error) {
       console.log('Error in requestLogin:', error)
+      throw error
+    }
+  }
+
+  const getUserInfo = async (token: string) => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + 'users', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+
+      if (response.status !== 200) {
+        const json = await response.json()
+        throw 'Failed to GET ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+
+      const user: {id: string, email: string, point: number} = await response.json()
+      return user
+    } catch (error) {
+      console.log('Error in getUserInfo', error)
       throw error
     }
   }
@@ -100,6 +126,9 @@ const SignUpNicknameInputPage = ({route, navigation}: SignUpNicknameInputProps) 
       await requestJoin()
       const accessToken = await requestLogin()
       await storeUserInfo(accessToken, nicknameInput, email, '')
+
+      const user = await getUserInfo(accessToken)
+      await setUserData(user.id, nicknameInput, email, accessToken, '')
     } catch (error) {
       console.log("Error in requestJoinAndLogin", error)
       throw error

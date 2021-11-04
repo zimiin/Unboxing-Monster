@@ -4,11 +4,13 @@ import { User } from "@constants/types"
 import { URLS } from "@constants/urls"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { CommonActions } from "@react-navigation/native"
+import { UserContext } from "@src/stores/UserContext"
 import { clearUserData, getAccessTokenFromAsyncStorage, getNicknameFromAsyncStorage } from "@src/utils/asyncStorageUtils"
 import { getLoginUserId, hasLoggedIn } from "@src/utils/loginUtils"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react"
 
 const MyPagePage = ({route, navigation}: MyPageProps) => {
+  const [{ }, { deleteUserData }] = useContext(UserContext)
   const [loginState, setLoginState] = useState<boolean>(false)
   const [isFetchingLoginState, setIsFetchingLoginState] = useState<boolean>(true)
   const [nickname, setNickname] = useState<string>()
@@ -83,6 +85,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
   const logout = async () => {    
     setShowModal(false)
     await clearUserData()
+    deleteUserData()
     navigation.replace('Auth', {screen: 'Login'})
   }
 

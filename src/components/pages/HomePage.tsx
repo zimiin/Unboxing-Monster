@@ -200,12 +200,6 @@ const HomePage = ({route, navigation}: HomeProps) => {
         openIntroModal={() => setModalVisible(true)}
         onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
       />
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Open', {screen: 'Loading', params: {boxId: 0, count: 0}})}
-      >
-        <Text>Loading Page</Text>
-      </TouchableOpacity>
     </>
   )
 }
