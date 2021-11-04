@@ -184,7 +184,7 @@ const StoragePage = ({route, navigation}: StorageProps) => {
   }, [])
 
   const openBox = (boxId: BoxId, count: number) => {
-    navigation.navigate('Open', {
+    navigation.replace('Open', {
       screen: 'Loading',
       params: {
         boxId: boxId,

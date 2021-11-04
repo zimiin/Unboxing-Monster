@@ -6,7 +6,7 @@ const OpeningPage = ({route, navigation}: OpeningProps) => {
   console.log(route.params.result)
   return (
     <OpeningTemplate 
-      onAnimationEnd={() => navigation.push('OpenResult', { result: route.params.result })}
+      onAnimationEnd={() => navigation.replace('OpenResult', { result: route.params.result })}
     />
   )
 }

@@ -65,7 +65,8 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   facebook_square: require('assets/images/facebook_square.png'),
   kakao_square: require('assets/images/kakao_square.png'),
   unboxing_logo: require('assets/images/UnboxingLogo.png'),
-  poll_event: require('assets/images/poll_event.png')
+  poll_event: require('assets/images/poll_event.png'),
+  box_making: require('assets/images/box_making.gif')
 }
 
 export const defaultBoxUri: string = 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'

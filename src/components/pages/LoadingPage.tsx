@@ -5,10 +5,13 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { URLS } from '@constants/urls'
 import { getAccessTokenFromAsyncStorage } from '@src/utils/asyncStorageUtils'
-import { Coupon } from '@constants/types'
+import { Coupon, ItemId } from '@constants/types'
 
 const LoadingPage = ({route, navigation}: LoadingProps) => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [switchImage, setSwitchImage] = useState<number>(0)
+  const [openResult, setOpenResult] = useState<ItemId[]>()
+  const [showOpenFailedModal, setShowOpenFailedModal] = useState<boolean>(false)
 
   useEffect(() => {
     const requestBoxOpen = async () => {
@@ -35,19 +38,34 @@ const LoadingPage = ({route, navigation}: LoadingProps) => {
         }
 
         const coupons: Coupon[] = await response.json()
-        navigation.push('Opening', { result: Array.from(coupons, (coupon) => coupon.itemId) })
+        setOpenResult(Array.from(coupons, (coupon) => coupon.itemId))
       } catch (error) {
-        console.error('Error in requestBoxOpen', error)
+        setShowOpenFailedModal(true)
+        console.log('Error in requestBoxOpen', error)
       }
     }
 
     requestBoxOpen()
+      .catch(error => console.log('Error in LoadingPage useEffect', error))
+    setTimeout(() => setSwitchImage(1), 2900)
   }, [])
+
+  useEffect(() => {
+    if (switchImage === 1 && openResult !== undefined) {
+      navigation.push('Opening', { result: openResult })
+    }
+  }, [openResult, switchImage])
 
   return (
     <LoadingTemplate  
       modalVisible={modalVisible}
-      onRequestModalClose={() => navigation.navigate('Main')}
+      openFailedModalVisible={showOpenFailedModal}
+      switchImage={switchImage}
+      onRequestModalClose={() => {
+        setModalVisible(false)
+        setShowOpenFailedModal(false)
+        navigation.navigate('Main', { screen: 'Storage' })
+      }}
     />
   )
 }

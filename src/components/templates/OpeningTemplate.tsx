@@ -13,7 +13,6 @@ interface Props {
 }
 
 const OpeningTemplate = (props: Props) => {
-  const [animation, setAnimation] = useState<number>(0)
 
   return (
     <View
@@ -23,31 +22,16 @@ const OpeningTemplate = (props: Props) => {
         backgroundColor: 'white',
         flex: 1,
       }}
-    >
-      {animation == 0 ? 
-        <Animatable.Image
-          animation="slideInDown"
-          iterationCount={3}
-          duration={500}
-          direction="alternate"
-          source={IMAGES.unopen_box}
-          style={{
-            width: scale(312),
-            height: scale(238)
-          }}
-          onAnimationEnd={() => setAnimation(1)}
-        />
-      : <Animatable.Image
-          animation="tada"
-          source={IMAGES.open_box}
-          style={{
-            width: scale(312),
-            height: scale(308)
-          }}
-          onAnimationEnd={props.onAnimationEnd}
-        />
-      }
-      
+    > 
+      <Animatable.Image
+        animation="tada"
+        source={IMAGES.open_box}
+        style={{
+          width: scale(312),
+          height: scale(308)
+        }}
+        onAnimationEnd={props.onAnimationEnd}
+      />
     </View>
   )
 }

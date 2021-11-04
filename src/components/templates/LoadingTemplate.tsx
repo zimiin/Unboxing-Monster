@@ -9,31 +9,39 @@ import {
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import NoticeModal from "@components/molecules/NoticeModal"
+import * as Animatable from 'react-native-animatable'
 
 interface Props {
   modalVisible: boolean,
+  switchImage: number,
+  openFailedModalVisible: boolean,
   onRequestModalClose: () => void,
 }
 
 const LoadingTemplate = (props: Props) => {
   return (
     <View style={styles.container}>
-      <Bold
-        style={{
-          fontSize: 17,
-          marginBottom: 30,
-        }}
-      >
-        블록체인에 연결 중...
-      </Bold>
-
-      <Image
-        source={IMAGES.open_loading}
-        style={{
-          width: scale(278),
-          height: scale(256)
-        }}
-      />
+      {props.switchImage === 0 ?
+        <Image
+          source={IMAGES.box_making}
+          style={{
+            width: scale(312),
+            height: scale(312)
+          }}
+        />
+        :
+        <Animatable.Image
+          animation="jello"
+          iterationCount={'infinite'}
+          duration={1700}
+          source={IMAGES.unopen_box}
+          style={{
+            width: scale(312),
+            height: scale(238),
+            marginTop: scale(74)
+          }}
+        />
+      }
 
       <NoticeModal
         visible={props.modalVisible}
@@ -50,6 +58,18 @@ const LoadingTemplate = (props: Props) => {
         <Text style={styles.email}>
           ask.unboxing.monster@gmail.com
         </Text>
+      </NoticeModal>
+
+      <NoticeModal
+        visible={props.openFailedModalVisible}
+        onRequestClose={props.onRequestModalClose}
+      >
+        <Image
+          source={IMAGES.notice}
+          style={styles.modalImage}
+        />
+
+        <Bold>박스 오픈에 문제가 발생했습니다.</Bold>
       </NoticeModal>
     </View>
   )
