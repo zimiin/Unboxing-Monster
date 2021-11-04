@@ -3,11 +3,17 @@ import PollQuestion, { AnswerTypeValue, ANSWER_TYPE } from '@components/organism
 import CustomBoxProgressBar from '@components/atoms/CustomBoxProgressBar'
 import { scale } from '@constants/figure';
 import React, { useState, useMemo } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import FullWidthButton from '@components/atoms/button/FullWidthButton';
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton';
 import HalfWidthButton from '@components/atoms/button/HalfWidthButton';
 import { COLORS } from '@constants/colors';
+import Loading from '@components/atoms/Loading';
+import { ResultCodeValue, RESULT_CODE } from '@components/pages/PollPage';
+import ConfirmModal from '@components/molecules/ConfirmModal';
+import NoticeModal from '@components/molecules/NoticeModal';
+import RegularText from '@components/atoms/typography/RegularText';
+import NoticeIcon from '@components/atoms/icon/NoticeIcon';
 
 export type PollData = {
   question: string,
@@ -22,6 +28,10 @@ interface Props {
   endPoll: () => void,
   answers: (number[] | string)[],
   storeAnswer: (questionIndex: number, answer: number[] | string) => void,
+  isLoading: boolean,
+  showModal: boolean,
+  submitResult?: ResultCodeValue,
+  onRequestCloseModal: () => void,
 }
 
 function PollTemplate(props: Props) {
@@ -174,8 +184,78 @@ function PollTemplate(props: Props) {
       }
 
       <SafeAreaView />
+
+      {props.isLoading === true ? <Loading /> : undefined}
+
+      <NoticeModal
+        visible={props.showModal}
+        onRequestClose={props.onRequestCloseModal}
+      >
+        <View
+          style={styles.modalContent}
+        >
+          {props.submitResult === RESULT_CODE.SUCCESS ?
+            <>
+              <RegularText
+                style={styles.modalText}
+              >
+                설문 응답 완료!
+              </RegularText>
+
+              <RegularText
+                style={styles.modalText}
+              >
+                3000포인트가 적립되었어요.
+              </RegularText>
+            </>
+            : props.submitResult === RESULT_CODE.END_EVENT ?
+              <>
+                <RegularText
+                  style={styles.modalText}
+                >
+                  이벤트가 종료되었어요.
+                </RegularText>
+
+                <RegularText
+                  style={styles.modalText}
+                >
+                  더 믾은 분께 제공드리지 못해 죄송해요.
+                </RegularText>
+              </>
+              : props.submitResult === RESULT_CODE.DUPLICATED ?
+                <>
+                  <RegularText
+                    style={styles.modalText}
+                  >
+                    이미 이벤트에 참여하셨어요.
+                  </RegularText>
+                </>
+                : 
+                <>
+                  <NoticeIcon />
+
+                  <RegularText
+                    style={styles.modalText}
+                  >
+                    서버에 문제가 발생했습니다.
+                  </RegularText>
+                </>
+          }
+        </View>
+      </NoticeModal>
     </View>
   )
 }
 
 export default PollTemplate
+
+const styles = StyleSheet.create({
+  modalContent: {
+    marginVertical: 20,
+    alignItems: 'center'
+  },
+  modalText: {
+    fontSize: 14,
+    lineHeight: 20,
+  }
+})

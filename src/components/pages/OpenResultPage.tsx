@@ -88,10 +88,10 @@ const OpenResultPage = ({route, navigation}: OpenResultProps) => {
       const answeredPoll = await response.text()
       console.log('didNotAnswerPoll answeredPoll', answeredPoll)
 
-      if (answeredPoll === 'true') {
-        return false
-      } else {
+      if (answeredPoll === 'false') {
         return true
+      } else {
+        return false
       }
     } catch (error) {
       console.log('Error in didNotAnswerPoll', error)

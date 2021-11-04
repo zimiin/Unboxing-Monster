@@ -1,6 +1,8 @@
 import { ANSWER_TYPE } from '@components/organisms/PollQuestion'
 import PollTemplate, { PollData } from '@components/templates/PollTemplate'
 import { PollProps } from '@constants/navigationTypes'
+import { URLS } from '@constants/urls'
+import { getAccessTokenFromAsyncStorage } from '@src/utils/asyncStorageUtils'
 import React, { useState } from 'react'
 
 const pollData: PollData[] = [
@@ -63,17 +65,81 @@ const pollData: PollData[] = [
   },
 ]
 
-const submitAnswer = () => {
+export type ResultCodeValue = (201 | 406 | 409 | 500)
 
+type ResultCode = {
+  SUCCESS: ResultCodeValue,
+  END_EVENT: ResultCodeValue,
+  DUPLICATED: ResultCodeValue,
+  SERVER_ERROR: ResultCodeValue,
+}
+
+export const RESULT_CODE = {
+  SUCCESS: 201,
+  END_EVENT: 406,
+  DUPLICATED: 409,
+  SERVER_ERROR: 500,
 }
 
 const PollPage = ({route, navigation}: PollProps) => {
   const [answers, setAnswers] = useState<(number[] | string)[]>([])
-
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [submitResult, setSubmitResult] = useState<ResultCodeValue>()
+  
   const storeAnswer = (questionIndex: number, answer: string | number[]) => {
     let newAnswers = answers.slice()
     newAnswers[questionIndex] = answer
     setAnswers(newAnswers)
+  }
+  
+  const openModal = () => {
+    setIsLoading(false)
+    setShowModal(true)
+  }
+
+  const submitAnswer = async () => {
+    try {
+      const response = await fetch(
+        URLS.unboxing_api + '/event/survey', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
+        },
+        body: JSON.stringify(answers)
+      })
+
+      console.log('submitAnswer response.status', response.status)
+      if (response.status === 201) {
+        setSubmitResult(201)
+      } else if (response.status === 406) {
+        setSubmitResult(406)
+      } else if (response.status === 409) {
+        setSubmitResult(409)
+      } else {
+        setSubmitResult(500)
+      }
+    } catch (error) {
+      console.log('Error in submitAnswer', error)
+      setSubmitResult(500)
+    }
+  }
+
+  const endPoll = () => {
+    setIsLoading(true)
+    submitAnswer()
+      .then(() => openModal())
+      .catch((error) => { console.log('Error in endPoll', error) })
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+    
+    if (submitResult === 201 || submitResult === 406 || submitResult === 409) {
+      navigation.replace('Main')
+    }
   }
 
   return (
@@ -81,7 +147,11 @@ const PollPage = ({route, navigation}: PollProps) => {
       answers={answers}
       storeAnswer={storeAnswer}
       pollData={pollData}
-      endPoll={submitAnswer}
+      isLoading={isLoading}
+      endPoll={endPoll}
+      showModal={showModal}
+      submitResult={submitResult}
+      onRequestCloseModal={closeModal}
     />
   )
 }
