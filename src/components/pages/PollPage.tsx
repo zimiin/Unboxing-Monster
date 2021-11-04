@@ -65,13 +65,14 @@ const pollData: PollData[] = [
   },
 ]
 
-export type ResultCodeValue = (201 | 406 | 409 | 500)
+export type ResultCodeValue = (201 | 406 | 409 | 500 | 404)
 
 type ResultCode = {
   SUCCESS: ResultCodeValue,
   END_EVENT: ResultCodeValue,
   DUPLICATED: ResultCodeValue,
   SERVER_ERROR: ResultCodeValue,
+  UNAUTHORIZED: ResultCodeValue
 }
 
 export const RESULT_CODE = {
@@ -79,6 +80,7 @@ export const RESULT_CODE = {
   END_EVENT: 406,
   DUPLICATED: 409,
   SERVER_ERROR: 500,
+  UNAUTHORIZED: 404
 }
 
 const PollPage = ({route, navigation}: PollProps) => {
@@ -98,24 +100,54 @@ const PollPage = ({route, navigation}: PollProps) => {
     setShowModal(true)
   }
 
+  const getAnswerString = () => {
+    let answerString = ''
+
+    for (let i = 0; i < answers.length; i++) {
+      answerString += i.toString()
+      answerString += ': '
+
+      if (Array.isArray(answers[i])) {
+        answerString += '['
+      }
+
+      answerString += answers[i]?.toString() || 'undefined'
+
+      if (Array.isArray(answers[i])) {
+        answerString += ']'
+      }
+
+      answerString += ', '
+    }
+
+    console.log('getAnswerString answerString', answerString)
+    return answerString
+  }
+
   const submitAnswer = async () => {
     try {
       const response = await fetch(
-        URLS.unboxing_api + '/event/survey', {
+        URLS.unboxing_api + 'event/survey', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + await getAccessTokenFromAsyncStorage()
         },
-        body: JSON.stringify(answers)
+        body: JSON.stringify({
+          survey: getAnswerString()
+        })
       })
 
       console.log('submitAnswer response.status', response.status)
+      console.log(await response.json())
+
       if (response.status === 201) {
         setSubmitResult(201)
       } else if (response.status === 406) {
         setSubmitResult(406)
+      } else if (response.status === 404) {
+        setSubmitResult(404)
       } else if (response.status === 409) {
         setSubmitResult(409)
       } else {

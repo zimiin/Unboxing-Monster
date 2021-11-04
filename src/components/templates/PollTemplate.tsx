@@ -237,7 +237,11 @@ function PollTemplate(props: Props) {
                   <RegularText
                     style={styles.modalText}
                   >
-                    서버에 문제가 발생했습니다.
+                    {props.submitResult === RESULT_CODE.UNAUTHORIZED ?
+                      '인증에 문제가 발생했습니다.'
+                      :
+                      '서버에 문제가 발생했습니다.'
+                    }
                   </RegularText>
                 </>
           }
