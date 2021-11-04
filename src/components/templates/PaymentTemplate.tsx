@@ -20,7 +20,7 @@ import PointTableRow from '@components/molecules/PointTableRow'
 import { COLORS } from '@constants/colors'
 import CheckBox from '@components/atoms/button/CheckBox'
 import TextRadioButton from '@components/atoms/button/TextRadioButton'
-import { SCREEN_WIDTH } from '@constants/figure'
+import { SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import EdgeAlignedRow from '@components/atoms/EdgeAlignedRow'
 import Bold from '@components/atoms/typography/Bold'
 import { PaymentMethod } from '@components/pages/PaymentPage'
@@ -198,62 +198,64 @@ const PaymentTemplate = (props: Props) => {
 
       <HorizontalRule />
 
-      <ContentBox title='결제수단'
-        style={styles.paymentMethodContentBox}>
-        <View style={styles.radioButtonContainer}>
-          {paymentMethodRadioButtons}
+      {/* <View>
+        <ContentBox title='결제수단'
+          style={styles.paymentMethodContentBox}>
+          <View style={styles.radioButtonContainer}>
+            {paymentMethodRadioButtons}
+          </View>
+        </ContentBox>
+
+        <HorizontalRule />
+
+        <Bold style={styles.title}>핸드폰 번호 입력</Bold>
+
+        <View style={styles.phoneInputRow}>
+          <GreyInputBox
+            value={props.phoneInput}
+            onChangeText={props.onChangePhoneInput}
+            keyboardType={'numeric'}
+            returnKeyType={'done'}
+            style={styles.phoneInputBox}
+            onSubmitEditing={props.onSubmitPhoneInput}
+          />
+
+          <CheckBox
+            style={styles.phoneCheckBox}
+            checked={props.savePhone}
+            onPress={props.onPressSavePhone}
+          />
+
+          <Text style={styles.tableText}>다음에도 사용하기</Text>
         </View>
-      </ContentBox>
 
-      <HorizontalRule />
-
-      <Bold style={styles.title}>핸드폰 번호 입력</Bold>
-
-      <View style={styles.phoneInputRow}>
-        <GreyInputBox
-          value={props.phoneInput}
-          onChangeText={props.onChangePhoneInput}
-          keyboardType={'numeric'}
-          returnKeyType={'done'}
-          style={styles.phoneInputBox}
-          onSubmitEditing={props.onSubmitPhoneInput}
-        />
-
-        <CheckBox
-          style={styles.phoneCheckBox}
-          checked={props.savePhone}
-          onPress={props.onPressSavePhone}
-        />
-
-        <Text style={styles.tableText}>다음에도 사용하기</Text>
-      </View>
-
-      <View
-        style={[
-          styles.phoneInputRow,
-          styles.personalInfoRow
-        ]}
-      >
-        <TouchableOpacity
-          onPress={props.onPressPersonalInfoUsage}
+        <View
+          style={[
+            styles.phoneInputRow,
+            styles.personalInfoRow
+          ]}
         >
-          <RegularText 
-            style={styles.personalInfoText}
+          <TouchableOpacity
+            onPress={props.onPressPersonalInfoUsage}
           >
-            제3자 개인정보제공 동의
-          </RegularText>
-        </TouchableOpacity>
+            <RegularText
+              style={styles.personalInfoText}
+            >
+              제3자 개인정보제공 동의
+            </RegularText>
+          </TouchableOpacity>
 
-        <CheckBox
-          style={styles.personalInfoCheckBox}
-          checked={props.personalInfoChecked}
-          onPress={props.onPressPersonalInfoCheckBox}
-        />
-      </View>
+          <CheckBox
+            style={styles.personalInfoCheckBox}
+            checked={props.personalInfoChecked}
+            onPress={props.onPressPersonalInfoCheckBox}
+          />
+        </View>
 
-      {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null}
+        {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null}
+      </View> 
 
-      <HorizontalRule style={styles.horizontalRule}/>
+      <HorizontalRule style={styles.horizontalRule}/> */}
 
       <ContentBox title='최종 결제 금액'>
         <View style={styles.finalPriceContainer}>
