@@ -15,101 +15,99 @@ const PaymentCompletePage = ({route, navigation}: PaymentCompleteProps) => {
 
   console.log('PaymentCompletePage', route.params)
 
-  useEffect(() => {
-    const getPaidAmount = () => {
-      let amount = 0
+  const getPaidAmount = () => {
+    let amount = 0
 
-      for (let [boxId, cartValue] of cart) {
-        if (cartValue.checked === true) {
-          const box = boxData.get(boxId)
-          if (box) {
-            amount += box.price * cartValue.count
-          }
+    for (let [boxId, cartValue] of cart) {
+      if (cartValue.checked === true) {
+        const box = boxData.get(boxId)
+        if (box) {
+          amount += box.price * cartValue.count
         }
       }
-      console.log('getPaidAmount')
-      return amount
     }
+    console.log('getPaidAmount')
+    return amount
+  }
 
-    const getPaidBoxIdCounts = () => {
-      let boxes: {boxId: BoxId, count: number}[] = []
+  const getPaidBoxIdCounts = () => {
+    let boxes: { boxId: BoxId, count: number }[] = []
 
-      for (let [boxId, cartValue] of cart) {
-        if (cartValue.checked === true) {
-          boxes.push({boxId: boxId, count: cartValue.count})
-        }
+    for (let [boxId, cartValue] of cart) {
+      if (cartValue.checked === true) {
+        boxes.push({ boxId: boxId, count: cartValue.count })
       }
-      console.log('getPaidBoxIdCounts')
-      return boxes
     }
+    console.log('getPaidBoxIdCounts')
+    return boxes
+  }
 
-    const validatePayment = async () => {
-      try {
-        const accessToken = await getAccessTokenFromAsyncStorage()
-        const merchantUid = route.params?.response.merchant_uid
-        if (merchantUid === undefined) throw 'undefined merchant_uid'
-        const impUid = route.params?.response.imp_uid
-        if (impUid === undefined) throw 'undefined imp_uid'
-        const price: number = getPaidAmount()
-        const boxIdCounts: {boxId: BoxId, count: number}[] = getPaidBoxIdCounts()
-        const point = route.params?.point
+  const validatePayment = async () => {
+    try {
+      const accessToken = await getAccessTokenFromAsyncStorage()
+      const merchantUid = route.params?.response.merchant_uid
+      if (merchantUid === undefined) throw 'undefined merchant_uid'
+      const impUid = route.params?.response.imp_uid
+      if (impUid === undefined) throw 'undefined imp_uid'
+      const price: number = getPaidAmount()
+      const boxIdCounts: { boxId: BoxId, count: number }[] = getPaidBoxIdCounts()
+      const point = route.params?.point
 
-        const response = await fetch(
-          URLS.unboxing_api + 'purchase', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + accessToken
-          },
-          body: JSON.stringify({
-            merchant_uid: merchantUid,
-            imp_uid: impUid,
-            price: price,
-            boxes: boxIdCounts,
-            point: point,
-          })
+      const response = await fetch(
+        URLS.unboxing_api + 'purchase', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken
+        },
+        body: JSON.stringify({
+          merchant_uid: merchantUid,
+          imp_uid: impUid,
+          price: price,
+          boxes: boxIdCounts,
+          point: point,
         })
+      })
 
-        if (response.status !== 201) {
-          const json = await response.json()
-          throw 'Failed to POST ' + response.url + ' status ' + response.status + ', ' + json.message
-        }
-        // 실패 내용 익셉션 추가????
-        console.log('validatePayment')
-        return true
-      } catch (error) {
-        console.log('Error in validatePayment', error)
-        return false
+      if (response.status !== 201) {
+        const json = await response.json()
+        throw 'Failed to POST ' + response.url + ' status ' + response.status + ', ' + json.message
+      }
+      // 실패 내용 익셉션 추가????
+      console.log('validatePayment')
+      return true
+    } catch (error) {
+      console.log('Error in validatePayment', error)
+      return false
+    }
+  }
+
+  const deletePaidItemFromCart = async () => {
+    let paidBoxIds: number[] = []
+
+    for (let [boxId, cartValue] of cart) {
+      if (cartValue.checked === true) {
+        paidBoxIds.push(boxId)
       }
     }
+    console.log('deletePaidItemFromCart')
+    deleteFromCart(paidBoxIds)
+  }
 
-    const deletePaidItemFromCart = async () => {
-      let paidBoxIds: number[] = []
-
-      for (let [boxId, cartValue] of cart) {
-        if (cartValue.checked === true) {
-          paidBoxIds.push(boxId)
-        }
-      }
-      console.log('deletePaidItemFromCart')
-      deleteFromCart(paidBoxIds)
-    }
-
+  useEffect(() => {
     try {
       validatePayment().then((result) => {
-        setIsLoaing(false)
-
         if (result === true) {
           deletePaidItemFromCart()
           setPaymentSuccess(true)
         } else {
           setPaymentSuccess(false)
         }
+        setIsLoaing(false)
       })
       console.log('useEffect of PaymentCompletePage')
     } catch (error) {
-      setIsLoaing(false)
       console.log('Error in useEffect of PaymentCompletePage ', error)
     }
   }, [])

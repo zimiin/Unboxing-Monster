@@ -11,6 +11,7 @@ import NoticeIcon from '@components/atoms/icon/NoticeIcon'
 import Bold from '@components/atoms/typography/Bold'
 import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
 import { COLORS } from '@constants/colors'
+import Loading from '@components/atoms/Loading'
 
 interface Props {
   isLoading: boolean,
@@ -70,9 +71,7 @@ const PaymentCompleteTemplate = (props: Props) => {
 
   const loading = (
     <View style={styles.centerView}>
-      <ActivityIndicator
-        size={'large'}
-      />
+      <Loading />
     </View>
   )
 
