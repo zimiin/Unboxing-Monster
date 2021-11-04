@@ -54,6 +54,7 @@ const SignUpEmailInputPage = ({ route, navigation }: SignUpEmailInputProps) => {
       error={error}
       onSubmitEditing={checkAndSetError}
       buttonText='다음'
+      isLoading={false}
     />
   )
 }

@@ -25,17 +25,17 @@ interface Props {
   canGoNext: boolean,
   error?: string,
   buttonText: string,
-  agreeToPolicy: boolean,
+  agreeToPolicy?: boolean,
   showPolicyAgreement?: boolean,
-  showPointEventModal: boolean,
-  pointEventResult: ResultCode,
+  showPointEventModal?: boolean,
+  pointEventResult?: ResultCode,
   onPressGoBack: () => void,
   onChangeText: (input: string) => void,
   onPressNext: () => void,
   onSubmitEditing?: () => void,
-  onPressAgreeToPolicy: () => void,
-  onPressAgreeToPolicyCheckBox: () => void,
-  onClosePointEventModal: () => void,
+  onPressAgreeToPolicy?: () => void,
+  onPressAgreeToPolicyCheckBox?: () => void,
+  onClosePointEventModal?: () => void,
 }
 
 const SignUpInputTemplate = (props: Props) => {
@@ -76,7 +76,7 @@ const SignUpInputTemplate = (props: Props) => {
 
             <CheckBox
               style={styles.checkBox}
-              checked={props.agreeToPolicy}
+              checked={props.agreeToPolicy || false}
               onPress={props.onPressAgreeToPolicyCheckBox}
             />
           </View>
@@ -98,8 +98,8 @@ const SignUpInputTemplate = (props: Props) => {
       {props.isLoading === true ? <Loading /> : null}
 
       <NoticeModal
-        visible={props.showPointEventModal}
-        onRequestClose={props.onClosePointEventModal}
+        visible={props.showPointEventModal || false}
+        onRequestClose={props.onClosePointEventModal || (() => {})}
       >
         <View
           style={styles.modalContent}

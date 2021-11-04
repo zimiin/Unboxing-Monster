@@ -17,7 +17,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
   const [showReportModal, setShowReportModal] = useState<boolean>(false)
   const [showWithdrawalModal, setShowWithdrawalModal] = useState<boolean>(false)
 
-  const getPoint = useCallback(async () => {
+  const getPoint = async () => {
     try {
       const accessToken = await getAccessTokenFromAsyncStorage()
       const response = await fetch(
@@ -41,7 +41,7 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
     } catch (error) {
       console.log('Error in getPoint', error)
     }
-  }, [])
+  }
 
   useEffect(() => {
     try {
@@ -60,6 +60,12 @@ const MyPagePage = ({route, navigation}: MyPageProps) => {
             }
           )
 
+          getPoint().then(
+            result => {
+              setPoint(result)
+            }
+          )
+          
           navigation.addListener('focus', () => {
             getPoint().then(
               result => {

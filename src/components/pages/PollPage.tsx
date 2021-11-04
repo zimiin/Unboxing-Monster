@@ -111,7 +111,7 @@ const PollPage = ({route, navigation}: PollProps) => {
         answerString += '['
       }
 
-      answerString += answers[i]?.toString() || 'undefined'
+      answerString += answers[i]?.toString() || ''
 
       if (Array.isArray(answers[i])) {
         answerString += ']'
