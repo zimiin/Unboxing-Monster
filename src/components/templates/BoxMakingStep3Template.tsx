@@ -15,6 +15,7 @@ import {
 import { COLORS, PROB_COLORS } from '@constants/colors'
 import { PieChart } from 'react-native-svg-charts'
 import SquareDot from '@components/atoms/SquareDot'
+import Loading from '@components/atoms/Loading'
 
 interface Props {
   screenTitle: string,
@@ -24,6 +25,7 @@ interface Props {
   boxName: string,
   probs: number[],
   itemInfo: {id: number, name: string}[],
+  isLoading: boolean,
   onPressGoBack: () => void,
   onPressNext: () => void,
 }
@@ -158,6 +160,8 @@ const BoxMakingStep3Template = (props: Props) => {
         onPress={props.onPressNext}
         content={'저장하고 장바구니에 담기'}
       />
+
+      {props.isLoading ? <Loading /> : undefined}
     </>
   )
 }

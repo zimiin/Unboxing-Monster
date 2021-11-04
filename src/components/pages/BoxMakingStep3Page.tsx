@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { BoxMakingStep2Props } from '@constants/navigationTypes'
 import BoxMakingStep3Template from '@components/templates/BoxMakingStep3Template'
 import { CustomBoxContext } from '@src/stores/CustomBoxContext'
@@ -13,6 +13,7 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
   const [{boxImage, boxPrice, boxName, selectedItems}, {}] = useContext(CustomBoxContext)
   const [{}, {modifyBoxCount, addBoxData}] = useContext(CartContext)
   const [{accessToken, nickname}, {}] = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const itemInfo: {id: number, name: string}[] = useMemo(() => {
     return selectedItems.map(
@@ -89,6 +90,7 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
     try {
       const box: Box = await saveBoxInDB()
       addToCart(box)
+      setIsLoading(false)
       navigation.popToTop()
     } catch (error) {
       console.log('Error in completeBoxMaking', error)
@@ -104,8 +106,12 @@ const BoxMakingStep3Page = ({ route, navigation }: BoxMakingStep2Props) => {
       boxName={boxName}
       probs={probabilites}
       itemInfo={itemInfo}
+      isLoading={isLoading}
       onPressGoBack={() => navigation.goBack()}
-      onPressNext={completeBoxMaking}
+      onPressNext={() => {
+        setIsLoading(true)
+        completeBoxMaking()
+      }}
     />
   )
 }
