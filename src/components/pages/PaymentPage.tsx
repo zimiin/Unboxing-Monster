@@ -55,6 +55,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [phoneInputError, setPhoneInputError] = useState<string>('')
   const [savePhone, setSavePhone] = useState<boolean>(true)
   const [personalInfoUsageAgree, setPersonalInfoUsageAgree] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const totalPrice = useMemo(() => {
     let sum = 0
@@ -146,21 +147,23 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
     if (useAllPoint) {
       setUsingPoint(0)
     } else {
-      let availablePoint: number
+      // let availablePoint: number
 
       if (point > totalPrice) {
-        availablePoint = toHundreds(totalPrice)
+        // availablePoint = toHundreds(totalPrice)
+        setUsingPoint(totalPrice)
       } else {
-        availablePoint = toHundreds(point)
+        // availablePoint = toHundreds(point)
+        setUsingPoint(point)
       }
 
-      const amount = totalPrice - availablePoint
+      // const amount = totalPrice - availablePoint
 
-      if (0 < amount && amount < 100) {
-        setUsingPoint(availablePoint - 100)
-      } else {
-        setUsingPoint(availablePoint)
-      }
+      // if (0 < amount && amount < 100) {
+      //   setUsingPoint(availablePoint - 100)
+      // } else {
+      //   setUsingPoint(availablePoint)
+      // }
     }
     setUseAllPoint(!useAllPoint)
   }
@@ -213,10 +216,10 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   }
 
   const validatePointInput = () => {
-    if (usingPoint % 100 !== 0) {
-      setPointInputError('포인트는 100P 단위로 사용가능합니다.')
-      return false
-    }
+    // if (usingPoint % 100 !== 0) {
+    //   setPointInputError('포인트는 100P 단위로 사용가능합니다.')
+    //   return false
+    // }
     return true
   }
 
@@ -236,15 +239,18 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
 
       const amount = totalPrice - usingPoint
       console.log('amount', amount)
+
       if (amount === 0) {
-        navigation.replace('PaymentComplete', { response: { merchant_uid: await getMerchantUid(), imp_uid: 'no' }, point: usingPoint })
+        const uid = await getMerchantUid()
+        navigation.replace('PaymentComplete', { response: { merchant_uid: uid, imp_uid: 'no' }, point: usingPoint })
+        setIsLoading(false)
         return
       }
 
-      if (amount < 100) {
-        setPointInputError('포인트 사용 후 최종 결제 금액은 100원 이상이어야 합니다.')
-        throw 'Amount is under 100'
-      }
+      // if (amount < 100) {
+      //   setPointInputError('포인트 사용 후 최종 결제 금액은 100원 이상이어야 합니다.')
+      //   throw 'Amount is under 100'
+      // }
 
       if (validatePhoneInput() === false) {
         throw 'Invalid phone number input: ' + phoneInput
@@ -313,6 +319,7 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       phoneInputError={phoneInputError}
       pointInputError={pointInputError}
       personalInfoChecked={personalInfoUsageAgree}
+      isLoading={isLoading}
       onSubmitPhoneInput={validatePhoneInput}
       onPressSavePhone={() => setSavePhone(!savePhone)}
       onChangePhoneInput={onChangePhoneInput}
@@ -320,7 +327,10 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onChangeUsingPointAmount={setUsingPointFromInput}
       onPressUseAllPoint={onPressUseAllPoint}
       onChangePaymentMethod={setSelectedPaymentMethod}
-      onPressMakePayment={onPressMakePayment}
+      onPressMakePayment={() => {
+        setIsLoading(true)
+        onPressMakePayment()
+      }}
       onSubmitPointInput={validatePointInput}
       onPressPersonalInfoUsage={() => navigation.push('PGPersonalInfoAgreement')}
       onPressPersonalInfoCheckBox={onPressPersonalInfoCheckBox}

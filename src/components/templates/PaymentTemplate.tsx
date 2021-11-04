@@ -31,6 +31,7 @@ import GreyInputBox from '@components/atoms/GreyInputBox'
 import Footer from '@components/molecules/Footer'
 import RegularText from '@components/atoms/typography/RegularText'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Loading from '@components/atoms/Loading'
 
 interface Props {
   screenTitle: string,
@@ -47,6 +48,7 @@ interface Props {
   phoneInputError: string,
   pointInputError: string,
   personalInfoChecked: boolean,
+  isLoading: boolean,
   onPressSavePhone: () => void,
   onPressBack: () => void,
   onChangeUsingPointAmount: (point: string) => void,
@@ -336,6 +338,8 @@ const PaymentTemplate = (props: Props) => {
           onPress={props.onPressMakePayment}
         />
       </SafeAreaView>
+
+      {props.isLoading ? <Loading /> : undefined}
     </>
   )
 }
