@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   ViewProps,
   ImageSourcePropType,
+  Image,
 } from 'react-native'
+import { IMAGES } from '@constants/images'
 
 export interface ItemRadioButtonProps extends ViewProps{
   id: number,
@@ -32,8 +34,9 @@ const ItemRadioButton = (props: ItemRadioButtonProps) => {
       />
 
       <View style={styles.radioButtonContainer}>
-        <CheckBox
-          checked={props.checked}
+        <Image
+          source={props.checked ? IMAGES.checkBox_checked : IMAGES.checkBox_unchecked}
+          style={{ width: 16, height: 16 }}
         />
       </View>
     </TouchableOpacity>

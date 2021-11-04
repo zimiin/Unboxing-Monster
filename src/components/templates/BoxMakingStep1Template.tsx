@@ -2,7 +2,7 @@ import FullWidthButton from '@components/atoms/button/FullWidthButton'
 import Bold from '@components/atoms/typography/Bold'
 import Header from '@components/organisms/header/Header'
 import { scale, verticalScale } from '@constants/figure'
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import {
   View,
   Text,
@@ -41,8 +41,17 @@ interface Props {
   onChangeSearchInput: (input: string) => void,
 }
 
+const ITEM_HEIGHT = scale(72) + 32
+
 const BoxMakingStep1Template = (props: Props) => {
   const [{selectedItems}, {}] = useContext(CustomBoxContext)
+  const itemListRef = useRef<FlatList<any>>(null)
+
+  useEffect(() => {
+    if (props.itemData && props.itemData.length > 0) {
+      itemListRef.current?.scrollToIndex({ index: 0 })
+    }
+  }, [props.sorted])
 
   const renderItem = ({ item }: { item: RenderItem }) => {
     if (item.filtered === true && item.searched === true) {
@@ -84,7 +93,9 @@ const BoxMakingStep1Template = (props: Props) => {
           <TouchableOpacity
             key={index}
             style={styles.filter}
-            onPress={() => props.onPressSortOption(filter)}
+            onPress={() => {
+              props.onPressSortOption(filter)
+            }}
           >
             <Text style={props.sorted === filter ? styles.boldText : styles.greyText}>
               {filter}
@@ -128,10 +139,12 @@ const BoxMakingStep1Template = (props: Props) => {
         </View>
 
         <FlatList
+          ref={itemListRef}
           renderItem={renderItem}
           data={props.itemData || []}
           ListFooterComponent={footer}
           keyExtractor={(item: RenderItem) => item.itemData.id.toString()}
+          getItemLayout={(data, index) => ({length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index})}
         />
       </View>
 
