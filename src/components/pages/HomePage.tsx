@@ -183,27 +183,23 @@ const HomePage = ({route, navigation}: HomeProps) => {
 
   return (
     <>
-    <HomeTemplate
-      isLoading={isLoading}
-      onPressSearchBar={() => navigation.push('Search')}
-      onPressCart={() => navigation.push('Cart')}
-      cartItemCount={cart.size > 0 ? cart.size : undefined}
-      noticeData={noticeData}
-      popularBoxData={popularBoxData}
-      customBoxData={customBoxData?.length === 0 || customBoxData === undefined ? popularBoxData : customBoxData}
-      allBoxData={allBoxData}
-      modalVisible={modalVisible}
-      scorllerContent={scrollerContent || ''}
-      closeTutorialModal={closeTutorialModal}
-      onRefresh={setDatas}
-      refreshing={refreshing}
-      openIntroModal={() => setModalVisible(true)}
-      onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
-    />
-
-      <TouchableOpacity onPress={() => navigation.navigate('PollInit')}>
-        <Text>POLL</Text>
-      </TouchableOpacity>
+      <HomeTemplate
+        isLoading={isLoading}
+        onPressSearchBar={() => navigation.push('Search')}
+        onPressCart={() => navigation.push('Cart')}
+        cartItemCount={cart.size > 0 ? cart.size : undefined}
+        noticeData={noticeData}
+        popularBoxData={popularBoxData}
+        customBoxData={customBoxData?.length === 0 || customBoxData === undefined ? popularBoxData : customBoxData}
+        allBoxData={allBoxData}
+        modalVisible={modalVisible}
+        scorllerContent={scrollerContent || ''}
+        closeTutorialModal={closeTutorialModal}
+        onRefresh={setDatas}
+        refreshing={refreshing}
+        openIntroModal={() => setModalVisible(true)}
+        onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
+      />
     </>
   )
 }

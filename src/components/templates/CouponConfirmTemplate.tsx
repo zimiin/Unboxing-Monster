@@ -2,9 +2,11 @@ import CheckBox from '@components/atoms/button/CheckBox'
 import HalfWidthButton from '@components/atoms/button/HalfWidthButton'
 import GreyInputBox from '@components/atoms/GreyInputBox'
 import InfoIcon from '@components/atoms/icon/InfoIcon'
+import Loading from '@components/atoms/Loading'
 import Bold from '@components/atoms/typography/Bold'
 import RegularText from '@components/atoms/typography/RegularText'
 import ConfirmModal from '@components/molecules/ConfirmModal'
+import NoticeModal from '@components/molecules/NoticeModal'
 import Header from '@components/organisms/header/Header'
 import { COLORS } from '@constants/colors'
 import { scale, verticalScale } from '@constants/figure'
@@ -27,6 +29,8 @@ interface Props {
   showModal: boolean,
   isLoading: boolean,
   personalInfoChecked: boolean,
+  showResultModal: boolean,
+  resultStatus?: number,
   goBackToPreviousScreen: () => void,
   onChangePhoneInput: (input: string) => void,
   onPressCheckBox: () => void,
@@ -36,6 +40,7 @@ interface Props {
   onConfirmPhone: () => void,
   onPressPersonalInfoUsage: () => void,
   onPressPersonalInfoCheckBox: () => void,
+  closeResultModal: () => void,
 }
 
 const CouponConfirmTemplate = (props: Props) => {
@@ -102,7 +107,7 @@ const CouponConfirmTemplate = (props: Props) => {
             />
           </View>
 
-          <Text style={styles.error}>{props.error}</Text>
+          <Text style={[styles.error]}>{props.error}</Text>
 
           <View style={styles.buttonRow}>
             <HalfWidthButton
@@ -125,17 +130,39 @@ const CouponConfirmTemplate = (props: Props) => {
         onRequestClose={props.onRequestCloseModal}
         onConfirm={props.onConfirmPhone}
       >
-        <Text style={styles.confirmText}>{props.phoneInput + '로\n24시간 내에 모바일쿠폰이 전송됩니다.'}</Text>
-        
-        {props.isLoading ?
-          <ActivityIndicator
-            animating={true}
-            style={styles.loading}
-          />
-          :
-          null
-        }
+        <Text style={styles.confirmText}>{props.phoneInput + '로\n모바일쿠폰이 전송됩니다.'}</Text>
       </ConfirmModal>
+
+      <NoticeModal
+        visible={props.showResultModal}
+        onRequestClose={props.closeResultModal}
+      >
+        <Text style={styles.confirmText}>
+          {props.resultStatus === 200 ?
+            props.phoneInput + '로\n모바일쿠폰을 발송했습니다.'
+            :
+            props.resultStatus === 402 ?
+              '죄송합니다.\n모바일 쿠폰 발송에 문제가 발생했습니다.'
+              :
+              props.resultStatus === 404 ?
+                '보유하지 않은 쿠폰입니다.'
+                :
+                props.resultStatus === 406 ?
+                  '유효기간이 만료되었습니다.'
+                  :
+                  props.resultStatus === 409 ?
+                    '이미 사용 또는 환불된 쿠폰입니다.'
+                    :
+                    '죄송합니다.\n서버에 문제가 발생했습니다.'
+          }
+        </Text>
+      </NoticeModal>
+
+      {props.isLoading ?
+        <Loading />
+        :
+        null
+      }
     </>
   )
 }
@@ -211,7 +238,8 @@ const styles = StyleSheet.create({
     color: COLORS.error,
     fontSize: scale(13),
     alignSelf: 'flex-start',
-    marginLeft: scale(24),
+    marginHorizontal: scale(24),
+    flexShrink: 1,
     marginTop: verticalScale(5),
     height: scale(17),
   },
@@ -233,7 +261,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 20,
     marginBottom: 10,
-    fontFamily: 'NotoSansCJKkr-Regular'
+    fontFamily: 'NotoSansCJKkr-Regular',
+    flexShrink: 1,
   },
   loading: {
     marginBottom: verticalScale(20),

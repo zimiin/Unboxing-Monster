@@ -13,7 +13,9 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoaing] = useState<boolean>(false)
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [showResultModal, setShowResultModal] = useState<boolean>(false)
   const [agreeToPersonalInfoUsage, setAgreeToPersonalInfoUsage] = useState<boolean>(false)
+  const [resultStatus, setResultStatus] = useState<number>()
 
   useEffect(() => {
     getPhoneFromAsyncStorage().then(
@@ -29,7 +31,7 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
       }
 
       if (agreeToPersonalInfoUsage === false) {
-        setError('제3자 정보 제공에 동의하지 않으시면 쿠폰 확정이 불가능합니다.')
+        setError('정보 제공에 동의하지 않으시면 쿠폰 확정이 불가능합니다.')
         return
       }
 
@@ -66,11 +68,12 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
         }
       })
 
-      if (response.status !== 200) {
+      if (response.status === 200 || response.status === 402 || response.status === 404 || response.status === 406 || response.status === 409 || response.status === 500) {
+        return response.status
+      } else {
         const json = await response.json()
         throw 'Failed to PATCH ' + response.url + ' status ' + response.status + ', ' + json.message
       }
-      console.log('onPressConfirmCoupon status 200')
     } catch (error) {
       console.log('Error in requestConfirmCoupon', error)
       throw error
@@ -79,10 +82,14 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
 
   const onCheckPhoneNumber = async () => {
     try {
-      setIsLoaing(true)
-      await requestConfirmCoupon(route.params.coupon, phoneInput)
-      navigation.popToTop()
+      const result = await requestConfirmCoupon(route.params.coupon, phoneInput)
+      setIsLoaing(false)
+      setResultStatus(result)
+      setShowResultModal(true)
     } catch (error) {
+      setIsLoaing(false)
+      setResultStatus(666)
+      setShowResultModal(true)
       console.log('Error in onCheckPhoneNumber', error)
     }
   }
@@ -95,6 +102,11 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
   const onPressPersonalInfoCheckBox = () => {
     setError('')
     setAgreeToPersonalInfoUsage(!agreeToPersonalInfoUsage)
+  }
+
+  const closeResultModal = () => {
+    setShowResultModal(false)
+    navigation.popToTop()
   }
 
   return (
@@ -111,9 +123,15 @@ const CouponConfirmPage = ({ route, navigation }: CouponConfirmProps) => {
       onPressCancel={() => navigation.goBack()}
       onPressConfirm={onPressConfirmButton}
       onRequestCloseModal={() => setShowModal(false)}
-      onConfirmPhone={onCheckPhoneNumber}
+      onConfirmPhone={() => {
+        setIsLoaing(true)
+        onCheckPhoneNumber()
+      }}
       onPressPersonalInfoCheckBox={onPressPersonalInfoCheckBox}
       onPressPersonalInfoUsage={() => navigation.push('CouponPersonalInfoAgreement')}
+      showResultModal={showResultModal}
+      resultStatus={resultStatus}
+      closeResultModal={closeResultModal}
     />
   )
 }
