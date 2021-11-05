@@ -13,6 +13,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import PaymentBoxItem from '@components/molecules/PaymentBoxItem'
@@ -32,6 +33,8 @@ import Footer from '@components/molecules/Footer'
 import RegularText from '@components/atoms/typography/RegularText'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Loading from '@components/atoms/Loading'
+import NoticeModal from '@components/molecules/NoticeModal'
+import NoticeIcon from '@components/atoms/icon/NoticeIcon'
 
 interface Props {
   screenTitle: string,
@@ -40,7 +43,7 @@ interface Props {
   usingPoint: number,
   useAllPoint: boolean,
   paymentMethods: PaymentMethod[],
-  selectedPaymentMethod: PaymentMethod,
+  selectedPaymentMethod?: PaymentMethod,
   totalPrice: number,
   finalPrice: number,
   phoneInput?: string,
@@ -49,6 +52,8 @@ interface Props {
   pointInputError: string,
   personalInfoChecked: boolean,
   isLoading: boolean,
+  noticeText: string,
+  showNoticeModal: boolean,
   onPressSavePhone: () => void,
   onPressBack: () => void,
   onChangeUsingPointAmount: (point: string) => void,
@@ -60,6 +65,7 @@ interface Props {
   onSubmitPointInput: () => void,
   onPressPersonalInfoUsage: () => void,
   onPressPersonalInfoCheckBox: () => void,
+  closeNoticeModal: () => void,
 }
 
 const PaymentTemplate = (props: Props) => {
@@ -72,7 +78,7 @@ const PaymentTemplate = (props: Props) => {
           return (
             <TextRadioButton
               key={index}
-              status={props.selectedPaymentMethod.label}
+              status={props.selectedPaymentMethod?.label || ''}
               onPress={() => props.onChangePaymentMethod(method)}
               style={styles.radioButton}
             >
@@ -200,17 +206,17 @@ const PaymentTemplate = (props: Props) => {
 
       <HorizontalRule />
 
-      {/* <View>
-        <ContentBox title='결제수단'
-          style={styles.paymentMethodContentBox}>
-          <View style={styles.radioButtonContainer}>
-            {paymentMethodRadioButtons}
-          </View>
-        </ContentBox>
+      <ContentBox title='결제수단'
+        style={styles.paymentMethodContentBox}>
+        <View style={styles.radioButtonContainer}>
+          {paymentMethodRadioButtons}
+        </View>
+      </ContentBox>
 
-        <HorizontalRule />
-
-        <Bold style={styles.title}>핸드폰 번호 입력</Bold>
+      <HorizontalRule />
+      
+      {/*<View>
+         <Bold style={styles.title}>핸드폰 번호 입력</Bold>
 
         <View style={styles.phoneInputRow}>
           <GreyInputBox
@@ -254,10 +260,10 @@ const PaymentTemplate = (props: Props) => {
           />
         </View>
 
-        {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null}
-      </View> 
+        {props.phoneInputError ? <Text style={[styles.errorText, styles.phoneInputError]}>{props.phoneInputError}</Text> : null} 
+      </View> */}
 
-      <HorizontalRule style={styles.horizontalRule}/> */}
+      {/* <HorizontalRule style={styles.horizontalRule}/> */}
 
       <ContentBox title='최종 결제 금액'>
         <View style={styles.finalPriceContainer}>
@@ -340,6 +346,22 @@ const PaymentTemplate = (props: Props) => {
       </SafeAreaView>
 
       {props.isLoading ? <Loading /> : undefined}
+
+      <NoticeModal
+        visible={props.showNoticeModal}
+        onRequestClose={props.closeNoticeModal}
+      >
+        <NoticeIcon />
+
+        <Text 
+          style={[
+            styles.tableText
+            , { marginVertical: 10 }
+          ]}
+        >
+          {props.noticeText}
+        </Text>
+      </NoticeModal>
     </>
   )
 }

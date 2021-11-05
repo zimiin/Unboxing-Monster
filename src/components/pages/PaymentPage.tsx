@@ -50,12 +50,14 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
   const [usingPoint, setUsingPoint] = useState<number>(0)
   const [useAllPoint, setUseAllPoint] = useState<boolean>(false)
   const [pointInputError, setPointInputError] = useState<string>('')
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(PAYMENT_METHODS[0])
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>()
   const [phoneInput, setPhoneInput] = useState<string>('')
   const [phoneInputError, setPhoneInputError] = useState<string>('')
   const [savePhone, setSavePhone] = useState<boolean>(true)
   const [personalInfoUsageAgree, setPersonalInfoUsageAgree] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showNoticeModal, setShowNoticeModal] = useState<boolean>(false)
+  const [noticeText, setNoticeText] = useState<string>('')
 
   const totalPrice = useMemo(() => {
     let sum = 0
@@ -245,6 +247,10 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
         navigation.replace('PaymentComplete', { response: { merchant_uid: uid, imp_uid: 'no' }, point: usingPoint })
         setIsLoading(false)
         return
+      } else if (amount > 0) {
+        setIsLoading(false)
+        setNoticeText('포인트가 부족합니다.')
+        setShowNoticeModal(true)
       }
 
       // if (amount < 100) {
@@ -252,47 +258,47 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       //   throw 'Amount is under 100'
       // }
 
-      if (validatePhoneInput() === false) {
-        throw 'Invalid phone number input: ' + phoneInput
-      }
+      // if (validatePhoneInput() === false) {
+      //   throw 'Invalid phone number input: ' + phoneInput
+      // }
 
-      if (personalInfoUsageAgree === false) {
-        setPhoneInputError('제3자 정보 제공에 동의하지 않으시면 결제 진행이 불가능합니다.')
-        throw `Not agree privacy usage agreement.`
-      }
+      // if (personalInfoUsageAgree === false) {
+      //   setPhoneInputError('제3자 정보 제공에 동의하지 않으시면 결제 진행이 불가능합니다.')
+      //   throw `Not agree privacy usage agreement.`
+      // }
 
-      const phone = removeHyphens(phoneInput)
-      if (savePhone) {
-        setPhoneToAsyncStorage(phone)
-      }
+      // const phone = removeHyphens(phoneInput)
+      // if (savePhone) {
+      //   setPhoneToAsyncStorage(phone)
+      // }
 
-      const merchantUid = await getMerchantUid()
-      const email = await getEmailFromAsyncStorage()
+      // const merchantUid = await getMerchantUid()
+      // const email = await getEmailFromAsyncStorage()
 
-      if (email === null) {
-        throw 'No email address in async storage'
-      }
+      // if (email === null) {
+      //   throw 'No email address in async storage'
+      // }
 
-      const data: PaymentParams = {
-        params: {
-          pg: selectedPaymentMethod.label === '카카오페이' ? 'kakaopay' : 'danal_tpay',
-          pay_method: selectedPaymentMethod.value,
-          display: {card_quota: []},
-          merchant_uid: merchantUid,
-          amount: amount.toString(),
-          name: merchantTitle || '',
-          buyer_tel: phone,
-          buyer_name: '',
-          buyer_email: email,
-          app_scheme: 'unboxing.monster',
-          biz_num: '2460302264',
-          m_redirect_url: IMPConst.M_REDIRECT_URL,
-          escrow: false,
-        },
-        tierCode: '',
-      }
+      // const data: PaymentParams = {
+      //   params: {
+      //     pg: selectedPaymentMethod.label === '카카오페이' ? 'kakaopay' : 'danal_tpay',
+      //     pay_method: selectedPaymentMethod.value,
+      //     display: {card_quota: []},
+      //     merchant_uid: merchantUid,
+      //     amount: amount.toString(),
+      //     name: merchantTitle || '',
+      //     buyer_tel: phone,
+      //     buyer_name: '',
+      //     buyer_email: email,
+      //     app_scheme: 'unboxing.monster',
+      //     biz_num: '2460302264',
+      //     m_redirect_url: IMPConst.M_REDIRECT_URL,
+      //     escrow: false,
+      //   },
+      //   tierCode: '',
+      // }
 
-      navigation.navigate('PGPayment', { data: data, point: usingPoint })
+      // navigation.navigate('PGPayment', { data: data, point: usingPoint })
     } catch (error) {
       console.log('Error in onPressMakePayment ', error)
     }
@@ -326,7 +332,10 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onPressBack={() => navigation.goBack()}
       onChangeUsingPointAmount={setUsingPointFromInput}
       onPressUseAllPoint={onPressUseAllPoint}
-      onChangePaymentMethod={setSelectedPaymentMethod}
+      onChangePaymentMethod={(method: PaymentMethod) => {
+        setNoticeText('준비중인 기능입니다.')
+        setShowNoticeModal(true)
+      }}
       onPressMakePayment={() => {
         setIsLoading(true)
         onPressMakePayment()
@@ -334,6 +343,9 @@ const PaymentPage = ({route, navigation}: PaymentProps) => {
       onSubmitPointInput={validatePointInput}
       onPressPersonalInfoUsage={() => navigation.push('PGPersonalInfoAgreement')}
       onPressPersonalInfoCheckBox={onPressPersonalInfoCheckBox}
+      showNoticeModal={showNoticeModal}
+      noticeText={noticeText}
+      closeNoticeModal={() => setShowNoticeModal(false)}
     />
   )
 }
