@@ -200,12 +200,6 @@ const HomePage = ({route, navigation}: HomeProps) => {
         openIntroModal={() => setModalVisible(true)}
         onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
       />
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Payment')}
-      >
-        <Text>payment</Text>
-      </TouchableOpacity>
     </>
   )
 }
