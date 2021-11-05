@@ -153,7 +153,7 @@ const BoxMakingStep1Page = ({ route, navigation }: BoxMakingStep1Props) => {
       hasPreviousScreen={true}
       screenTitle='커스텀 박스 만들기'
       sorted={sorted}
-      itemData={sorted === '낮은가격순' ? sortedItemList : reversedItemList}
+      itemData={sorted === '낮은가격순' ? sortedItemList.filter(item => item.searched === true) : reversedItemList.filter(item => item.searched === true)}
       error={error}
       searchInput={searchInput}
       sortOptions={sortOptions}
