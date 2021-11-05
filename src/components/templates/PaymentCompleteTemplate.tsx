@@ -1,16 +1,10 @@
 import GreyButton from '@components/atoms/button/GreyButton'
 import DoneIcon from '@components/atoms/icon/DoneIcon'
-import Title from '@components/atoms/typography/Title'
 import React from 'react'
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text } from 'react-native'
-import {
-  View,
-} from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { scale, verticalScale } from '@constants/figure'
 import NoticeIcon from '@components/atoms/icon/NoticeIcon'
 import Bold from '@components/atoms/typography/Bold'
-import FullContentWidthButton from '@components/atoms/button/FullContentWidthButton'
-import { COLORS } from '@constants/colors'
 import Loading from '@components/atoms/Loading'
 
 interface Props {
