@@ -38,35 +38,40 @@ const BoxInfo = ({ route, navigation }: BoxInfoProps) => {
   }, [])
 
   const items = useMemo(() => {
-    return (
-      data?.items.map(
-        (item) => {
-          return (
-            <View
-              style={styles.itemContainer}
-              key={item.id}
-            >
-              <BoxListItem
-                image={item.image}
-                title={item.title}
-                price={item.price}
-                onPress={
-                  () => navigation.push('ItemInfo',
-                    {
-                      itemId: item.id,
-                      itemImage: item.image,
-                      itemTitle: item.title,
-                      itemPrice: item.price,
-                      itemDetail: item.detail,
-                    }
-                  )
-                }
-              />
-            </View>
-          )
-        }
+    if (data && data.items) {
+      let sortedItems = data.items.slice()
+      sortedItems.sort((a, b) => -(a.price - b.price))
+      
+      return (
+        sortedItems.map(
+          (item) => {
+            return (
+              <View
+                style={styles.itemContainer}
+                key={item.id}
+              >
+                <BoxListItem
+                  image={item.image}
+                  title={item.title}
+                  price={item.price}
+                  onPress={
+                    () => navigation.push('ItemInfo',
+                      {
+                        itemId: item.id,
+                        itemImage: item.image,
+                        itemTitle: item.title,
+                        itemPrice: item.price,
+                        itemDetail: item.detail,
+                      }
+                    )
+                  }
+                />
+              </View>
+            )
+          }
+        )
       )
-    )
+    }
   }, [data])
 
   return (
