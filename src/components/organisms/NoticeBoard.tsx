@@ -10,6 +10,7 @@ import { Notice } from "@constants/types"
 import { openUrl } from "@src/utils/utils"
 
 const openIntroModalUrl = 'https://open.Intro.Modal'
+const manualModal = 'https://user-images.githubusercontent.com/45932570/140607004-e3187a57-bbe8-42ce-90da-dfc03589d466.png'
 
 const defaultNotice: Notice[] = [{
   id: 0,
@@ -20,6 +21,7 @@ const defaultNotice: Notice[] = [{
 interface Props {
   noticeData?: Notice[],
   openIntroModal?: () => void,
+  openManualModal?: () => void,
 }
 
 const NoticeBoard = (props: Props) => {
@@ -31,6 +33,8 @@ const NoticeBoard = (props: Props) => {
 
     if (item.srcUrl === openIntroModalUrl) {
       onPress = props.openIntroModal ? props.openIntroModal : () => console.log('No openModal function passed')
+    } else if (item.srcUrl === manualModal) {
+      onPress = props.openManualModal ? props.openManualModal : () => console.log('No openModal function passed')
     } else {
       onPress = () => openUrl(item.srcUrl)
     }

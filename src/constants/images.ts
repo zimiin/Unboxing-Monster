@@ -66,7 +66,7 @@ export const IMAGES: { [k: string]: ImageSourcePropType } = {
   kakao_square: require('assets/images/kakao_square.png'),
   unboxing_logo: require('assets/images/UnboxingLogo.png'),
   poll_event: require('assets/images/poll_event.png'),
-  box_making: require('assets/images/box_making.gif')
+  box_making: require('assets/images/box_making.gif'),
 }
 
 export const defaultBoxUri: string = 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'
@@ -81,4 +81,13 @@ export const BOXES: string[] = [
   'https://user-images.githubusercontent.com/45932570/132882415-9230ab17-8c6b-4aa2-ae73-2865deb5c4cd.png',
   'https://user-images.githubusercontent.com/45932570/132882422-b99761ff-5429-4d79-9fb5-00d4d47b1281.png',
   'https://user-images.githubusercontent.com/45932570/132882437-e4a7cb1c-d26e-486b-800e-59d705cc9ebf.png',
+]
+
+export const MANUALS: ImageSourcePropType[] = [
+  require('assets/images/manual_001.png'),
+  require('assets/images/manual_002.png'),
+  require('assets/images/manual_003.png'),
+  require('assets/images/manual_004.png'),
+  require('assets/images/manual_005.png'),
+  require('assets/images/manual_006.png'),
 ]

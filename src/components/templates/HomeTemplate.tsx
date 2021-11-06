@@ -1,24 +1,26 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import {
   View,
   StyleSheet,
   FlatList,
+  Image,
 } from 'react-native'
 import HomeScreenHeader from '@components/organisms/header/HomeScreenHeader'
 import HorizontalRule from '@components/atoms/HorizontalRule'
 import NoticeBoard from '@components/organisms/NoticeBoard'
 import Scroller from '@components/organisms/Scroller'
 import TutorialModal from '@components/templates/TutorialModal'
-import { scale, verticalScale } from '@constants/figure'
+import { scale, SCREEN_HEIGHT, SCREEN_WIDTH, verticalScale } from '@constants/figure'
 import Bold from '@components/atoms/typography/Bold'
 import BoxItem from '@components/molecules/BoxItem'
 import { Box, BoxId, Notice } from '@constants/types'
 import NoDataBox from '@components/molecules/NoDataBox'
-import { IMAGES } from '@constants/images'
+import { IMAGES, MANUALS } from '@constants/images'
 import FloatingCartButton from '@components/atoms/button/FloatingCartButton'
 import NotoSansBold from '@components/atoms/typography/NotoSansBold'
 import Loading from '@components/atoms/Loading'
 import Footer from '@components/molecules/Footer'
+import SwiperModal from '@components/organisms/SwiperModal'
 
 interface Props {
   isLoading: boolean,
@@ -30,12 +32,15 @@ interface Props {
   modalVisible: boolean,
   refreshing: boolean,
   scorllerContent: string,
+  manualModalVisible: boolean,
   onPressSearchBar: () => void,
   onPressCart: () => void,
   closeTutorialModal: () => void,
   onRefresh: () => void,
   openIntroModal?: () => void,
   onPressBoxItem?: (boxId: BoxId) => void,
+  openManualModal?: () => void,
+  closeManualModal: () => void,
 }
 
 const HorizontalListBlank = () => (
@@ -57,6 +62,31 @@ const verticalListEmptyComponent = () => (
 )
 
 const HomeTemplate = (props: Props) => {
+  const manualItems = useMemo(() => {
+    const items: ReactNode[] = []
+
+    for (let i = 0; i < 6; i++) {
+      items.push(
+        <View
+          style={{
+            backgroundColor: '#229ae8'
+          }}
+        >
+          <Image
+            source={MANUALS[i]}
+            style={{
+              width: SCREEN_WIDTH,
+              height: SCREEN_HEIGHT - verticalScale(25),
+              resizeMode: 'contain'
+            }}
+          />
+        </View>
+      )
+    }
+
+    return items
+  }, [])
+  
   const renderBoxItem = ({item}: {item: Box}) => {
     return (
       <View style={styles.boxItem}>
@@ -76,6 +106,7 @@ const HomeTemplate = (props: Props) => {
       <NoticeBoard
         noticeData={props.noticeData}
         openIntroModal={props.openIntroModal}
+        openManualModal={props.openManualModal}
       />
 
       <View>
@@ -152,6 +183,12 @@ const HomeTemplate = (props: Props) => {
       <TutorialModal
         modalVisible={props.modalVisible}
         onRequestClose={props.closeTutorialModal}
+      />
+
+      <SwiperModal
+        modalVisible={props.manualModalVisible}
+        onRequestClose={props.closeManualModal}
+        slideData={manualItems}
       />
 
       {props.isLoading ? <Loading /> : null}

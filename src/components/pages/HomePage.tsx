@@ -21,6 +21,7 @@ const HomePage = ({route, navigation}: HomeProps) => {
   const [throttled, setThrottled] = useState<boolean>(false)
   const [scrollerContent, setScrollerContent] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [manualModalVisible, setManualModalVisible] = useState<boolean>(false)
 
   useEffect(() => {
     getIsFirstUseFromStorage()
@@ -194,10 +195,13 @@ const HomePage = ({route, navigation}: HomeProps) => {
         allBoxData={allBoxData}
         modalVisible={modalVisible}
         scorllerContent={scrollerContent || ''}
+        manualModalVisible={manualModalVisible}
         closeTutorialModal={closeTutorialModal}
         onRefresh={setDatas}
         refreshing={refreshing}
         openIntroModal={() => setModalVisible(true)}
+        openManualModal={() => setManualModalVisible(true)}
+        closeManualModal={() => setManualModalVisible(false)}
         onPressBoxItem={(boxId: number) => navigation.navigate('BoxInfo', {boxId: boxId})}
       />
     </>
