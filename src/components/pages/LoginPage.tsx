@@ -337,9 +337,9 @@ const LoginPage = ({route, navigation}: LoginProps) => {
       isLoading={isLoading}
       showUnableEventModal={showUnableEventModal}
       onPressLookAround={() => navigation.replace('Main')}
-      onPressFacebook={() => checkEventAndLogin('facebook')}
-      onPressApple={() => checkEventAndLogin('apple')}
-      onPressKakao={() => checkEventAndLogin('kakao')}
+      onPressFacebook={() => loginWith('facebook')}
+      onPressApple={() => loginWith('apple')}
+      onPressKakao={() => loginWith('kakao')}
       closeUnableEventModal={() => setShowUnableEventModal(false)}
       onConfirmEventStatus={() => { loginWith(selectedProvider); setShowUnableEventModal(false) }}
     />
