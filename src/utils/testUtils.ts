@@ -1,6 +1,7 @@
 import { createServer } from 'miragejs'
 import { URLS } from '@constants/urls'
 import { setAccessTokenToAsyncStorage } from './asyncStorageUtils'
+import { ITEMS } from '@src/assets/data/items'
 
 
 declare global {
@@ -20,6 +21,10 @@ export const setupServer = () => {
         return {
           text: 'hello world!'
         }
+      })
+
+      this.get(URLS.unboxing_api + 'item', () => {
+        return ITEMS
       })
     }
   })
