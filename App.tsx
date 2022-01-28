@@ -22,6 +22,31 @@ import PrivacyPolicyPage from '@components/pages/PrivacyPolicyPage'
 import { setIsFirstUseFromStorage } from '@src/utils/asyncStorageUtils'
 import PollPage from '@components/pages/PollPage'
 import PollInitPage from '@components/pages/PollInitPage'
+import { createServer } from 'miragejs'
+import { URLS } from '@constants/urls'
+
+declare global {
+  interface Window {
+    server: any;
+  }
+}
+
+if (window.server) {
+  window.server.shutdown()
+}
+
+window.server = createServer({
+  routes() {
+    this.get(URLS.unboxing_api, () => {
+      return {
+        text: 'hello world!'
+      }
+    })
+  }
+})
+
+fetch(URLS.unboxing_api)
+.then(result => console.log(result))
 
 const Stack = createStackNavigator<RootStackParamList>()
 
